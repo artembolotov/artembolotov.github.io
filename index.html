@@ -8,7 +8,10 @@
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
       #hamburger {
-        display: block;
+        display: none;
+        position: absolute;
+        left: -999px;
+        top: -999px;
       }
       #page-nav {
         width: 100%;
@@ -71,7 +74,7 @@
   <body id="page-top">
     <nav id="page-nav">
       <!-- [THE HAMBURGER] -->
-      <label for="hamburger" id="menu-label">&#9776;Тест Тест</label>
+      <label for="hamburger" id="menu-label">&#9776;</label>
       <input type="checkbox" id="hamburger"/>
       <script>
         /* document.getElementById("menu-label").addEventListener('touchstart', event => {
