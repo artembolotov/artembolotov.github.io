@@ -72,8 +72,16 @@
   <body id="page-top">
     <nav id="page-nav">
       <!-- [THE HAMBURGER] -->
-      <label for="hamburger">&#9776;</label>
+      <label for="hamburger" id="menu-label">&#9776;</label>
       <input type="checkbox" id="hamburger"/>
+      <script>
+        document.getElementById("menu-label").addEventListener('touchstart', event => {
+          event.preventDefault()
+          const checkbox = document.getElementById("hamburger")
+          checkbox.checked = !checkbox.checked
+        })
+      </script>
+      
 
       <!-- [MENU ITEMS] -->
       <ul>
