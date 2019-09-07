@@ -34,7 +34,6 @@
       #page-nav label {
         display: inline-block;
         color: #fff;
-        background: #a02620;
         font-style: normal;
         font-size: 1.2em;
         padding: 10px;
@@ -73,12 +72,16 @@
     <nav id="page-nav">
       <!-- [THE HAMBURGER] -->
       <label for="hamburger" id="menu-label">&#9776;</label>
-      <input type="checkbox" id="hamburger"/>
+      <input type="checkbox" id="hamburger" disabled/>
       <script>
         document.getElementById("menu-label").addEventListener('touchstart', event => {
           event.preventDefault()
           const checkbox = document.getElementById("hamburger")
           checkbox.checked = !checkbox.checked
+        })
+        document.getElementById("hamburger").addEventListener('touchstart', event => {
+          event.preventDefault()
+          console.log(event.target)
         })
       </script>
       
