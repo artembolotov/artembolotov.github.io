@@ -21,7 +21,7 @@
       #page-nav {
         width: 100%;
         background: #000;
-        position: sticky;
+        position: fixed;
         top: 0;
       }
 
@@ -53,22 +53,21 @@
         font-style: normal;
         font-size: 1.2em;
         float: right;
-      }
-
-      /* Break down menu items into vertical */
+      }  
       #page-nav ul li {
         display: block;
       }
       #page-nav ul li {
         border-top: 1px solid #333;
       }
-
-      /* Toggle show/hide menu on checkbox click */
       #page-nav ul {
         display: none;
       }
       #page-nav input:checked ~ ul {
         display: block;
+      }
+      #content {
+        padding-top: 50px;
       }
 
       @media screen and (min-width: 768px) {
@@ -108,5 +107,18 @@
       </ul>
       </div>
     </nav>
+    <div id="content" class="container">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in maximus mauris. Donec vel eros ante. Phasellus eu lacus accumsan, tempor eros eu, lobortis nulla. Maecenas est magna, pulvinar tempus tellus a, sagittis faucibus nibh. In egestas mattis eleifend. Vivamus at pulvinar nibh, ac imperdiet nunc. Pellentesque urna ipsum, placerat et justo in, scelerisque ornare ipsum. Mauris vestibulum neque sed tempus pulvinar. Sed blandit quis ligula ut rhoncus. Suspendisse in finibus ipsum. Vivamus sit amet massa blandit magna pharetra bibendum vitae eu orci. Vivamus lobortis malesuada scelerisque. Ut dignissim mattis malesuada.
+    
+            In egestas sagittis odio, non auctor tortor lobortis a. Nam imperdiet hendrerit leo vitae efficitur. In molestie id mauris at suscipit. Integer in tincidunt eros. Phasellus suscipit faucibus elit, ut commodo elit. Praesent dui ex, sagittis ut velit a, vestibulum ultricies mi. Integer a justo velit.
+            
+            Cras porta lacinia ante, quis aliquam nunc dictum non. Nam et lorem eu justo tempor dictum vitae id risus. Nam molestie leo a dolor finibus varius. Proin ac hendrerit nibh, eget gravida orci. Aliquam quis ullamcorper diam, eget sollicitudin mi. Nunc sem lectus, sodales quis orci ultricies, blandit lobortis turpis. Vivamus volutpat, tortor vitae sagittis ultrices, eros orci consequat dolor, ac ultrices mi nisl at enim. Donec pretium, risus id porta auctor, risus dui accumsan nibh, at semper ipsum lorem vel mi. Aliquam at augue iaculis nunc scelerisque ultricies. Vivamus eu risus dui. Donec interdum nisl egestas libero consequat, porttitor vehicula nulla interdum.
+            
+            Duis eget neque lectus. Mauris viverra convallis suscipit. Integer nibh libero, accumsan non nunc ac, condimentum semper lectus. Morbi at est eu metus fringilla vulputate. Maecenas auctor, libero quis aliquam varius, lacus odio consectetur enim, vel iaculis nunc dolor vel metus. Duis est odio, pellentesque eget lorem non, ultricies eleifend velit. Integer accumsan hendrerit placerat. Nulla posuere dapibus justo sit amet imperdiet. Sed dolor augue, pulvinar non sodales non, volutpat non justo. Ut quis arcu dui. Vivamus egestas lacinia posuere. Nulla tempor tincidunt elit ut iaculis. Nulla facilisis neque vel nisl scelerisque tristique. In nec augue convallis libero luctus placerat vitae sed augue. Nulla facilisi. Donec nec ipsum hendrerit, ultricies turpis nec, venenatis quam.
+            
+            Integer eget lacus a urna molestie rhoncus. Sed consequat nulla ac scelerisque ullamcorper. Donec volutpat eros vel purus lacinia, ut iaculis sapien tempus. Praesent a finibus dolor, in egestas nisl. Donec sed diam euismod, pulvinar lectus ac, mollis magna. Cras at rutrum est. Fusce et consequat erat. In hac habitasse platea dictumst. Pellentesque porttitor orci eu aliquam finibus.
+        </p>
+    </div>
   </body>
 </html>
