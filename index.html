@@ -21,11 +21,16 @@
       #page-nav {
         width: 100%;
         background: #000;
-        position: fixed;
+        position: sticky;
+        top: 0;
       }
 
       #page-nav .container > * {
         line-height: 50px;
+      }
+
+      #page-nav .container > a {
+        display: inline-block;
       }
       
       #page-nav ul {
@@ -35,7 +40,7 @@
       }
       #page-nav ul li {
         display: inline-block;
-        padding: 0 10px;
+        padding: 0 15px;
         box-sizing: border-box;
       }
       #page-nav ul li a {
@@ -47,7 +52,6 @@
         color: #fff;
         font-style: normal;
         font-size: 1.2em;
-        padding: 0 10px;
         float: right;
       }
 
