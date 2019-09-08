@@ -6,7 +6,7 @@
     <title>Артем Болотов</title>
 
     <style>
-      html, body { height: 100%; width: 100%; scroll-behavior:smooth; }
+      html, body { height: 100%; width: 100%; }
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0;}
       .container { margin-left: auto; margin-right: auto; }
       .container > * { padding-right: 15px; padding-left: 15px; }
@@ -81,5 +81,15 @@
         <h2>Contact</h2>
         <p>Hi, my name is Kirby Turner. I’m a software engineer at Apple. Before joining Apple, I ran my own software company for 14 years. I got my start at programming in the early 1980s, and I can’t image doing anything else as a career.</p>
       </section> 
+      <script>
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' })
+          })
+        })
+      </script>
   </body>
+
 </html>
