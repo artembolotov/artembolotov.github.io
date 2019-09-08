@@ -6,119 +6,80 @@
     <title>Артем Болотов</title>
 
     <style>
+      html, body { height: 100%; width: 100%; scroll-behavior:smooth; }
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0;}
-      .container {
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .container > * {
-        padding-right: 15px;
-        padding-left: 15px;
-      }
-      #hamburger {
-        display: none;
-      }
-      #page-nav {
-        width: 100%;
-        background: #000;
-        position: fixed;
-        top: 0;
-      }
-
-      #page-nav .container > * {
-        line-height: 50px;
-      }
-
-      #page-nav .container > a {
-        display: inline-block;
-      }
-      
-      #page-nav ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0; 
-      }
-      #page-nav ul li {
-        display: inline-block;
-        padding: 0 15px;
-        box-sizing: border-box;
-      }
-      #page-nav ul li a {
-        color: #fff;
-        text-decoration: none;
-      }
-      #page-nav label {
-        display: block;
-        color: #fff;
-        font-style: normal;
-        font-size: 1.2em;
-        float: right;
-      }  
-      #page-nav ul li {
-        display: block;
-      }
-      #page-nav ul li {
-        border-top: 1px solid #333;
-      }
-      #page-nav ul {
-        display: none;
-      }
-      #page-nav input:checked ~ ul {
-        display: block;
-      }
-      #content {
-        padding-top: 50px;
-      }
+      .container { margin-left: auto; margin-right: auto; }
+      .container > * { padding-right: 15px; padding-left: 15px; }
+      #hamburger { display: none; }
+      #page-nav { width: 100%; background: #000; position: fixed; top: 0; border-bottom: 1px solid rgba(255,255,255,.3) }
+      #page-nav .container > * { line-height: 50px;}
+      #page-nav .container > a { display: inline-block; }
+      #page-nav ul { list-style-type: none; margin: 0; padding: 0; display: none; }
+      #page-nav ul li { display: block; padding: 0 15px; box-sizing: border-box; line-height: 40px; text-transform: uppercase; }
+      #page-nav ul li a { color: #fff; text-decoration: none; font-size: 14px; }
+      #page-nav label { display: block; color: #fff; font-style: normal; font-size: 1.2em; float: right; }  
+      #page-nav input:checked ~ ul { display: block; }
+      #intro { display: table; height: auto; width: 100%; background: rgba(255,0,0,0.37); padding: 180px 0;}
+      #intro .container { display: table-cell; vertical-align: middle; }
+      section { padding-top: 100px; font-size: 20px; }
+      section p { margin: 0 0 25px; }
+      h2 { font-size: 30px; font-weight: 700; text-transform: uppercase }
 
       @media screen and (min-width: 768px) {
-        .container {
-          width: 750px;
-        }
-        #page-nav label, #hamburger {
-          display: none;
-        }
-        #page-nav ul {
-          display: block;
-          float: right;
-        }
-        #page-nav ul li {
-          display: inline-block;
-        }
+        .container { width: 750px; }
+        #page-nav label, #hamburger { display: none; }
+        #page-nav ul { display: block; float: right; }
+        #page-nav ul li { display: inline-block; line-height: inherit; }
+        #intro { height: 100%; }
+        section { padding-top: 250px; font-size: 20px; }
+        section p { margin: 0 0 35px; }
       }
       @media screen and (min-width: 992px) {
-        .container {
-          width: 970px;
-        }
+        .container { width: 970px; }
       }
     </style>
   </head>
   <body id="page-top">
     <nav id="page-nav">
       <div class="container">
-      <a href="#top">Logo</a>
+      <a href="#">Logo</a>
       <label for="hamburger" id="menu-label">&#9776;</label>
       <input type="checkbox" id="hamburger"/>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Tech</a></li>
-        <li><a href="#">Games</a></li>
-        <li><a href="#">Reviews</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#career">Career</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://medium.com/@artembolotov" target="_blank" rel="external">Blog</a></li>
       </ul>
+      <script>
+        const menu = document.getElementById("page-nav")
+        const hamburger = document.getElementById("hamburger")
+        menu.addEventListener("click", event => {
+          if (event.target instanceof HTMLAnchorElement) {
+            hamburger.checked = false
+          }
+        })
+      </script>
       </div>
     </nav>
-    <div id="content" class="container">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in maximus mauris. Donec vel eros ante. Phasellus eu lacus accumsan, tempor eros eu, lobortis nulla. Maecenas est magna, pulvinar tempus tellus a, sagittis faucibus nibh. In egestas mattis eleifend. Vivamus at pulvinar nibh, ac imperdiet nunc. Pellentesque urna ipsum, placerat et justo in, scelerisque ornare ipsum. Mauris vestibulum neque sed tempus pulvinar. Sed blandit quis ligula ut rhoncus. Suspendisse in finibus ipsum. Vivamus sit amet massa blandit magna pharetra bibendum vitae eu orci. Vivamus lobortis malesuada scelerisque. Ut dignissim mattis malesuada.
-    
-            In egestas sagittis odio, non auctor tortor lobortis a. Nam imperdiet hendrerit leo vitae efficitur. In molestie id mauris at suscipit. Integer in tincidunt eros. Phasellus suscipit faucibus elit, ut commodo elit. Praesent dui ex, sagittis ut velit a, vestibulum ultricies mi. Integer a justo velit.
-            
-            Cras porta lacinia ante, quis aliquam nunc dictum non. Nam et lorem eu justo tempor dictum vitae id risus. Nam molestie leo a dolor finibus varius. Proin ac hendrerit nibh, eget gravida orci. Aliquam quis ullamcorper diam, eget sollicitudin mi. Nunc sem lectus, sodales quis orci ultricies, blandit lobortis turpis. Vivamus volutpat, tortor vitae sagittis ultrices, eros orci consequat dolor, ac ultrices mi nisl at enim. Donec pretium, risus id porta auctor, risus dui accumsan nibh, at semper ipsum lorem vel mi. Aliquam at augue iaculis nunc scelerisque ultricies. Vivamus eu risus dui. Donec interdum nisl egestas libero consequat, porttitor vehicula nulla interdum.
-            
-            Duis eget neque lectus. Mauris viverra convallis suscipit. Integer nibh libero, accumsan non nunc ac, condimentum semper lectus. Morbi at est eu metus fringilla vulputate. Maecenas auctor, libero quis aliquam varius, lacus odio consectetur enim, vel iaculis nunc dolor vel metus. Duis est odio, pellentesque eget lorem non, ultricies eleifend velit. Integer accumsan hendrerit placerat. Nulla posuere dapibus justo sit amet imperdiet. Sed dolor augue, pulvinar non sodales non, volutpat non justo. Ut quis arcu dui. Vivamus egestas lacinia posuere. Nulla tempor tincidunt elit ut iaculis. Nulla facilisis neque vel nisl scelerisque tristique. In nec augue convallis libero luctus placerat vitae sed augue. Nulla facilisi. Donec nec ipsum hendrerit, ultricies turpis nec, venenatis quam.
-            
-            Integer eget lacus a urna molestie rhoncus. Sed consequat nulla ac scelerisque ullamcorper. Donec volutpat eros vel purus lacinia, ut iaculis sapien tempus. Praesent a finibus dolor, in egestas nisl. Donec sed diam euismod, pulvinar lectus ac, mollis magna. Cras at rutrum est. Fusce et consequat erat. In hac habitasse platea dictumst. Pellentesque porttitor orci eu aliquam finibus.
-        </p>
-    </div>
+    <header id="intro">
+        <div id="content" class="container">
+       
+        </div>
+    </header>   
+    <section id="about" class="container">
+      <h2>Обо мне</h2>
+      <p>Hi, my name is Kirby Turner. I’m a software engineer at Apple. Before joining Apple, I ran my own software company for 14 years. I got my start at programming in the early 1980s, and I can’t image doing anything else as a career.</p>
+      <p>When I’m not sitting behind the keyboard, I can be found hanging out with my wife Melanie and my son Rowan, hiking the mountains of New England, kayaking the waters in and around Vermont, and snowboarding down mountains in search of epic powder.</p>
+    </section>
+    <section id="career" class="container">
+      <h2>Career</h2>
+      <p>Hi, my name is Kirby Turner. I’m a software engineer at Apple. Before joining Apple, I ran my own software company for 14 years. I got my start at programming in the early 1980s, and I can’t image doing anything else as a career.</p>
+      <p>When I’m not sitting behind the keyboard, I can be found hanging out with my wife Melanie and my son Rowan, hiking the mountains of New England, kayaking the waters in and around Vermont, and snowboarding down mountains in search of epic powder.</p>
+    </section>
+    <section id="contact" class="container">
+        <h2>Contact</h2>
+        <p>Hi, my name is Kirby Turner. I’m a software engineer at Apple. Before joining Apple, I ran my own software company for 14 years. I got my start at programming in the early 1980s, and I can’t image doing anything else as a career.</p>
+      </section> 
   </body>
 </html>
