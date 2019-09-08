@@ -5,17 +5,27 @@
     <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
     <title>Артем Болотов</title>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+    <style>
+      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0;}
+      .container {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .container > * {
+        padding-right: 15px;
+        padding-left: 15px;
+      }
       #hamburger {
         display: none;
-        position: absolute;
-        left: -999px;
-        top: -999px;
       }
       #page-nav {
         width: 100%;
         background: #000;
+        position: fixed;
+      }
+
+      #page-nav .container > * {
+        line-height: 50px;
       }
       
       #page-nav ul {
@@ -25,21 +35,20 @@
       }
       #page-nav ul li {
         display: inline-block;
-        padding: 10px;
+        padding: 0 10px;
         box-sizing: border-box;
       }
       #page-nav ul li a {
         color: #fff;
         text-decoration: none;
       }
-
-
       #page-nav label {
-        display: inline-block;
+        display: block;
         color: #fff;
         font-style: normal;
         font-size: 1.2em;
-        padding: 10px;
+        padding: 0 10px;
+        float: right;
       }
 
       /* Break down menu items into vertical */
@@ -59,34 +68,33 @@
       }
 
       @media screen and (min-width: 768px) {
+        .container {
+          width: 750px;
+        }
         #page-nav label, #hamburger {
           display: none;
         }
         #page-nav ul {
           display: block;
+          float: right;
         }
-          #page-nav ul li {
+        #page-nav ul li {
           display: inline-block;
+        }
+      }
+      @media screen and (min-width: 992px) {
+        .container {
+          width: 970px;
         }
       }
     </style>
   </head>
   <body id="page-top">
     <nav id="page-nav">
-      <!-- [THE HAMBURGER] -->
+      <div class="container">
+      <a href="#">Logo</a>
       <label for="hamburger" id="menu-label">&#9776;</label>
       <input type="checkbox" id="hamburger"/>
-      <script>
-        /* document.getElementById("menu-label").addEventListener('touchstart', event => {
-          event.preventDefault()
-          event.stopPropagation()
-          const checkbox = document.getElementById("hamburger")
-          checkbox.checked = !checkbox.checked
-        }) */
-      </script>
-      
-
-      <!-- [MENU ITEMS] -->
       <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#">About</a></li>
@@ -94,6 +102,7 @@
         <li><a href="#">Games</a></li>
         <li><a href="#">Reviews</a></li>
       </ul>
+      </div>
     </nav>
   </body>
 </html>
