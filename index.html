@@ -46,7 +46,11 @@
 
       #social a { display: inline-block; }
       #social svg path { fill: #202020; }
-      #social a:hover svg { transform: scale(1.1,1.1); transition: .2s; }
+      
+
+      @media (hover: hover) {
+        #social a:hover svg { transform: scale(1.1,1.1); transition: .2s; }
+      }
 
       @media screen and (min-width: 768px) {
         .container { width: 750px; }
@@ -61,6 +65,7 @@
       @media screen and (min-width: 992px) {
         .container { width: 970px; }
       }
+      
     </style>
   </head>
   <body id="page-top">
