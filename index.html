@@ -22,7 +22,7 @@
       #page-nav input:checked ~ ul { display: block; }
       #top { display: table; height: auto; width: 100%; background: rgba(255,0,0,0.37); padding: 180px 0;}
       #top .container { display: table-cell; vertical-align: middle; }
-      section { padding-top: 30px; padding-bottom: 60px; font-size: 20px; }
+      section { padding-top: 30px; padding-bottom: 60px; font-size: 20px; text-align: center; }
       section p { margin: 0 0 25px; line-height: 1.5; }
       #about { margin-top: 100px; }
       #contact { padding-bottom: 150px;}
@@ -41,15 +41,20 @@
       #social { list-style: none; }
       #social * { width: 40px; height: 40px;}
       #social li { display: inline-block; margin: 0 5px; }
-      #social li:last-child { float: right; }
-      #social li:last-child, #social li:last-child * { width: auto; line-height: 40px; }
-
+     
+      
       #social a { display: inline-block; }
       #social svg path { fill: #202020; }
-      
+      #social li:last-child { width: 100%; }
+      #social li:last-child * { width: auto; line-height: 40px; }
 
       @media (hover: hover) {
         #social a:hover svg { transform: scale(1.1,1.1); transition: .2s; }
+      }
+
+      @media screen and (min-width: 598px) {
+        section { text-align: left; }
+        #social li:last-child { float: right; width: auto; }
       }
 
       @media screen and (min-width: 768px) {
