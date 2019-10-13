@@ -9,12 +9,13 @@
       html { scroll-behavior: smooth; }
       html, body { height: 100%; width: 100%; }
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0;}
+      ul { list-style-type: none; }
       .container { margin-left: auto; margin-right: auto; }
       .container > * { padding-right: 15px; padding-left: 15px; }
       #hamburger { display: none; }
       #page-nav { width: 100%; background: #000; position: fixed; top: 0; z-index: 999; }  
       #page-nav .container a { line-height: 50px; }
-      #page-nav ul { list-style-type: none; margin: 0; padding: 0; display: none; }
+      #page-nav ul { margin: 0; padding: 0; display: none; }
       #page-nav ul li { display: block; line-height: 40px; text-transform: uppercase; transition: .5s }
       #page-nav ul li.current { background: rgba(255,255,255,.5); }
       #page-nav ul li a { display: block; padding: 0 15px; color: #fff; text-decoration: none; font-size: 14px; }
@@ -47,11 +48,31 @@
         50% { transform: translateY(50px); opacity: 0.9; }
       }
 
+      #timeline li:before { content: ""; position: absolute; top: 0; bottom: 0; left: 38px; width: 4px; background: rgba(0,0,0,0.30);}
+      #timeline li:last-child::before { bottom: inherit;}
+
+      #timeline li { position: relative; padding: 10px 0 70px 0;}
+
+      #timeline img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        z-index: 100;
+      }
+
+      #timeline img ~ * {
+        margin: 0;;
+        padding-left: 100px;
+        padding-right: 20px;
+      }
+
       #social { list-style: none; }
       #social * { width: 40px; height: 40px;}
       #social li { display: inline-block; margin: 0 5px; }
      
-      
       #social a { display: inline-block; }
       #social svg path { fill: #202020; }
       #social li:last-child { width: 100%; }
@@ -125,6 +146,24 @@
     </section>
     <section id="career" class="container">
       <h2>Career</h2>
+      <ul id="timeline">
+        <li>
+          <img src="img/image.png" srcset="img/image.png 1x, img/image@2x.png 2x, img/image@3x.png 3x" alt="">
+          <h4>2019</h4>
+          <p>Red calendar released!</p>
+          <p>That very important for me!</p>
+        </li>
+        <li>
+          <img src="img/image.png" srcset="img/image.png 1x, img/image@2x.png 2x, img/image@3x.png 3x" alt="">
+          <h4>2018</h4>
+          <p>Red calendar released!</p>
+        </li>
+        <li>
+          <img src="img/image.png" srcset="img/image.png 1x, img/image@2x.png 2x, img/image@3x.png 3x" alt="">
+          <h4>2017</h4>
+          <p>Red calendar released! Red calendar released! Red calendar released! Red calendar released! Red calendar released!</p>
+        </li>
+      </ul>
       <p>Hi, my name is Kirby Turner. I’m a software engineer at Apple. Before joining Apple, I ran my own software company for 14 years. I got my start at programming in the early 1980s, and I can’t image doing anything else as a career.</p>
       <p>When I’m not sitting behind the keyboard, I can be found hanging out with my wife Melanie and my son Rowan, hiking the mountains of New England, kayaking the waters in and around Vermont, and snowboarding down mountains in search of epic powder.</p>
     </section>
