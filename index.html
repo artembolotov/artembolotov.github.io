@@ -3,11 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
-    <title>Артем Болотов</title>
-
+    <title>Артём Болотов &mdash; Full-Stack iOS-разработчик из Костромы</title>
     <style>
       html, body { height: 100%; width: 100%; }
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0;}
+      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: system-ui; margin: 0; padding: 0;}
       ul { list-style-type: none; }
       .container { margin-left: auto; margin-right: auto; }
       .container > * { padding-right: 15px; padding-left: 15px; }
@@ -20,7 +19,7 @@
       #page-nav ul li a { display: block; padding: 0 15px; color: #fff; text-decoration: none; font-size: 14px; }
       #page-nav label { display: block; color: #fff; font-style: normal; font-size: 1.2em; float: right; }  
       #page-nav input:checked ~ ul { display: block; }
-      #top { display: table; height: 100%; width: 100%; padding: 180px 0; background: url(img/intro-bg.jpg) center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; }
+      #top { display: table; height: 100%; width: 100%; padding: 0; background: url(img/intro-bg.jpg) center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; }
       #top h1, #top h2{ color: white; text-align: center; font-weight: normal; font-size: 25px; }
       section { padding-top: 30px; padding-bottom: 60px; font-size: 20px; text-align: center; }
       section p { margin: 0 0 25px; line-height: 1.5; }
@@ -105,10 +104,10 @@
         <span></span>
       </label>      
       <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#career">Career</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="https://medium.com/@artembolotov" target="_blank" rel="external">Blog</a></li>
+        <li><a href="#about">Про меня</a></li>
+        <li><a href="#career">Биография</a></li>
+        <li><a href="#contact">Контакты</a></li>
+        <li><a href="https://t.me/bolotovblog" target="_blank" rel="external">Блог</a></li>
       </ul>
       <script>
         const menu = document.getElementById("page-nav")
@@ -118,19 +117,20 @@
             hamburger.checked = false
           }
         })
+        const emailE = ('hello@' + 'artembolotov.ru')
       </script>
       </div>
     </nav>
     <header id="top">
       <div id="welcome" class="container">
-       <h1>Software engineer, author, and snowboard bum</h1>
-       <h2>Living in Stowe, Vermont</h2>
+       <h1>Full-Stack iOS-разработчик и отец троих детей</h1>
+       <h2>Живу в Костроме</h2>
       </div>
       <div id="arrow">
       </div>
-    </header>   
+    </header>
     <section id="about" class="container">
-      <h2>Обо мне</h2>
+      <h2>Про меня</h2>
       <p>Hi, my name is Kirby Turner. I’m a software engineer at Apple. Before joining Apple, I ran my own software company for 14 years. I got my start at programming in the early 1980s, and I can’t image doing anything else as a career.</p>
       <p>When I’m not sitting behind the keyboard, I can be found hanging out with my wife Melanie and my son Rowan, hiking the mountains of New England, kayaking the waters in and around Vermont, and snowboarding down mountains in search of epic powder.</p>
     </section>
@@ -158,10 +158,8 @@
       <p>When I’m not sitting behind the keyboard, I can be found hanging out with my wife Melanie and my son Rowan, hiking the mountains of New England, kayaking the waters in and around Vermont, and snowboarding down mountains in search of epic powder.</p>
     </section>
     <section id="contact" class="container">
-      <h2>Contact</h2>
-      <p>Send me an email if you would like to get in touch, have questions, or just want to say hello:  
-      
-      </p>
+      <h2>Контакты</h2>
+      <p>Напишите мне письмо или в&nbsp;телеграм, если у&nbsp;вас есть вопросы или предложения.</p>
       <ul id="social">
         <li><a href="https://t.me/artembolotov" target="_blank">
           <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -186,8 +184,7 @@
           </svg>              
         </a></li>
         <li><script>
-          emailE=('hello@' + 'artembolotov.ru')
-          document.write('<A href="mailto:' + emailE + '">' + emailE + '</a>')
+          document.write('<a href="mailto:' + emailE + '">' + emailE + '</a>')
         </script></li>
       </ul>          
     </section> 
