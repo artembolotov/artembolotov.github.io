@@ -52,7 +52,7 @@
       #timeline li:before { content: ""; position: absolute; top: 40px; bottom: 0; left: 38px; width: 4px; background: rgba(0,0,0,0.30);}
       #timeline li:last-child::before { bottom: inherit;}
       #timeline li { position: relative; padding: 10px 0 70px 0; text-align: left;}
-      #timeline img { position: absolute; left: 0; top: 0; border-radius: 50%; width: 80px; height: 80px; z-index: 100;}
+      #timeline img { position: absolute; left: 0; top: 0; border-radius: 50%; width: 120px; height: 120px; z-index: 100;}
       #timeline img ~ * { margin: 0; padding-left: 100px; padding-right: 20px; }
       #social { list-style: none; }
       #social * { width: 40px; height: 40px;}
@@ -76,12 +76,12 @@
       @media screen and (min-width: 768px) {
         #timeline li { width: 50%; }
         #timeline li:nth-child(2n) { margin-left: 50%; }
-        #timeline li:nth-child(2n) img { left: -40px; }
-        #timeline li:nth-child(2n) img ~ * { padding-left: 60px; padding-right: 0px; }
+        #timeline li:nth-child(2n) img { left: -60px; }
+        #timeline li:nth-child(2n) img ~ * { padding-left: 80px; padding-right: 0px; }
         #timeline li:nth-child(2n):before { left: -2px; }
         #timeline li:nth-child(2n+1) { text-align: right; }
-        #timeline li:nth-child(2n+1) img { left: auto; right: -40px; }
-        #timeline li:nth-child(2n+1) img ~ * { padding-left: 0px; padding-right: 60px; }
+        #timeline li:nth-child(2n+1) img { left: auto; right: -60px; }
+        #timeline li:nth-child(2n+1) img ~ * { padding-left: 0px; padding-right: 80px; }
         #timeline li:nth-child(2n+1):before { left: auto; right: -2px; }
       }
 
