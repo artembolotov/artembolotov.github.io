@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="1024" height="1024"><svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_813_16)">
+<circle cx="512" cy="512" r="512" fill="white"></circle>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1024 512C1024 794.77 794.77 1024 512 1024C229.23 1024 0 794.77 0 512C0 229.23 229.23 0 512 0C794.77 0 1024 229.23 1024 512ZM670.737 715.544L711.321 561.03L199.854 697.056L155.879 645.524L754.794 486.956C754.794 486.956 804.756 473.569 831.839 466.396C838.941 464.515 855.315 467.521 854.297 471.385L775.383 771.07L764.148 812.823C763.959 813.541 760.987 819.947 747.48 814.92C733.289 809.637 679.4 789.083 679.4 789.083L481.726 715.497L546.682 668.362L670.737 715.544Z" fill="url(#paint0_linear_813_16)"></path>
+</g>
+<defs>
+<linearGradient id="SvgjsLinearGradient1001" x1="51200" y1="40766.6" x2="51200" y2="102400" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF3B30"></stop>
+<stop offset="1" stop-color="#E6352B"></stop>
+</linearGradient>
+<clipPath id="SvgjsClipPath1000">
+<rect width="1024" height="1024" fill="white"></rect>
+</clipPath>
+</defs>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+</style></svg>
