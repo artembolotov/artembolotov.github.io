@@ -1,0 +1,5 @@
+#timeline li:before { content: ""; position: absolute; top: 40px; bottom: 0; left: 38px; width: 4px; background: rgba(0,0,0,0.30);}
+#timeline li:last-child::before { bottom: inherit;}
+#timeline li { position: relative; padding: 10px 0 70px 0; text-align: left;}
+#timeline img { position: absolute; left: 0; top: 0; border-radius: 50%; width: 80px; height: 80px; z-index: 100;}
+#timeline img ~ * { margin: 0; padding-left: 100px; padding-right: 20px; }
