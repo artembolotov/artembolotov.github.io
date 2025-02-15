@@ -2,4 +2,3 @@ title: "Блог"
 description: "Мой блог на GitHub Pages"
 baseurl: "/blog"  # Указывает, что блог находится в папке /blog
 permalink: /:year/:month/:day/:title/  # Формат ссылок на посты
-theme: default  # Можно изменить на другую тему
