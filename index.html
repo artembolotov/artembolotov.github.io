@@ -284,6 +284,12 @@
         window.addEventListener("scroll", event => {
           debounce(handleScroll, 20)
         })
+
+        document.addEventListener("DOMContentLoaded", () => {
+          if (window.location.hash) {
+              history.replaceState(null, document.title, window.location.pathname + window.location.search);
+          }
+        })
       })(document)
     </script>
   </body>
