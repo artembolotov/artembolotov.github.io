@@ -1,6 +1,4 @@
 title: "Блог"
 description: "Мой блог на GitHub Pages"
-baseurl: ./blog  # Указывает, что блог находится в папке /blog
-layouts_dir: ./_layouts
 permalink: /:year/:month/:day/:title/  # Формат ссылок на посты
 ignore_theme_config: true
