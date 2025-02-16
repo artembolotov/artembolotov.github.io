@@ -4,14 +4,17 @@ title: "Блог"
 ---
 
 <h1>Блог</h1>
-<ul>
+
+<main>
+  <div class="posts">
   {% for post in site.posts %}
-    <li>
+    <article>
       <h2><a href="{{ post.url }}">{{ post.title }}</a></h2> 
-      ({{ post.date | date: "%d.%m.%Y" }})
+      <time datetime="{{ post.date }}">{{ post.date | date: "%d %B %Y" }}</time>
       {% if post.description %}
-        <p>{{ post.description }}</p>
+      <p>{{ post.description }}</p>
       {% endif %}
-    </li>
+    </article>
   {% endfor %}
-</ul>
+  </div>
+</main>
