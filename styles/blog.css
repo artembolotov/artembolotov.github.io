@@ -2,4 +2,10 @@ html { overflow-y:scroll; }
 main { margin-top: 80px; }
 main img { width: 100%; height: auto; }
 .container h1 { font-size: 30px; font-weight: 700; text-transform: uppercase; color: #000; }
-
+.image-row {
+    display: flex;
+    gap: 10px;
+}
+.image-row img {
+    width: 48%;
+}
