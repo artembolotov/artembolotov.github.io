@@ -6,12 +6,9 @@ main img { width: 100%; height: auto; }
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
-    justify-content: center;
   }
-  
   .image-row img {
-    max-width: 100%;
-    height: auto;
-    flex: 1 1 calc(50% - 16px);
-    margin-bottom: 16px; 
+    max-width: 100%; /* Изображения будут адаптироваться под контейнер */
+    height: auto;    /* Сохраняем пропорции */
+    flex: 1 1 calc(50% - 16px); /* Каждое изображение занимает половину строки с учетом отступов */
   }
