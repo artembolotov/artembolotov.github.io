@@ -4,8 +4,14 @@ main img { width: 100%; height: auto; }
 .container h1 { font-size: 30px; font-weight: 700; text-transform: uppercase; color: #000; }
 .image-row {
     display: flex;
-    gap: 10px;
-}
-.image-row img {
-    width: 48%;
-}
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .image-row img {
+    max-width: 100%;
+    height: auto;
+    flex: 1 1 calc(50% - 16px);
+    margin-bottom: 16px; 
+  }
