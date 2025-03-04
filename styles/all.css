@@ -72,9 +72,7 @@ section h4 { color: #000; padding-bottom: 0.4em; }
 
 @media (prefers-color-scheme: dark) {
     body { background: #000; color: rgba(255,255,255,0.8); }
-    section h2, section h4 { color: #fff; }
     a:link, a:visited { color: #64b2ff; border-bottom: 1px solid rgba(100,178,255,0.8); }  
-    #social svg { -webkit-filter: invert(100%); filter: invert(100%); }
 }
 
 @media (hover: hover) and (prefers-color-scheme: dark) {

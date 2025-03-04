@@ -33,4 +33,6 @@ section h2 { font-size: 30px; font-weight: 700; text-transform: uppercase; color
 
 @media (prefers-color-scheme: dark) {
     #timeline li:before { background: rgba(255,255,255,0.3); }
+    section h2, section h4 { color: #fff; }
+    #social svg { -webkit-filter: invert(100%); filter: invert(100%); }
 }
