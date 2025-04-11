@@ -68,3 +68,18 @@ main img { width: 100%; height: auto; }
       background: rgba(255,255,255,0.1);
     }
   }
+
+  /* Стиль для подписей к изображениям */
+img + em {
+    display: block;
+    text-align: center;
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    img + em {
+      color: #aaa;
+    }
+  }
