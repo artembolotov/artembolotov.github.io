@@ -12,8 +12,8 @@ draft: true
 
 ```css
 thead th {
-    position: sticky;
-    top: 0;
+  position: sticky;
+  top: 0;
 }
 ```
 
