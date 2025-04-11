@@ -9,3 +9,6 @@ draft: true
 ![Вот первая gif](/blog/img/2025-04-11-html-table/20250408_184100.gif)
 
 Текст после неё
+
+{% include post-image.html name="20250408_184100.gif" alt="Вот первая gif" %}
+

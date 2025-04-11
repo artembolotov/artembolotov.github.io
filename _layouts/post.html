@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<article class="post">
+  <h1 class="post-title">{{ page.title }}</h1>
+  <time datetime="{{ page.date | date_to_xmlschema }}">
+    {% assign m = page.date | date: "%-m" | minus: 1 %}
+    {% assign months = "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря" | split: "," %}
+    {{ page.date | date: "%-d" }} {{ months[m] }} {{ page.date | date: "%Y" }}
+  </time>
+  <div class="post-content">
+    {{ content }}
+  </div>
+</article>
