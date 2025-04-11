@@ -12,7 +12,7 @@ draft: true
 
 ![Вторая gif](/blog/img/2025-04-11-html-table/20250408_184620.gif)
 
-![Третья gif](/blog/img/2025-04-11-html-table/20250408_184644.gif.gif)
+![Третья gif](/blog/img/2025-04-11-html-table/20250408_184644.gif)
 
 ![четвертая gif](/blog/img/2025-04-11-html-table/20250408_184710.gif)
 
