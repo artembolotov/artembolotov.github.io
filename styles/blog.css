@@ -94,7 +94,7 @@ main img, .highlight {
 img + em {
     display: block;
     text-align: center;
-    margin-top: 0.2em;
+    margin-top: 0;
     font-size: 0.8em;
     color: #666;
 }
