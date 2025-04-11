@@ -27,66 +27,66 @@ main p {
     }
 }
 
-/* Стили для блоков кода */
+/* Стили подсветки синтаксиса */
 .highlight {
-    margin: 1.5em 0;
-    border-radius: 6px;
     background: #f8f8f8;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow: hidden;
+    border-radius: 4px;
+    margin: 1.5em 0;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
   }
   
   .highlight pre {
-    margin: 0;
-    padding: 1em 1.2em;
+    padding: 16px;
     overflow-x: auto;
-    font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    margin: 0;
+  }
+  
+  .highlight code {
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 0.9em;
     line-height: 1.5;
   }
   
-  .highlight code {
-    display: block;
-  }
+  /* Цвета для синтаксиса */
+  .highlight .nt { color: #0070c9; } /* HTML tags */
+  .highlight .na { color: #836c28; } /* HTML attribute names */
+  .highlight .s, .highlight .s1, .highlight .s2 { color: #c41a16; } /* Strings */
+  .highlight .k, .highlight .kd { color: #a90d91; } /* Keywords */
+  .highlight .nc { color: #3f6e75; } /* Class names */
+  .highlight .nl { color: #3b972e; } /* Property names */
+  .highlight .p { color: #000000; } /* Punctuation */
+  .highlight .o { color: #000000; } /* Operators */
+  .highlight .nb { color: #c18401; } /* Built-in names */
+  .highlight .nf { color: #326598; } /* Function names */
+  .highlight .c, .highlight .c1, .highlight .cm { color: #536570; font-style: italic; } /* Comments */
+  .highlight .m { color: #1c00cf; } /* Numbers */
+  .highlight .mi { color: #1c00cf; } /* Integer literals */
+  .highlight .mf { color: #1c00cf; } /* Float literals */
+  .highlight .nd { color: #a90d91; } /* CSS pseudo-selectors */
   
-  /* Заголовок для блока кода */
-  .code-header {
-    padding: 0.6em 1.2em;
-    background: #e8e8e8;
-    color: #333;
-    font-size: 0.85em;
-    font-weight: 500;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .code-language {
-    background: rgba(0,0,0,0.07);
-    padding: 2px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-size: 0.75em;
-    letter-spacing: 1px;
-  }
-  
-  /* Стили для темной темы */
+  /* Для темной темы */
   @media (prefers-color-scheme: dark) {
     .highlight {
       background: #1a1a1a;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 1px 5px rgba(0,0,0,0.2);
     }
     
-    .code-header {
-      background: #252525;
-      color: #ddd;
-      border-bottom: 1px solid #333;
-    }
-    
-    .code-language {
-      background: rgba(255,255,255,0.1);
-    }
+    .highlight code { color: #e0e0e0; }
+    .highlight .nt { color: #55a1fb; }
+    .highlight .na { color: #c7b053; }
+    .highlight .s, .highlight .s1, .highlight .s2 { color: #ed5f5f; }
+    .highlight .k, .highlight .kd { color: #cf73e6; }
+    .highlight .nc { color: #5ab0bb; }
+    .highlight .nl { color: #66c16a; }
+    .highlight .p { color: #e0e0e0; }
+    .highlight .o { color: #e0e0e0; }
+    .highlight .nb { color: #e6a13d; }
+    .highlight .nf { color: #70a9e6; }
+    .highlight .c, .highlight .c1, .highlight .cm { color: #999999; }
+    .highlight .m { color: #799aff; }
+    .highlight .mi { color: #799aff; }
+    .highlight .mf { color: #799aff; }
+    .highlight .nd { color: #cf73e6; }
   }
 
   /* Стиль для подписей к изображениям */
