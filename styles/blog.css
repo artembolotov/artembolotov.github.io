@@ -15,17 +15,17 @@ main {
     text-align: left; 
   }
   
-  main p { 
+main p { 
     margin: 0 0 25px; 
     line-height: 1.5; 
-  }
-  
-  @media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 768px) {
     main p { 
-      margin: 0 0 35px; 
-      line-height: 1.6; 
+        margin: 0 0 35px; 
+        line-height: 1.6; 
     }
-  }
+}
 
 /* Стили для блоков кода */
 .highlight {
@@ -98,8 +98,22 @@ img + em {
     color: #666;
   }
   
-  @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     img + em {
       color: #aaa;
     }
-  }
+}
+
+time {
+    display: block;
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 25px;
+    margin-top: -10px;
+}
+  
+@media (prefers-color-scheme: dark) {
+    time {      
+        color: #aaa;
+    }
+}
