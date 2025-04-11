@@ -7,13 +7,12 @@ main img { width: 100%; height: auto; }
 .image-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .image-row img { width: 100%; height: auto; }
 
-/* Отступы и размеры шрифтов как на основном сайте */
 main { 
     padding-top: 30px; 
     padding-bottom: 60px; 
     font-size: 20px; 
     text-align: left; 
-  }
+}
   
 main p { 
     margin: 0 0 25px; 
@@ -29,48 +28,45 @@ main p {
 
 /* Стили подсветки синтаксиса */
 .highlight {
-    background: #f8f8f8;
-    border-radius: 4px;
+    background: #f8f8f8;    
     margin: 1.5em 0;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-  }
+}
   
-  .highlight pre {
+.highlight pre {
     padding: 16px;
     overflow-x: auto;
     margin: 0;
-  }
-  
-  .highlight code {
+}
+ 
+.highlight code {
     font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 0.9em;
     line-height: 1.5;
-  }
+}
   
-  /* Цвета для синтаксиса */
-  .highlight .nt { color: #0070c9; } /* HTML tags */
-  .highlight .na { color: #836c28; } /* HTML attribute names */
-  .highlight .s, .highlight .s1, .highlight .s2 { color: #c41a16; } /* Strings */
-  .highlight .k, .highlight .kd { color: #a90d91; } /* Keywords */
-  .highlight .nc { color: #3f6e75; } /* Class names */
-  .highlight .nl { color: #3b972e; } /* Property names */
-  .highlight .p { color: #000000; } /* Punctuation */
-  .highlight .o { color: #000000; } /* Operators */
-  .highlight .nb { color: #c18401; } /* Built-in names */
-  .highlight .nf { color: #326598; } /* Function names */
-  .highlight .c, .highlight .c1, .highlight .cm { color: #536570; font-style: italic; } /* Comments */
-  .highlight .m { color: #1c00cf; } /* Numbers */
-  .highlight .mi { color: #1c00cf; } /* Integer literals */
-  .highlight .mf { color: #1c00cf; } /* Float literals */
-  .highlight .nd { color: #a90d91; } /* CSS pseudo-selectors */
+/* Цвета для синтаксиса */
+.highlight .nt { color: #0070c9; } /* HTML tags */
+.highlight .na { color: #836c28; } /* HTML attribute names */
+.highlight .s, .highlight .s1, .highlight .s2 { color: #c41a16; } /* Strings */
+.highlight .k, .highlight .kd { color: #a90d91; } /* Keywords */
+.highlight .nc { color: #3f6e75; } /* Class names */
+.highlight .nl { color: #3b972e; } /* Property names */
+.highlight .p { color: #000000; } /* Punctuation */
+.highlight .o { color: #000000; } /* Operators */
+.highlight .nb { color: #c18401; } /* Built-in names */
+.highlight .nf { color: #326598; } /* Function names */
+.highlight .c, .highlight .c1, .highlight .cm { color: #536570; font-style: italic; } /* Comments */
+.highlight .m { color: #1c00cf; } /* Numbers */
+.highlight .mi { color: #1c00cf; } /* Integer literals */
+.highlight .mf { color: #1c00cf; } /* Float literals */
+.highlight .nd { color: #a90d91; } /* CSS pseudo-selectors */
   
-  /* Для темной темы */
-  @media (prefers-color-scheme: dark) {
+/* Для темной темы */
+@media (prefers-color-scheme: dark) {
     .highlight {
-      background: #1a1a1a;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+        background: #1a1a1a;
     }
-    
+
     .highlight code { color: #e0e0e0; }
     .highlight .nt { color: #55a1fb; }
     .highlight .na { color: #c7b053; }
@@ -87,21 +83,20 @@ main p {
     .highlight .mi { color: #799aff; }
     .highlight .mf { color: #799aff; }
     .highlight .nd { color: #cf73e6; }
-  }
+}
+
+main img, .highlight {
+    border-radius: 4px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
 
   /* Стиль для подписей к изображениям */
 img + em {
     display: block;
     text-align: center;
     margin-top: 0.2em;
-    font-size: 0.9em;
+    font-size: 0.8em;
     color: #666;
-  }
-  
-@media (prefers-color-scheme: dark) {
-    img + em {
-      color: #aaa;
-    }
 }
 
 time {
@@ -115,5 +110,13 @@ time {
 @media (prefers-color-scheme: dark) {
     time {      
         color: #aaa;
+    }
+
+    img + em {
+        color: #aaa;
+    }
+    
+    main img, .highlight {
+        box-shadow: 0 1px 5px rgba(0,0,0,0.2);
     }
 }
