@@ -21,7 +21,7 @@ main img { width: 100%; height: auto; }
     padding: 1em 1.2em;
     overflow-x: auto;
     font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 0.9em;
+    font-size: 1em;
     line-height: 1.5;
   }
   
