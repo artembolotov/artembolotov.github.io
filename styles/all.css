@@ -16,7 +16,7 @@ a:link, a:visited { color: #0089ff; text-decoration: none; border-bottom: 1px so
 #page-nav label { display: block; color: #fff; font-style: normal; font-size: 1.2em; float: right; }  
 #page-nav input:checked ~ ul { display: block; }
 section { padding-top: 1.875em; padding-bottom: 3.75em; font-size: 1.25em; text-align: left; }
-section p { margin: 0 0 1.5625em; line-height: 1.5; }
+section p { margin: 0 0 25px; line-height: 1.5; }
 
 section h4 { color: #000; padding-bottom: 0.4em; }
 #menu-label {width: 50px;height: 50px; position: relative; padding: 0; -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -o-transform: rotate(0deg); transform: rotate(0deg); -webkit-transition: .5s ease-in-out; -moz-transition: .5s ease-in-out; -o-transition: .5s ease-in-out; transition: .5s ease-in-out; cursor: pointer; }
@@ -63,7 +63,7 @@ section h4 { color: #000; padding-bottom: 0.4em; }
     #page-nav ul { display: block; float: right; }
     #page-nav ul li { display: inline-block; margin-left: -4px; }
     section { font-size: 1.25em; }
-    section p { margin: 0 0 2.1875em; line-height: 1.6; }        
+    section p { margin: 0 0 35px; line-height: 1.6; }        
 }
 
 @media screen and (min-width: 992px) {
