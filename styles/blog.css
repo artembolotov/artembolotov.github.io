@@ -1,7 +1,7 @@
 html { overflow-y:scroll; } 
 main { margin-top: 80px; }
 main img { width: 100%; height: auto; }
-.container h1 { font-size: 30px; font-weight: 700; text-transform: uppercase; color: #000; }
+h1 { font-size: 30px; font-weight: 700; text-transform: uppercase; color: #000; }
 .image-row-2, .image-row-3 { display: grid; gap: 8px; width: 100%; margin: 0 auto; box-sizing: border-box; }
 .image-row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .image-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -119,4 +119,6 @@ time {
     main img, .highlight {
         box-shadow: 0 1px 5px rgba(0,0,0,0.2);
     }
+
+    h1 { color: #fff; }
 }
