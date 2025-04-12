@@ -1,27 +1,27 @@
 html { overflow-y:scroll; } 
-main { margin-top: 80px; }
+main { margin-top: 5em; }
 main img { width: 100%; height: auto; }
-h1 { font-size: 30px; font-weight: 700; text-transform: uppercase; color: #000; }
-.image-row-2, .image-row-3 { display: grid; gap: 8px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+h1 { font-size: 1.875em; font-weight: 700; text-transform: uppercase; color: #000; }
+.image-row-2, .image-row-3 { display: grid; gap: 0.5em; width: 100%; margin: 0 auto; box-sizing: border-box; }
 .image-row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .image-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .image-row img { width: 100%; height: auto; }
 
 main { 
-    padding-top: 30px; 
-    padding-bottom: 60px; 
-    font-size: 20px; 
+    padding-top: 1.875em; 
+    padding-bottom: 3.75em; 
+    font-size: 1.25em; 
     text-align: left; 
 }
   
 main p { 
-    margin: 0 0 25px; 
+    margin: 0 0 1.5625em; 
     line-height: 1.5; 
 }
 
 @media screen and (min-width: 768px) {
     main p { 
-        margin: 0 0 35px; 
+        margin: 0 0 2.1875em; 
         line-height: 1.6; 
     }
 }
@@ -33,7 +33,7 @@ main p {
 }
   
 .highlight pre {
-    padding: 16px;
+    padding: 1em;
     overflow-x: auto;
     margin: 0;
 }
@@ -90,7 +90,7 @@ main img, .highlight {
     box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-  /* Стиль для подписей к изображениям */
+/* Стиль для подписей к изображениям */
 img + em {
     display: block;
     text-align: center;
@@ -103,8 +103,8 @@ time {
     display: block;
     font-size: 0.9em;
     color: #666;
-    margin-bottom: 25px;
-    margin-top: -10px;
+    margin-bottom: 1.5625em;
+    margin-top: -0.625em;
 }
   
 @media (prefers-color-scheme: dark) {
