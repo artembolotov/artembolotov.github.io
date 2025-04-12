@@ -1,6 +1,6 @@
 ---
 title: "Sticky header в html таблице"
-description: "Проблема и решение"
+description: "Всё дело в шапке"
 ---
 
 Не&nbsp;думал, что в&nbsp;2025 мне понадобятся таблицы на&nbsp;сайте, как и&nbsp;ручная вёрстка при наличии нейросетей. Но&nbsp;есть у&nbsp;html-таблиц очень полезное свойство: при увеличении ширины ячейки становится шире весь столбец.
@@ -11,7 +11,7 @@ description: "Проблема и решение"
 В&nbsp;одном из&nbsp;моих проектов нужно было именно такое поведение. При этом хотелось зафиксировать шапку, чтобы при прокрутке она всегда оставалась наверху.
 
 ```css
-thead&nbsp;th {
+thead th {
     position: sticky;
     top: 0;
 }
@@ -25,7 +25,7 @@ thead&nbsp;th {
 Добавим *background-color* и&nbsp;посмотрим, что будет теперь.
 
 ```css
-thead&nbsp;th {
+thead th {
     position: sticky;
     top: 0;
     background-color: white;
@@ -101,7 +101,7 @@ table {
     border-left: 1px solid red;
 }
 
-thead&nbsp;th {
+thead th {
     background-color: white;
     border-top: 1px solid green;
 }
@@ -122,7 +122,7 @@ table {
     border-left: 1px solid #ddd;
 }
 
-thead&nbsp;th {
+thead th {
     background-color: white;
     border-top: 1px solid #ddd;
 }
