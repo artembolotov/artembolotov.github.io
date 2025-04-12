@@ -49,7 +49,8 @@ a:link, a:visited {
 }
 
 #page-nav .container a { 
-  line-height: 50px; 
+  line-height: 50px;
+  display: inline-block;
 }
 
 #page-nav ul { 
