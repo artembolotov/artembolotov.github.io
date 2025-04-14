@@ -47,16 +47,16 @@ th:after, th:before {
 }
 
 th:after {
-    right: &minus;1px;
+    right: -1px;
     border-right: 1px solid #ddd;
-    bottom: &minus;1px;
+    bottom: -1px;
     border-bottom: 1px solid #ddd;
 }
 
 th:before {
-    left: &minus;1px;
+    left: -1px;
     border-left: 1px solid #ddd;
-    top: &minus;1px;
+    top: -1px;
     border-top: 1px solid #ddd;
 }
 ```
