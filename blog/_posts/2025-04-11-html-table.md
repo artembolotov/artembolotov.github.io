@@ -40,7 +40,7 @@ thead th {
 
 ```css
 th:after, th:before {
-    content: &rsquo;&rsquo;;
+    content: "";
     position: absolute;
     top: 0;
     height: 100%;
