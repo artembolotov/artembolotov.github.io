@@ -145,3 +145,56 @@ time {
 
   h1 { color: #fff; }
 }
+
+/* Author footer styles */
+.author-footer {
+  margin-top: 4em;
+  padding: 2em;
+  background-color: #f5f5f7;
+  color: #333;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.author-footer .avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  border: 2px solid #0089ff;
+}
+
+.author-footer p {
+  margin: 0.5em 0;
+  line-height: 1.4;
+}
+
+.author-footer .greeting {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.author-footer .bio {
+  color: rgba(0,0,0,0.8);
+}
+
+.author-footer .projects {
+  margin-top: 0.5em;
+}
+
+.author-footer .social {
+  margin-top: 0.5em;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .author-footer {
+    background-color: #1a1a1a;
+    color: white;
+  }
+  
+  .author-footer .bio {
+    color: rgba(255,255,255,0.9);
+  }
+}
