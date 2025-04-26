@@ -52,11 +52,11 @@ Apple Developer Program стоит $99 в год. Без него вы не см
 
 Если раньше было не так много качественных ресурсов, то сейчас их море. Разумеется, на английском. Если не знаете, всё равно попробуйте — удивитесь, но всё будет понятно. Из того, что советую:
 
-1. **[100 Days of SwiftUI](https://www.hackingwithswift.com/100/swiftui)** — отличный старт для новичков. [Paul Hudson](https://x.com/twostraws) очень структурировано ведёт от основ к более сложным темам.
+1. **<a href="https://www.hackingwithswift.com/100/swiftui" target="_blank">100 Days of SwiftUI</a>** — отличный старт для новичков. [Paul Hudson](https://x.com/twostraws) очень структурировано ведёт от основ к более сложным темам.
 
-2. **[CS193p - Developing Apps for iOS](https://cs193p.sites.stanford.edu/)** — университетский курс от Стэнфорда. Каждый год обновляется, сейчас полностью на SwiftUI. Тут уже поглубже и поакадемичнее.
+2. **<a href="https://cs193p.sites.stanford.edu/" target="_blank">CS193p - Developing Apps for iOS</a>** — университетский курс от Стэнфорда. Каждый год обновляется, сейчас полностью на SwiftUI. Тут уже поглубже и поакадемичнее.
 
-3. **[Книги от Big Mountain Studio](https://www.bigmountainstudio.com/)** — отличный выбор когда уже есть основы. «SwiftUI Views Mastery» и «Core Data Mastery in SwiftUI» — их я прочитал от корки до корки (если так говорят про электронные книги).
+3. **<a href="https://www.bigmountainstudio.com/" target="_blank">Big Mountain Studio</a>** — отличный выбор когда уже есть основы. «SwiftUI Views Mastery» и «Core Data Mastery in SwiftUI» — их я прочитал от корки до корки (если так говорят про электронные книги).
 
 ## Почему это всё-таки стоит начать
 
