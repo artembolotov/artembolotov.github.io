@@ -35,10 +35,6 @@ main {
   font-size: 1.1em; 
   text-align: left; 
 }
-  
-main p { 
-  margin: 0 0 1.5625em; 
-}
 
 main ul {
   list-style-type: disc; /* Или другой тип маркера */
@@ -52,10 +48,6 @@ main li {
 @media screen and (min-width: 768px) {
   main {
     line-height: 1.6; 
-  }
-
-  main p { 
-    margin: 0 0 2.1875em; 
   }
 }
 
