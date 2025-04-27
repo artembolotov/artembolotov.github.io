@@ -16,6 +16,10 @@ h2 {
   margin: 2.5em 0 0;
 }
 
+.posts h2 {
+  font-size: 1.2em;
+}
+
 h3 {
   margin: 2em 0 0;
 }
