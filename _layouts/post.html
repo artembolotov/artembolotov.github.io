@@ -1,6 +1,9 @@
 ---
 layout: default
 ---
+
+{% include tag-menu.html %}
+
 <article class="post">
   <h1 class="post-title">{{ page.title }}</h1>
   <time datetime="{{ page.date | date_to_xmlschema }}">
@@ -9,8 +12,6 @@ layout: default
     {{ page.date | date: "%-d" }} {{ months[m] }} {{ page.date | date: "%Y" }}
   </time>
 
-  {% include tag-menu.html %}
-  
   <div class="post-content">
     {{ content }}
 

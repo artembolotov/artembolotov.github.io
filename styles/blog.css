@@ -187,8 +187,7 @@ time {
   margin-top: 0.5em;
 }
 
-/* Tag Menu */
-/* Tag Menu - минималистичный стиль */
+/* Tag Menu - стиль с акцентом на кликабельность */
 .tag-menu {
   margin: 1em 0 1.5em;
   border-bottom: 1px solid #eee;
@@ -209,20 +208,22 @@ time {
 }
 
 .tag-menu a {
-  color: #333;
+  color: #0089ff;
   text-decoration: none;
-  border-bottom: none;
-  transition: color 0.2s;
+  border-bottom: 1px solid rgba(0,137,255,.3);
+  transition: color 0.2s, border-color 0.2s;
   font-size: 0.95em;
 }
 
 .tag-menu a:hover {
-  color: #0089ff;
+  color: #f41224;
+  border-color: rgba(244,18,36,.3);
 }
 
 .tag-menu li.active a {
-  color: #0089ff;
+  color: #333;
   font-weight: 500;
+  border-bottom: none;
   cursor: default;
   pointer-events: none;
 }
@@ -234,19 +235,22 @@ time {
   }
   
   .tag-menu a {
-    color: #e0e0e0;
+    color: #64b2ff;
+    border-bottom: 1px solid rgba(100,178,255,0.8);
   }
   
   .tag-menu a:hover {
-    color: #64b2ff;
+    color: #ff453a;
+    border-color: rgba(255,69,68,.7);
   }
   
   .tag-menu li.active a {
-    color: #64b2ff;
+    color: #e0e0e0;
+    border-bottom: none;
   }
 }
 
-/* Post Tags - минималистичный стиль */
+/* Post Tags */
 .post-tags {
   margin-top: 2em;
   margin-bottom: 2em;
@@ -256,24 +260,27 @@ time {
   display: inline-block;
   margin-right: 1em;
   margin-bottom: 0.5em;
-  color: #666;
+  color: #0089ff;
   text-decoration: none;
-  border-bottom: none;
+  border-bottom: 1px solid rgba(0,137,255,.3);
   font-size: 0.9em;
-  transition: color 0.2s;
+  transition: color 0.2s, border-color 0.2s;
 }
 
 .post-tags .tag:hover {
-  color: #0089ff;
+  color: #f41224;
+  border-color: rgba(244,18,36,.3);
 }
 
 @media (prefers-color-scheme: dark) {
   .post-tags .tag {
-    color: #aaa;
+    color: #64b2ff;
+    border-bottom: 1px solid rgba(100,178,255,0.8);
   }
   
   .post-tags .tag:hover {
-    color: #64b2ff;
+    color: #ff453a;
+    border-color: rgba(255,69,68,.7);
   }
 }
 
