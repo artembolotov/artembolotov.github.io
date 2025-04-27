@@ -1,5 +1,5 @@
 html { overflow-y:scroll; } 
-main { margin-top: 5em; }
+main { margin-top: 5em; line-height: 1.5; }
 main img { width: 100%; height: auto; }
 
 /* Keeping h1 the same size as h2 on main site, as requested */
@@ -38,7 +38,6 @@ main {
   
 main p { 
   margin: 0 0 1.5625em; 
-  line-height: 1.5; 
 }
 
 main ul {
@@ -51,9 +50,12 @@ main li {
 }
 
 @media screen and (min-width: 768px) {
+  main {
+    line-height: 1.6; 
+  }
+
   main p { 
     margin: 0 0 2.1875em; 
-    line-height: 1.6; 
   }
 }
 
