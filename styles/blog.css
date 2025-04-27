@@ -13,7 +13,11 @@ h1 {
 }
 
 h2 {
-  margin-top: 2em;
+  margin: 2em 0 0;
+}
+
+h3 {
+  margin: 0;
 }
 
 .post-content {
