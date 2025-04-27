@@ -1,6 +1,6 @@
 html { overflow-y:scroll; } 
 main { margin-top: 5em; line-height: 1.5; }
-main img { max-height: 450px; max-width: 100%; }
+main img { display: block; max-height: 500px; max-width: 100%; margin: 0 auto; }
 
 /* Keeping h1 the same size as h2 on main site, as requested */
 h1 { 
