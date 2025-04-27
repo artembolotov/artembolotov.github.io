@@ -11,6 +11,14 @@ layout: default
   <div class="post-content">
     {{ content }}
 
+    {% if page.tags %}
+    <div class="post-tags">
+      {% for tag in page.tags %}
+      <a href="/blog/tag/{{ tag | slugify | downcase }}/" class="tag">#{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     {% include author-footer.html %}
   </div>
 </article>

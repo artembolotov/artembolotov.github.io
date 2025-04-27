@@ -1,17 +1,17 @@
 ---
 layout: default
-title: "Блог"
+title: "Блог - #life"
 ---
 
 <h1>Блог</h1>
 
-{% include tag-menu.html active_tag="iosdev" %}
+{% include tag-menu.html active_tag="life" %}
 
 <div class="posts">
 {% assign months = "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря" | split: "," %}
 {% for post in site.posts %}
 {% unless post.draft %}
-  {% if post.tags contains "iOS" or post.tags contains "Swift" or post.tags contains "Разработка" or post.tags contains "iOS-разработка" or post.tags contains "iosdev" %}
+  {% if post.tags contains "life" %}
   <article>
     <h2><a href="{{ post.url }}">{{ post.title }}</a></h2> 
     {% assign month_index = post.date | date: "%-m" | minus: 1 %}
@@ -24,4 +24,3 @@ title: "Блог"
 {% endunless %}
 {% endfor %}
 </div>
-
