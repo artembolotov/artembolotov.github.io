@@ -41,6 +41,10 @@ main p {
   line-height: 1.5; 
 }
 
+ol {
+  padding-left: 1em;
+}
+
 ol li p {
   margin-bottom: 1em;
 }
