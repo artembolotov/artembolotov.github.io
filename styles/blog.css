@@ -1,6 +1,6 @@
 html { overflow-y:scroll; } 
 main { margin-top: 5em; line-height: 1.5; }
-main img { width: 100%; height: auto; }
+main img { max-height: 450px; max-width: 100%; }
 
 /* Keeping h1 the same size as h2 on main site, as requested */
 h1 { 
@@ -38,7 +38,7 @@ h3 {
 }
 .image-row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .image-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.image-row img { max-height: 450px; max-width: 100%;}
+.image-row img { width: 100%; height: auto; }
 
 /* Main content */
 main { 
