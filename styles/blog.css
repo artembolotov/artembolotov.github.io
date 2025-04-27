@@ -141,7 +141,6 @@ time {
   font-size: 0.9em;
   color: #666;
   margin-bottom: 1.5625em;
-  margin-top: -0.625em;
 }
   
 /* Dark mode adjustments */
@@ -220,6 +219,7 @@ time {
 .tag-menu li {
   margin-right: 1.5em;
   margin-bottom: 0.2em;  /* Уменьшенный отступ снизу для элементов списка */
+  padding-left: 0;
 }
 
 .tag-menu a {
