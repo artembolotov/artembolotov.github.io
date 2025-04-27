@@ -8,8 +8,12 @@ h1 {
   font-weight: 700; 
   text-transform: uppercase; 
   color: #000; 
-  margin-top: 0;
+  margin-top: 0.8em;
   margin-bottom: 0.8em;
+}
+
+.post-content {
+  margin-top: 1.2em;
 }
 
 /* Image rows */
@@ -187,11 +191,11 @@ time {
   margin-top: 0.5em;
 }
 
-/* Tag Menu - стиль с акцентом на кликабельность */
+/* Tag Menu */
 .tag-menu {
-  margin: 1em 0 1.5em;
+  margin: 0.5em 0 1em;  /* Уменьшенные отступы сверху и снизу */
   border-bottom: 1px solid #eee;
-  padding-bottom: 0.5em;
+  padding-bottom: 0.3em;  /* Уменьшенный отступ до разделительной линии */
 }
 
 .tag-menu ul {
@@ -204,7 +208,7 @@ time {
 
 .tag-menu li {
   margin-right: 1.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.2em;  /* Уменьшенный отступ снизу для элементов списка */
 }
 
 .tag-menu a {
@@ -212,7 +216,7 @@ time {
   text-decoration: none;
   border-bottom: 1px solid rgba(0,137,255,.3);
   transition: color 0.2s, border-color 0.2s;
-  font-size: 0.95em;
+  font-size: 0.9em;  /* Немного меньший размер шрифта */
 }
 
 .tag-menu a:hover {
