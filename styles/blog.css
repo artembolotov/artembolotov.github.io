@@ -41,15 +41,11 @@ main p {
   line-height: 1.5; 
 }
 
-ol li p {
-  margin-bottom: 1em;
-}
-
 main ul {
   list-style-type: disc; /* Или другой тип маркера */
 }
 
-main ul li {
+main li {
   padding-left: 0.5em;
   margin-bottom: 0.5em;
 }
