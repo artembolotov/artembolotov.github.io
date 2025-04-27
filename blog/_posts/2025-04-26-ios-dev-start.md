@@ -4,15 +4,13 @@ description: "C чего начать, что потребуется и поче
 tags: [iosdev]
 ---
 
-Привет! Не знаю, как вы здесь оказались, но раз уж читаете эту статью, значит, вас заинтересовала нативная разработка приложений для iPhone и iPad. И, честно говоря, это отличный выбор.
+Привет! Не знаю, как вы здесь оказались, но раз уж читаете эту статью, значит, вас заинтересовала нативная разработка приложений для iPhone и iPad. Отличный выбор!
 
-## С чего всё началось
+## С чего всё началось у меня
 
 В 2014 году я случайно наткнулся на видео Алексея Скутаренко — русскоговорящего iOS разработчика, который, освоив эту профессию, уехал жить и работать в США. Это был один из тех моментов, когда сразу понимаешь: «вот оно!» 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
-  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/Z0IywGVakqQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
 
+{% include youtube.html id="Z0IywGVakqQ" %}
 
 Тогда было крутое комьюнити и отличные бесплатные курсы. Сейчас курсы устарели, сообщество закрыли, но возможности стали шире.
 
