@@ -221,7 +221,7 @@ time {
 }
 
 .tag-menu li {
-  margin-right: 1.5em;
+  margin-right: 1em;
   margin-bottom: 0.2em;  /* Уменьшенный отступ снизу для элементов списка */
   padding-left: 0;
 }
