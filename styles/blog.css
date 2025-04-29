@@ -1,5 +1,5 @@
 html { overflow-y:scroll; } 
-main { margin-top: 0; line-height: 1.5; }
+main { margin-top: 50px; line-height: 1.5; }
 main img { display: block; max-height: 500px; max-width: 100%; margin: 0 auto; }
 
 /* Keeping h1 the same size as h2 on main site, as requested */
@@ -42,7 +42,7 @@ h3 {
 
 /* Main content */
 main { 
-  padding-top: 1.875em; 
+  padding-top: 0.5em; 
   padding-bottom: 3.75em; 
   font-size: 1.1em; 
   text-align: left; 
