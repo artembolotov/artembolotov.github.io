@@ -3,6 +3,7 @@ layout: default
 ---
 
 {% include tag-menu.html %}
+{% include tag-translations.html %}
 
 <article class="post">
   <h1 class="post-title">{{ page.title }}</h1>
@@ -18,11 +19,8 @@ layout: default
     {% if page.tags %}
     <div class="post-tags">
       {% for tag in page.tags %}
-        {% if tag == "notes" %}
-          <a href="/blog/{{ tag | slugify | downcase }}/" class="tag">#заметки</a>
-        {% else %}
-          <a href="/blog/{{ tag | slugify | downcase }}/" class="tag">#{{ tag }}</a>
-        {% endif %}
+        {% assign tag_label = tag_translations[tag] | default: tag %}
+        <a href="/blog/{{ tag | slugify | downcase }}/" class="tag">#{{ tag_label }}</a>
       {% endfor %}
     </div>
     {% endif %}
