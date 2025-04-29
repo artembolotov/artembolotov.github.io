@@ -1,16 +1,14 @@
-{% include tag-translations.html %}
-
 <div class="tag-menu">
-    <ul>
-      <li{% if include.active_tag == 'all' %} class="active"{% endif %}>
-        <a href="/blog/"{% if include.active_tag == 'all' %} aria-current="page"{% endif %}>Всё</a>
+  <ul>
+    <li{% if include.active_tag == 'all' %} class="active"{% endif %}>
+      <a href="/blog/"{% if include.active_tag == 'all' %} aria-current="page"{% endif %}>Всё</a>
+    </li>
+    {% assign menu_tags = "iosdev,webdev,life,notes" | split: "," %}
+    {% for tag in menu_tags %}
+      {% include tag-translations.html %}
+      <li{% if include.active_tag == tag %} class="active"{% endif %}>
+        <a href="/blog/{{ tag | slugify | downcase }}/"{% if include.active_tag == tag %} aria-current="page"{% endif %}>#{{ tag_label }}</a>
       </li>
-      {% assign menu_tags = "iosdev,webdev,life,notes" | split: "," %}
-      {% for tag in menu_tags %}
-        {% assign tag_label = tag_translations[tag] | default: tag %}
-        <li{% if include.active_tag == tag %} class="active"{% endif %}>
-          <a href="/blog/{{ tag | slugify | downcase }}/"{% if include.active_tag == tag %} aria-current="page"{% endif %}>#{{ tag_label }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+    {% endfor %}
+  </ul>
+</div>

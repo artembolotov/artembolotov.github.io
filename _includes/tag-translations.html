@@ -1,10 +1,23 @@
 {% comment %}
   Tag translation system for blog
+  
+  This file defines translations for tag names. 
+  English tag names are used in code, Russian translations are shown to users.
 {% endcomment %}
 
-{% assign tag_translations_json = 
-'{
-  "notes": "заметки"
-}' %}
+{% assign tag_notes = "заметки" %}
+{% assign tag_iosdev = "ios-разработка" %}
+{% assign tag_webdev = "веб-разработка" %}
+{% assign tag_life = "жизнь" %}
 
-{% assign tag_translations = tag_translations_json | strip | jsonify | fromJSON %}
+{% if tag == "notes" %}
+  {% assign tag_label = tag_notes %}
+{% elsif tag == "iosdev" %}
+  {% assign tag_label = tag_iosdev %}
+{% elsif tag == "webdev" %}
+  {% assign tag_label = tag_webdev %}
+{% elsif tag == "life" %}
+  {% assign tag_label = tag_life %}
+{% else %}
+  {% assign tag_label = tag %}
+{% endif %}

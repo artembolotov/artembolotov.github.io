@@ -3,11 +3,11 @@ layout: default
 ---
 
 {% include tag-menu.html active_tag=page.tag %}
+
+{% assign tag = page.tag %}
 {% include tag-translations.html %}
 
-{% assign tag_title = tag_translations[page.tag] | default: page.tag %}
-
-<h1>Блог - #{{ tag_title }}</h1>
+<h1>Блог - #{{ tag_label }}</h1>
 <div class="posts">
 {% assign months = "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря" | split: "," %}
 {% for post in site.posts %}
