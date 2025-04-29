@@ -4,7 +4,6 @@ layout: default
 
 {% include tag-menu.html active_tag="all" %}
 
-<h1>Блог - Все записи</h1>
 <div class="posts">
 {% assign months = "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря" | split: "," %}
 {% for post in site.posts %}

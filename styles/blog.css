@@ -1,5 +1,5 @@
 html { overflow-y:scroll; } 
-main { margin-top: 5em; line-height: 1.5; }
+main { margin-top: 0; line-height: 1.5; }
 main img { display: block; max-height: 500px; max-width: 100%; margin: 0 auto; }
 
 /* Keeping h1 the same size as h2 on main site, as requested */
@@ -239,12 +239,13 @@ time {
   border-color: rgba(244,18,36,.3);
 }
 
-.tag-menu li.active a {
+.tag-menu li.active h1 {
   color: #333;
   font-weight: 500;
-  border-bottom: none;
-  cursor: default;
-  pointer-events: none;
+  margin: 0;
+  font-size: 0.9em;
+  text-transform: none;
+  display: inline;
 }
 
 /* Темная тема */
@@ -263,9 +264,8 @@ time {
     border-color: rgba(255,69,68,.7);
   }
   
-  .tag-menu li.active a {
+  .tag-menu li.active h1 {
     color: #e0e0e0;
-    border-bottom: none;
   }
 }
 
