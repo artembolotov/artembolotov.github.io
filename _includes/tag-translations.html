@@ -5,19 +5,4 @@
   English tag names are used in code, Russian translations are shown to users.
 {% endcomment %}
 
-{% assign tag_notes = "заметки" %}
-{% assign tag_iosdev = "iosdev" %}
-{% assign tag_webdev = "webdev" %}
-{% assign tag_life = "life" %}
-
-{% if include.tag == "notes" %}
-  {% assign tag_label = tag_notes %}
-{% elsif include.tag == "iosdev" %}
-  {% assign tag_label = tag_iosdev %}
-{% elsif include.tag == "webdev" %}
-  {% assign tag_label = tag_webdev %}
-{% elsif include.tag == "life" %}
-  {% assign tag_label = tag_life %}
-{% else %}
-  {% assign tag_label = include.tag %}
-{% endif %}
+{% assign tag_label = site.data.tag_translations[include.tag] | default: include.tag %}
