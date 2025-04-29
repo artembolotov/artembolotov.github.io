@@ -1,7 +1,7 @@
 <div class="tag-menu">
   <ul>
-    <li{% if include.active_tag == 'all' %} class="active"{% endif %}>
-      <a href="/blog/"{% if include.active_tag == 'all' %} aria-current="page"{% endif %}>Всё</a>
+    <li{% if include.active_tag == 'all' or include.active_tag == nil or include.active_tag == '' %} class="active"{% endif %}>
+      <a href="/blog/"{% if include.active_tag == 'all' or include.active_tag == nil or include.active_tag == '' %} aria-current="page"{% endif %}>Всё</a>
     </li>
     {% assign menu_tags = "iosdev,webdev,life,notes" | split: "," %}
     {% for menu_tag in menu_tags %}
