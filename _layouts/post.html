@@ -18,8 +18,8 @@ layout: default
     {% if page.tags %}
     <div class="post-tags">
       {% for tag in page.tags %}
-        {% if tag == "заметки" %}
-          <a href="/blog/notes/" class="tag">#{{ tag }}</a>
+        {% if tag == "notes" %}
+          <a href="/blog/{{ tag | slugify | downcase }}/" class="tag">#заметки</a>
         {% else %}
           <a href="/blog/{{ tag | slugify | downcase }}/" class="tag">#{{ tag }}</a>
         {% endif %}
