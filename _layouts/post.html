@@ -17,11 +17,9 @@ layout: default
 
     {% if page.tags %}
     <div class="post-tags">
-      {% for tag in page.tags %}
-        {% assign tag_temp = tag %}
-        {% assign tag = tag_temp %}
-        {% include tag-translations.html %}
-        <a href="/blog/{{ tag | slugify | downcase }}/" class="tag">#{{ tag_label }}</a>
+      {% for post_tag in page.tags %}
+        {% include tag-translations.html tag=post_tag %}
+        <a href="/blog/{{ post_tag | slugify | downcase }}/" class="tag">#{{ tag_label }}</a>
       {% endfor %}
     </div>
     {% endif %}

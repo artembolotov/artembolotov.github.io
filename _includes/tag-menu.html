@@ -4,10 +4,10 @@
       <a href="/blog/"{% if include.active_tag == 'all' %} aria-current="page"{% endif %}>Всё</a>
     </li>
     {% assign menu_tags = "iosdev,webdev,life,notes" | split: "," %}
-    {% for tag in menu_tags %}
-      {% include tag-translations.html %}
-      <li{% if include.active_tag == tag %} class="active"{% endif %}>
-        <a href="/blog/{{ tag | slugify | downcase }}/"{% if include.active_tag == tag %} aria-current="page"{% endif %}>#{{ tag_label }}</a>
+    {% for menu_tag in menu_tags %}
+      {% include tag-translations.html tag=menu_tag %}
+      <li{% if include.active_tag == menu_tag %} class="active"{% endif %}>
+        <a href="/blog/{{ menu_tag | slugify | downcase }}/"{% if include.active_tag == menu_tag %} aria-current="page"{% endif %}>#{{ tag_label }}</a>
       </li>
     {% endfor %}
   </ul>

@@ -10,14 +10,14 @@
 {% assign tag_webdev = "веб-разработка" %}
 {% assign tag_life = "жизнь" %}
 
-{% if tag == "notes" %}
+{% if include.tag == "notes" %}
   {% assign tag_label = tag_notes %}
-{% elsif tag == "iosdev" %}
+{% elsif include.tag == "iosdev" %}
   {% assign tag_label = tag_iosdev %}
-{% elsif tag == "webdev" %}
+{% elsif include.tag == "webdev" %}
   {% assign tag_label = tag_webdev %}
-{% elsif tag == "life" %}
+{% elsif include.tag == "life" %}
   {% assign tag_label = tag_life %}
 {% else %}
-  {% assign tag_label = tag %}
+  {% assign tag_label = include.tag %}
 {% endif %}
