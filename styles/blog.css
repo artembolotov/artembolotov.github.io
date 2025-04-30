@@ -40,6 +40,7 @@ figure.image-row-2, figure.image-row-3 {
   display: grid;
   gap: 0.5em;
   width: 100%;
+  align-items: center;
 }
 
 figure.image-row-2 {
@@ -54,6 +55,19 @@ figure.image-row-2 img, figure.image-row-3 img {
   width: 100%;
   height: auto;
   grid-row: 1;
+}
+
+/* Alignment options for image rows */
+.image-row-2.align-center, .image-row-3.align-center {
+  align-items: center;
+}
+
+.image-row-2.align-start, .image-row-3.align-start {
+  align-items: start;
+}
+
+.image-row-2.align-end, .image-row-3.align-end {
+  align-items: end;
 }
 
 figure.image-row-2 figcaption, figure.image-row-3 figcaption {

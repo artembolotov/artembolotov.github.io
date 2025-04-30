@@ -1,4 +1,4 @@
-<figure class="image-row-2">
+<figure class="image-row-2 align-{{ include.align | default: 'center' }}">
   <img src="{{ include.image1 }}" alt="{{ include.alt1 }}" loading="lazy">
   <img src="{{ include.image2 }}" alt="{{ include.alt2 }}" loading="lazy">
   {% if include.caption %}
