@@ -4,9 +4,7 @@ sitemap:
   exclude: 'yes'
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Главная страница -->
   <url>
     <loc>https://bolotov.dev/</loc>
@@ -64,17 +62,6 @@ sitemap:
       {% endif %}
       <changefreq>monthly</changefreq>
       <priority>0.7</priority>
-      
-      {% if post.description %}
-        <image:image>
-          {% assign first_img_path = post.content | split: 'img src="' | slice: 1, 1 | split: '"' | first %}
-          {% if first_img_path %}
-            <image:loc>https://bolotov.dev{{ first_img_path }}</image:loc>
-            <image:title>{{ post.title | xml_escape }}</image:title>
-            <image:caption>{{ post.description | xml_escape }}</image:caption>
-          {% endif %}
-        </image:image>
-      {% endif %}
     </url>
     {% endunless %}
   {% endfor %}
