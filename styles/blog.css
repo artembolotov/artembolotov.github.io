@@ -36,11 +36,11 @@ h3 {
 }
 
 figure.image-row-2, figure.image-row-3 {
-  margin: 1.5em 0;
-  display: grid;
-  gap: 0.5em;
-  width: 100%;
-  align-items: center;
+  display: grid; 
+  gap: 0.5em; 
+  width: 100%; 
+  margin: 0 auto; 
+  box-sizing: border-box; 
 }
 
 figure.image-row-2 {
@@ -86,42 +86,26 @@ figure.image-row-2 figcaption, figure.image-row-3 figcaption {
   }
 }
 
-/* Responsive image rows */
 @media screen and (max-width: 640px) {
-  /* Для телефонов изображения выстраиваются вертикально */
-  figure.image-row-2, figure.image-row-3,
-  .image-row-2, .image-row-3 {
-    grid-template-columns: 1fr; /* Одна колонка */
-    gap: 1em; /* Увеличенный отступ между изображениями */
+  .image-row-2, .image-row-3 { 
+    grid-template-columns: 1fr !important; /* !important для гарантированного переопределения */ 
   }
   
-  /* Подпись под всеми изображениями */
+  /* Дополнительные отступы для лучшей читаемости */
+  .image-row-2 img, .image-row-3 img {
+    margin-bottom: 1em;
+  }
+  
+  /* Если используются подписи, убедитесь, что они также выровнены */
   figure.image-row-2 figcaption, figure.image-row-3 figcaption {
     grid-column: 1;
-    grid-row: auto; /* Автоматическое позиционирование */
-    margin-top: 0.5em;
-  }
-  
-  /* Увеличиваем размер изображений на мобильных */
-  figure.image-row-2 img, figure.image-row-3 img,
-  .image-row-2 img, .image-row-3 img {
-    max-width: 100%;
-    margin: 0 auto;
   }
 }
 
-/* Планшеты: 2 колонки для image-row-3 */
-@media screen and (min-width: 641px) and (max-width: 768px) {
-  figure.image-row-3, .image-row-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  /* Третье изображение занимает всю строку */
-  figure.image-row-3 img:nth-child(3), .image-row-3 img:nth-child(3) {
-    grid-column: 1 / -1;
-    max-width: 50%;
-    margin: 0 auto;
-  }
+/* Оригинальные определения сетки для десктопов */
+@media screen and (min-width: 641px) {
+  .image-row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .image-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* Main content */
