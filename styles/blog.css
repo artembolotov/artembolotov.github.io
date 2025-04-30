@@ -77,7 +77,6 @@ figure.image-row-2 figcaption, figure.image-row-3 figcaption {
   font-style: italic;
   font-size: 0.9em;
   color: #666;
-  margin-top: 0.5em;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -97,7 +96,6 @@ figure.image-row-2 figcaption, figure.image-row-3 figcaption {
   .image-row-2 img, .image-row-3 img {
     grid-row: auto !important;
     width: 100%;
-    margin-bottom: 1em;
   }
   
   /* Если используются подписи, убедитесь, что они также выровнены */
