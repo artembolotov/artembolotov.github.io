@@ -1,5 +1,59 @@
-title: "Блог"
-description: "Мой блог на GitHub Pages"
+title: "Блог Артёма Болотова"
+description: "Блог iOS-разработчика о разработке приложений, web, технологиях и жизни"
 baseurl: "/blog"
-permalink: /:year/:month/:day/:title/  # Формат ссылок на посты
+url: "https://bolotov.dev"
+permalink: /:year/:month/:day/:title/
+lang: "ru-RU"
+author: "Артём Болотов"
+email: "ar@bolotov.dev"
+
+# Настройки SEO
+logo: "/blog/img/avatar.jpg"
+social:
+  name: Артём Болотов
+  links:
+    - https://instagram.com/artembolotov
+    - https://vk.com/artembolotov
+    - https://x.com/artembolotov
+    - https://t.me/artembolotov
+    - https://t.me/bolotovblog
+    - https://t.me/bolotov_logs
+
+# Плагины
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Исключения из сборки
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - .jekyll-metadata
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+
+# Коллекции и настройки постов
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Артём Болотов"
+      image: "/blog/img/avatar.jpg"
+
+# Настройки сжатия
+compress_html:
+  clippings: all
+  comments: ["<!-- ", " -->"]
+  endings: all
+  ignore:
+    envs: [development]
+  blanklines: false
+  profile: false
+  startings: [html, head, body]
+
+# Игнорировать конфигурацию темы
 ignore_theme_config: true

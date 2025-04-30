@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /+1.html
+Disallow: /skip.html
+
+Sitemap: https://bolotov.dev/sitemap.xml
