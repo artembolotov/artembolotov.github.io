@@ -1,6 +1,25 @@
+# robots.txt для bolotov.dev
 User-agent: *
 Allow: /
 Disallow: /+1.html
 Disallow: /skip.html
+Disallow: /blog/img/
+Disallow: /icons/
+Disallow: /styles/
 
+# Не индексировать служебные страницы и повторы
+Disallow: */feed/
+Disallow: */atom/
+Disallow: */feed.xml
+
+# Разрешить Яндекс.Картинки для иллюстраций в блоге
+User-agent: Yandex
+Allow: /blog/img/
+
+# Указываем индексу Google кэшировать JavaScript и CSS
+User-agent: Googlebot
+Allow: /*.js$
+Allow: /*.css$
+
+# Указываем расположение XML-карты сайта
 Sitemap: https://bolotov.dev/sitemap.xml

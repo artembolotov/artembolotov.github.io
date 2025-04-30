@@ -1,21 +1,81 @@
 ---
 layout: null
+sitemap:
+  exclude: 'yes'
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Главная страница -->
   <url>
-    <loc>{{ site.url }}</loc>
+    <loc>https://bolotov.dev/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  
+  <!-- Главная страница блога -->
+  <url>
+    <loc>https://bolotov.dev/blog/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Страницы категорий (тегов) блога -->
+  <url>
+    <loc>https://bolotov.dev/blog/iosdev/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://bolotov.dev/blog/webdev/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://bolotov.dev/blog/life/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://bolotov.dev/blog/notes/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Все опубликованные посты блога (исключая черновики) -->
   {% for post in site.posts %}
-    {% unless post.draft %}
+    {% unless post.draft or post.sitemap.exclude == "yes" %}
     <url>
-      <loc>{{ site.url }}{{ post.url }}</loc>
-      <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
+      <loc>https://bolotov.dev{{ post.url }}</loc>
+      {% if post.date %}
+        <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
+      {% else %}
+        <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+      {% endif %}
       <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+      
+      {% if post.description %}
+        <image:image>
+          {% assign first_img_path = post.content | split: 'img src="' | slice: 1, 1 | split: '"' | first %}
+          {% if first_img_path %}
+            <image:loc>https://bolotov.dev{{ first_img_path }}</image:loc>
+            <image:title>{{ post.title | xml_escape }}</image:title>
+            <image:caption>{{ post.description | xml_escape }}</image:caption>
+          {% endif %}
+        </image:image>
+      {% endif %}
     </url>
     {% endunless %}
   {% endfor %}
-  <!-- Добавьте все ваши статические страницы и страницы тегов -->
 </urlset>
