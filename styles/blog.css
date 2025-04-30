@@ -87,18 +87,23 @@ figure.image-row-2 figcaption, figure.image-row-3 figcaption {
 }
 
 @media screen and (max-width: 640px) {
+  figure.image-row-2, figure.image-row-3, 
   .image-row-2, .image-row-3 { 
     grid-template-columns: 1fr !important; /* !important для гарантированного переопределения */ 
   }
   
-  /* Дополнительные отступы для лучшей читаемости */
+  /* Сброс grid-row для изображений на мобильных */
+  figure.image-row-2 img, figure.image-row-3 img,
   .image-row-2 img, .image-row-3 img {
+    grid-row: auto !important;
+    width: 100%;
     margin-bottom: 1em;
   }
   
   /* Если используются подписи, убедитесь, что они также выровнены */
   figure.image-row-2 figcaption, figure.image-row-3 figcaption {
-    grid-column: 1;
+    grid-column: 1 !important;
+    grid-row: auto !important;
   }
 }
 
