@@ -77,6 +77,7 @@ a:link, a:visited {
   text-decoration: none; 
   font-size: 0.875em; 
   font-weight: 500; 
+  width: 100%;
 }
 
 #page-nav label { 
