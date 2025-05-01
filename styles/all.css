@@ -1,19 +1,14 @@
-html, body { width: 100%; }
+html, body { width: 100%; background-color: #ECEFF1;}
 html { -webkit-text-size-adjust: 100%; }
 
-html {
-  background-color: #ECEFF1;
-}
-
 @media (prefers-color-scheme: dark) {
-  html {
+  html, body {
     background-color: #000;
   }
 }
 
 /* Base styles */
 body { 
-  background: #ECEFF1; 
   color: rgba(0,0,0,0.8); 
   font-family: system-ui; 
   margin: 0; 
@@ -280,7 +275,6 @@ section h4 {
 /* Dark theme adjustments */
 @media (prefers-color-scheme: dark) {
   body { 
-    background: #000; 
     color: rgba(255,255,255,0.8); 
   }
   
