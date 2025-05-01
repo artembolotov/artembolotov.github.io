@@ -1,6 +1,16 @@
 html, body { width: 100%; }
 html { -webkit-text-size-adjust: 100%; }
 
+html {
+  background-color: #ECEFF1;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #000;
+  }
+}
+
 /* Base styles */
 body { 
   background: #ECEFF1; 
