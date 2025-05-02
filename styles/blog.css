@@ -411,12 +411,13 @@ time {
 }
 
 .read-time {
-  color: #666;
+  color: #777;
+  font-size: 0.8em;
 }
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   .read-time {
-    color: #aaa;
+    color: #888;
   }
 }
