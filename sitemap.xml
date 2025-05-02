@@ -55,7 +55,9 @@ sitemap:
     {% unless post.draft or post.sitemap.exclude == "yes" %}
     <url>
       <loc>https://bolotov.dev{{ post.url }}</loc>
-      {% if post.date %}
+      {% if post.last_modified_at %}
+        <lastmod>{{ post.last_modified_at | date_to_xmlschema }}</lastmod>
+      {% elsif post.date %}
         <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
       {% else %}
         <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
