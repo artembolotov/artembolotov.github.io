@@ -282,7 +282,6 @@ time {
 /* Tag Menu */
 .tag-menu {
   margin: 0.5em 0 1em;  /* Уменьшенные отступы сверху и снизу */
-  border-bottom: 1px solid #eee;
   padding-bottom: 0.3em;  /* Уменьшенный отступ до разделительной линии */
 }
 
