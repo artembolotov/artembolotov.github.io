@@ -1,0 +1,32 @@
+{% assign words = include.content | strip_html | number_of_words %}
+
+{% comment %}Точный подсчет изображений{% endcomment %}
+{% assign img_tags = include.content | split: '<img ' | size | minus: 1 %}
+{% assign markdown_images = include.content | split: '![' | size | minus: 1 %}
+{% assign row2_images = include.content | split: 'image-row-2.html' | size | minus: 1 %}
+{% assign row2_count = row2_images | times: 2 %}
+{% assign row3_images = include.content | split: 'image-row-3.html' | size | minus: 1 %}
+{% assign row3_count = row3_images | times: 3 %}
+
+{% comment %}Суммируем все изображения{% endcomment %}
+{% assign image_count = img_tags | plus: markdown_images | plus: row2_count | plus: row3_count %}
+
+{% comment %}Базовая скорость чтения: 270 слов в минуту{% endcomment %}
+{% assign reading_time = words | divided_by: 270.0 %}
+
+{% comment %}Добавляем 10 секунд на каждое изображение{% endcomment %}
+{% assign image_time = image_count | times: 10 | divided_by: 60.0 %}
+
+{% comment %}Учитываем блоки кода{% endcomment %}
+{% assign code_blocks = include.content | split: '```' | size | minus: 1 | divided_by: 2 %}
+{% assign code_time = code_blocks | times: 20 | divided_by: 60.0 %}
+
+{% comment %}Суммируем общее время{% endcomment %}
+{% assign total_time = reading_time | plus: image_time | plus: code_time | round %}
+
+{% comment %}Минимум 1 минута{% endcomment %}
+{% if total_time < 1 %}
+  {% assign total_time = 1 %}
+{% endif %}
+
+<span class="read-time">[{{ total_time }}] мин. чтения</span>

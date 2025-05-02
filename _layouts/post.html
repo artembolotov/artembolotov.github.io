@@ -12,6 +12,8 @@ layout: default
     {{ page.date | date: "%-d" }} {{ months[m] }} {{ page.date | date: "%Y" }}
   </time>
 
+  {% include reading-time.html content=content %}
+
   <div class="post-content">
     {{ content }}
 

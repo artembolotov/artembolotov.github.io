@@ -409,3 +409,30 @@ time {
     box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   }
 }
+
+/* Post metadata */
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.post-meta time {
+  display: inline;
+  margin: 0;
+}
+
+.read-time {
+  color: #666;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .post-meta, .read-time {
+    color: #aaa;
+  }
+}
