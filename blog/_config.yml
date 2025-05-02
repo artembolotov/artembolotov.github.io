@@ -43,10 +43,6 @@ defaults:
       layout: "post"
       author: "Артём Болотов"
       image: "/blog/img/avatar.jpg"
-  - scope:
-      path: "**/*.html"
-    values:
-      permalink: /:path/:basename/
 
 # Настройки сжатия
 compress_html:
