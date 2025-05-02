@@ -44,13 +44,7 @@ defaults:
       author: "Артём Болотов"
       image: "/blog/img/avatar.jpg"
   - scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "default"
-      permalink: /:path/:basename/
-  - scope:
-      path: "*.html"
+      path: "**/*.html"
     values:
       permalink: /:path/:basename/
 
