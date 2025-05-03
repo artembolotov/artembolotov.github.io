@@ -43,7 +43,6 @@ defaults:
       layout: "post"
       author: "Артём Болотов"
       image: "/blog/img/avatar.jpg"
-      output_ext: ""
 
 # Настройки сжатия
 compress_html:
