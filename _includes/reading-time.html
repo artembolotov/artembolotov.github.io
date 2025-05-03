@@ -11,15 +11,15 @@
 {% comment %}Суммируем все изображения{% endcomment %}
 {% assign image_count = img_tags | plus: markdown_images | plus: row2_count | plus: row3_count %}
 
-{% comment %}Базовая скорость чтения: 270 слов в минуту{% endcomment %}
-{% assign reading_time = words | divided_by: 270.0 %}
+{% comment %}Базовая скорость чтения: 200 слов в минуту{% endcomment %}
+{% assign reading_time = words | divided_by: 200.0 %}
 
-{% comment %}Добавляем 10 секунд на каждое изображение{% endcomment %}
-{% assign image_time = image_count | times: 10 | divided_by: 60.0 %}
+{% comment %}Добавляем 3 секунды на каждое изображение{% endcomment %}
+{% assign image_time = image_count | times: 3 | divided_by: 60.0 %}
 
 {% comment %}Учитываем блоки кода{% endcomment %}
 {% assign code_blocks = include.content | split: '```' | size | minus: 1 | divided_by: 2 %}
-{% assign code_time = code_blocks | times: 20 | divided_by: 60.0 %}
+{% assign code_time = code_blocks | times: 5 | divided_by: 60.0 %}
 
 {% comment %}Суммируем общее время{% endcomment %}
 {% assign total_time = reading_time | plus: image_time | plus: code_time | round %}
