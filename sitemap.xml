@@ -54,7 +54,7 @@ sitemap:
   {% for post in site.posts %}
     {% unless post.draft or post.sitemap.exclude == "yes" %}
     <url>
-      <loc>https://bolotov.dev{{ post.url }}</loc>
+      <loc>https://bolotov.dev{{ post.url | remove: '.html' }}</loc>
       {% if post.last_modified_at %}
         <lastmod>{{ post.last_modified_at | date_to_xmlschema }}</lastmod>
       {% elsif post.date %}
