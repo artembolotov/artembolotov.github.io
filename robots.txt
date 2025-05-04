@@ -6,8 +6,6 @@ Disallow: /skip.html
 Disallow: /blog/img/
 Disallow: /icons/
 Disallow: /styles/
-Disallow: http://bolotov.dev/
-Disallow: http://www.bolotov.dev/
 
 
 # Не индексировать служебные страницы и повторы
