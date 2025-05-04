@@ -22,5 +22,5 @@ User-agent: Googlebot
 Allow: /*.js$
 Allow: /*.css$
 
-# Указываем расположение XML-карты сайта
+Host: https://bolotov.dev
 Sitemap: https://bolotov.dev/sitemap.xml
