@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+{% include tag-menu.html active_tag="all" %}
+
+{% assign months = "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря" | split: "," %}
+{% assign month_index = page.date | date: "%-m" | minus: 1 %}
+
+<h1>Архив за {{ page.date | date: "%d" }} {{ months[month_index] }} {{ page.date | date: "%Y" }}</h1>
+
+<nav class="breadcrumb">
+  <a href="/blog/">Блог</a> → 
+  <a href="/blog/{{ page.date | date: "%Y" }}/">{{ page.date | date: "%Y" }}</a> → 
+  <a href="/blog/{{ page.date | date: "%Y" }}/{{ page.date | date: "%m" }}/">{{ months[month_index] }}</a> → 
+  {{ page.date | date: "%d" }}
+</nav>
+
+<div class="posts">
+{% for post in page.posts %}
+{% unless post.draft %}
+  <article>
+    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2> 
+    <time datetime="{{ post.date }}">{{ post.date | date: "%d" }} {{ months[month_index] }} {{ post.date | date: "%Y" }}</time>
+    {% if post.description %}
+    <p>{{ post.description }}</p>
+    {% endif %}
+
+    {% include reading-time.html content=post.content %}
+  </article>
+{% endunless %}
+{% endfor %}
+</div>

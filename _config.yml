@@ -23,6 +23,7 @@ social:
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-archives
 
 # Исключения из сборки
 exclude:
@@ -46,6 +47,20 @@ defaults:
       permalink: /blog/:year/:month/:day/:title
       canonical_url: ""
       lang: "ru"
+
+jekyll-archives:
+  enabled:
+    - year
+    - month
+    - day
+  layouts:
+    year: archive-year
+    month: archive-month
+    day: archive-day
+  permalinks:
+    year: '/blog/:year/'
+    month: '/blog/:year/:month/'
+    day: '/blog/:year/:month/:day/'
 
 # Настройки сжатия
 compress_html:
