@@ -45,6 +45,7 @@ defaults:
       image: "/blog/img/avatar.jpg"
       permalink: /:year/:month/:day/:title/
       canonical_url: ""
+      lang: "ru"
 
 # Настройки сжатия
 compress_html:
