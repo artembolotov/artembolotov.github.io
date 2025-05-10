@@ -43,7 +43,7 @@ defaults:
       layout: "post"
       author: "Артём Болотов"
       image: "/img/avatar.jpg"
-      permalink: /:year/:month/:day/:title
+      permalink: /blog/:year/:month/:day/:title
       canonical_url: ""
       lang: "ru"
 
