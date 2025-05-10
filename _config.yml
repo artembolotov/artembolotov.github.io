@@ -1,6 +1,6 @@
 title: "Блог Артёма Болотова"
 description: "Блог iOS-разработчика о разработке приложений, web, технологиях и жизни"
-baseurl: "/blog"
+baseurl: "/"
 url: "https://bolotov.dev"
 permalink: /:year/:month/:day/:title/
 lang: "ru-RU"
@@ -42,7 +42,7 @@ defaults:
     values:
       layout: "post"
       author: "Артём Болотов"
-      image: "/img/avatar.jpg"
+      image: "/blog/img/avatar.jpg"
       permalink: /:year/:month/:day/:title
       canonical_url: ""
       lang: "ru"
