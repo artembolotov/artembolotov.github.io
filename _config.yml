@@ -8,7 +8,7 @@ author: "Артём Болотов"
 email: "ar@bolotov.dev"
 
 # Настройки SEO
-logo: "/img/avatar.jpg"
+logo: "/blog/img/avatar.jpg"
 social:
   name: Артём Болотов
   links:
@@ -42,7 +42,7 @@ defaults:
     values:
       layout: "post"
       author: "Артём Болотов"
-      image: "/img/avatar.jpg"
+      image: "/blog/img/avatar.jpg"
       permalink: /blog/:year/:month/:day/:title
       canonical_url: ""
       lang: "ru"
