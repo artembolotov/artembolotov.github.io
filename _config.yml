@@ -1,8 +1,8 @@
 title: "Блог Артёма Болотова"
 description: "Блог iOS-разработчика о разработке приложений, web, технологиях и жизни"
-baseurl: "/blog"
+baseurl: "/"
 url: "https://bolotov.dev"
-permalink: /:year/:month/:day/:title/
+permalink: /blog/:year/:month/:day/:title/
 lang: "ru-RU"
 author: "Артём Болотов"
 email: "ar@bolotov.dev"
