@@ -1,8 +1,8 @@
 # robots.txt для bolotov.dev
 User-agent: *
 Allow: /
-Disallow: /+1.html
-Disallow: /skip.html
+Disallow: /+1
+Disallow: /skip
 Disallow: /blog/img/
 Disallow: /icons/
 Disallow: /styles/
