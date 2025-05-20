@@ -49,12 +49,6 @@ defaults:
         - /blog/:year/:month/:day/:title.html
       canonical_url: ""
       lang: "ru"
-  - scope:
-      path: ""
-      type: "pages"
-    values:
-      redirect_from:
-        - :path.html
 
 # Настройки сжатия
 compress_html:
