@@ -23,6 +23,7 @@ social:
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-redirect-from
 
 # Исключения из сборки
 exclude:
@@ -44,8 +45,17 @@ defaults:
       author: "Артём Болотов"
       image: "/blog/img/avatar.jpg"
       permalink: /blog/:year/:month/:day/:title
+      redirect_from:
+        - /blog/:year/:month/:day/:title.html
       canonical_url: ""
       lang: "ru"
+      
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      redirect_from:
+        - :path.html
 
 # Настройки сжатия
 compress_html:
