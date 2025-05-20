@@ -49,7 +49,6 @@ defaults:
         - /blog/:year/:month/:day/:title.html
       canonical_url: ""
       lang: "ru"
-      
   - scope:
       path: ""
       type: "pages"
