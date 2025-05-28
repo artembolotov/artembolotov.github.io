@@ -428,7 +428,7 @@ time {
 /* Blockquotes styling */
 blockquote {
   margin: 2em 0;
-  padding: 1.5em 2em;
+  padding: 1em;
   background-color: #f8f9fa;
   border-left: 4px solid #0089ff;
   border-radius: 0 4px 4px 0;
