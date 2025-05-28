@@ -424,3 +424,41 @@ time {
     color: #888;
   }
 }
+
+/* Blockquotes styling */
+blockquote {
+  margin: 2em 0;
+  padding: 1.5em 2em;
+  background-color: #f8f9fa;
+  border-left: 4px solid #0089ff;
+  border-radius: 0 4px 4px 0;
+  position: relative;
+  font-style: italic;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+blockquote p {
+  margin: 0;
+  color: rgba(0,0,0,0.8);
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .read-time {
+    color: #888;
+  }
+  
+  blockquote {
+    background-color: #1a1a1a;
+    border-left-color: #64b2ff;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+  
+  blockquote p {
+    color: rgba(255,255,255,0.9);
+  }
+}
