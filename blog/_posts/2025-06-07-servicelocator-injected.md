@@ -1,47 +1,46 @@
 ---
-title: "ServiceLocator и @Injected: упрощаем работу с зависимостями (в iOS)"
-description: "Простой и понятный способ организации кода в Swift-приложениях без сложных фреймворков"
+title: "ServiceLocator и&nbsp;@Injected: как упростить работу с&nbsp;зависимостями в&nbsp;iOS"
+description: "Простой и&nbsp;понятный способ организации кода в&nbsp;Swift-приложениях без сложных фреймворков"
 tags: [iosdev]
-draft: true
 ---
 
-Представьте, что вы строите дом. У вас есть электрик, сантехник, маляр — каждый специалист отвечает за свою часть работы. В программировании похожая ситуация: у нас есть разные сервисы (службы), каждый из которых выполняет свою задачу. Сегодня расскажу, как удобно организовать работу с такими сервисами в iOS-приложении.
+Представьте, что вы&nbsp;строите дом. У&nbsp;вас есть электрик, сантехник, маляр&nbsp;&mdash; каждый специалист отвечает за&nbsp;свою часть работы. В&nbsp;программировании похожая ситуация: у&nbsp;нас есть разные сервисы (службы), каждый из&nbsp;которых выполняет свою задачу. Сегодня расскажу, как удобно организовать работу с&nbsp;такими сервисами в&nbsp;iOS-приложении.
 
 ## Проблема: запутанные связи
 
-Когда приложение растёт, в нём появляется всё больше компонентов, которые должны друг с другом взаимодействовать. Например:
-- Сервис для работы с сетью
+Когда приложение растёт, в&nbsp;нём появляется всё больше компонентов, которые должны друг с&nbsp;другом взаимодействовать. Например:
+- Сервис для работы с&nbsp;сетью
 - Сервис для сохранения данных
 - Сервис аналитики
-- И так далее...
+- И&nbsp;так далее...
 
-Без правильной организации код быстро превращается в спагетти, где всё зависит от всего.
+Без правильной организации код быстро превращается в&nbsp;спагетти, где всё зависит от&nbsp;всего.
 
 ## Решение: ServiceLocator
 
-ServiceLocator — это как справочная служба в большом офисном центре. Вместо того чтобы бегать по этажам в поисках нужного специалиста, вы просто обращаетесь в справочную: «Мне нужен бухгалтер» — и вам сразу говорят, где его найти.
+ServiceLocator&nbsp;&mdash; это как справочная служба в&nbsp;большом офисном центре. Вместо того чтобы бегать по&nbsp;этажам в&nbsp;поисках нужного специалиста, вы&nbsp;просто обращаетесь в&nbsp;справочную: &laquo;Мне нужен бухгалтер&raquo;&nbsp;&mdash; и&nbsp;вам сразу говорят, где его найти.
 
-Вот как это выглядит в коде:
+Вот как это выглядит в&nbsp;коде:
 
 ```swift
 final class ServiceLocator {
-    // Единственный экземпляр на всё приложение
+    // Singleton instance for the entire app
     static let shared = ServiceLocator()
     
-    // Словарь для хранения всех сервисов
+    // Dictionary to store all services
     private lazy var services = [String: Any]()
     
-    // Регистрация нового сервиса
+    // Register a new service
     func addService<T>(service: T) {
         let key = String(describing: T.self)
         services[key] = service
     }
     
-    // Получение сервиса
+    // Get a service
     func getService<T>() -> T {
         let key = String(describing: T.self)
         guard let service = services[key] as? T else {
-            fatalError("Сервис типа \(T.self) не зарегистрирован!")
+            fatalError("Service of type \(T.self) is not registered!")
         }
         return service
     }
@@ -50,7 +49,7 @@ final class ServiceLocator {
 
 ## Магия @propertyWrapper
 
-Но постоянно писать `ServiceLocator.shared.getService()` — утомительно. Здесь на помощь приходит возможность Swift создавать собственные «обёртки» для свойств. Это как автоматический дозатор мыла — вы просто подносите руки, а он сам выдаёт нужное количество.
+Но&nbsp;постоянно писать `ServiceLocator.shared.getService()`&nbsp;&mdash; утомительно. Здесь на&nbsp;помощь приходит возможность Swift создавать собственные &laquo;обёртки&raquo; для свойств. Это как автоматический дозатор мыла&nbsp;&mdash; вы&nbsp;просто подносите руки, а&nbsp;он&nbsp;сам выдаёт нужное количество.
 
 ```swift
 @propertyWrapper
@@ -60,58 +59,63 @@ struct Injected<Service> {
     var wrappedValue: Service {
         mutating get { service }
     }
+     
+    public var projectedValue: Injected<Service> {
+        get { self }
+        set { self = newValue }
+    }
 }
 ```
 
 ## Важность протоколов: контракт вместо реализации
 
-Представьте, что вы нанимаете водителя. Вам важно, что он умеет водить машину, а не то, какой марки у него права. В программировании протоколы работают так же — они описывают, ЧТО должен уметь делать сервис, а не КАК он это делает.
+Представьте, что вы&nbsp;нанимаете водителя. Вам важно, что он&nbsp;умеет водить машину, а&nbsp;не&nbsp;то, какой марки у&nbsp;него права. В&nbsp;программировании протоколы работают так&nbsp;же&nbsp;&mdash; они описывают, ЧТО должен уметь делать сервис, а&nbsp;не&nbsp;КАК он&nbsp;это делает.
 
 ### Почему это важно?
 
-Допустим, вы создали приложение, которое сохраняет данные в iCloud. Но потом решили, что хотите сохранять их локально. Если вы использовали протоколы, то замена будет простой как щелчок выключателя.
+Допустим, вы&nbsp;создали приложение, которое сохраняет данные в&nbsp;iCloud. Но&nbsp;потом решили, что хотите сохранять их&nbsp;локально. Если вы&nbsp;использовали протоколы, то&nbsp;замена будет простой как щелчок выключателя.
 
 Вот пример:
 
 ```swift
-// Протокол описывает, ЧТО должен уметь сервис хранения
+// Protocol describes WHAT the storage service should do
 protocol StorageServiceProtocol {
     func save(data: String, key: String)
     func load(key: String) -> String?
     func delete(key: String)
 }
 
-// Реализация для iCloud
+// Implementation for iCloud
 class CloudStorageService: StorageServiceProtocol {
     func save(data: String, key: String) {
-        print("Сохраняю в iCloud: \(data)")
-        // Код для работы с iCloud
+        print("Saving to iCloud: \(data)")
+        // Code to work with iCloud
     }
     
     func load(key: String) -> String? {
-        print("Загружаю из iCloud")
-        return "данные из облака"
+        print("Loading from iCloud")
+        return "data from cloud"
     }
     
     func delete(key: String) {
-        print("Удаляю из iCloud")
+        print("Deleting from iCloud")
     }
 }
 
-// Реализация для локального хранилища
+// Implementation for local storage
 class LocalStorageService: StorageServiceProtocol {
     func save(data: String, key: String) {
-        print("Сохраняю локально: \(data)")
-        // Код для работы с UserDefaults
+        print("Saving locally: \(data)")
+        // Code to work with UserDefaults
     }
     
     func load(key: String) -> String? {
-        print("Загружаю локально")
-        return "локальные данные"
+        print("Loading locally")
+        return "local data"
     }
     
     func delete(key: String) {
-        print("Удаляю локально")
+        print("Deleting locally")
     }
 }
 ```
@@ -121,56 +125,56 @@ class LocalStorageService: StorageServiceProtocol {
 Теперь смотрите, как просто поменять реализацию:
 
 ```swift
-// При запуске приложения выбираем нужную реализацию
+// Choose implementation when app starts
 if userHasInternet {
     ServiceLocator.shared.addService(service: CloudStorageService() as StorageServiceProtocol)
 } else {
     ServiceLocator.shared.addService(service: LocalStorageService() as StorageServiceProtocol)
 }
 
-// В коде приложения ничего менять не нужно!
+// No need to change anything in the app code!
 class DataManager {
     @Injected private var storage: StorageServiceProtocol
     
     func saveUserData() {
-        storage.save(data: "Важные данные", key: "user_data")
-        // Работает с любой реализацией!
+        storage.save(data: "Important data", key: "user_data")
+        // Works with any implementation!
     }
 }
 ```
 
-## Как это работает на практике
+## Как это работает на&nbsp;практике
 
-### Шаг 1: Создаём протокол и реализацию
+### Шаг 1: Создаём протокол и&nbsp;реализацию
 
 ```swift
-// Протокол для работы с сетью
+// Protocol for network operations
 protocol NetworkServiceProtocol {
     func loadUserData() async throws -> UserData
     func sendAnalytics(event: String)
 }
 
-// Реальная реализация
+// Real implementation
 class NetworkService: NetworkServiceProtocol {
     func loadUserData() async throws -> UserData {
-        // Здесь код для работы с API
-        return UserData(name: "Артём")
+        // API call code here
+        return UserData(name: "Artem")
     }
     
     func sendAnalytics(event: String) {
-        print("Отправляю аналитику: \(event)")
+        print("Sending analytics: \(event)")
     }
 }
 
-// Тестовая реализация для разработки
+// Mock implementation for development
 class MockNetworkService: NetworkServiceProtocol {
     func loadUserData() async throws -> UserData {
-        // Возвращаем тестовые данные без обращения к серверу
-        return UserData(name: "Тестовый пользователь")
+        // Return test data without server call
+        return UserData(name: "Test User")
     }
     
     func sendAnalytics(event: String) {
-        print("ТЕСТ: \(event)")
+        print("TEST: \(event)")
     }
 }
 ```
@@ -178,19 +182,23 @@ class MockNetworkService: NetworkServiceProtocol {
 ### Шаг 2: Регистрируем нужную версию
 
 ```swift
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    func application(_ application: UIApplication, 
-                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+class App {
+    init() {
+        setupServices()
+    }
+    
+    private func setupServices() {
         #if DEBUG
-        // В режиме разработки используем тестовые сервисы
+        // Use mock services in development
         ServiceLocator.shared.addService(service: MockNetworkService() as NetworkServiceProtocol)
         #else
-        // В продакшене — реальные
+        // Use real services in production
         ServiceLocator.shared.addService(service: NetworkService() as NetworkServiceProtocol)
         #endif
         
-        return true
+        // Register other services
+        ServiceLocator.shared.addService(service: AnalyticsService() as AnalyticsServiceProtocol)
+        ServiceLocator.shared.addService(service: KeychainService() as KeychainServiceProtocol)
     }
 }
 ```
@@ -216,44 +224,85 @@ class ProfileViewController: UIViewController {
 }
 ```
 
+## Практический пример: смена системы аналитики
+
+Представим, что вы&nbsp;решили перейти с&nbsp;одной системы аналитики на&nbsp;другую. Благодаря протоколам это делается легко:
+
+```swift
+// Analytics protocol
+protocol AnalyticsServiceProtocol {
+    func trackEvent(_ name: String)
+    func trackEvent(_ name: String, parameters: [String: Any])
+}
+
+// Implementation for System A
+class AnalyticsSystemA: AnalyticsServiceProtocol {
+    func trackEvent(_ name: String) {
+        // Send event to System A
+    }
+    
+    func trackEvent(_ name: String, parameters: [String: Any]) {
+        // Send event with parameters to System A
+    }
+}
+
+// Implementation for System B
+class AnalyticsSystemB: AnalyticsServiceProtocol {
+    func trackEvent(_ name: String) {
+        // Send event to System B
+    }
+    
+    func trackEvent(_ name: String, parameters: [String: Any]) {
+        // Send event with parameters to System B
+    }
+}
+
+// Easy switch between implementations
+if shouldUseNewAnalytics {
+    ServiceLocator.shared.addService(service: AnalyticsSystemB() as AnalyticsServiceProtocol)
+} else {
+    ServiceLocator.shared.addService(service: AnalyticsSystemA() as AnalyticsServiceProtocol)
+}
+```
+
 ## Преимущества использования протоколов
 
 1. **Гибкость**: Легко менять реализацию без изменения основного кода
 2. **Тестирование**: Можно создавать тестовые версии сервисов
-3. **Разработка**: Можно работать с заглушками, пока бэкенд не готов
+3. **Разработка**: Можно работать с&nbsp;заглушками, пока бэкенд не&nbsp;готов
 4. **A/B тестирование**: Легко тестировать разные подходы
 
 ## Советы для начинающих
 
-### 1. Всегда начинайте с протокола
+### 1. Всегда начинайте с&nbsp;протокола
 
-Даже если у вас пока одна реализация:
+Даже если у&nbsp;вас пока одна реализация:
 
 ```swift
-// Сначала протокол
+// First create protocol
 protocol AnalyticsServiceProtocol {
     func trackEvent(_ name: String)
 }
 
-// Потом реализация
+// Then implementation
 class AnalyticsService: AnalyticsServiceProtocol {
     func trackEvent(_ name: String) {
-        // Отправка события
+        // Event tracking implementation
     }
 }
 ```
 
 ### 2. Называйте протоколы понятно
 
-Добавляйте суффикс `Protocol` или префикс с описанием функционала:
+Добавляйте суффикс `Protocol` или префикс с&nbsp;описанием функционала:
 
 ```swift
-protocol DataPersisting { }      // Хорошо
-protocol StorageProtocol { }     // Хорошо
-protocol Storage { }             // Может путаться с классом
+protocol DataPersisting { }      // Good
+protocol StorageProtocol { }     // Good
+protocol Storage { }             // Can be confused with class
 ```
 
-### 3. Группируйте регистрацию по смыслу
+### 3. Группируйте регистрацию по&nbsp;смыслу
 
 ```swift
 extension ServiceLocator {
@@ -271,8 +320,8 @@ extension ServiceLocator {
 
 ## Заключение
 
-ServiceLocator с @Injected и протоколами — это мощная комбинация, которая делает код гибким и удобным для поддержки. Вы получаете простоту использования и возможность легко менять реализацию в будущем.
+ServiceLocator с&nbsp;@Injected и&nbsp;протоколами&nbsp;&mdash; это мощная комбинация, которая делает код гибким и&nbsp;удобным для поддержки. Вы&nbsp;получаете простоту использования и&nbsp;возможность легко менять реализацию в&nbsp;будущем.
 
-Помните: протокол — это контракт между частями вашего приложения. Он говорит «что делать», а реализация решает «как делать». Это даёт свободу менять «как» без изменения «что».
+Помните: протокол&nbsp;&mdash; это контракт между частями вашего приложения. Он&nbsp;говорит &laquo;что делать&raquo;, а&nbsp;реализация решает &laquo;как делать&raquo;. Это даёт свободу менять &laquo;как&raquo; без изменения &laquo;что&raquo;.
 
-Начните использовать этот подход в своих проектах — и вы удивитесь, насколько проще станет вносить изменения и добавлять новые функции!
+Начните использовать этот подход в&nbsp;своих проектах&nbsp;&mdash; и&nbsp;вы&nbsp;удивитесь, насколько проще станет вносить изменения и&nbsp;добавлять новые функции!
