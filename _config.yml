@@ -51,12 +51,12 @@ defaults:
 compress_html:
   clippings: all
   comments: ["<!-- ", " -->"]
-  endings: all
+  endings: []
   ignore:
     envs: [development]
-  blanklines: false
+  blanklines: true
   profile: false
-  startings: [html, head, body]
+  startings: []
 
 # Игнорировать конфигурацию темы
 ignore_theme_config: true
