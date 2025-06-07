@@ -4,7 +4,7 @@ description: "Простой и&nbsp;понятный способ органи�
 tags: [iosdev]
 ---
 
-Представьте, что вы&nbsp;строите дом. У&nbsp;вас есть электрик, сантехник, маляр&nbsp;&mdash; каждый специалист отвечает за&nbsp;свою часть работы. В&nbsp;программировании похожая ситуация: у&nbsp;нас есть разные сервисы (службы), каждый из&nbsp;которых выполняет свою задачу. Сегодня расскажу, как удобно организовать работу с&nbsp;такими сервисами в&nbsp;iOS-приложении.
+Представьте, что вы&nbsp;строите дом. У&nbsp;вас есть электрик, сантехник, маляр&nbsp;&mdash; каждый специалист отвечает за&nbsp;свою часть работы. В&nbsp;программировании похожая ситуация: у&nbsp;нас есть разные сервисы (службы), каждый из&nbsp;которых выполняет свою задачу. Сегодня расскажу, как удобно организовать работу с&nbsp;такими сервисами в&nbsp;iOS-приложении на&nbsp;SwiftUI.
 
 ## Проблема: запутанные связи
 
@@ -58,11 +58,6 @@ struct Injected<Service> {
     
     var wrappedValue: Service {
         mutating get { service }
-    }
-     
-    public var projectedValue: Injected<Service> {
-        get { self }
-        set { self = newValue }
     }
 }
 ```
@@ -133,17 +128,26 @@ if userHasInternet {
 }
 
 // No need to change anything in the app code!
-class DataManager {
+struct SettingsView: View {
     @Injected private var storage: StorageServiceProtocol
+    @State private var userName = ""
     
-    func saveUserData() {
-        storage.save(data: "Important data", key: "user_data")
-        // Works with any implementation!
+    var body: some View {
+        VStack {
+            TextField("Your name", text: $userName)
+            
+            Button("Save") {
+                storage.save(data: userName, key: "user_name")
+            }
+        }
+        .onAppear {
+            userName = storage.load(key: "user_name") ?? ""
+        }
     }
 }
 ```
 
-## Как это работает на&nbsp;практике
+## Как это работает на&nbsp;практике в&nbsp;SwiftUI
 
 ### Шаг 1: Создаём протокол и&nbsp;реализацию
 
@@ -158,7 +162,7 @@ protocol NetworkServiceProtocol {
 class NetworkService: NetworkServiceProtocol {
     func loadUserData() async throws -> UserData {
         // API call code here
-        return UserData(name: "Artem")
+        return UserData(name: "Artem", email: "ar@bolotov.dev")
     }
     
     func sendAnalytics(event: String) {
@@ -170,21 +174,34 @@ class NetworkService: NetworkServiceProtocol {
 class MockNetworkService: NetworkServiceProtocol {
     func loadUserData() async throws -> UserData {
         // Return test data without server call
-        return UserData(name: "Test User")
+        return UserData(name: "Test User", email: "test@example.com")
     }
     
     func sendAnalytics(event: String) {
         print("TEST: \(event)")
     }
 }
+
+// Data model
+struct UserData {
+    let name: String
+    let email: String
+}
 ```
 
-### Шаг 2: Регистрируем нужную версию
+### Шаг 2: Регистрируем сервисы в&nbsp;точке входа
 
 ```swift
-class App {
+@main
+struct MyApp: App {
     init() {
         setupServices()
+    }
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
     }
     
     private func setupServices() {
@@ -203,103 +220,237 @@ class App {
 }
 ```
 
-### Шаг 3: Используем везде одинаково
+### Шаг 3: Используем в&nbsp;SwiftUI Views
 
 ```swift
-class ProfileViewController: UIViewController {
+struct ProfileView: View {
     @Injected private var network: NetworkServiceProtocol
+    @Injected private var analytics: AnalyticsServiceProtocol
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        Task {
-            do {
-                let userData = try await network.loadUserData()
-                updateUI(with: userData)
-            } catch {
-                showError(error)
+    @State private var userData: UserData?
+    @State private var isLoading = false
+    @State private var errorMessage: String?
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                if isLoading {
+                    ProgressView()
+                        .padding()
+                } else if let userData = userData {
+                    VStack(spacing: 20) {
+                        Text("Hello, \(userData.name)!")
+                            .font(.title)
+                        
+                        Text(userData.email)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding()
+                } else if let error = errorMessage {
+                    Text(error)
+                        .foregroundColor(.red)
+                        .padding()
+                }
+                
+                Button("Reload") {
+                    Task {
+                        await loadUserData()
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .navigationTitle("Profile")
+            .onAppear {
+                analytics.trackEvent("ProfileView opened")
+                Task {
+                    await loadUserData()
+                }
             }
         }
     }
+    
+    private func loadUserData() async {
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            userData = try await network.loadUserData()
+            analytics.trackEvent("User data loaded")
+        } catch {
+            errorMessage = "Failed to load data: \(error.localizedDescription)"
+            analytics.trackEvent("User data load failed")
+        }
+        
+        isLoading = false
+    }
 }
 ```
 
-## Практический пример: смена системы аналитики
+## Продвинутый пример: ObservableObject с&nbsp;сервисами
 
-Представим, что вы&nbsp;решили перейти с&nbsp;одной системы аналитики на&nbsp;другую. Благодаря протоколам это делается легко:
+Часто в&nbsp;SwiftUI нужно использовать сервисы внутри ObservableObject:
 
 ```swift
-// Analytics protocol
-protocol AnalyticsServiceProtocol {
-    func trackEvent(_ name: String)
-    func trackEvent(_ name: String, parameters: [String: Any])
+// Protocol for authentication
+protocol AuthServiceProtocol {
+    func login(email: String, password: String) async throws -> User
+    func logout()
+    var isAuthenticated: Bool { get }
 }
 
-// Implementation for System A
-class AnalyticsSystemA: AnalyticsServiceProtocol {
-    func trackEvent(_ name: String) {
-        // Send event to System A
+// ViewModel using services
+class AuthViewModel: ObservableObject {
+    @Injected private var authService: AuthServiceProtocol
+    @Injected private var analytics: AnalyticsServiceProtocol
+    
+    @Published var isLoading = false
+    @Published var errorMessage: String?
+    @Published var isAuthenticated = false
+    
+    func login(email: String, password: String) async {
+        await MainActor.run {
+            isLoading = true
+            errorMessage = nil
+        }
+        
+        do {
+            let user = try await authService.login(email: email, password: password)
+            analytics.trackEvent("Login successful", parameters: ["user_id": user.id])
+            
+            await MainActor.run {
+                isAuthenticated = true
+                isLoading = false
+            }
+        } catch {
+            analytics.trackEvent("Login failed")
+            
+            await MainActor.run {
+                errorMessage = error.localizedDescription
+                isLoading = false
+            }
+        }
     }
     
-    func trackEvent(_ name: String, parameters: [String: Any]) {
-        // Send event with parameters to System A
+    func logout() {
+        authService.logout()
+        analytics.trackEvent("User logged out")
+        isAuthenticated = false
     }
 }
 
-// Implementation for System B
-class AnalyticsSystemB: AnalyticsServiceProtocol {
-    func trackEvent(_ name: String) {
-        // Send event to System B
-    }
+// SwiftUI View using ViewModel
+struct LoginView: View {
+    @StateObject private var viewModel = AuthViewModel()
+    @State private var email = ""
+    @State private var password = ""
     
-    func trackEvent(_ name: String, parameters: [String: Any]) {
-        // Send event with parameters to System B
-    }
-}
-
-// Easy switch between implementations
-if shouldUseNewAnalytics {
-    ServiceLocator.shared.addService(service: AnalyticsSystemB() as AnalyticsServiceProtocol)
-} else {
-    ServiceLocator.shared.addService(service: AnalyticsSystemA() as AnalyticsServiceProtocol)
-}
-```
-
-## Преимущества использования протоколов
-
-1. **Гибкость**: Легко менять реализацию без изменения основного кода
-2. **Тестирование**: Можно создавать тестовые версии сервисов
-3. **Разработка**: Можно работать с&nbsp;заглушками, пока бэкенд не&nbsp;готов
-4. **A/B тестирование**: Легко тестировать разные подходы
-
-## Советы для начинающих
-
-### 1. Всегда начинайте с&nbsp;протокола
-
-Даже если у&nbsp;вас пока одна реализация:
-
-```swift
-// First create protocol
-protocol AnalyticsServiceProtocol {
-    func trackEvent(_ name: String)
-}
-
-// Then implementation
-class AnalyticsService: AnalyticsServiceProtocol {
-    func trackEvent(_ name: String) {
-        // Event tracking implementation
+    var body: some View {
+        Form {
+            TextField("Email", text: $email)
+                .textContentType(.emailAddress)
+                .autocapitalization(.none)
+            
+            SecureField("Password", text: $password)
+                .textContentType(.password)
+            
+            if let error = viewModel.errorMessage {
+                Text(error)
+                    .foregroundColor(.red)
+                    .font(.caption)
+            }
+            
+            Button(action: {
+                Task {
+                    await viewModel.login(email: email, password: password)
+                }
+            }) {
+                if viewModel.isLoading {
+                    ProgressView()
+                } else {
+                    Text("Login")
+                }
+            }
+            .disabled(viewModel.isLoading || email.isEmpty || password.isEmpty)
+        }
+        .navigationTitle("Login")
     }
 }
 ```
 
-### 2. Называйте протоколы понятно
-
-Добавляйте суффикс `Protocol` или префикс с&nbsp;описанием функционала:
+## Практический пример: переключение окружений
 
 ```swift
-protocol DataPersisting { }      // Good
-protocol StorageProtocol { }     // Good
-protocol Storage { }             // Can be confused with class
+// Protocol for configuration
+protocol ConfigServiceProtocol {
+    var apiBaseURL: String { get }
+    var environment: Environment { get }
+}
+
+enum Environment {
+    case development
+    case staging
+    case production
+}
+
+// Different implementations
+class DevConfigService: ConfigServiceProtocol {
+    var apiBaseURL = "https://dev-api.example.com"
+    var environment = Environment.development
+}
+
+class ProdConfigService: ConfigServiceProtocol {
+    var apiBaseURL = "https://api.example.com"
+    var environment = Environment.production
+}
+
+// Settings view to switch environments
+struct SettingsView: View {
+    @Injected private var config: ConfigServiceProtocol
+    
+    var body: some View {
+        List {
+            Section("Environment") {
+                Label(config.environment.rawValue, systemImage: "server.rack")
+                Text(config.apiBaseURL)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .navigationTitle("Settings")
+    }
+}
+```
+
+## Советы для SwiftUI разработчиков
+
+### 1. Используйте @Injected в&nbsp;View напрямую
+
+```swift
+struct ContentView: View {
+    @Injected private var network: NetworkServiceProtocol
+    
+    var body: some View {
+        // Use service directly in view
+    }
+}
+```
+
+### 2. Для StateObject создайте фабричный метод
+
+```swift
+extension ServiceLocator {
+    func makeAuthViewModel() -> AuthViewModel {
+        return AuthViewModel()
+    }
+}
+
+struct RootView: View {
+    @StateObject private var authViewModel = ServiceLocator.shared.makeAuthViewModel()
+    
+    var body: some View {
+        // Your view code
+    }
+}
 ```
 
 ### 3. Группируйте регистрацию по&nbsp;смыслу
@@ -313,15 +464,15 @@ extension ServiceLocator {
     
     func registerStorageServices() {
         addService(service: KeychainService() as KeychainServiceProtocol)
-        addService(service: CacheService() as CacheServiceProtocol)
+        addService(service: UserDefaultsService() as UserDefaultsServiceProtocol)
     }
 }
 ```
 
 ## Заключение
 
-ServiceLocator с&nbsp;@Injected и&nbsp;протоколами&nbsp;&mdash; это мощная комбинация, которая делает код гибким и&nbsp;удобным для поддержки. Вы&nbsp;получаете простоту использования и&nbsp;возможность легко менять реализацию в&nbsp;будущем.
+ServiceLocator с&nbsp;@Injected и&nbsp;протоколами отлично работает в&nbsp;SwiftUI приложениях. Вы&nbsp;получаете простоту использования, чистый код и&nbsp;возможность легко менять реализацию сервисов.
 
 Помните: протокол&nbsp;&mdash; это контракт между частями вашего приложения. Он&nbsp;говорит &laquo;что делать&raquo;, а&nbsp;реализация решает &laquo;как делать&raquo;. Это даёт свободу менять &laquo;как&raquo; без изменения &laquo;что&raquo;.
 
-Начните использовать этот подход в&nbsp;своих проектах&nbsp;&mdash; и&nbsp;вы&nbsp;удивитесь, насколько проще станет вносить изменения и&nbsp;добавлять новые функции!
+Начните использовать этот подход в&nbsp;своих SwiftUI проектах&nbsp;&mdash; и&nbsp;вы&nbsp;удивитесь, насколько проще станет организовывать код и&nbsp;добавлять новые функции!
