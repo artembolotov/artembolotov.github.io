@@ -59,6 +59,11 @@ struct Injected<Service> {
     var wrappedValue: Service {
         mutating get { service }
     }
+
+    public var projectedValue: Injected<Service> {
+        get { self }
+        set { self = newValue }
+    }
 }
 ```
 
