@@ -1,12 +1,10 @@
 ---
-title: "Переход с Google Analytics на Яндекс.Метрику"
-description: "Как отказаться от хорошего инструмента и начать пользоваться плохим."
+title: "Переход с Google Analytics на Яндекс.Метрику с соблюдением GDPR"
+description: "Практическое руководство по отказу от хорошего инструмента"
 tags: [webdev]
 image: /blog/img/2025-05-30-goodbye-ga/migrate.png
 draft: false
 ---
-
-# Переход с Google Analytics на Яндекс.Метрику с соблюдением GDPR: практическое руководство
 
 ![Уходим с GA](/blog/img/2025-05-30-goodbye-ga/migrate.png)
 
