@@ -23,7 +23,7 @@ draft: false
 
 ### Шаг 1: Создание счетчика
 
-1. Зайдите в [Яндекс.Метрику](https://metrika.yandex.ru/)
+1. Зайдите в [Яндекс.Метрику](https://metrika.yandex.ru/){:target="_blank"}
 2. Нажмите "Добавить счетчик"
 3. Укажите адрес сайта и название
 4. Настройте базовые параметры
@@ -82,7 +82,7 @@ document.getElementById('accept-cookies').addEventListener('click', function() {
     initYandexMetrika();
 });
 ```
-![Баннер](/blog/img/2025-05-30-goodbye-ga/screeenlines_example.jpg)
+![Баннер](/blog/img/2025-05-30-goodbye-ga/screenlines-banner.png)
 *Я просто прибил баннер с согласием к низу экрана*
 
 ## Важно: почему мы убрали noscript версию
