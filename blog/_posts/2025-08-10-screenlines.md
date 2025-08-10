@@ -8,11 +8,7 @@ draft: true
 
 > Как проблема с защитным стеклом превратилась в приложение, которое за 3 дня скачали 4000 человек.
 
-![ScreenLines в App Store](/blog/img/2025-08-10-screenlines/IMG_0929.PNG)
-
-
-{% include image-row-2.html image1="/blog/img/2025-08-10-screenlines/results1.png" alt1="Едем в автобусе" image2="/blog/img/2025-08-10-screenlines/results2.png" alt2="Наш самолёт" %}
-
+![ScreenLines в App Store](/blog/img/2025-08-10-screenlines/preview.png)
 
 ## Проблема, знакомая каждому
 
