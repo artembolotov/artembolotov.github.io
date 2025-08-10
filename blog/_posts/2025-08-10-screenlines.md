@@ -2,7 +2,7 @@
 title: "ScreenLines: моё новое приложение"
 description: "Как простая белая линия зашла в App Store и обогнала «Парковки Москвы»"
 tags: [notes, iosdev]
-image: //blog/img/2025-08-10-screenlines/screenlines.png
+image: /blog/img/2025-08-10-screenlines/screenlines.png
 draft: true
 ---
 
