@@ -8,7 +8,7 @@ draft: true
 
 > История о том, как бытовая проблема с защитным стеклом превратилась в приложение, которое за 3 дня скачали 3000 человек и которое поднялось на 34 место в рейтинге утилит App Store.
 
-![ScreenLines на 34 месте в App Store](/assets/images/screenlines/appstore-rating.jpg)
+![ScreenLines в App Store](/blog/img/2025-08-10-screenlines/preview.png)
 
 ## Проблема, знакомая каждому
 
