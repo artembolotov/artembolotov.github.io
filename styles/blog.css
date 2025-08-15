@@ -2,22 +2,24 @@ html { overflow-y:scroll; }
 main { margin-top: 50px; line-height: 1.5; }
 main img { display: block; max-height: 500px; max-width: 100%; margin: 0 auto; }
 
-/* Post content container - same width as original container */
-.post-content {
+/* Auto-container for all elements except galleries */
+main > *:not(.image-gallery) {
   max-width: 970px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
   box-sizing: border-box;
 }
 
 @media screen and (min-width: 768px) {
-  .post-content {
+  main > *:not(.image-gallery) {
     max-width: 750px;
   }
 }
 
 @media screen and (min-width: 992px) {
-  .post-content {
+  main > *:not(.image-gallery) {
     max-width: 970px;
   }
 }
@@ -91,12 +93,6 @@ h3 {
   object-fit: contain;
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-/* Gallery breaks out of post-content - now just full width */
-.post-content .image-gallery {
-  width: 100%;
-  margin-left: 0;
 }
 
 /* Mobile gallery styles */
