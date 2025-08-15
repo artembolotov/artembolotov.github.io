@@ -407,31 +407,20 @@ time {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-/* Image Gallery - universal approach */
+/* Image Gallery */
 .image-gallery {
   margin: 2rem 0;
-  /* Break out of container on all devices */
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  margin-left: -49vw;
-  
-  /* Ensure gallery itself can scroll */
-  overflow: visible;
 }
 
 .image-gallery-inner {
   display: flex;
-  overflow-x: auto; /* Only gallery scrolls horizontally */
+  overflow-x: auto;
   scroll-snap-type: x mandatory;
   gap: 0.5rem;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.2) transparent;
-  
-  width: max-content;
-  margin: 0 auto;
 }
 
 .image-gallery-inner img {
@@ -444,8 +433,34 @@ time {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-/* Mobile image sizing */
+/* Desktop: break out of container */
+@media screen and (min-width: 769px) {
+  .image-gallery {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -49vw;
+  }
+  
+  .image-gallery-inner {
+    /* Limit width to viewport, enable scroll */
+    max-width: 100vw;
+    width: auto;
+  }
+}
+
+/* Mobile */
 @media screen and (max-width: 768px) {
+  .image-gallery {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+  
+  .image-gallery-inner {
+    gap: 0.75rem;
+    width: 100%;
+  }
+  
   .image-gallery-inner:not([data-count="1"]) img {
     width: 75vw;
     max-width: 75vw;
