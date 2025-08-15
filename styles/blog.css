@@ -451,47 +451,44 @@ time {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-/* Image Gallery - corrected for container structure */
+/* Image Gallery - full edge-to-edge */
 .image-gallery {
   margin: 2rem 0;
 }
 
-/* Desktop: break out of container */
+/* Desktop: break out of container, edge-to-edge */
 @media screen and (min-width: 769px) {
   .image-gallery {
-    /* Calculate breakout considering container width and padding */
     width: 100vw;
     position: relative;
     left: 50%;
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    
-    /* Add padding to prevent edge collision */
-    padding: 0 2rem;
-    box-sizing: border-box;
+    /* No padding - edge to edge */
   }
   
   .image-gallery-inner {
-    /* Center the gallery content */
     max-width: none;
     width: max-content;
     margin: 0 auto;
   }
 }
 
-/* Mobile: full width */
+/* Mobile: full width, edge-to-edge */
 @media screen and (max-width: 768px) {
   .image-gallery {
     /* Compensate for container padding */
     margin-left: -1rem;
     margin-right: -1rem;
-    padding: 0 1rem;
+    /* No additional padding */
   }
   
   .image-gallery-inner {
     gap: 0.75rem;
     width: 100%;
+    /* Add minimal padding only for mobile scroll comfort */
+    padding: 0 0.5rem;
   }
   
   .image-gallery-inner[data-count="1"] {
@@ -499,7 +496,7 @@ time {
   }
   
   .image-gallery-inner[data-count="1"] img {
-    max-width: calc(100% - 2rem);
+    max-width: calc(100vw - 1rem);
   }
   
   .image-gallery-inner:not([data-count="1"]) img {
