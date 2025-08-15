@@ -462,8 +462,8 @@ time {
     width: 100vw;
     position: relative;
     left: 50%;
-    /* Compensate for scrollbar: typically 17px, so ~0.9vw on 1920px screen */
-    margin-left: calc(-50vw + 0.5 * (100vw - 100%));
+    /* Use the value that works, but make it responsive */
+    margin-left: -49vw;
   }
   
   .image-gallery-inner {
