@@ -451,9 +451,56 @@ time {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
+/* Image Gallery */
+.image-gallery {
+  margin: 2rem 0;
+}
+
+.image-gallery-inner {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 0.5rem;
+  
+  /* Desktop: auto width, can extend beyond text */
+  width: fit-content;
+  max-width: calc(100vw - 2rem);
+  
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+
+.image-gallery-inner::-webkit-scrollbar {
+  height: 6px;
+}
+
+.image-gallery-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.image-gallery-inner::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+.image-gallery-inner img {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  max-height: 500px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
 /* Mobile styles */
 @media screen and (max-width: 768px) {
-  .image-gallery {
+  .image-gallery-inner {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     padding: 0 1rem;
@@ -461,16 +508,16 @@ time {
   }
   
   /* Single image: centered, full width */
-  .image-gallery[data-count="1"] {
+  .image-gallery-inner[data-count="1"] {
     justify-content: center;
   }
   
-  .image-gallery[data-count="1"] img {
+  .image-gallery-inner[data-count="1"] img {
     max-width: calc(100vw - 2rem);
   }
   
   /* Multiple images: show ~80% width + partial next */
-  .image-gallery:not([data-count="1"]) img {
+  .image-gallery-inner:not([data-count="1"]) img {
     width: 80vw;
     max-width: 80vw;
   }
@@ -478,15 +525,15 @@ time {
 
 /* Dark theme */
 @media (prefers-color-scheme: dark) {
-  .image-gallery img {
+  .image-gallery-inner img {
     box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   }
   
-  .image-gallery::-webkit-scrollbar-thumb {
+  .image-gallery-inner::-webkit-scrollbar-thumb {
     background: rgba(255,255,255,0.3);
   }
   
-  .image-gallery {
+  .image-gallery-inner {
     scrollbar-color: rgba(255,255,255,0.3) transparent;
   }
 }
