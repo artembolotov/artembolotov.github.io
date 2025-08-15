@@ -1,0 +1,31 @@
+---
+layout: default
+---
+
+{% include tag-menu.html active_tag="" %}
+
+<article class="post">
+  <h1 class="post-title">{{ page.title }}</h1>
+  <time datetime="{{ page.date | date_to_xmlschema }}">
+    {% assign m = page.date | date: "%-m" | minus: 1 %}
+    {% assign months = "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря" | split: "," %}
+    {{ page.date | date: "%-d" }} {{ months[m] }} {{ page.date | date: "%Y" }}
+  </time>
+
+  {% include reading-time.html content=content %}
+
+  <div class="post-content">
+    {{ content }}
+
+    {% if page.tags %}
+    <div class="post-tags">
+      {% for post_tag in page.tags %}
+        {% include tag-translations.html tag=post_tag %}
+        <a href="/blog/{{ post_tag | slugify | downcase }}/" class="tag">#{{ tag_label }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% include author-footer.html %}
+  </div>
+</article>
