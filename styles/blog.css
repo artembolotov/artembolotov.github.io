@@ -407,96 +407,14 @@ time {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-/* Image Gallery */
-.image-gallery {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  gap: 0.5rem;
-  margin: 2rem 0;
-  
-  /* Desktop: auto width, can extend beyond text */
-  width: fit-content;
-  max-width: calc(100vw - 2rem);
-  
-  /* Smooth scrolling */
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  
-  /* Hide scrollbar but keep functionality */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.2) transparent;
-}
-
-.image-gallery::-webkit-scrollbar {
-  height: 6px;
-}
-
-.image-gallery::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.image-gallery::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.2);
-  border-radius: 3px;
-}
-
-.image-gallery img {
-  scroll-snap-align: start;
-  flex-shrink: 0;
-  max-height: 500px;
-  height: auto;
-  object-fit: contain;
-  border-radius: 4px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-/* Image Gallery - full edge-to-edge */
+/* Image Gallery - universal approach */
 .image-gallery {
   margin: 2rem 0;
-}
-
-/* Desktop: break out of container, edge-to-edge */
-@media screen and (min-width: 769px) {
-  .image-gallery {
-    width: 98vw; /* чуть меньше для компенсации */
-    position: relative;
-    left: 50%;
-    margin-left: -49vw;
-  }
-}
-
-/* Mobile: edge-to-edge, no padding */
-@media screen and (max-width: 768px) {
-  .image-gallery {
-    /* Compensate for container padding */
-    margin-left: -1rem;
-    margin-right: -1rem;
-    width: calc(100vw);
-  }
-  
-  .image-gallery-inner {
-    gap: 0.5rem;
-    width: 100%;
-    /* Remove padding for true edge-to-edge */
-    padding: 0;
-  }
-  
-  /* Single image: centered */
-  .image-gallery-inner[data-count="1"] {
-    justify-content: center;
-  }
-  
-  .image-gallery-inner[data-count="1"] img {
-    max-width: 100vw;
-  }
-  
-  /* Multiple images: show ~80% + partial next */
-  .image-gallery-inner:not([data-count="1"]) img {
-    width: 75vw; /* Adjusted for no padding */
-    max-width: 75vw;
-    flex-shrink: 0;
-  }
+  /* Break out of container on all devices */
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -49vw; /* Works for your setup */
 }
 
 .image-gallery-inner {
@@ -508,6 +426,10 @@ time {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.2) transparent;
+  
+  /* Universal image sizing */
+  width: max-content;
+  margin: 0 auto;
 }
 
 .image-gallery-inner img {
@@ -518,6 +440,14 @@ time {
   object-fit: contain;
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+/* Only adjust image width for mobile comfort */
+@media screen and (max-width: 768px) {
+  .image-gallery-inner:not([data-count="1"]) img {
+    width: 75vw;
+    max-width: 75vw;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
