@@ -407,6 +407,90 @@ time {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
+/* Image Gallery */
+.image-gallery {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 0.5rem;
+  margin: 2rem 0;
+  
+  /* Desktop: auto width, can extend beyond text */
+  width: fit-content;
+  max-width: calc(100vw - 2rem);
+  
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+
+.image-gallery::-webkit-scrollbar {
+  height: 6px;
+}
+
+.image-gallery::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.image-gallery::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+.image-gallery img {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  max-height: 500px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+  .image-gallery {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 0 1rem;
+    gap: 0.75rem;
+  }
+  
+  /* Single image: centered, full width */
+  .image-gallery[data-count="1"] {
+    justify-content: center;
+  }
+  
+  .image-gallery[data-count="1"] img {
+    max-width: calc(100vw - 2rem);
+  }
+  
+  /* Multiple images: show ~80% width + partial next */
+  .image-gallery:not([data-count="1"]) img {
+    width: 80vw;
+    max-width: 80vw;
+  }
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  .image-gallery img {
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+  
+  .image-gallery::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+  }
+  
+  .image-gallery {
+    scrollbar-color: rgba(255,255,255,0.3) transparent;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   .youtube-container iframe {
     box-shadow: 0 1px 5px rgba(0,0,0,0.2);

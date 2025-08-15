@@ -1,0 +1,16 @@
+{% comment %}
+Image gallery component
+Usage: {% include gallery.html images=gallery_images %}
+{% endcomment %}
+
+<div class="image-gallery" data-count="{{ include.images | strip | split: newline | size }}">
+  {% assign image_list = include.images | strip | split: newline %}
+  {% for item in image_list %}
+    {% unless item == "" %}
+      {% assign parts = item | strip | split: "|" %}
+      {% assign image_path = parts[0] | strip %}
+      {% assign image_alt = parts[1] | strip | default: "" %}
+      <img src="{{ image_path }}" alt="{{ image_alt }}" loading="lazy">
+    {% endunless %}
+  {% endfor %}
+</div>
