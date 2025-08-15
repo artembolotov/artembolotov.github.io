@@ -459,19 +459,10 @@ time {
 /* Desktop: break out of container, edge-to-edge */
 @media screen and (min-width: 769px) {
   .image-gallery {
-    width: 100vw;
-    position: relative;
+    width: 100%;
+    margin-left: -50%;
     left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    /* No padding - edge to edge */
-  }
-  
-  .image-gallery-inner {
-    max-width: none;
-    width: max-content;
-    margin: 0 auto;
+    position: relative;
   }
 }
 
