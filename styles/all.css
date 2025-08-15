@@ -51,7 +51,7 @@ a:link, a:visited {
   z-index: 999; 
 }
 
-#page-nav .container a { 
+#page-nav div a { 
   line-height: 50px;
   display: inline-block;
 }
