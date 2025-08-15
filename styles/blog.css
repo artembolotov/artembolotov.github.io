@@ -192,9 +192,12 @@ main {
   text-align: left; 
 }
 
+main ul, main ol {
+  list-style-position: inside;
+}
+
 main ul {
   list-style-type: disc;
-  list-style-position: inside;
 }
 
 main li {
@@ -508,7 +511,7 @@ time {
 }
 
 /* Blockquotes styling */
-blockquote {
+blockquote p {
   margin: 2em 0;
   padding: 1em;
   background-color: #f8f9fa;
