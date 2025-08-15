@@ -414,12 +414,15 @@ time {
   width: 100vw;
   position: relative;
   left: 50%;
-  margin-left: -49vw; /* Works for your setup */
+  margin-left: -49vw;
+  
+  /* Ensure gallery itself can scroll */
+  overflow: visible;
 }
 
 .image-gallery-inner {
   display: flex;
-  overflow-x: auto;
+  overflow-x: auto; /* Only gallery scrolls horizontally */
   scroll-snap-type: x mandatory;
   gap: 0.5rem;
   scroll-behavior: smooth;
@@ -427,7 +430,6 @@ time {
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.2) transparent;
   
-  /* Universal image sizing */
   width: max-content;
   margin: 0 auto;
 }
@@ -442,7 +444,7 @@ time {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-/* Only adjust image width for mobile comfort */
+/* Mobile image sizing */
 @media screen and (max-width: 768px) {
   .image-gallery-inner:not([data-count="1"]) img {
     width: 75vw;
