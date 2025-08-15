@@ -459,10 +459,14 @@ time {
 /* Desktop: break out of container, edge-to-edge */
 @media screen and (min-width: 769px) {
   .image-gallery {
-    width: 100%;
-    margin-left: -50%;
-    left: 50%;
+    width: 100dvw; /* dynamic viewport width, accounts for scrollbars */
     position: relative;
+    left: 50%;
+    margin-left: -50dvw;
+    
+    /* Fallback for older browsers */
+    width: calc(100vw - (100vw - 100%));
+    margin-left: calc(-50vw + (100vw - 100%) / 2);
   }
 }
 
