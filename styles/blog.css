@@ -434,18 +434,16 @@ time {
 }
 
 /* Desktop: break out of container */
+:root {
+  --scrollbar-width: calc(100vw - 100%);
+}
+
 @media screen and (min-width: 769px) {
   .image-gallery {
-    width: 100vw;
+    width: calc(100vw - var(--scrollbar-width));
     position: relative;
     left: 50%;
-    margin-left: -49vw;
-  }
-  
-  .image-gallery-inner {
-    /* Limit width to viewport, enable scroll */
-    max-width: 100vw;
-    width: auto;
+    margin-left: calc(-50vw + var(--scrollbar-width) / 2);
   }
 }
 
