@@ -3,7 +3,7 @@ main { margin-top: 50px; line-height: 1.5; }
 main img { display: block; max-height: 500px; max-width: 100%; margin: 0 auto; }
 
 /* Auto-container for all elements except galleries */
-main > *:not(.image-gallery):not(.container), #page-nav {
+main > *:not(.image-gallery):not(.container), #page-nav div {
   max-width: 970px;
   padding-left: max(1rem, env(safe-area-inset-left));
   padding-right: max(1rem, env(safe-area-inset-right));
