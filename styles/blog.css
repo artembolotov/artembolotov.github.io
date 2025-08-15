@@ -451,9 +451,62 @@ time {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-/* Image Gallery */
+/* Image Gallery - corrected for container structure */
 .image-gallery {
   margin: 2rem 0;
+}
+
+/* Desktop: break out of container */
+@media screen and (min-width: 769px) {
+  .image-gallery {
+    /* Calculate breakout considering container width and padding */
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    /* Add padding to prevent edge collision */
+    padding: 0 2rem;
+    box-sizing: border-box;
+  }
+  
+  .image-gallery-inner {
+    /* Center the gallery content */
+    max-width: none;
+    width: max-content;
+    margin: 0 auto;
+  }
+}
+
+/* Mobile: full width */
+@media screen and (max-width: 768px) {
+  .image-gallery {
+    /* Compensate for container padding */
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding: 0 1rem;
+  }
+  
+  .image-gallery-inner {
+    gap: 0.75rem;
+    width: 100%;
+  }
+  
+  .image-gallery-inner[data-count="1"] {
+    justify-content: center;
+  }
+  
+  .image-gallery-inner[data-count="1"] img {
+    max-width: calc(100% - 2rem);
+  }
+  
+  .image-gallery-inner:not([data-count="1"]) img {
+    width: 80vw;
+    max-width: 80vw;
+    flex-shrink: 0;
+  }
 }
 
 .image-gallery-inner {
@@ -461,31 +514,10 @@ time {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   gap: 0.5rem;
-  
-  /* Desktop: auto width, can extend beyond text */
-  width: fit-content;
-  max-width: calc(100vw - 2rem);
-  
-  /* Smooth scrolling */
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  
-  /* Hide scrollbar but keep functionality */
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.2) transparent;
-}
-
-.image-gallery-inner::-webkit-scrollbar {
-  height: 6px;
-}
-
-.image-gallery-inner::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.image-gallery-inner::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.2);
-  border-radius: 3px;
 }
 
 .image-gallery-inner img {
@@ -496,46 +528,6 @@ time {
   object-fit: contain;
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-/* Mobile styles */
-@media screen and (max-width: 768px) {
-  .image-gallery-inner {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    padding: 0 1rem;
-    gap: 0.75rem;
-  }
-  
-  /* Single image: centered, full width */
-  .image-gallery-inner[data-count="1"] {
-    justify-content: center;
-  }
-  
-  .image-gallery-inner[data-count="1"] img {
-    max-width: calc(100vw - 2rem);
-  }
-  
-  /* Multiple images: show ~80% width + partial next */
-  .image-gallery-inner:not([data-count="1"]) img {
-    width: 80vw;
-    max-width: 80vw;
-  }
-}
-
-/* Dark theme */
-@media (prefers-color-scheme: dark) {
-  .image-gallery-inner img {
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-  
-  .image-gallery-inner::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.3);
-  }
-  
-  .image-gallery-inner {
-    scrollbar-color: rgba(255,255,255,0.3) transparent;
-  }
 }
 
 @media (prefers-color-scheme: dark) {
