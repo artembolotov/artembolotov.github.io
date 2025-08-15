@@ -193,7 +193,8 @@ main {
 }
 
 main ul {
-  list-style-type: disc; /* Или другой тип маркера */
+  list-style-type: disc;
+  list-style-position: inside;
 }
 
 main li {
