@@ -459,12 +459,17 @@ time {
 /* Desktop: break out of container, edge-to-edge */
 @media screen and (min-width: 769px) {
   .image-gallery {
-    /* Full viewport width */
     width: 100vw;
     position: relative;
     left: 50%;
-    /* Calculate exact offset considering scrollbar */
-    margin-left: calc(-50vw + (100vw - 100%) / 2);
+    /* Compensate for scrollbar: typically 17px, so ~0.9vw on 1920px screen */
+    margin-left: calc(-50vw + 0.5 * (100vw - 100%));
+  }
+  
+  .image-gallery-inner {
+    max-width: none;
+    width: max-content;
+    margin: 0 auto;
   }
 }
 
