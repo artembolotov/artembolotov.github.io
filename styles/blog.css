@@ -366,8 +366,8 @@ time {
 
 /* Tag Menu */
 .tag-menu {
-  margin: 0.5em 0 1em;  /* Уменьшенные отступы сверху и снизу */
-  padding-bottom: 0.3em;  /* Уменьшенный отступ до разделительной линии */
+  margin: 0.5em 0 1em;
+  padding-bottom: 0.3em;
 }
 
 .tag-menu ul {
@@ -380,7 +380,7 @@ time {
 
 .tag-menu li {
   margin-right: 1em;
-  margin-bottom: 0.2em;  /* Уменьшенный отступ снизу для элементов списка */
+  margin-bottom: 0.2em;
   padding-left: 0;
 }
 
@@ -389,7 +389,7 @@ time {
   text-decoration: none;
   border-bottom: 1px solid rgba(0,137,255,.3);
   transition: color 0.2s, border-color 0.2s;
-  font-size: 0.9em;  /* Немного меньший размер шрифта */
+  font-size: 0.9em;
 }
 
 .tag-menu a:hover {
