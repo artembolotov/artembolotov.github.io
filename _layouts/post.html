@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<div class="container">
+<div>
   {% include tag-menu.html active_tag="" %}
 
   <article class="post">
@@ -19,7 +19,7 @@ layout: default
 
 {{ content }}
 
-<div class="container">
+<div>
   {% if page.tags %}
   <div class="post-tags">
     {% for post_tag in page.tags %}
