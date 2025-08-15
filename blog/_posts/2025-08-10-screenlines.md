@@ -11,7 +11,7 @@ draft: true
 ![ScreenLines в App Store](/blog/img/2025-08-10-screenlines/preview.png)
 
 {% capture gallery_test %}
-/blog/img/img/2025-08-10-screenlines/preview.png|Первое фото
+/blog/img/2025-08-10-screenlines/preview.png|Первое фото
 /blog/img/2025-05-28-reestr-po/reestr.png|Второе фото  
 /blog/img/2024-08-20-samara/IMG_5771.jpeg|Третье фото
 {% endcapture %}
