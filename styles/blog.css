@@ -459,13 +459,11 @@ time {
 /* Desktop: break out of container, edge-to-edge */
 @media screen and (min-width: 769px) {
   .image-gallery {
-    width: 100dvw; /* dynamic viewport width, accounts for scrollbars */
+    /* Full viewport width */
+    width: 100vw;
     position: relative;
     left: 50%;
-    margin-left: -50dvw;
-    
-    /* Fallback for older browsers */
-    width: calc(100vw - (100vw - 100%));
+    /* Calculate exact offset considering scrollbar */
     margin-left: calc(-50vw + (100vw - 100%) / 2);
   }
 }
