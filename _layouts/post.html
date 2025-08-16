@@ -37,32 +37,41 @@ layout: default
     const galleries = document.querySelectorAll('.image-gallery');
     console.log('Found galleries:', galleries.length);
     
-    // Функция для проверки, находится ли курсор в границах элемента
-    function isPointInElement(x, y, element) {
-      const rect = element.getBoundingClientRect();
-      return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+    // Функция для проверки, видна ли галерея в viewport
+    function isGalleryInViewport(gallery) {
+      const rect = gallery.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Галерея считается активной, если она пересекается с viewport
+      return rect.bottom > 0 && rect.top < windowHeight;
+    }
+    
+    // Находим активную галерею (видимую в viewport)
+    function getActiveGallery() {
+      for (const gallery of galleries) {
+        if (isGalleryInViewport(gallery)) {
+          return gallery.querySelector('.image-gallery-inner');
+        }
+      }
+      return null;
     }
     
     // Глобальный слушатель wheel с passive: false
     document.addEventListener('wheel', function(e) {
-      // Проверяем все галереи на странице
-      for (const gallery of galleries) {
-        if (isPointInElement(e.clientX, e.clientY, gallery)) {
-          const galleryInner = gallery.querySelector('.image-gallery-inner');
-          if (!galleryInner) continue;
+      const activeGallery = getActiveGallery();
+      
+      if (activeGallery) {
+        const scrollLeft = activeGallery.scrollLeft;
+        const maxScrollLeft = activeGallery.scrollWidth - activeGallery.clientWidth;
+        
+        // Если галерея может прокручиваться в нужном направлении
+        if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
+            (e.deltaY < 0 && scrollLeft > 0)) {
+          e.preventDefault();
           
-          const scrollLeft = galleryInner.scrollLeft;
-          const maxScrollLeft = galleryInner.scrollWidth - galleryInner.clientWidth;
-          
-          if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
-              (e.deltaY < 0 && scrollLeft > 0)) {
-            e.preventDefault();
-            
-            // Скорость как у обычного скролла
-            galleryInner.scrollLeft = scrollLeft + (e.deltaY * 3);
-            console.log('Gallery scrolled to:', galleryInner.scrollLeft);
-          }
-          break; // Найдена галерея, выходим из цикла
+          // Быстрый скролл как у страницы
+          activeGallery.scrollLeft = scrollLeft + (e.deltaY * 5);
+          console.log('Gallery scrolled to:', activeGallery.scrollLeft);
         }
       }
     }, { passive: false });
