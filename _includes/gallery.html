@@ -1,9 +1,11 @@
 {% comment %}
-Image gallery component - FIXED VERSION
+Image gallery component with navigation buttons
 Usage: {% include gallery.html images=gallery_images %}
 {% endcomment %}
 
-<div class="image-gallery">
+{% assign gallery_id = 'gallery-' | append: include.images | truncate: 20, '' | remove: ' ' | remove: '/' | remove: '.' %}
+
+<div class="image-gallery" data-gallery-id="{{ gallery_id }}">
   {% assign lines = include.images | strip | split: "
 " %}
   {% assign image_count = 0 %}
@@ -21,8 +23,94 @@ Usage: {% include gallery.html images=gallery_images %}
         {% assign parts = trimmed_line | split: "|" %}
         {% assign image_path = parts[0] | strip %}
         {% assign image_alt = parts[1] | strip | default: "" %}
-        <img src="{{ image_path }}" alt="{{ image_alt }}">
+        <img src="{{ image_path }}" alt="{{ image_alt }}" loading="lazy">
       {% endunless %}
     {% endfor %}
   </div>
+  
+  {% if image_count > 1 %}
+  <div class="gallery-controls">
+    <button class="gallery-nav gallery-nav-prev" aria-label="Предыдущее изображение" disabled>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="gallery-nav gallery-nav-next" aria-label="Следующее изображение">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+  {% endif %}
 </div>
+
+<script>
+(function() {
+  // Initialize gallery navigation for the specific gallery
+  const gallery = document.querySelector('[data-gallery-id="{{ gallery_id }}"]');
+  if (!gallery) return;
+  
+  const scrollContainer = gallery.querySelector('.image-gallery-inner');
+  const prevBtn = gallery.querySelector('.gallery-nav-prev');
+  const nextBtn = gallery.querySelector('.gallery-nav-next');
+  
+  if (!scrollContainer || !prevBtn || !nextBtn) return;
+  
+  // Update button states based on scroll position
+  function updateButtonStates() {
+    const scrollLeft = scrollContainer.scrollLeft;
+    const scrollWidth = scrollContainer.scrollWidth;
+    const clientWidth = scrollContainer.clientWidth;
+    
+    // Check if at start
+    prevBtn.disabled = scrollLeft <= 1;
+    
+    // Check if at end (with small threshold for rounding errors)
+    nextBtn.disabled = scrollLeft + clientWidth >= scrollWidth - 1;
+  }
+  
+  // Scroll to next/previous image
+  function scrollToDirection(direction) {
+    const images = scrollContainer.querySelectorAll('img');
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const scrollLeft = scrollContainer.scrollLeft;
+    
+    let targetImage = null;
+    
+    if (direction === 'next') {
+      // Find first image that's mostly out of view on the right
+      for (let img of images) {
+        const imgRect = img.getBoundingClientRect();
+        if (imgRect.left > containerRect.left + 50) {
+          targetImage = img;
+          break;
+        }
+      }
+    } else {
+      // Find last image that's mostly out of view on the left
+      for (let i = images.length - 1; i >= 0; i--) {
+        const imgRect = images[i].getBoundingClientRect();
+        if (imgRect.right < containerRect.right - 50) {
+          targetImage = images[i];
+          break;
+        }
+      }
+    }
+    
+    if (targetImage) {
+      targetImage.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    }
+  }
+  
+  // Event listeners
+  prevBtn.addEventListener('click', () => scrollToDirection('prev'));
+  nextBtn.addEventListener('click', () => scrollToDirection('next'));
+  scrollContainer.addEventListener('scroll', updateButtonStates);
+  
+  // Initial state
+  updateButtonStates();
+  
+  // Update on window resize
+  window.addEventListener('resize', updateButtonStates);
+})();
+</script>

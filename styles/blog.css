@@ -61,6 +61,42 @@ h3 {
   margin: 2rem 0;
 }
 
+/* Gallery navigation controls */
+.gallery-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0 1rem;
+}
+
+.gallery-nav {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #333;
+}
+
+.gallery-nav:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.gallery-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.gallery-nav svg {
+  width: 20px;
+  height: 20px;
+}
+
 .image-gallery-inner {
   display: flex;
   overflow-x: auto;
@@ -69,6 +105,8 @@ h3 {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.2) transparent;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0.5rem;
 }
 
 .image-gallery-inner::-webkit-scrollbar {
@@ -86,6 +124,7 @@ h3 {
 
 .image-gallery-inner img {
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   flex-shrink: 0;
   max-height: 500px;
   height: auto;
@@ -146,6 +185,35 @@ figure.image-row-2 figcaption, figure.image-row-3 figcaption {
   font-style: italic;
   font-size: 0.9em;
   color: #666;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .gallery-nav {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+  }
+  
+  .gallery-nav:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 640px) {
+  .gallery-controls {
+    padding: 0 0.5rem;
+  }
+  
+  .gallery-nav {
+    padding: 0.4rem;
+  }
+  
+  .gallery-nav svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
