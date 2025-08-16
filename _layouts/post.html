@@ -34,17 +34,10 @@ layout: default
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Эксперимент 1: wheel на всю страницу
+  // Эксперимент 1: wheel на всю страницу с координатами центра
   document.addEventListener('wheel', function(e) {
-    console.log('PAGE wheel:', e.deltaY);
-  });
-  
-  // Эксперимент 2: wheel на каждую галерею
-  const galleries = document.querySelectorAll('.image-gallery');
-  galleries.forEach((gallery, index) => {
-    gallery.addEventListener('wheel', function(e) {
-      console.log(`GALLERY ${index} wheel:`, e.deltaY);
-    });
+    const centerY = window.innerHeight / 2 + window.scrollY;
+    console.log('PAGE wheel:', e.deltaY, 'Center Y:', Math.round(centerY));
   });
   
   console.log('Found galleries:', galleries.length);
