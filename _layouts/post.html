@@ -37,8 +37,18 @@ layout: default
     const galleries = document.querySelectorAll('.image-gallery-inner');
     console.log('Found galleries:', galleries.length);
     
-    galleries.forEach(gallery => {
-      gallery.addEventListener('wheel', function(e) {
+    // Пробуем на родительском элементе
+    const galleryContainers = document.querySelectorAll('.image-gallery');
+    console.log('Found gallery containers:', galleryContainers.length);
+    
+    galleryContainers.forEach(container => {
+      console.log('Adding wheel listener to container');
+      container.addEventListener('wheel', function(e) {
+        console.log('Wheel event on container:', e.deltaY);
+        
+        const gallery = container.querySelector('.image-gallery-inner');
+        if (!gallery) return;
+        
         const scrollLeft = gallery.scrollLeft;
         const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
         
@@ -47,10 +57,13 @@ layout: default
           e.preventDefault();
           gallery.scrollLeft += e.deltaY;
           console.log('Scrolled to:', gallery.scrollLeft);
-        } else {
-          console.log('Not scrolling gallery, deltaY:', e.deltaY, 'scrollLeft:', scrollLeft);
         }
       });
+    });
+    
+    // Тест - добавляем на всю страницу
+    document.addEventListener('wheel', function(e) {
+      console.log('Page wheel event:', e.deltaY);
     });
   });
 </script>
