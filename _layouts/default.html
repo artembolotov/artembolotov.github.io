@@ -85,94 +85,80 @@ layout: compress
   <main>
     {{ content }}
   </main>
-  <script>
-  (function() {
-    // Gallery scroll hijacking for desktop only
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+<script>
+(function() {
+  // Gallery scroll hijacking for desktop only
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  
+  const galleries = document.querySelectorAll('.image-gallery-inner');
+  if (!galleries.length) return;
+  
+  let activeGallery = null;
+  let isScrollingGallery = false;
+  
+  // Scroll speed multiplier
+  const SCROLL_SPEED = 3;
+  
+  // Check if gallery center is at viewport center
+  function isGalleryCentered(gallery) {
+    const rect = gallery.getBoundingClientRect();
+    const viewportCenter = window.innerHeight / 2;
+    const galleryCenter = rect.top + rect.height / 2;
     
-    const galleries = document.querySelectorAll('.image-gallery-inner');
-    if (!galleries.length) return;
-    
-    let activeGallery = null;
-    let isScrollingGallery = false;
-    
-    // Scroll speed multiplier (adjust this value to control speed)
-    const SCROLL_SPEED = 3;
-    
-    // Threshold for center detection in pixels
-    const CENTER_THRESHOLD = 50;
-    
-    // Check if gallery center is at viewport center
-    function isGalleryCentered(gallery) {
-      const rect = gallery.getBoundingClientRect();
-      const viewportCenter = window.innerHeight / 2;
-      const galleryCenter = rect.top + rect.height / 2;
-      
-      // Gallery center must be within threshold of viewport center
-      return Math.abs(galleryCenter - viewportCenter) < CENTER_THRESHOLD;
+    // Gallery center must be within half of gallery height from viewport center
+    const threshold = Math.min(rect.height / 2, 100);
+    return Math.abs(galleryCenter - viewportCenter) < threshold;
+  }
+  
+  // Check if gallery can scroll horizontally
+  function canScrollHorizontally(gallery, direction) {
+    if (direction > 0) {
+      // Scrolling down = scroll gallery right
+      return gallery.scrollLeft < (gallery.scrollWidth - gallery.clientWidth - 1);
+    } else {
+      // Scrolling up = scroll gallery left
+      return gallery.scrollLeft > 0;
     }
+  }
+  
+  // Handle wheel event
+  function handleWheel(e) {
+    // Check all galleries for centered one
+    let centeredGallery = null;
     
-    // Check if gallery can scroll horizontally
-    function canScrollHorizontally(gallery, direction) {
-      if (direction > 0) {
-        // Scrolling right
-        return gallery.scrollLeft < (gallery.scrollWidth - gallery.clientWidth - 1);
-      } else {
-        // Scrolling left  
-        return gallery.scrollLeft > 0;
+    galleries.forEach(gallery => {
+      if (isGalleryCentered(gallery)) {
+        centeredGallery = gallery;
       }
-    }
-    
-    // Find active gallery on scroll
-    function updateActiveGallery() {
-      activeGallery = null;
-      galleries.forEach(gallery => {
-        if (isGalleryCentered(gallery)) {
-          activeGallery = gallery;
-        }
-      });
-    }
-    
-    // Handle wheel event
-    function handleWheel(e) {
-      if (!activeGallery) {
-        updateActiveGallery();
-      }
-      
-      if (activeGallery && isGalleryCentered(activeGallery)) {
-        const delta = e.deltaY || e.detail || e.wheelDelta;
-        
-        if (canScrollHorizontally(activeGallery, delta)) {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          // Convert vertical scroll to horizontal with speed multiplier
-          activeGallery.scrollLeft += delta * SCROLL_SPEED;
-          isScrollingGallery = true;
-        } else {
-          // Gallery reached edge, allow normal scroll
-          isScrollingGallery = false;
-          activeGallery = null;
-        }
-      }
-    }
-    
-    // Regular scroll event to update active gallery
-    window.addEventListener('scroll', function() {
-      if (!isScrollingGallery) {
-        updateActiveGallery();
-      }
-    }, { passive: true });
-    
-    // Wheel event for gallery scrolling
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    
-    // Reset on resize
-    window.addEventListener('resize', function() {
-      activeGallery = null;
-      isScrollingGallery = false;
     });
-  })();
-  </script>
+    
+    if (centeredGallery) {
+      const delta = e.deltaY;
+      
+      if (canScrollHorizontally(centeredGallery, delta)) {
+        // Prevent default page scroll
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Scroll gallery horizontally
+        centeredGallery.scrollLeft += delta * SCROLL_SPEED;
+        
+        return false;
+      }
+    }
+    
+    // Let page scroll normally
+    return true;
+  }
+  
+  // Wheel event for gallery scrolling
+  window.addEventListener('wheel', handleWheel, { passive: false });
+  
+  // Mouse wheel event for older browsers
+  window.addEventListener('mousewheel', handleWheel, { passive: false });
+  window.addEventListener('DOMMouseScroll', handleWheel, { passive: false });
+})();
+</script>
+
 </body>
 </html>
