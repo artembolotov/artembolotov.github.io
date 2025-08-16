@@ -43,13 +43,17 @@ layout: default
         console.log('Wheel event:', e.deltaY);
         const scrollLeft = gallery.scrollLeft;
         const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
-        console.log('ScrollLeft:', scrollLeft, 'MaxScroll:', maxScrollLeft);
+        console.log('ScrollLeft before:', scrollLeft, 'MaxScroll:', maxScrollLeft);
         
         if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
             (e.deltaY < 0 && scrollLeft > 0)) {
           console.log('Preventing default and scrolling gallery');
           e.preventDefault();
-          gallery.scrollLeft += e.deltaY;
+          gallery.scrollBy({
+            left: e.deltaY,
+            behavior: 'smooth'
+          });
+          console.log('ScrollLeft after:', gallery.scrollLeft);
         }
       });
     });
