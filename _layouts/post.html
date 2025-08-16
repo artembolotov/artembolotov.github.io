@@ -61,11 +61,10 @@ layout: default
     // Глобальный слушатель wheel с passive: false
     document.addEventListener('wheel', function(e) {
       if (isOverGallery && currentGallery) {
-        console.log('Wheel over gallery:', e.deltaY);
-        
         const scrollLeft = currentGallery.scrollLeft;
         const maxScrollLeft = currentGallery.scrollWidth - currentGallery.clientWidth;
-        console.log('Current scroll:', scrollLeft, 'Max scroll:', maxScrollLeft);
+        
+        console.log('Wheel:', e.deltaY, 'ScrollLeft:', scrollLeft, 'CanScrollRight:', scrollLeft < maxScrollLeft, 'CanScrollLeft:', scrollLeft > 0);
         
         if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
             (e.deltaY < 0 && scrollLeft > 0)) {
@@ -75,17 +74,19 @@ layout: default
           const originalSnapType = currentGallery.style.scrollSnapType;
           currentGallery.style.scrollSnapType = 'none';
           
-          // Прямое изменение scrollLeft
-          const newScrollLeft = scrollLeft + e.deltaY;
+          // Уменьшаем чувствительность в 3 раза
+          const scrollAmount = e.deltaY * 0.3;
+          const newScrollLeft = scrollLeft + scrollAmount;
           currentGallery.scrollLeft = newScrollLeft;
           
-          // Проверяем результат сразу
-          console.log('Attempted scroll to:', newScrollLeft, 'Actual scrollLeft:', currentGallery.scrollLeft);
+          console.log('Scrolled by:', scrollAmount, 'New position:', currentGallery.scrollLeft);
           
           // Возвращаем scroll-snap через небольшую задержку
           setTimeout(() => {
             currentGallery.style.scrollSnapType = originalSnapType;
-          }, 100);
+          }, 50);
+        } else {
+          console.log('Not scrolling - reached boundary');
         }
       }
     }, { passive: false });
