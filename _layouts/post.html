@@ -34,58 +34,19 @@ layout: default
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const galleries = document.querySelectorAll('.image-gallery');
-  
-  function getActiveGallery() {
-    const windowHeight = window.innerHeight;
-    const windowCenter = windowHeight / 2;
-    
-    for (const gallery of galleries) {
-      const rect = gallery.getBoundingClientRect();
-      const galleryCenter = rect.top + rect.height / 2;
-      
-      // Галерея "активна" если:
-      // 1. Видна на экране (пересекается с viewport)
-      // 2. Её центр близко к центру экрана (в пределах 40% экрана)
-      const isVisible = rect.bottom > 0 && rect.top < windowHeight;
-      const distanceFromCenter = Math.abs(galleryCenter - windowCenter);
-      const activationRadius = windowHeight * 0.4; // 40% экрана
-      
-      if (isVisible && distanceFromCenter < activationRadius) {
-        const inner = gallery.querySelector('.image-gallery-inner');
-        if (inner) {
-          console.log(`Gallery active: center at ${Math.round(galleryCenter)}, window center ${Math.round(windowCenter)}, distance ${Math.round(distanceFromCenter)}`);
-          return inner;
-        }
-      }
-    }
-    return null;
-  }
-  
+  // Эксперимент 1: wheel на всю страницу
   document.addEventListener('wheel', function(e) {
-    const activeGallery = getActiveGallery();
-    
-    if (activeGallery) {
-      const scrollLeft = activeGallery.scrollLeft;
-      const maxScrollLeft = activeGallery.scrollWidth - activeGallery.clientWidth;
-      
-      const canScrollRight = e.deltaY > 0 && scrollLeft < maxScrollLeft;
-      const canScrollLeft = e.deltaY < 0 && scrollLeft > 0;
-      
-      console.log(`Gallery scroll state: ${scrollLeft}/${maxScrollLeft}, can scroll right: ${canScrollRight}, left: ${canScrollLeft}`);
-      
-      if (canScrollRight || canScrollLeft) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        activeGallery.scrollLeft += e.deltaY;
-        console.log(`Gallery scrolled to: ${activeGallery.scrollLeft}`);
-      } else {
-        console.log('Gallery at edge, allowing page scroll');
-      }
-    } else {
-      console.log('No active gallery, normal page scroll');
-    }
-  }, { passive: false });
+    console.log('PAGE wheel:', e.deltaY);
+  });
+  
+  // Эксперимент 2: wheel на каждую галерею
+  const galleries = document.querySelectorAll('.image-gallery');
+  galleries.forEach((gallery, index) => {
+    gallery.addEventListener('wheel', function(e) {
+      console.log(`GALLERY ${index} wheel:`, e.deltaY);
+    });
+  });
+  
+  console.log('Found galleries:', galleries.length);
 });
 </script>
