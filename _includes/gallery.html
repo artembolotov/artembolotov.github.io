@@ -27,22 +27,21 @@ Usage: {% include gallery.html images=gallery_images %}
       {% endunless %}
     {% endfor %}
   </div>
-  
-  {% if image_count > 1 %}
-  <div class="gallery-controls">
-    <button class="gallery-nav gallery-nav-prev" aria-label="Предыдущее изображение" disabled>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
-    <button class="gallery-nav gallery-nav-next" aria-label="Следующее изображение">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
-  </div>
-  {% endif %}
 </div>
+{% if image_count > 1 %}
+<div class="gallery-controls">
+  <button class="gallery-nav gallery-nav-prev" aria-label="Предыдущее изображение" disabled>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+  <button class="gallery-nav gallery-nav-next" aria-label="Следующее изображение">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+</div>
+{% endif %}
 
 <script>
 (function() {
