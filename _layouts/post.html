@@ -38,7 +38,13 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('wheel', function(e) {
     const centerY = window.innerHeight / 2 + window.scrollY;
     console.log('PAGE wheel:', e.deltaY, 'Center Y:', Math.round(centerY));
-  });
+    
+    // Останавливаем скролл вперёд если center Y > 4000
+    if (e.deltaY > 0 && centerY > 4000) {
+      e.preventDefault();
+      console.log('Scroll forward blocked at Y > 4000');
+    }
+  }, { passive: false });
   
   console.log('Found galleries:', galleries.length);
 });
