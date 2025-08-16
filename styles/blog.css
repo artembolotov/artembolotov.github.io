@@ -97,7 +97,6 @@ h3 {
 
 /* Gallery images sizing for all screens */
 .image-gallery-inner:not([data-count="1"]) img {
-  width: 85vw;
   max-width: 85vw;
 }
 
