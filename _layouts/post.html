@@ -34,51 +34,35 @@ layout: default
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const galleries = document.querySelectorAll('.image-gallery-inner');
+    const galleries = document.querySelectorAll('.image-gallery');
     console.log('Found galleries:', galleries.length);
     
-    // Функция для проверки, находится ли курсор над галереей
-    function getGalleryUnderCursor(x, y) {
-      const element = document.elementFromPoint(x, y);
-      if (!element) return null;
-      
-      // Ищем родительскую галерею
-      const gallery = element.closest('.image-gallery');
-      if (gallery) {
-        return gallery.querySelector('.image-gallery-inner');
-      }
-      return null;
+    // Функция для проверки, находится ли курсор в границах элемента
+    function isPointInElement(x, y, element) {
+      const rect = element.getBoundingClientRect();
+      return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
     }
     
     // Глобальный слушатель wheel с passive: false
     document.addEventListener('wheel', function(e) {
-      // Определяем галерею под курсором в реальном времени
-      const currentGallery = getGalleryUnderCursor(e.clientX, e.clientY);
-      
-      if (currentGallery) {
-        const scrollLeft = currentGallery.scrollLeft;
-        const maxScrollLeft = currentGallery.scrollWidth - currentGallery.clientWidth;
-        
-        console.log('Wheel over gallery:', e.deltaY, 'ScrollLeft:', scrollLeft, 'CanScrollRight:', scrollLeft < maxScrollLeft, 'CanScrollLeft:', scrollLeft > 0);
-        
-        if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
-            (e.deltaY < 0 && scrollLeft > 0)) {
-          e.preventDefault();
+      // Проверяем все галереи на странице
+      for (const gallery of galleries) {
+        if (isPointInElement(e.clientX, e.clientY, gallery)) {
+          const galleryInner = gallery.querySelector('.image-gallery-inner');
+          if (!galleryInner) continue;
           
-          // Временно отключаем scroll-snap
-          const originalSnapType = currentGallery.style.scrollSnapType;
-          currentGallery.style.scrollSnapType = 'none';
+          const scrollLeft = galleryInner.scrollLeft;
+          const maxScrollLeft = galleryInner.scrollWidth - galleryInner.clientWidth;
           
-          // Возвращаем полную скорость
-          const newScrollLeft = scrollLeft + e.deltaY;
-          currentGallery.scrollLeft = newScrollLeft;
-          
-          console.log('Scrolled to:', currentGallery.scrollLeft);
-          
-          // Возвращаем scroll-snap через небольшую задержку
-          setTimeout(() => {
-            currentGallery.style.scrollSnapType = originalSnapType;
-          }, 50);
+          if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
+              (e.deltaY < 0 && scrollLeft > 0)) {
+            e.preventDefault();
+            
+            // Скорость как у обычного скролла
+            galleryInner.scrollLeft = scrollLeft + (e.deltaY * 3);
+            console.log('Gallery scrolled to:', galleryInner.scrollLeft);
+          }
+          break; // Найдена галерея, выходим из цикла
         }
       }
     }, { passive: false });
