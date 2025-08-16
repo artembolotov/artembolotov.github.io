@@ -55,21 +55,28 @@ layout: default
       });
     });
     
-    // Глобальный слушатель wheel
+    // Глобальный слушатель wheel с passive: false
     document.addEventListener('wheel', function(e) {
       if (isOverGallery && currentGallery) {
         console.log('Wheel over gallery:', e.deltaY);
         
         const scrollLeft = currentGallery.scrollLeft;
         const maxScrollLeft = currentGallery.scrollWidth - currentGallery.clientWidth;
+        console.log('Current scroll:', scrollLeft, 'Max scroll:', maxScrollLeft);
         
         if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
             (e.deltaY < 0 && scrollLeft > 0)) {
           e.preventDefault();
-          currentGallery.scrollLeft += e.deltaY;
+          
+          // Используем scrollTo вместо прямого изменения scrollLeft
+          currentGallery.scrollTo({
+            left: scrollLeft + e.deltaY,
+            behavior: 'auto'
+          });
+          
           console.log('Gallery scrolled to:', currentGallery.scrollLeft);
         }
       }
-    });
+    }, { passive: false });
   });
 </script>
