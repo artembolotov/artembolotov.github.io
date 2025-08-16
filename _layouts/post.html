@@ -70,53 +70,56 @@ layout: default
 document.addEventListener('DOMContentLoaded', function() {
   const galleries = document.querySelectorAll('.image-gallery');
   
-  function getGalleryUnderCursor(x, y) {
-    // Проверяем элемент точно под курсором
-    const element = document.elementFromPoint(x, y);
-    if (!element) return null;
+  function getActiveGallery() {
+    const windowHeight = window.innerHeight;
+    const windowCenter = windowHeight / 2;
     
-    // Ищем родительскую галерею
-    const gallery = element.closest('.image-gallery');
-    if (gallery) {
-      const inner = gallery.querySelector('.image-gallery-inner');
-      if (inner) {
-        console.log('Found gallery under cursor');
-        return inner;
+    for (const gallery of galleries) {
+      const rect = gallery.getBoundingClientRect();
+      const galleryCenter = rect.top + rect.height / 2;
+      
+      // Галерея "активна" если:
+      // 1. Видна на экране (пересекается с viewport)
+      // 2. Её центр близко к центру экрана (в пределах 40% экрана)
+      const isVisible = rect.bottom > 0 && rect.top < windowHeight;
+      const distanceFromCenter = Math.abs(galleryCenter - windowCenter);
+      const activationRadius = windowHeight * 0.4; // 40% экрана
+      
+      if (isVisible && distanceFromCenter < activationRadius) {
+        const inner = gallery.querySelector('.image-gallery-inner');
+        if (inner) {
+          console.log(`Gallery active: center at ${Math.round(galleryCenter)}, window center ${Math.round(windowCenter)}, distance ${Math.round(distanceFromCenter)}`);
+          return inner;
+        }
       }
     }
     return null;
   }
   
-  // Навешиваем обработчик на каждую галерею отдельно
-  galleries.forEach(gallery => {
-    const inner = gallery.querySelector('.image-gallery-inner');
-    if (!inner) return;
+  document.addEventListener('wheel', function(e) {
+    const activeGallery = getActiveGallery();
     
-    gallery.addEventListener('wheel', function(e) {
-      console.log('Wheel on gallery element');
-      
-      const scrollLeft = inner.scrollLeft;
-      const maxScrollLeft = inner.scrollWidth - inner.clientWidth;
+    if (activeGallery) {
+      const scrollLeft = activeGallery.scrollLeft;
+      const maxScrollLeft = activeGallery.scrollWidth - activeGallery.clientWidth;
       
       const canScrollRight = e.deltaY > 0 && scrollLeft < maxScrollLeft;
       const canScrollLeft = e.deltaY < 0 && scrollLeft > 0;
       
-      console.log({
-        deltaY: e.deltaY,
-        scrollLeft,
-        maxScrollLeft,
-        canScrollRight,
-        canScrollLeft
-      });
+      console.log(`Gallery scroll state: ${scrollLeft}/${maxScrollLeft}, can scroll right: ${canScrollRight}, left: ${canScrollLeft}`);
       
       if (canScrollRight || canScrollLeft) {
         e.preventDefault();
         e.stopPropagation();
         
-        inner.scrollLeft += e.deltaY;
-        console.log('Gallery scrolled to:', inner.scrollLeft);
+        activeGallery.scrollLeft += e.deltaY;
+        console.log(`Gallery scrolled to: ${activeGallery.scrollLeft}`);
+      } else {
+        console.log('Gallery at edge, allowing page scroll');
       }
-    }, { passive: false });
-  });
+    } else {
+      console.log('No active gallery, normal page scroll');
+    }
+  }, { passive: false });
 });
 </script>
