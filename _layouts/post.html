@@ -31,3 +31,42 @@ layout: default
 
   {% include author-footer.html %}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const galleries = document.querySelectorAll('.image-gallery');
+  
+  function getGalleryNearCursor(x, y) {
+    for (const gallery of galleries) {
+      const rect = gallery.getBoundingClientRect();
+      
+      if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
+      
+      const isInHorizontalBounds = x >= rect.left && x <= rect.right;
+      const isNearVertically = y >= (rect.top - 50) && y <= (rect.bottom + 50);
+      
+      if (isInHorizontalBounds && isNearVertically) {
+        return gallery.querySelector('.image-gallery-inner');
+      }
+    }
+    return null;
+  }
+  
+  document.addEventListener('wheel', function(e) {
+    const activeGallery = getGalleryNearCursor(e.clientX, e.clientY);
+    
+    if (activeGallery) {
+      const scrollLeft = activeGallery.scrollLeft;
+      const maxScrollLeft = activeGallery.scrollWidth - activeGallery.clientWidth;
+      
+      const canScrollRight = e.deltaY > 0 && scrollLeft < maxScrollLeft;
+      const canScrollLeft = e.deltaY < 0 && scrollLeft > 0;
+      
+      if (canScrollRight || canScrollLeft) {
+        e.preventDefault();
+        activeGallery.scrollLeft += e.deltaY * 2;
+      }
+    }
+  }, { passive: false });
+});
+</script>

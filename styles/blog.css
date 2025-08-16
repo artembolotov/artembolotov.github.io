@@ -64,7 +64,6 @@ h3 {
 .image-gallery-inner {
   display: flex;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   gap: 0.5rem;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
