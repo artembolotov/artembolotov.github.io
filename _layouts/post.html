@@ -32,6 +32,40 @@ layout: default
   {% include author-footer.html %}
 </div>
 
+---
+layout: default
+---
+
+<div>
+  {% include tag-menu.html active_tag="" %}
+
+  <article class="post">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <time datetime="{{ page.date | date_to_xmlschema }}">
+      {% assign m = page.date | date: "%-m" | minus: 1 %}
+      {% assign months = "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря" | split: "," %}
+      {{ page.date | date: "%-d" }} {{ months[m] }} {{ page.date | date: "%Y" }}
+    </time>
+
+    {% include reading-time.html content=content %}
+  </article>
+</div>
+
+{{ content | replace: '<hr />', '<div><hr /></div>' }}
+
+<div>
+  {% if page.tags %}
+  <div class="post-tags">
+    {% for post_tag in page.tags %}
+      {% include tag-translations.html tag=post_tag %}
+      <a href="/blog/{{ post_tag | slugify | downcase }}/" class="tag">#{{ tag_label }}</a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% include author-footer.html %}
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const galleries = document.querySelectorAll('.image-gallery');
@@ -46,7 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return null;
   }
   
-  // Пробуем разные события колесика
+  let isGalleryScrolling = false;
+  
   function handleGalleryScroll(e) {
     const activeGallery = getGalleryUnderCursor(e.clientX, e.clientY);
     
@@ -58,21 +93,44 @@ document.addEventListener('DOMContentLoaded', function() {
       const canScrollLeft = e.deltaY < 0 && scrollLeft > 0;
       
       if (canScrollRight || canScrollLeft) {
+        // Агрессивная блокировка скролла страницы
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         
-        // Используем сырые значения deltaY без умножения
+        isGalleryScrolling = true;
+        
+        // Временно блокируем скролл body
+        document.body.style.overflow = 'hidden';
+        
         activeGallery.scrollLeft += e.deltaY;
-        console.log('Raw deltaY:', e.deltaY, 'New scrollLeft:', activeGallery.scrollLeft);
+        
+        // Возвращаем скролл body через небольшую задержку
+        setTimeout(() => {
+          document.body.style.overflow = '';
+          isGalleryScrolling = false;
+        }, 50);
+        
+        console.log('Gallery scrolled, page blocked');
+        return false; // Дополнительная блокировка
       }
     }
   }
   
-  // Слушаем разные события
-  document.addEventListener('wheel', handleGalleryScroll, { passive: false });
+  // Слушатель с capture: true (обрабатывается раньше других)
+  document.addEventListener('wheel', handleGalleryScroll, { 
+    passive: false, 
+    capture: true 
+  });
   
-  // Альтернативные события (могут быть более натуральными)
-  document.addEventListener('mousewheel', handleGalleryScroll, { passive: false });
-  document.addEventListener('DOMMouseScroll', handleGalleryScroll, { passive: false });
+  // Дополнительный глобальный блокиратор
+  document.addEventListener('wheel', function(e) {
+    if (isGalleryScrolling) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      return false;
+    }
+  }, { passive: false, capture: true });
 });
 </script>
