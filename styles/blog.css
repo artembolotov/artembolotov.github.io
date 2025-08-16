@@ -95,12 +95,10 @@ h3 {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-/* Mobile gallery styles */
-@media screen and (max-width: 768px) {
-  .image-gallery-inner:not([data-count="1"]) img {
-    width: 75vw;
-    max-width: 75vw;
-  }
+/* Gallery images sizing for all screens */
+.image-gallery-inner:not([data-count="1"]) img {
+  width: 85vw;
+  max-width: 85vw;
 }
 
 /* Image row with caption */
