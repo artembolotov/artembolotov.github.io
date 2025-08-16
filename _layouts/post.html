@@ -34,27 +34,25 @@ layout: default
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Эксперимент 1: wheel на всю страницу с координатами центра
+  let lastValidScrollY = 0;
+  
+  // Эксперимент с блокировкой через событие scroll
+  window.addEventListener('scroll', function() {
+    const centerY = window.innerHeight / 2 + window.scrollY;
+    
+    if (centerY > 4000) {
+      console.log('Scroll blocked! Returning to:', lastValidScrollY);
+      window.scrollTo(0, lastValidScrollY);
+    } else {
+      lastValidScrollY = window.scrollY;
+    }
+  });
+  
+  // Wheel для отладки
   document.addEventListener('wheel', function(e) {
     const centerY = window.innerHeight / 2 + window.scrollY;
     console.log('PAGE wheel:', e.deltaY, 'Center Y:', Math.round(centerY));
-    
-    // Останавливаем скролл вперёд если center Y > 4000
-    if (e.deltaY > 0 && centerY > 4000) {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      
-      // Дополнительная блокировка через overflow
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => {
-        document.body.style.overflow = '';
-      }, 100);
-      
-      console.log('Scroll forward blocked at Y > 4000');
-      return false;
-    }
-  }, { passive: false, capture: true });
+  });
   
   console.log('Found galleries:', galleries.length);
 });
