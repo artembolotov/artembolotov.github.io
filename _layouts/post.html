@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return null;
   }
   
-  document.addEventListener('wheel', function(e) {
+  // Пробуем разные события колесика
+  function handleGalleryScroll(e) {
     const activeGallery = getGalleryUnderCursor(e.clientX, e.clientY);
     
     if (activeGallery) {
@@ -60,33 +61,18 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         e.stopPropagation();
         
-        // Более натуральный скролл - меньший шаг, плавное изменение
-        const scrollStep = e.deltaY * 2; // Уменьшили с 8 до 2
-        const targetScroll = Math.max(0, Math.min(maxScrollLeft, scrollLeft + scrollStep));
-        
-        // Плавное изменение через requestAnimationFrame
-        const startScroll = activeGallery.scrollLeft;
-        const distance = targetScroll - startScroll;
-        const duration = 100; // 100ms для плавности
-        const startTime = performance.now();
-        
-        function animateScroll(currentTime) {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          
-          // Easing function для натурального ощущения
-          const easeOut = 1 - Math.pow(1 - progress, 3);
-          
-          activeGallery.scrollLeft = startScroll + (distance * easeOut);
-          
-          if (progress < 1) {
-            requestAnimationFrame(animateScroll);
-          }
-        }
-        
-        requestAnimationFrame(animateScroll);
+        // Используем сырые значения deltaY без умножения
+        activeGallery.scrollLeft += e.deltaY;
+        console.log('Raw deltaY:', e.deltaY, 'New scrollLeft:', activeGallery.scrollLeft);
       }
     }
-  }, { passive: false });
+  }
+  
+  // Слушаем разные события
+  document.addEventListener('wheel', handleGalleryScroll, { passive: false });
+  
+  // Альтернативные события (могут быть более натуральными)
+  document.addEventListener('mousewheel', handleGalleryScroll, { passive: false });
+  document.addEventListener('DOMMouseScroll', handleGalleryScroll, { passive: false });
 });
 </script>
