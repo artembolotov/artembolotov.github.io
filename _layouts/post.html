@@ -56,11 +56,16 @@ document.addEventListener('DOMContentLoaded', function() {
       const canScrollRight = e.deltaY > 0 && scrollLeft < maxScrollLeft;
       const canScrollLeft = e.deltaY < 0 && scrollLeft > 0;
       
+      console.log('Over gallery:', { deltaY: e.deltaY, scrollLeft, maxScrollLeft, canScrollRight, canScrollLeft });
+      
       if (canScrollRight || canScrollLeft) {
-        e.preventDefault(); // Блокируем только когда реально скроллим галерею
-        activeGallery.scrollLeft += e.deltaY * 5;
+        e.preventDefault();
+        e.stopPropagation(); // Дополнительно останавливаем всплытие события
+        activeGallery.scrollLeft += e.deltaY * 8; // Увеличили скорость
+        console.log('Gallery scrolled, prevented page scroll');
+      } else {
+        console.log('Gallery at edge, allowing page scroll');
       }
-      // Если галерея на краю - позволяем странице скроллиться
     }
   }, { passive: false });
 });
