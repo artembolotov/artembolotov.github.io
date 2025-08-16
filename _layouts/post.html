@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let lastValidScrollY = 0;
   
   // Эксперимент с блокировкой через событие scroll
-  window.addEventListener('scroll', function() {
+  window.addEventListener('scroll', function(e) {
     const centerY = window.innerHeight / 2 + window.scrollY;
     
     if (centerY > 4000) {
