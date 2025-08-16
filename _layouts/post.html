@@ -42,7 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (centerY > 4000) {
       console.log('Scroll blocked! Returning to:', lastValidScrollY);
-      window.scrollTo(0, lastValidScrollY);
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
     } else {
       lastValidScrollY = window.scrollY;
     }
