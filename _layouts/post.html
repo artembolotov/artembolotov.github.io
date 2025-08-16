@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       lastValidScrollY = window.scrollY;
     }
-  });
+  }, { passive: false });
   
   // Wheel для отладки
   document.addEventListener('wheel', function(e) {
