@@ -41,8 +41,6 @@ layout: default
     function isGalleryInViewport(gallery) {
       const rect = gallery.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      
-      // Галерея считается активной, если она пересекается с viewport
       return rect.bottom > 0 && rect.top < windowHeight;
     }
     
@@ -64,33 +62,26 @@ layout: default
         const scrollLeft = activeGallery.scrollLeft;
         const maxScrollLeft = activeGallery.scrollWidth - activeGallery.clientWidth;
         
-        console.log('Gallery dimensions:', {
-          scrollLeft,
-          maxScrollLeft,
-          scrollWidth: activeGallery.scrollWidth,
-          clientWidth: activeGallery.clientWidth,
-          deltaY: e.deltaY
-        });
+        // Проверяем можно ли скроллить в нужном направлении
+        const canScrollRight = e.deltaY > 0 && scrollLeft < maxScrollLeft;
+        const canScrollLeft = e.deltaY < 0 && scrollLeft > 0;
         
-        // Если галерея может прокручиваться в нужном направлении
-        if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
-            (e.deltaY < 0 && scrollLeft > 0)) {
+        if (canScrollRight || canScrollLeft) {
           e.preventDefault();
           
-          // Попробуем разные методы прокрутки
-          const newScrollLeft = scrollLeft + (e.deltaY * 2);
+          // Временно отключаем scroll-snap для плавности
+          const originalSnapType = activeGallery.style.scrollSnapType;
+          activeGallery.style.scrollSnapType = 'none';
           
-          // Метод 1: Прямое изменение
-          activeGallery.scrollLeft = newScrollLeft;
-          console.log('Method 1 - Direct:', activeGallery.scrollLeft);
+          // Прокручиваем галерею
+          activeGallery.scrollLeft = scrollLeft + (e.deltaY * 3);
           
-          // Метод 2: scrollTo
-          activeGallery.scrollTo(newScrollLeft, 0);
-          console.log('Method 2 - scrollTo:', activeGallery.scrollLeft);
+          // Возвращаем scroll-snap через короткую задержку
+          setTimeout(() => {
+            activeGallery.style.scrollSnapType = originalSnapType;
+          }, 100);
           
-          // Метод 3: scrollBy
-          activeGallery.scrollBy(e.deltaY * 2, 0);
-          console.log('Method 3 - scrollBy:', activeGallery.scrollLeft);
+          console.log(`Gallery scrolled: ${scrollLeft} → ${activeGallery.scrollLeft} (max: ${maxScrollLeft})`);
         }
       }
     }, { passive: false });
