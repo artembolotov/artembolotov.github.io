@@ -56,15 +56,35 @@ document.addEventListener('DOMContentLoaded', function() {
       const canScrollRight = e.deltaY > 0 && scrollLeft < maxScrollLeft;
       const canScrollLeft = e.deltaY < 0 && scrollLeft > 0;
       
-      console.log('Over gallery:', { deltaY: e.deltaY, scrollLeft, maxScrollLeft, canScrollRight, canScrollLeft });
-      
       if (canScrollRight || canScrollLeft) {
         e.preventDefault();
-        e.stopPropagation(); // Дополнительно останавливаем всплытие события
-        activeGallery.scrollLeft += e.deltaY * 8; // Увеличили скорость
-        console.log('Gallery scrolled, prevented page scroll');
-      } else {
-        console.log('Gallery at edge, allowing page scroll');
+        e.stopPropagation();
+        
+        // Более натуральный скролл - меньший шаг, плавное изменение
+        const scrollStep = e.deltaY * 2; // Уменьшили с 8 до 2
+        const targetScroll = Math.max(0, Math.min(maxScrollLeft, scrollLeft + scrollStep));
+        
+        // Плавное изменение через requestAnimationFrame
+        const startScroll = activeGallery.scrollLeft;
+        const distance = targetScroll - startScroll;
+        const duration = 100; // 100ms для плавности
+        const startTime = performance.now();
+        
+        function animateScroll(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function для натурального ощущения
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          
+          activeGallery.scrollLeft = startScroll + (distance * easeOut);
+          
+          if (progress < 1) {
+            requestAnimationFrame(animateScroll);
+          }
+        }
+        
+        requestAnimationFrame(animateScroll);
       }
     }
   }, { passive: false });
