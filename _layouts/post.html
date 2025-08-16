@@ -57,9 +57,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const canScrollLeft = e.deltaY < 0 && scrollLeft > 0;
       
       if (canScrollRight || canScrollLeft) {
-        e.preventDefault();
+        e.preventDefault(); // Блокируем только когда реально скроллим галерею
         activeGallery.scrollLeft += e.deltaY * 5;
       }
+      // Если галерея на краю - позволяем странице скроллиться
     }
   }, { passive: false });
 });
