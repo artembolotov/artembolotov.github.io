@@ -42,9 +42,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Останавливаем скролл вперёд если center Y > 4000
     if (e.deltaY > 0 && centerY > 4000) {
       e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      
+      // Дополнительная блокировка через overflow
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        document.body.style.overflow = '';
+      }, 100);
+      
       console.log('Scroll forward blocked at Y > 4000');
+      return false;
     }
-  }, { passive: false });
+  }, { passive: false, capture: true });
   
   console.log('Found galleries:', galleries.length);
 });
