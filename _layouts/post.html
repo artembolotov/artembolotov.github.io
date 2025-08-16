@@ -37,33 +37,39 @@ layout: default
     const galleries = document.querySelectorAll('.image-gallery-inner');
     console.log('Found galleries:', galleries.length);
     
-    // Пробуем на родительском элементе
-    const galleryContainers = document.querySelectorAll('.image-gallery');
-    console.log('Found gallery containers:', galleryContainers.length);
+    let isOverGallery = false;
+    let currentGallery = null;
     
-    galleryContainers.forEach(container => {
-      console.log('Adding wheel listener to container');
-      container.addEventListener('wheel', function(e) {
-        console.log('Wheel event on container:', e.deltaY);
+    // Отслеживаем когда мышь над галереей
+    document.querySelectorAll('.image-gallery').forEach(container => {
+      container.addEventListener('mouseenter', function() {
+        isOverGallery = true;
+        currentGallery = container.querySelector('.image-gallery-inner');
+        console.log('Mouse over gallery');
+      });
+      
+      container.addEventListener('mouseleave', function() {
+        isOverGallery = false;
+        currentGallery = null;
+        console.log('Mouse left gallery');
+      });
+    });
+    
+    // Глобальный слушатель wheel
+    document.addEventListener('wheel', function(e) {
+      if (isOverGallery && currentGallery) {
+        console.log('Wheel over gallery:', e.deltaY);
         
-        const gallery = container.querySelector('.image-gallery-inner');
-        if (!gallery) return;
-        
-        const scrollLeft = gallery.scrollLeft;
-        const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
+        const scrollLeft = currentGallery.scrollLeft;
+        const maxScrollLeft = currentGallery.scrollWidth - currentGallery.clientWidth;
         
         if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
             (e.deltaY < 0 && scrollLeft > 0)) {
           e.preventDefault();
-          gallery.scrollLeft += e.deltaY;
-          console.log('Scrolled to:', gallery.scrollLeft);
+          currentGallery.scrollLeft += e.deltaY;
+          console.log('Gallery scrolled to:', currentGallery.scrollLeft);
         }
-      });
-    });
-    
-    // Тест - добавляем на всю страницу
-    document.addEventListener('wheel', function(e) {
-      console.log('Page wheel event:', e.deltaY);
+      }
     });
   });
 </script>
