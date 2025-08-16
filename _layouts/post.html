@@ -31,31 +31,3 @@ layout: default
 
   {% include author-footer.html %}
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  let lastValidScrollY = 0;
-  
-  // Эксперимент с блокировкой через событие scroll
-  window.addEventListener('scroll', function(e) {
-    const centerY = window.innerHeight / 2 + window.scrollY;
-    
-    if (centerY > 4000) {
-      console.log('Scroll blocked! Returning to:', lastValidScrollY);
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-    } else {
-      lastValidScrollY = window.scrollY;
-    }
-  }, { passive: false });
-  
-  // Wheel для отладки
-  document.addEventListener('wheel', function(e) {
-    const centerY = window.innerHeight / 2 + window.scrollY;
-    console.log('PAGE wheel:', e.deltaY, 'Center Y:', Math.round(centerY));
-  });
-  
-  console.log('Found galleries:', galleries.length);
-});
-</script>
