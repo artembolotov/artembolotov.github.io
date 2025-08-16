@@ -31,3 +31,22 @@ layout: default
 
   {% include author-footer.html %}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const galleries = document.querySelectorAll('.image-gallery-inner');
+    
+    galleries.forEach(gallery => {
+      gallery.addEventListener('wheel', function(e) {
+        const scrollLeft = gallery.scrollLeft;
+        const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
+        
+        if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
+            (e.deltaY < 0 && scrollLeft > 0)) {
+          e.preventDefault();
+          gallery.scrollLeft += e.deltaY;
+        }
+      });
+    });
+  });
+</script>
