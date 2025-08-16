@@ -33,19 +33,13 @@ layout: default
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
   const galleries = document.querySelectorAll('.image-gallery');
   
-  function getGalleryNearCursor(x, y) {
+  function getGalleryUnderCursor(x, y) {
     for (const gallery of galleries) {
       const rect = gallery.getBoundingClientRect();
-      
-      if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
-      
-      const isInHorizontalBounds = x >= rect.left && x <= rect.right;
-      const isNearVertically = y >= (rect.top - 50) && y <= (rect.bottom + 50);
-      
-      if (isInHorizontalBounds && isNearVertically) {
+      if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
         return gallery.querySelector('.image-gallery-inner');
       }
     }
@@ -53,7 +47,7 @@ layout: default
   }
   
   document.addEventListener('wheel', function(e) {
-    const activeGallery = getGalleryNearCursor(e.clientX, e.clientY);
+    const activeGallery = getGalleryUnderCursor(e.clientX, e.clientY);
     
     if (activeGallery) {
       const scrollLeft = activeGallery.scrollLeft;
@@ -64,7 +58,7 @@ layout: default
       
       if (canScrollRight || canScrollLeft) {
         e.preventDefault();
-        activeGallery.scrollLeft += e.deltaY * 2;
+        activeGallery.scrollLeft += e.deltaY * 5;
       }
     }
   }, { passive: false });
