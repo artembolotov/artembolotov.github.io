@@ -32,6 +32,9 @@ layout: default
   {% include author-footer.html %}
 </div>
 
+{% include author-footer.html %}
+</div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const galleries = document.querySelectorAll('.image-gallery-inner');
@@ -68,13 +71,21 @@ layout: default
             (e.deltaY < 0 && scrollLeft > 0)) {
           e.preventDefault();
           
-          // Используем scrollTo вместо прямого изменения scrollLeft
-          currentGallery.scrollTo({
-            left: scrollLeft + e.deltaY,
-            behavior: 'auto'
-          });
+          // Временно отключаем scroll-snap
+          const originalSnapType = currentGallery.style.scrollSnapType;
+          currentGallery.style.scrollSnapType = 'none';
           
-          console.log('Gallery scrolled to:', currentGallery.scrollLeft);
+          // Прямое изменение scrollLeft
+          const newScrollLeft = scrollLeft + e.deltaY;
+          currentGallery.scrollLeft = newScrollLeft;
+          
+          // Проверяем результат сразу
+          console.log('Attempted scroll to:', newScrollLeft, 'Actual scrollLeft:', currentGallery.scrollLeft);
+          
+          // Возвращаем scroll-snap через небольшую задержку
+          setTimeout(() => {
+            currentGallery.style.scrollSnapType = originalSnapType;
+          }, 100);
         }
       }
     }, { passive: false });
