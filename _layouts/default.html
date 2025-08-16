@@ -85,5 +85,88 @@ layout: compress
   <main>
     {{ content }}
   </main>
+  <script>
+(function() {
+  // Gallery scroll hijacking for desktop only
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+  
+  const galleries = document.querySelectorAll('.image-gallery-inner');
+  if (!galleries.length) return;
+  
+  let activeGallery = null;
+  let isScrollingGallery = false;
+  
+  // Check if gallery is centered vertically in viewport
+  function isGalleryCentered(gallery) {
+    const rect = gallery.getBoundingClientRect();
+    const viewportCenter = window.innerHeight / 2;
+    const galleryCenter = rect.top + rect.height / 2;
+    const threshold = rect.height / 2;
+    
+    return Math.abs(galleryCenter - viewportCenter) < threshold;
+  }
+  
+  // Check if gallery can scroll horizontally
+  function canScrollHorizontally(gallery, direction) {
+    if (direction > 0) {
+      // Scrolling right
+      return gallery.scrollLeft < (gallery.scrollWidth - gallery.clientWidth - 1);
+    } else {
+      // Scrolling left  
+      return gallery.scrollLeft > 0;
+    }
+  }
+  
+  // Find active gallery on scroll
+  function updateActiveGallery() {
+    activeGallery = null;
+    galleries.forEach(gallery => {
+      if (isGalleryCentered(gallery)) {
+        activeGallery = gallery;
+      }
+    });
+  }
+  
+  // Handle wheel event
+  function handleWheel(e) {
+    if (!activeGallery) {
+      updateActiveGallery();
+    }
+    
+    if (activeGallery && isGalleryCentered(activeGallery)) {
+      const delta = e.deltaY || e.detail || e.wheelDelta;
+      
+      if (canScrollHorizontally(activeGallery, delta)) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Convert vertical scroll to horizontal
+        activeGallery.scrollLeft += delta;
+        isScrollingGallery = true;
+      } else {
+        // Gallery reached edge, allow normal scroll
+        isScrollingGallery = false;
+        activeGallery = null;
+      }
+    }
+  }
+  
+  // Regular scroll event to update active gallery
+  window.addEventListener('scroll', function() {
+    if (!isScrollingGallery) {
+      updateActiveGallery();
+    }
+  }, { passive: true });
+  
+  // Wheel event for gallery scrolling
+  window.addEventListener('wheel', handleWheel, { passive: false });
+  
+  // Reset on resize
+  window.addEventListener('resize', function() {
+    activeGallery = null;
+    isScrollingGallery = false;
+  });
+})();
+</script>
 </body>
 </html>
