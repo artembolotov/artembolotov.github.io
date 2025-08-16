@@ -35,14 +35,19 @@ layout: default
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const galleries = document.querySelectorAll('.image-gallery-inner');
+    console.log('Found galleries:', galleries.length);
     
     galleries.forEach(gallery => {
+      console.log('Adding wheel listener to gallery');
       gallery.addEventListener('wheel', function(e) {
+        console.log('Wheel event:', e.deltaY);
         const scrollLeft = gallery.scrollLeft;
         const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
+        console.log('ScrollLeft:', scrollLeft, 'MaxScroll:', maxScrollLeft);
         
         if ((e.deltaY > 0 && scrollLeft < maxScrollLeft) || 
             (e.deltaY < 0 && scrollLeft > 0)) {
+          console.log('Preventing default and scrolling gallery');
           e.preventDefault();
           gallery.scrollLeft += e.deltaY;
         }
