@@ -71,66 +71,52 @@ document.addEventListener('DOMContentLoaded', function() {
   const galleries = document.querySelectorAll('.image-gallery');
   
   function getGalleryUnderCursor(x, y) {
-    for (const gallery of galleries) {
-      const rect = gallery.getBoundingClientRect();
-      if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-        return gallery.querySelector('.image-gallery-inner');
+    // Проверяем элемент точно под курсором
+    const element = document.elementFromPoint(x, y);
+    if (!element) return null;
+    
+    // Ищем родительскую галерею
+    const gallery = element.closest('.image-gallery');
+    if (gallery) {
+      const inner = gallery.querySelector('.image-gallery-inner');
+      if (inner) {
+        console.log('Found gallery under cursor');
+        return inner;
       }
     }
     return null;
   }
   
-  let isGalleryScrolling = false;
-  
-  function handleGalleryScroll(e) {
-    const activeGallery = getGalleryUnderCursor(e.clientX, e.clientY);
+  // Навешиваем обработчик на каждую галерею отдельно
+  galleries.forEach(gallery => {
+    const inner = gallery.querySelector('.image-gallery-inner');
+    if (!inner) return;
     
-    if (activeGallery) {
-      const scrollLeft = activeGallery.scrollLeft;
-      const maxScrollLeft = activeGallery.scrollWidth - activeGallery.clientWidth;
+    gallery.addEventListener('wheel', function(e) {
+      console.log('Wheel on gallery element');
+      
+      const scrollLeft = inner.scrollLeft;
+      const maxScrollLeft = inner.scrollWidth - inner.clientWidth;
       
       const canScrollRight = e.deltaY > 0 && scrollLeft < maxScrollLeft;
       const canScrollLeft = e.deltaY < 0 && scrollLeft > 0;
       
+      console.log({
+        deltaY: e.deltaY,
+        scrollLeft,
+        maxScrollLeft,
+        canScrollRight,
+        canScrollLeft
+      });
+      
       if (canScrollRight || canScrollLeft) {
-        // Агрессивная блокировка скролла страницы
         e.preventDefault();
         e.stopPropagation();
-        e.stopImmediatePropagation();
         
-        isGalleryScrolling = true;
-        
-        // Временно блокируем скролл body
-        document.body.style.overflow = 'hidden';
-        
-        activeGallery.scrollLeft += e.deltaY;
-        
-        // Возвращаем скролл body через небольшую задержку
-        setTimeout(() => {
-          document.body.style.overflow = '';
-          isGalleryScrolling = false;
-        }, 50);
-        
-        console.log('Gallery scrolled, page blocked');
-        return false; // Дополнительная блокировка
+        inner.scrollLeft += e.deltaY;
+        console.log('Gallery scrolled to:', inner.scrollLeft);
       }
-    }
-  }
-  
-  // Слушатель с capture: true (обрабатывается раньше других)
-  document.addEventListener('wheel', handleGalleryScroll, { 
-    passive: false, 
-    capture: true 
+    }, { passive: false });
   });
-  
-  // Дополнительный глобальный блокиратор
-  document.addEventListener('wheel', function(e) {
-    if (isGalleryScrolling) {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      return false;
-    }
-  }, { passive: false, capture: true });
 });
 </script>
