@@ -37,17 +37,21 @@ layout: default
     const galleries = document.querySelectorAll('.image-gallery');
     console.log('Found galleries:', galleries.length);
     
-    // Функция для проверки, видна ли галерея в viewport
-    function isGalleryInViewport(gallery) {
-      const rect = gallery.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      return rect.bottom > 0 && rect.top < windowHeight;
-    }
-    
-    // Находим активную галерею (видимую в viewport)
-    function getActiveGallery() {
+    // Находим галерею под курсором или рядом с ним
+    function getGalleryNearCursor(x, y) {
       for (const gallery of galleries) {
-        if (isGalleryInViewport(gallery)) {
+        const rect = gallery.getBoundingClientRect();
+        
+        // Проверяем что галерея видна в viewport
+        if (rect.bottom < 0 || rect.top > window.innerHeight) {
+          continue;
+        }
+        
+        // Проверяем что курсор в пределах галереи по X и близко по Y
+        const isInHorizontalBounds = x >= rect.left && x <= rect.right;
+        const isNearVertically = y >= (rect.top - 100) && y <= (rect.bottom + 100);
+        
+        if (isInHorizontalBounds && isNearVertically) {
           return gallery.querySelector('.image-gallery-inner');
         }
       }
@@ -56,7 +60,7 @@ layout: default
     
     // Глобальный слушатель wheel с passive: false
     document.addEventListener('wheel', function(e) {
-      const activeGallery = getActiveGallery();
+      const activeGallery = getGalleryNearCursor(e.clientX, e.clientY);
       
       if (activeGallery) {
         const scrollLeft = activeGallery.scrollLeft;
@@ -69,19 +73,10 @@ layout: default
         if (canScrollRight || canScrollLeft) {
           e.preventDefault();
           
-          // Временно отключаем scroll-snap для плавности
-          const originalSnapType = activeGallery.style.scrollSnapType;
-          activeGallery.style.scrollSnapType = 'none';
-          
           // Прокручиваем галерею
           activeGallery.scrollLeft = scrollLeft + (e.deltaY * 3);
           
-          // Возвращаем scroll-snap через короткую задержку
-          setTimeout(() => {
-            activeGallery.style.scrollSnapType = originalSnapType;
-          }, 100);
-          
-          console.log(`Gallery scrolled: ${scrollLeft} → ${activeGallery.scrollLeft} (max: ${maxScrollLeft})`);
+          console.log(`Gallery scrolled: ${scrollLeft} → ${activeGallery.scrollLeft}`);
         }
       }
     }, { passive: false });
