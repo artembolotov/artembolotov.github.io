@@ -173,6 +173,14 @@ const totalSavings = totalServiceCost - totalSelfCost
 {% endcapture %}
 {% include gallery.html images=gallery_results %}
 
+А ещё получило звание Indie App of the Week
+
+{% capture gallery_indie %}
+/blog/img/2025-08-10-screenlines/indie_0.png
+/blog/img/2025-08-10-screenlines/indie_1.png
+{% endcapture %}
+{% include gallery.html images=gallery_indie %}
+
 ## Уроки для разработчиков
 
 ### 1. Простота ≠ Примитивность
