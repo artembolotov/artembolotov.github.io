@@ -145,7 +145,7 @@ class GalleryController {
     const allImagesFit = scrollWidth <= clientWidth + 5; // 5px threshold
 
     if (allImagesFit) {
-      // All images fit - hide entire controls container
+      // All images fit - keep controls hidden
       controlsContainer.style.visibility = 'hidden';
     } else {
       // Images don't fit - show controls and update button states
