@@ -20,9 +20,21 @@ class GalleryController {
   initializeGalleries() {
     // Find all galleries on the page
     const galleryElements = document.querySelectorAll('.image-gallery');
+    let autoIdCounter = 1;
     
     galleryElements.forEach(gallery => {
-      const galleryId = gallery.getAttribute('data-gallery-id');
+      let galleryId = gallery.getAttribute('data-gallery-id');
+      
+      // Generate unique ID for auto galleries
+      if (galleryId === 'gallery-auto') {
+        galleryId = 'gallery-' + autoIdCounter++;
+        gallery.setAttribute('data-gallery-id', galleryId);
+        
+        // Update button data-gallery attributes
+        const buttons = gallery.querySelectorAll('.gallery-nav');
+        buttons.forEach(btn => btn.setAttribute('data-gallery', galleryId));
+      }
+      
       if (galleryId && !this.galleries.has(galleryId)) {
         this.initializeGallery(gallery, galleryId);
       }

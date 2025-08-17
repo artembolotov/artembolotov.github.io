@@ -8,10 +8,7 @@ Usage:
 {% if include.id %}
   {% assign gallery_id = include.id %}
 {% else %}
-  {% comment %}Generate random unique ID{% endcomment %}
-  {% assign random_num = site.time | date: "%s%N" | slice: -8, 8 %}
-  {% assign content_slice = include.images | slice: 0, 20 | size %}
-  {% assign gallery_id = 'gallery-' | append: random_num | append: content_slice %}
+  {% assign gallery_id = 'gallery-auto' %}
 {% endif %}
 
 <div class="image-gallery" data-gallery-id="{{ gallery_id }}">
