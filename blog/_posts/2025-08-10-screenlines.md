@@ -98,7 +98,8 @@ private func disableScreenAutoLocking() {
 ```swift
 .withConfetti(counter: $viewModel.happyCounter)
 ```
-![Радуемся вместе с пользователем](/blog/img/2025-08-10-screenlines/confetti.png)
+
+<img src="/blog/img/2025-08-10-screenlines/confetti.png" style="box-shadow: none;" alt="" />
 
 ## Когда ИИ пишет сайт
 
