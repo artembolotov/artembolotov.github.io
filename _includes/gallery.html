@@ -23,7 +23,7 @@ Usage: {% include gallery.html images=gallery_images %}
         {% assign parts = trimmed_line | split: "|" %}
         {% assign image_path = parts[0] | strip %}
         {% assign image_alt = parts[1] | strip | default: "" %}
-        <img src="{{ image_path }}" alt="{{ image_alt }}" loading="lazy">
+        <img src="{{ image_path }}" alt="{{ image_alt }}">
       {% endunless %}
     {% endfor %}
   </div>
