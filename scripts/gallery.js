@@ -184,9 +184,7 @@ class GalleryController {
     // Ensure we don't scroll beyond bounds
     targetScroll = Math.max(0, Math.min(targetScroll, scrollContainer.scrollWidth - scrollContainer.clientWidth));
 
-    scrollContainer.scrollTo({
-      left: targetScroll
-    });
+    scrollContainer.scrollLeft = targetScroll;
     
     // CSS scroll-snap will automatically align to the nearest image!
   }
