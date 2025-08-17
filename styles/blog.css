@@ -329,9 +329,10 @@ main li {
 }
 
 /* Image styling */
-main img, .highlight {
+main p img, .highlight {
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  padding: 5px;
 }
 
 /* Image captions */
@@ -360,7 +361,7 @@ time {
     color: #aaa;
   }
   
-  main img, .highlight {
+  main p img, .highlight {
     box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   }
 
