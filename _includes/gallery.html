@@ -33,8 +33,9 @@ Usage:
       {% endunless %}
     {% endfor %}
   </div>
-  
-  {% if image_count > 1 %}
+</div>
+
+{% if image_count > 1 %}
   <div class="gallery-controls">
     <button class="gallery-nav gallery-prev" data-gallery="{{ gallery_id }}" data-direction="prev" aria-label="Предыдущее изображение">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -48,4 +49,3 @@ Usage:
     </button>
   </div>
   {% endif %}
-</div>
