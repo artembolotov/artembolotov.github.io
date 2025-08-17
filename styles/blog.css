@@ -100,12 +100,17 @@ h3 {
 
 .image-gallery-inner {
   display: flex;
-  overflow-x: auto;
   gap: 0.5rem;
+  overflow-x: auto;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
   scroll-padding: 0.5rem;
+  
+  /* Magic CSS centering when content fits */
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
   
   /* Hide scrollbar completely */
   scrollbar-width: none; /* Firefox */
@@ -192,6 +197,10 @@ figure.image-row-2 figcaption, figure.image-row-3 figcaption {
   
   .gallery-nav:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .image-gallery-inner img {
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   }
 }
 
@@ -367,10 +376,6 @@ time {
   }
 
   h1 { color: #fff; }
-  
-  .image-gallery-inner img {
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
 }
 
 /* Author footer styles */
