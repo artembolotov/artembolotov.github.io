@@ -17,6 +17,16 @@ draft: true
 {% endcapture %}
 {% include gallery.html images=gallery_test %}
 
+{% capture gallery_appstore %}
+/blog/img/2025-08-10-screenlines/ru_0.png
+/blog/img/2025-08-10-screenlines/ru_1.png
+/blog/img/2025-08-10-screenlines/ru_2.png
+/blog/img/2025-08-10-screenlines/ru_3.png
+/blog/img/2025-08-10-screenlines/ru_4.png
+/blog/img/2025-08-10-screenlines/ru_5.png
+{% endcapture %}
+{% include gallery.html images=gallery_appstore %}
+
 ## Проблема, знакомая каждому
 
 Черная рамка стекла, черная рамка телефона, вы пытаетесь на глаз определить, ровно ли легло стекло. Не очень ровно — отклеиваем и центруем заново. Может попасть пылинка — доставать или оставить?  Результат предсказуем: либо "съедена" часть экрана с одной стороны, либо видна белая полоска с другой. А переклеивать — это пыль, пузыри и испорченные нервы.

@@ -1,9 +1,16 @@
 {% comment %}
 Image gallery component with navigation buttons
-Usage: {% include gallery.html images=gallery_images %}
+Usage: 
+{% include gallery.html images=gallery_test id="gallery_test" %}
+or
+{% include gallery.html images=gallery_test %} (auto-generated ID)
 {% endcomment %}
 
-{% assign gallery_id = 'gallery-' | append: forloop.index0 | append: '-' | append: page.date | date: "%Y%m%d" %}
+{% if include.id %}
+  {% assign gallery_id = include.id %}
+{% else %}
+  {% assign gallery_id = 'gallery-' | append: forloop.index0 | append: '-' | append: page.date | date: "%Y%m%d" %}
+{% endif %}
 
 <div class="image-gallery" data-gallery-id="{{ gallery_id }}">
   {% assign lines = include.images | strip | split: "
