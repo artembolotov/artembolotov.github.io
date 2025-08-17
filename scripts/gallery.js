@@ -171,7 +171,7 @@ class GalleryController {
     if (!galleryData) return;
 
     const { scrollContainer } = galleryData;
-    const scrollAmount = scrollContainer.clientWidth * 0.75;
+    const scrollAmount = scrollContainer.clientWidth * 0.5; // More conservative 50%
     const currentScroll = scrollContainer.scrollLeft;
 
     let targetScroll;
