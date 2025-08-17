@@ -6,7 +6,7 @@ image: /blog/img/2025-08-10-screenlines/preview.png
 draft: true
 ---
 
-5000 скачиваний за три дня. 34 место в топе утилит App Store России. [Приложение недели](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank"} в сообществе [Indie iOS Apps](https://x.com/ios_dev_alb/status/1956656538841477335?s=46&t=XX_GDAhHPLfRalDTeluI4w){:target="_blank"}. И всё это — приложение, которое просто показывает белую линию на экране.
+4700 скачиваний за три дня. 34 место в топе утилит App Store России. [Приложение недели](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank"} в сообществе [Indie iOS Apps](https://x.com/ios_dev_alb/status/1956656538841477335?s=46&t=XX_GDAhHPLfRalDTeluI4w){:target="_blank"}. И всё это — приложение, которое просто показывает белую линию на экране.
 
 {% capture gallery_appstore %}
 /blog/img/2025-08-10-screenlines/ru_0.png
@@ -157,7 +157,7 @@ const totalSavings = totalServiceCost - totalSelfCost
 
 ## Результаты взлёта
 
-- **5000 скачиваний** за первые 3 дня
+- **4700 скачиваний** за первые 3 дня
 - **34 место** в топе утилит App Store России  
 - **Обогнали** «Парковки Москвы» и «Столото»
 - **География**: Россия, Нидерланды, Германия, США
