@@ -6,7 +6,7 @@ image: /blog/img/2025-08-10-screenlines/preview.png
 draft: true
 ---
 
-5000 скачиваний за три дня. 34 место в топе утилит App Store России. Приложение недели в сообществе Indie iOS Apps. И всё это — приложение, которое просто показывает белую линию на экране.
+5000 скачиваний за три дня. 34 место в топе утилит App Store России. [Приложение недели](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank"} в сообществе [Indie iOS Apps](https://x.com/ios_dev_alb/status/1956656538841477335?s=46&t=XX_GDAhHPLfRalDTeluI4w){:target="_blank"}. И всё это — приложение, которое просто показывает белую линию на экране.
 
 {% capture gallery_appstore %}
 /blog/img/2025-08-10-screenlines/ru_0.png
@@ -129,6 +129,16 @@ Claude оказался единственным, кто подходит для
 /blog/img/2025-08-10-screenlines/racoon_3.png
 {% endcapture %}
 {% include gallery.html images=gallery_racoon %}
+
+Теперь есть и настоящие отзывы
+
+{% capture gallery_reviews %}
+/blog/img/2025-08-10-screenlines/reviews_0.png
+/blog/img/2025-08-10-screenlines/reviews_1.png
+/blog/img/2025-08-10-screenlines/reviews_2.png
+/blog/img/2025-08-10-screenlines/reviews_3.png
+{% endcapture %}
+{% include gallery.html images=gallery_reviews %}
 
 ### Калькулятор экономии
 
