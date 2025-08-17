@@ -118,7 +118,7 @@ class GalleryController {
     }
     galleryData.scrollTimeout = setTimeout(() => {
       this.updateButtonStates(galleryId);
-    }, 50);
+    }, 10); // Faster response - was 50ms, now 10ms
   }
 
   handleResize(galleryId) {
@@ -130,7 +130,7 @@ class GalleryController {
     }
     galleryData.resizeTimeout = setTimeout(() => {
       this.updateButtonStates(galleryId);
-    }, 100);
+    }, 25); // Faster response - was 100ms, now 25ms
   }
 
   updateButtonStates(galleryId) {
