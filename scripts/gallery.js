@@ -48,8 +48,9 @@ class GalleryController {
     const scrollContainer = galleryElement.querySelector('.image-gallery-inner');
     const prevBtn = galleryElement.querySelector('.gallery-prev');
     const nextBtn = galleryElement.querySelector('.gallery-next');
+    const controlsContainer = galleryElement.querySelector('.gallery-controls');
 
-    if (!scrollContainer || !prevBtn || !nextBtn) {
+    if (!scrollContainer || !prevBtn || !nextBtn || !controlsContainer) {
       console.log('Gallery elements not found for:', galleryId);
       return;
     }
@@ -60,6 +61,7 @@ class GalleryController {
       scrollContainer: scrollContainer,
       prevBtn: prevBtn,
       nextBtn: nextBtn,
+      controlsContainer: controlsContainer,
       scrollTimeout: null,
       resizeTimeout: null
     };
@@ -134,22 +136,33 @@ class GalleryController {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData) return;
 
-    const { scrollContainer, prevBtn, nextBtn } = galleryData;
+    const { scrollContainer, prevBtn, nextBtn, controlsContainer } = galleryData;
     const scrollLeft = scrollContainer.scrollLeft;
     const scrollWidth = scrollContainer.scrollWidth;
     const clientWidth = scrollContainer.clientWidth;
 
-    // Check if at start or end (with small threshold)
-    const atStart = scrollLeft <= 5;
-    const atEnd = scrollLeft + clientWidth >= scrollWidth - 5;
+    // Check if all images fit in the visible area
+    const allImagesFit = scrollWidth <= clientWidth + 5; // 5px threshold
 
-    // Update button states
-    prevBtn.disabled = atStart;
-    nextBtn.disabled = atEnd;
+    if (allImagesFit) {
+      // All images fit - hide entire controls container
+      controlsContainer.style.visibility = 'hidden';
+    } else {
+      // Images don't fit - show controls and update button states
+      controlsContainer.style.visibility = 'visible';
+      
+      // Check if at start or end (with small threshold)
+      const atStart = scrollLeft <= 5;
+      const atEnd = scrollLeft + clientWidth >= scrollWidth - 5;
 
-    // Visual feedback
-    prevBtn.style.opacity = atStart ? '0.3' : '1';
-    nextBtn.style.opacity = atEnd ? '0.3' : '1';
+      // Update button states
+      prevBtn.disabled = atStart;
+      nextBtn.disabled = atEnd;
+
+      // Visual feedback
+      prevBtn.style.opacity = atStart ? '0.3' : '1';
+      nextBtn.style.opacity = atEnd ? '0.3' : '1';
+    }
   }
 
   getImageWidth(galleryId) {
