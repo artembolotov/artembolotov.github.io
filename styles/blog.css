@@ -89,7 +89,8 @@ h3 {
 
 .gallery-nav:disabled {
   opacity: 0.3;
-  cursor: not-allowed;
+  cursor: default;
+  pointer-events: none;
 }
 
 .gallery-nav svg {
@@ -103,23 +104,17 @@ h3 {
   gap: 0.5rem;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.2) transparent;
   scroll-snap-type: x mandatory;
   scroll-padding: 0.5rem;
+  
+  /* Hide scrollbar completely */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
+/* Hide scrollbar in WebKit browsers */
 .image-gallery-inner::-webkit-scrollbar {
-  height: 6px;
-}
-
-.image-gallery-inner::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.image-gallery-inner::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.2);
-  border-radius: 3px;
+  display: none;
 }
 
 .image-gallery-inner img {
@@ -375,14 +370,6 @@ time {
   
   .image-gallery-inner img {
     box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-  
-  .image-gallery-inner::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.3);
-  }
-  
-  .image-gallery-inner {
-    scrollbar-color: rgba(255,255,255,0.3) transparent;
   }
 }
 
