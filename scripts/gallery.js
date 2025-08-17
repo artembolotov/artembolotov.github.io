@@ -1,6 +1,7 @@
 /**
  * Universal Gallery Controller
  * Handles all image galleries on the page
+ * Uses CSS scroll-snap for precise image alignment
  */
 class GalleryController {
   constructor() {
@@ -165,31 +166,19 @@ class GalleryController {
     }
   }
 
-  getImageWidth(galleryId) {
-    const galleryData = this.galleries.get(galleryId);
-    if (!galleryData) return 0;
-
-    const firstImage = galleryData.scrollContainer.querySelector('img');
-    if (!firstImage) return galleryData.scrollContainer.clientWidth;
-
-    const imageRect = firstImage.getBoundingClientRect();
-    const gap = 8; // 0.5rem gap between images
-    return imageRect.width + gap;
-  }
-
   scrollToDirection(galleryId, direction) {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData) return;
 
     const { scrollContainer } = galleryData;
-    const imageWidth = this.getImageWidth(galleryId);
+    const scrollAmount = scrollContainer.clientWidth * 0.75;
     const currentScroll = scrollContainer.scrollLeft;
 
     let targetScroll;
     if (direction === 'next') {
-      targetScroll = currentScroll + imageWidth;
+      targetScroll = currentScroll + scrollAmount;
     } else {
-      targetScroll = currentScroll - imageWidth;
+      targetScroll = currentScroll - scrollAmount;
     }
 
     // Ensure we don't scroll beyond bounds
@@ -199,6 +188,8 @@ class GalleryController {
       left: targetScroll,
       behavior: 'smooth'
     });
+    
+    // CSS scroll-snap will automatically align to the nearest image!
   }
 
   // Public method to manually initialize new galleries (useful for dynamic content)
