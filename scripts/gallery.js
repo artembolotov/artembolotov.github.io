@@ -1,17 +1,11 @@
-/**
- * Universal Gallery Controller
- * Handles all image galleries on the page
- * Uses CSS scroll-snap for precise image alignment
- */
 class GalleryController {
   constructor() {
     this.galleries = new Map();
-    this.eventDelegationSetup = false; // Flag to prevent multiple event listeners
+    this.eventDelegationSetup = false;
     this.init();
   }
 
   init() {
-    // Wait for DOM to be ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => this.initializeGalleries());
     } else {
@@ -20,19 +14,16 @@ class GalleryController {
   }
 
   initializeGalleries() {
-    // Find all galleries on the page
     const galleryElements = document.querySelectorAll('.image-gallery');
     let autoIdCounter = 1;
     
     galleryElements.forEach(gallery => {
       let galleryId = gallery.getAttribute('data-gallery-id');
       
-      // Generate unique ID for auto galleries
       if (galleryId === 'gallery-auto') {
         galleryId = 'gallery-' + autoIdCounter++;
         gallery.setAttribute('data-gallery-id', galleryId);
         
-        // Update button data-gallery attributes
         const buttons = gallery.querySelectorAll('.gallery-nav');
         buttons.forEach(btn => btn.setAttribute('data-gallery', galleryId));
       }
@@ -42,7 +33,6 @@ class GalleryController {
       }
     });
 
-    // Set up global event delegation ONLY ONCE
     if (!this.eventDelegationSetup) {
       this.setupEventDelegation();
       this.eventDelegationSetup = true;
@@ -68,12 +58,16 @@ class GalleryController {
       nextBtn: nextBtn,
       controlsContainer: controlsContainer,
       scrollTimeout: null,
-      resizeTimeout: null
+      resizeTimeout: null,
+      isPreloaded: false  // Add preload flag
     };
 
     this.galleries.set(galleryId, galleryData);
 
-    // Set up scroll listener for this gallery
+    // IMPORTANT: Preload scroll mechanism
+    this.preloadScroll(galleryId);
+
+    // Set up scroll listener
     scrollContainer.addEventListener('scroll', () => {
       this.handleScroll(galleryId);
     });
@@ -88,6 +82,10 @@ class GalleryController {
     images.forEach(img => {
       img.addEventListener('load', () => {
         this.updateButtonStates(galleryId);
+        // Re-preload after images load
+        if (!galleryData.isPreloaded) {
+          this.preloadScroll(galleryId);
+        }
       });
     });
 
@@ -97,8 +95,29 @@ class GalleryController {
     console.log('Gallery initialized:', galleryId);
   }
 
+  // New method: Preload scroll to initialize browser's scroll mechanism
+  preloadScroll(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData) return;
+
+    const { scrollContainer } = galleryData;
+    
+    // Micro-scroll to initialize scroll-snap and smooth scrolling
+    requestAnimationFrame(() => {
+      // Save current position
+      const originalPosition = scrollContainer.scrollLeft;
+      
+      // Do a tiny scroll forward and back
+      scrollContainer.scrollLeft = 1;
+      
+      requestAnimationFrame(() => {
+        scrollContainer.scrollLeft = originalPosition;
+        galleryData.isPreloaded = true;
+      });
+    });
+  }
+
   setupEventDelegation() {
-    // Use event delegation to handle all gallery button clicks
     document.addEventListener('click', (e) => {
       if (e.target.closest('.gallery-nav')) {
         e.preventDefault();
@@ -122,7 +141,7 @@ class GalleryController {
     }
     galleryData.scrollTimeout = setTimeout(() => {
       this.updateButtonStates(galleryId);
-    }, 10); // Faster response - was 50ms, now 10ms
+    }, 10);
   }
 
   handleResize(galleryId) {
@@ -134,7 +153,9 @@ class GalleryController {
     }
     galleryData.resizeTimeout = setTimeout(() => {
       this.updateButtonStates(galleryId);
-    }, 25); // Faster response - was 100ms, now 25ms
+      // Re-preload after resize
+      this.preloadScroll(galleryId);
+    }, 25);
   }
 
   updateButtonStates(galleryId) {
@@ -146,25 +167,19 @@ class GalleryController {
     const scrollWidth = scrollContainer.scrollWidth;
     const clientWidth = scrollContainer.clientWidth;
 
-    // Check if all images fit in the visible area
-    const allImagesFit = scrollWidth <= clientWidth + 5; // 5px threshold
+    const allImagesFit = scrollWidth <= clientWidth + 5;
 
     if (allImagesFit) {
-      // All images fit - keep controls hidden
       controlsContainer.style.visibility = 'hidden';
     } else {
-      // Images don't fit - show controls and update button states
       controlsContainer.style.visibility = 'visible';
       
-      // Check if at start or end (with small threshold)
       const atStart = scrollLeft <= 5;
       const atEnd = scrollLeft + clientWidth >= scrollWidth - 5;
 
-      // Update button states
       prevBtn.disabled = atStart;
       nextBtn.disabled = atEnd;
 
-      // Visual feedback
       prevBtn.style.opacity = atStart ? '0.3' : '1';
       nextBtn.style.opacity = atEnd ? '0.3' : '1';
     }
@@ -174,8 +189,22 @@ class GalleryController {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData) return;
 
-    const { scrollContainer } = galleryData;
-    const scrollAmount = scrollContainer.clientWidth * 0.5; // More conservative 50%
+    const { scrollContainer, isPreloaded } = galleryData;
+    
+    // If not preloaded, do it now
+    if (!isPreloaded) {
+      this.preloadScroll(galleryId);
+      // Delay the actual scroll slightly
+      setTimeout(() => {
+        this.performScroll(scrollContainer, direction);
+      }, 50);
+    } else {
+      this.performScroll(scrollContainer, direction);
+    }
+  }
+
+  performScroll(scrollContainer, direction) {
+    const scrollAmount = scrollContainer.clientWidth * 0.5;
     const currentScroll = scrollContainer.scrollLeft;
 
     let targetScroll;
@@ -185,18 +214,15 @@ class GalleryController {
       targetScroll = currentScroll - scrollAmount;
     }
 
-    // Ensure we don't scroll beyond bounds
-    targetScroll = Math.max(0, Math.min(targetScroll, scrollContainer.scrollWidth - scrollContainer.clientWidth));
+    targetScroll = Math.max(0, Math.min(targetScroll, 
+      scrollContainer.scrollWidth - scrollContainer.clientWidth));
 
     scrollContainer.scrollTo({
       left: targetScroll,
       behavior: 'smooth'
     });
-    
-    // CSS scroll-snap will automatically align to the nearest image!
   }
 
-  // Public method to manually initialize new galleries (useful for dynamic content)
   refresh() {
     this.initializeGalleries();
   }
