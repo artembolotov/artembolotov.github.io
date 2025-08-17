@@ -6,6 +6,7 @@
 class GalleryController {
   constructor() {
     this.galleries = new Map();
+    this.eventDelegationSetup = false; // Flag to prevent multiple event listeners
     this.init();
   }
 
@@ -41,8 +42,11 @@ class GalleryController {
       }
     });
 
-    // Set up global event delegation
-    this.setupEventDelegation();
+    // Set up global event delegation ONLY ONCE
+    if (!this.eventDelegationSetup) {
+      this.setupEventDelegation();
+      this.eventDelegationSetup = true;
+    }
   }
 
   initializeGallery(galleryElement, galleryId) {
