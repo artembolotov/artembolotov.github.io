@@ -17,12 +17,6 @@ main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge), #page-
   padding-right: max(1rem, env(safe-area-inset-right));
 }
 
-div.highlight {
-  padding-left: max(0rem, env(safe-area-inset-left));
-  padding-right: max(0rem, env(safe-area-inset-right));
-}
-
-
 /* Keeping h1 the same size as h2 on main site, as requested */
 h1 { 
   font-size: 1.475em; 
