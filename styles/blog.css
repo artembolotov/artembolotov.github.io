@@ -258,12 +258,13 @@ div.highlight {
 }
 
 /* Image captions */
-img + em {
+img + em, .gallery-caption {
   display: block;
   text-align: center;
   margin-top: 0;
   font-size: 0.9em;
   color: #666;
+  font-style: italic;
 }
 
 /* Date formatting */
@@ -279,7 +280,7 @@ time {
     color: #aaa;
   }
 
-  img + em {
+  img + em, .gallery-caption {
     color: #aaa;
   }
 

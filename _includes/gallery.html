@@ -1,7 +1,8 @@
 {% comment %}
 Image gallery component with navigation buttons
 Usage: 
-{% include gallery.html images=gallery_test id="custom_id" %}  (with custom ID)
+{% include gallery.html images=gallery_test id="custom_id" caption="Gallery caption" %}  (with custom ID and caption)
+{% include gallery.html images=gallery_test caption="Gallery caption" %}  (auto-generated ID with caption)
 {% include gallery.html images=gallery_test %}  (auto-generated random ID)
 {% endcomment %}
 
@@ -48,3 +49,6 @@ Usage:
   </div>
   {% endif %}
 </div>
+{% if include.caption %}
+<em class="gallery-caption">{{ include.caption }}</em>
+{% endif %}
