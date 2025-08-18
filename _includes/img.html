@@ -1,10 +1,15 @@
 {% comment %}
-_includes/img.html
-Формирует путь из page.url: /blog/2025/04/30/hosting/ -> 2025-04-30-hosting
+_includes/img.html  
+Максимально простое решение
 {% endcomment %}
 
-{% assign url_path = page.url | remove: '/blog/' | strip | remove_first: '/' | remove_last: '/' %}
-{% assign post_name = url_path | replace: '/', '-' %}
+{% assign url_parts = page.url | split: '/' %}
+{% assign year = url_parts[2] %}
+{% assign month = url_parts[3] %}  
+{% assign day = url_parts[4] %}
+{% assign title = url_parts[5] %}
+
+{% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
 {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: include.src %}
 
 <img src="{{ image_path }}" alt="{{ include.alt | default: '' }}">
