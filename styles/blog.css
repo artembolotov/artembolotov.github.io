@@ -285,7 +285,10 @@ div.highlight {
 }
   
 .highlight pre {
-  padding: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
   overflow-x: auto;
   margin: 0;
 }
