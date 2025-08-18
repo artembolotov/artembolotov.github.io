@@ -271,8 +271,12 @@ main li {
 }
 
 /* Code highlighting styles */
+
+.highlighter-rouge {
+  background: #f8f8f8;
+}
+
 div.highlight {
-  background: #f8f8f8;    
   margin: 1.5em 0;
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
@@ -312,7 +316,7 @@ div.highlight {
   
 /* Dark theme */
 @media (prefers-color-scheme: dark) {
-  .highlight {
+  .highlighter-rouge {
     background: #1a1a1a;
   }
 
