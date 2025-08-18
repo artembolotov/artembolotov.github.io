@@ -1,0 +1,11 @@
+{% comment %}
+_includes/img.html
+Формирует путь из page.url: /blog/2025/04/30/hosting/ -> 2025-04-30-hosting
+{% endcomment %}
+
+{% assign url_path = page.url | remove: '/blog/' | strip | remove_first: '/' | remove_last: '/' %}
+{% assign post_name = url_path | replace: '/', '-' %}
+{% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: include.src %}
+
+<img src="{{ image_path }}" alt="{{ include.alt | default: '' }}">
+{% if include.caption %}<em class="image-caption">{{ include.caption }}</em>{% endif %}
