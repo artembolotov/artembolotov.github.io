@@ -267,6 +267,12 @@ img + em, .gallery-caption {
   font-style: italic;
 }
 
+.gallery-caption {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  margin-top: 0.5rem;
+}
+
 /* Date formatting */
 time {
   display: block;
