@@ -8,10 +8,20 @@ main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge), #page-
   margin-left: auto;
   margin-right: auto;
   max-width: 970px;
-  padding-left: max(1rem, env(safe-area-inset-left));
-  padding-right: max(1rem, env(safe-area-inset-right));
   box-sizing: border-box;
 }
+
+main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge), #page-nav div, 
+.gallery-controls, .author-footer-container {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+
+div.highlight {
+  padding-left: max(0rem, env(safe-area-inset-left));
+  padding-right: max(0rem, env(safe-area-inset-right));
+}
+
 
 /* Keeping h1 the same size as h2 on main site, as requested */
 h1 { 
@@ -275,7 +285,7 @@ div.highlight {
 }
   
 .highlight pre {
-  padding: 1em 0;
+  padding: 1em;
   overflow-x: auto;
   margin: 0;
 }
