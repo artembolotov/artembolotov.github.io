@@ -94,7 +94,7 @@ h3 {
 
 .image-gallery-inner {
   display: flex;
-  gap: 0.5rem;
+  gap: 6px;
   overflow-x: auto;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -130,55 +130,6 @@ h3 {
   max-width: 85vw;
 }
 
-/* Image row with caption */
-.image-row-2, .image-row-3 {
-  margin-bottom: 1em;
-}
-
-figure.image-row-2, figure.image-row-3 {
-  display: grid; 
-  gap: 0.5em; 
-  width: 100%; 
-  margin: 0 auto; 
-  box-sizing: border-box; 
-}
-
-figure.image-row-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-figure.image-row-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-figure.image-row-2 img, figure.image-row-3 img {
-  width: 100%;
-  height: auto;
-  grid-row: 1;
-}
-
-/* Alignment options for image rows */
-.image-row-2.align-center, .image-row-3.align-center {
-  align-items: center;
-}
-
-.image-row-2.align-start, .image-row-3.align-start {
-  align-items: start;
-}
-
-.image-row-2.align-end, .image-row-3.align-end {
-  align-items: end;
-}
-
-figure.image-row-2 figcaption, figure.image-row-3 figcaption {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  text-align: center;
-  font-style: italic;
-  font-size: 0.9em;
-  color: #666;
-}
-
 /* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
   .gallery-nav {
@@ -210,38 +161,6 @@ figure.image-row-2 figcaption, figure.image-row-3 figcaption {
     width: 18px;
     height: 18px;
   }
-}
-
-@media (prefers-color-scheme: dark) {
-  figure.image-row-2 figcaption, figure.image-row-3 figcaption {
-    color: #aaa;
-  }
-}
-
-@media screen and (max-width: 640px) {
-  figure.image-row-2, figure.image-row-3, 
-  .image-row-2, .image-row-3 { 
-    grid-template-columns: 1fr !important; /* !important для гарантированного переопределения */ 
-  }
-  
-  /* Сброс grid-row для изображений на мобильных */
-  figure.image-row-2 img, figure.image-row-3 img,
-  .image-row-2 img, .image-row-3 img {
-    grid-row: auto !important;
-    width: 100%;
-  }
-  
-  /* Если используются подписи, убедитесь, что они также выровнены */
-  figure.image-row-2 figcaption, figure.image-row-3 figcaption {
-    grid-column: 1 !important;
-    grid-row: auto !important;
-  }
-}
-
-/* Оригинальные определения сетки для десктопов */
-@media screen and (min-width: 641px) {
-  .image-row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .image-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* Main content */

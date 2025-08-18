@@ -3,10 +3,6 @@
 {% comment %}Точный подсчет изображений{% endcomment %}
 {% assign img_tags = include.content | split: '<img ' | size | minus: 1 %}
 {% assign markdown_images = include.content | split: '![' | size | minus: 1 %}
-{% assign row2_images = include.content | split: 'image-row-2.html' | size | minus: 1 %}
-{% assign row2_count = row2_images | times: 2 %}
-{% assign row3_images = include.content | split: 'image-row-3.html' | size | minus: 1 %}
-{% assign row3_count = row3_images | times: 3 %}
 
 {% comment %}Суммируем все изображения{% endcomment %}
 {% assign image_count = img_tags | plus: markdown_images | plus: row2_count | plus: row3_count %}
