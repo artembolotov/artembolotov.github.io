@@ -9,12 +9,12 @@ draft: true
 4700 скачиваний за три дня. 34 место в топе утилит App Store России. [Приложение недели](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank"} в сообществе [Indie iOS Apps](https://x.com/ios_dev_alb/status/1956656538841477335?s=46&t=XX_GDAhHPLfRalDTeluI4w){:target="_blank"}. И всё это — приложение, которое просто показывает белую линию на экране.
 
 {% capture gallery_appstore %}
-/blog/img/2025-08-10-screenlines/ru_0.png
-/blog/img/2025-08-10-screenlines/ru_1.png
-/blog/img/2025-08-10-screenlines/ru_2.png
-/blog/img/2025-08-10-screenlines/ru_3.png
-/blog/img/2025-08-10-screenlines/ru_4.png
-/blog/img/2025-08-10-screenlines/ru_5.png
+ru_0.png
+ru_1.png
+ru_2.png
+ru_3.png
+ru_4.png
+ru_5.png
 {% endcapture %}
 {% include gallery.html images=gallery_appstore %}
 
@@ -30,9 +30,6 @@ draft: true
 
 И вот — первая версия: белый прямоугольник по размеру экрана, сохранённый в галерею. Открыл фото, приложил стекло так, чтобы белая рамка была видна равномерно, прижал. Идеально!
 Проверил гипотезу на друзьях и детях. Даже те, у кого «руки не из того места» (их слова), смогли наклеить стекло идеально с первого раза. 100% успеха — такого не бывает, но было.
-
-![Ребёнок клеит стекло с помощью ScreenLines](/blog/img/2025-08-10-screenlines/veronika.png)
-*Вероника успешно клеит стекло с первого раза*
 
 {% include img.html src="veronika.png" alt="Ребёнок клеит стекло с помощью ScreenLines" caption="Вероника успешно клеит стекло с первого раза" %}
 
