@@ -1,9 +1,12 @@
 {% comment %}
-Image gallery component with navigation buttons
+Image gallery component with navigation buttons and auto-path support
 Usage: 
-{% include gallery.html images=gallery_test id="custom_id" caption="Gallery caption" %}  (with custom ID and caption)
-{% include gallery.html images=gallery_test caption="Gallery caption" %}  (auto-generated ID with caption)
+{% include gallery.html images=gallery_test id="custom_id" %}  (with custom ID)
 {% include gallery.html images=gallery_test %}  (auto-generated random ID)
+
+Image paths support:
+- Full path: "/blog/img/2025-01-01-post/image.jpg|Alt text"
+- Auto path: "image.jpg|Alt text" (will become "/blog/img/YYYY-MM-DD-post-name/image.jpg")
 {% endcomment %}
 
 {% if include.id %}
@@ -28,8 +31,24 @@ Usage:
       {% assign trimmed_line = line | strip %}
       {% unless trimmed_line == "" %}
         {% assign parts = trimmed_line | split: "|" %}
-        {% assign image_path = parts[0] | strip %}
+        {% assign raw_image_path = parts[0] | strip %}
         {% assign image_alt = parts[1] | strip | default: "" %}
+        
+        {% comment %}Check if we need to generate auto-path{% endcomment %}
+        {% if raw_image_path contains '/' %}
+          {% comment %}If path contains slash, consider it a full path{% endcomment %}
+          {% assign image_path = raw_image_path %}
+        {% else %}
+          {% comment %}Otherwise generate automatic path{% endcomment %}
+          {% assign url_parts = page.url | split: '/' %}
+          {% assign year = url_parts[2] %}
+          {% assign month = url_parts[3] %}
+          {% assign day = url_parts[4] %}
+          {% assign title = url_parts[5] %}
+          {% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
+          {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
+        {% endif %}
+        
         <img src="{{ image_path }}" alt="{{ image_alt }}">
       {% endunless %}
     {% endfor %}
@@ -47,8 +66,5 @@ Usage:
       </svg>
     </button>
   </div>
-  {% endif %}
-  {% if include.caption %}
-  <em class="gallery-caption">{{ include.caption }}</em>
   {% endif %}
 </div>
