@@ -275,7 +275,7 @@ div.highlight {
 }
   
 .highlight pre {
-  padding: 1em;
+  padding: 1em 0;
   overflow-x: auto;
   margin: 0;
 }
