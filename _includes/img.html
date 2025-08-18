@@ -1,18 +1,27 @@
 {% comment %}
-_includes/img.html  
-Максимально простое решение
+_includes/img.html
+Поддерживает как простые имена файлов, так и полные пути
+Usage: 
+  {% include img.html src="image1.png" alt="Description" %} (auto-path)
+  {% include img.html src="/blog/img/custom/image.png" alt="Description" %} (full path)
 {% endcomment %}
 
-{% assign url_parts = page.url | split: '/' %}
-{% assign year = url_parts[2] %}
-{% assign month = url_parts[3] %}  
-{% assign day = url_parts[4] %}
-{% assign title = url_parts[5] %}
+{% if include.src contains '/' %}
+  {% comment %}Если в src есть слеш, считаем что это полный путь{% endcomment %}
+  {% assign image_path = include.src %}
+{% else %}
+  {% comment %}Иначе формируем автоматический путь{% endcomment %}
+  {% assign url_parts = page.url | split: '/' %}
+  {% assign year = url_parts[2] %}
+  {% assign month = url_parts[3] %}  
+  {% assign day = url_parts[4] %}
+  {% assign title = url_parts[5] %}
+  
+  {% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
+  {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: include.src %}
+{% endif %}
 
-{% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
-{% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: include.src %}
-
-<div class="single_image">
+<div class="single_image"></div>
 <img src="{{ image_path }}" alt="{{ include.alt | default: '' }}">
 {% if include.caption %}<em class="image-caption">{{ include.caption }}</em>{% endif %}
 </div>
