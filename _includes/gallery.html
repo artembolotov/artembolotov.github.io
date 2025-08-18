@@ -48,7 +48,7 @@ Usage:
     </button>
   </div>
   {% endif %}
+  {% if include.caption %}
+  <em class="gallery-caption">{{ include.caption }}</em>
+  {% endif %}
 </div>
-{% if include.caption %}
-<em class="gallery-caption">{{ include.caption }}</em>
-{% endif %}
