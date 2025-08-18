@@ -14,8 +14,8 @@ main > *:not(.image-gallery):not(.author-footer), #page-nav div, .gallery-contro
 
 /* Keeping h1 the same size as h2 on main site, as requested */
 h1 { 
-  font-size: 1.875em; 
-  font-weight: 700; 
+  font-size: 1.475em; 
+  font-weight: 900; 
   text-transform: uppercase; 
   color: #000; 
   margin-top: 0.8em;
