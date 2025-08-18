@@ -3,7 +3,8 @@ main { margin-top: 50px; line-height: 1.5; }
 main img { display: block; max-width: 100%; margin: 0 auto; }
 
 /* Auto-container for all elements except galleries */
-main > *:not(.image-gallery):not(.author-footer), #page-nav div, .gallery-controls, .author-footer-container {
+main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge), #page-nav div, 
+.gallery-controls, .author-footer-container, div.highlighter-rouge {
   margin-left: auto;
   margin-right: auto;
   max-width: 970px;
