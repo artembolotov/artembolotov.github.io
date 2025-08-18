@@ -1,6 +1,6 @@
 html { overflow-y:scroll; } 
 main { margin-top: 50px; line-height: 1.5; }
-main img { display: block; max-height: 500px; max-width: 100%; margin: 0 auto; }
+main img { display: block; max-width: 100%; margin: 0 auto; }
 
 /* Auto-container for all elements except galleries */
 main > *:not(.image-gallery):not(.author-footer), #page-nav div, .gallery-controls, .author-footer-container {
@@ -326,13 +326,6 @@ main li {
   .highlight .nd { color: #cf73e6; }
 }
 
-/* Image styling */
-main p img, .highlight {
-  border-radius: 4px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-  padding: 5px;
-}
-
 /* Image captions */
 img + em {
   display: block;
@@ -357,10 +350,6 @@ time {
 
   img + em {
     color: #aaa;
-  }
-  
-  main p img, .highlight {
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   }
 
   h1 { color: #fff; }
