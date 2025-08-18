@@ -29,7 +29,7 @@ ru_5.png
 Часто я видел этот небольшой перекос, когда изображение с одной стороны помещается полностью, а сдругой обрезано. Бывают стёкла, которые равномерно съедают ваш экран. Такие я никогда не любил, а на старых белых телефонах (это которые с кнопкой Home), они ещё так по-дурацки светились. Обычно стёкла клеят на выключенный телефон. Потому что загорающийся экран мешает увидеть попавшую пылинку. Но если нужно разместить стекло ровно (и не потерять ни пикселя картинки), экран должен гореть. Попробовав наклеить стекло сам, я понял, что так отцентровать его всё равно сложно. А что если по экрану была бы тонкая белая линия, которая служила бы ориентиром?
 
 И вот — первая версия: белый прямоугольник по размеру экрана, сохранённый в галерею. Открыл фото, приложил стекло так, чтобы белая рамка была видна равномерно, прижал. Идеально!
-Проверил гипотезу на друзьях и детях. Даже те, у кого «руки не из того места» (их слова), смогли наклеить стекло идеально с первого раза. 100% успеха — такого не бывает, но было.
+Проверил гипотезу на друзьях и детях. Даже те, у кого «руки не из того места» (их слова), смогли наклеить стекло идеально с первого раза — 100% успеха.
 
 {% include img.html src="veronika.png" alt="Ребёнок клеит стекло с помощью ScreenLines" caption="Вероника успешно клеит стекло с первого раза" %}
 
@@ -98,7 +98,7 @@ private func disableScreenAutoLocking() {
 .withConfetti(counter: $viewModel.happyCounter)
 ```
 
-<img src="/blog/img/2025-08-10-screenlines/confetti.png" style="box-shadow: none;" alt="" />
+{% include img.html src="confetti.png" %}
 
 ## Когда ИИ пишет сайт
 
@@ -117,9 +117,9 @@ Claude оказался единственным, кто подходит для
 С енотом вышло случайно — просили разные нейросети рисовать что-то абсурдное. ChatGPT предложил такую идею.
 
 {% capture gallery_racoon %}
-/blog/img/2025-08-10-screenlines/racoon_1.png
-/blog/img/2025-08-10-screenlines/racoon_2.png
-/blog/img/2025-08-10-screenlines/racoon_3.png
+racoon_1.png
+racoon_2.png
+racoon_3.png
 {% endcapture %}
 {% include gallery.html images=gallery_racoon %}
 
@@ -131,10 +131,10 @@ Claude оказался единственным, кто подходит для
 А теперь есть и настоящие отзывы:
 
 {% capture gallery_reviews %}
-/blog/img/2025-08-10-screenlines/reviews_0.png
-/blog/img/2025-08-10-screenlines/reviews_1.png
-/blog/img/2025-08-10-screenlines/reviews_2.png
-/blog/img/2025-08-10-screenlines/reviews_3.png
+reviews_0.png
+reviews_1.png
+reviews_2.png
+reviews_3.png
 {% endcapture %}
 {% include gallery.html images=gallery_reviews %}
 
@@ -165,18 +165,18 @@ const totalSavings = totalServiceCost - totalSelfCost
 Приложение попало в топ за три дня. Без затрат на продвижение.
 
 {% capture gallery_results %}
-/blog/img/2025-08-10-screenlines/results_1.png
-/blog/img/2025-08-10-screenlines/results_2.png
-/blog/img/2025-08-10-screenlines/results_3.png
-/blog/img/2025-08-10-screenlines/results_4.png
+results_1.png
+results_2.png
+results_3.png
+results_4.png
 {% endcapture %}
 {% include gallery.html images=gallery_results %}
 
 А ещё получило звание Indie App of the Week
 
 {% capture gallery_indie %}
-/blog/img/2025-08-10-screenlines/indie_0.png
-/blog/img/2025-08-10-screenlines/indie_1.png
+indie_0.png
+indie_1.png
 {% endcapture %}
 {% include gallery.html images=gallery_indie %}
 
@@ -206,10 +206,10 @@ ScreenLines показал: в App Store всегда есть место для
 Но дело не только в этом. Я же обещал раскрыть секрет. Приложение вряд ли так быстро вылезло в топ, если бы о нём не рассказал блогер с аудиторией 788000 подписчиков. 
 
 {% capture gallery_marketing %}
-/blog/img/2025-08-10-screenlines/marketing_1.jpg
-/blog/img/2025-08-10-screenlines/marketing_2.png
-/blog/img/2025-08-10-screenlines/marketing_3.png
-/blog/img/2025-08-10-screenlines/marketing_4.png
+marketing_1.jpg
+marketing_2.png
+marketing_3.png
+marketing_4.png
 {% endcapture %}
 {% include gallery.html images=gallery_marketing %}
 
