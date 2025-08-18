@@ -11,15 +11,15 @@ main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge), #page-
   box-sizing: border-box;
 }
 
-main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge), #page-nav div, 
+main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge):not(.single_image), #page-nav div, 
 .gallery-controls, .author-footer-container {
-  padding-left: max(1rem, env(safe-area-inset-left));
-  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-left: max(1rem, max(1rem, env(safe-area-inset-left), env(safe-area-inset-right)));
+  padding-right: max(1rem, max(1rem, env(safe-area-inset-left), env(safe-area-inset-right)));
 }
 
 .single_image {
-  padding-left: max(0rem, env(safe-area-inset-left));
-  padding-right: max(0rem, env(safe-area-inset-right));
+  padding-left: max(0rem, env(safe-area-inset-left), env(safe-area-inset-right));
+  padding-right: max(0rem, env(safe-area-inset-left), env(safe-area-inset-right));
 }
 
 /* Keeping h1 the same size as h2 on main site, as requested */
