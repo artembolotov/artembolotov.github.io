@@ -21,7 +21,7 @@ Usage:
   {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: include.src %}
 {% endif %}
 
-<div class="single_image"></div>
+<div class="single_image">
 <img src="{{ image_path }}" alt="{{ include.alt | default: '' }}">
 {% if include.caption %}<em class="image-caption">{{ include.caption }}</em>{% endif %}
 </div>
