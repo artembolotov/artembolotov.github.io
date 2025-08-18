@@ -277,7 +277,7 @@ main li {
 }
 
 div.highlight {
-  margin: 1.5em 0;
+  margin: 1.5em auto;
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
