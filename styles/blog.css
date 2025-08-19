@@ -59,10 +59,11 @@ h3 {
   margin-top: 1.2em;
 }
 
-/* Image Gallery with Loading State - SIMPLIFIED VERSION */
+/* Image Gallery with Loading State - REALISTIC HEIGHT VERSION */
 .image-gallery {
   margin: 2rem 0;
-  min-height: 200px; /* Reserve minimum space */
+  /* ✅ Reserve space close to actual gallery height */
+  min-height: 500px;
 }
 
 /* Loading State Styles */
@@ -70,7 +71,8 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 200px;
+  /* ✅ Match the reserved gallery height */
+  min-height: 500px;
   background: rgba(0, 0, 0, 0.02);
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -79,6 +81,7 @@ h3 {
 .gallery-loading-content {
   text-align: center;
   max-width: 250px;
+  width: 100%;
 }
 
 .gallery-loading-spinner {
@@ -257,8 +260,13 @@ h3 {
 
 /* Mobile adjustments */
 @media screen and (max-width: 640px) {
+  .image-gallery {
+    /* ✅ Smaller but still realistic height on mobile */
+    min-height: 300px;
+  }
+  
   .gallery-loading {
-    min-height: 150px;
+    min-height: 300px;
   }
   
   .gallery-loading-content {
