@@ -293,10 +293,6 @@ h3 {
   .gallery-nav:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.1);
   }
-  
-  .image-gallery-inner img {
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
 }
 
 /* Mobile adjustments */
@@ -312,6 +308,56 @@ h3 {
   .gallery-nav svg {
     width: 18px;
     height: 18px;
+  }
+}
+
+/* Mobile adjustments for gallery */
+@media screen and (max-width: 640px) {
+  .image-gallery {
+    /* Smaller but still realistic height on mobile */
+    min-height: 300px;
+    transition: min-height 0.3s ease;
+  }
+  
+  /* Remove reserved height after loading on mobile */
+  .image-gallery.loaded {
+    min-height: auto;
+  }
+  
+  .gallery-loading {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .gallery-loading-content {
+    max-width: 220px;
+  }
+  
+  .gallery-loading-spinner {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .gallery-controls {
+    padding: 0 0.5rem;
+  }
+  
+  .gallery-nav {
+    padding: 0.4rem;
+  }
+  
+  .gallery-nav svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* Mobile images can be a bit larger */
+  .image-gallery-inner:not([data-count="1"]) img {
+    max-width: 95vw;
+  }
+  
+  .image-gallery-inner img {
+    max-height: 300px;
   }
 }
 
