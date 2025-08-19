@@ -66,11 +66,7 @@ extension Model {
     var screenCornerRadius: CGFloat {
         switch self {
                    
-        case .iPhoneX, .iPhoneXS, .iPhoneXSMax, .iPhone11Pro, .iPhone11ProMax: 39.0
-            
-        case .iPhoneXR, .iPhone11: 41.5
-            
-        case .iPhone12, .iPhone12Pro, .iPhone13, .iPhone13Pro, .iPhone14, .iPhone16e: 47.33
+        // ... 
         
         case .iPhone12ProMax, .iPhone13ProMax, .iPhone14Plus: 53.33
             
@@ -81,7 +77,7 @@ extension Model {
             
         case .iPhone16Pro, .iPhone16ProMax: 62.0
 
-        // ... and so on
+        // ... 
 
 ```
 
