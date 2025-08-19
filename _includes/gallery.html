@@ -1,5 +1,5 @@
 {% comment %}
-Simplified image gallery component with loading state
+Enhanced image gallery component with independent loading
 Usage: 
 {% include gallery.html images=gallery_test id="custom_id" %}  (with custom ID)
 {% include gallery.html images=gallery_test %}  (auto-generated random ID)
@@ -35,6 +35,9 @@ Image paths support:
       <div class="gallery-loading-progress">
         <div class="gallery-loading-bar"></div>
       </div>
+      <div class="gallery-loading-counter">
+        <span class="gallery-loaded-count">0</span>/<span class="gallery-total-count">{{ image_count }}</span>
+      </div>
     </div>
   </div>
   
@@ -63,11 +66,12 @@ Image paths support:
             {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
           {% endif %}
           
-          {% comment %}Simple img tag without size complications{% endcomment %}
           <img src="{{ image_path }}" 
                alt="{{ image_alt }}" 
                loading="eager"
-               data-gallery-image>
+               data-gallery-image
+               data-gallery-id="{{ gallery_id }}"
+               style="opacity: 0; transition: opacity 0.3s ease;">
         {% endunless %}
       {% endfor %}
     </div>
@@ -87,4 +91,34 @@ Image paths support:
     </div>
     {% endif %}
   </div>
+  
+  <!-- Fallback for no-JS -->
+  <noscript>
+    <div class="gallery-fallback">
+      <div class="image-gallery-inner" data-count="{{ image_count }}">
+        {% for line in lines %}
+          {% assign trimmed_line = line | strip %}
+          {% unless trimmed_line == "" %}
+            {% assign parts = trimmed_line | split: "|" %}
+            {% assign raw_image_path = parts[0] | strip %}
+            {% assign image_alt = parts[1] | strip | default: "" %}
+            
+            {% if raw_image_path contains '/' %}
+              {% assign image_path = raw_image_path %}
+            {% else %}
+              {% assign url_parts = page.url | split: '/' %}
+              {% assign year = url_parts[2] %}
+              {% assign month = url_parts[3] %}
+              {% assign day = url_parts[4] %}
+              {% assign title = url_parts[5] %}
+              {% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
+              {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
+            {% endif %}
+            
+            <img src="{{ image_path }}" alt="{{ image_alt }}">
+          {% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+  </noscript>
 </div>

@@ -59,11 +59,12 @@ h3 {
   margin-top: 1.2em;
 }
 
-/* Image Gallery with Loading State - REALISTIC HEIGHT VERSION */
+/* Enhanced Image Gallery with Independent Loading */
 .image-gallery {
   margin: 2rem 0;
-  /* ✅ Reserve space close to actual gallery height */
+  /* Reserve space close to actual gallery height */
   min-height: 500px;
+  position: relative;
 }
 
 /* Loading State Styles */
@@ -71,16 +72,16 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* ✅ Match the reserved gallery height */
   min-height: 500px;
   background: rgba(0, 0, 0, 0.02);
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: opacity 0.5s ease;
 }
 
 .gallery-loading-content {
   text-align: center;
-  max-width: 250px;
+  max-width: 280px;
   width: 100%;
 }
 
@@ -112,6 +113,7 @@ h3 {
   background: rgba(0, 0, 0, 0.1);
   border-radius: 2px;
   overflow: hidden;
+  margin-bottom: 0.5rem;
 }
 
 .gallery-loading-bar {
@@ -120,6 +122,12 @@ h3 {
   border-radius: 2px;
   width: 0%;
   transition: width 0.3s ease;
+}
+
+.gallery-loading-counter {
+  color: #888;
+  font-size: 0.8em;
+  font-weight: 500;
 }
 
 /* Gallery Content */
@@ -134,6 +142,31 @@ h3 {
 
 /* Hide loading when gallery is loaded */
 .image-gallery.loaded .gallery-loading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Individual image fade-in effect */
+.image-gallery-inner img {
+  transition: opacity 0.3s ease;
+}
+
+.image-gallery-inner img.loaded {
+  opacity: 1 !important;
+}
+
+/* Fallback for no-JS */
+.gallery-fallback {
+  display: none;
+}
+
+/* Show fallback only when JavaScript is disabled */
+.no-js .gallery-fallback {
+  display: block;
+}
+
+.no-js .gallery-loading,
+.no-js .gallery-content {
   display: none;
 }
 
@@ -145,6 +178,13 @@ h3 {
   margin-top: 0.5rem;
   /* Hide by default, JavaScript will show when needed */
   visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-controls.visible {
+  visibility: visible;
+  opacity: 1;
 }
 
 .gallery-nav {
@@ -162,6 +202,11 @@ h3 {
 
 .gallery-nav:hover:not(:disabled) {
   background: rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.gallery-nav:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .gallery-nav:disabled {
@@ -204,13 +249,14 @@ h3 {
   scroll-snap-stop: always;
   flex-shrink: 0;
   
-  /* ✅ Simple sizing - browser knows dimensions after loading */
+  /* Simple sizing - browser knows dimensions after loading */
   max-height: 500px;
   height: auto;
   width: auto;
   
   object-fit: contain;
-  opacity: 1;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
 /* Gallery images sizing for all screens */
@@ -223,7 +269,7 @@ h3 {
   max-width: 100%;
 }
 
-/* Dark mode adjustments */
+/* Dark mode adjustments for gallery */
 @media (prefers-color-scheme: dark) {
   .gallery-loading {
     background: rgba(255, 255, 255, 0.02);
@@ -243,6 +289,10 @@ h3 {
     background: rgba(255, 255, 255, 0.1);
   }
   
+  .gallery-loading-counter {
+    color: #999;
+  }
+  
   .gallery-nav {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
@@ -258,10 +308,10 @@ h3 {
   }
 }
 
-/* Mobile adjustments */
+/* Mobile adjustments for gallery */
 @media screen and (max-width: 640px) {
   .image-gallery {
-    /* ✅ Smaller but still realistic height on mobile */
+    /* Smaller but still realistic height on mobile */
     min-height: 300px;
   }
   
@@ -270,7 +320,7 @@ h3 {
   }
   
   .gallery-loading-content {
-    max-width: 200px;
+    max-width: 220px;
   }
   
   .gallery-loading-spinner {
@@ -294,6 +344,10 @@ h3 {
   /* Mobile images can be a bit larger */
   .image-gallery-inner:not([data-count="1"]) img {
     max-width: 95vw;
+  }
+  
+  .image-gallery-inner img {
+    max-height: 300px;
   }
 }
 
@@ -371,7 +425,7 @@ div.highlight {
 .highlight .mf { color: #1c00cf; } /* Float literals */
 .highlight .nd { color: #a90d91; } /* CSS pseudo-selectors */
   
-/* Dark theme */
+/* Dark theme for code highlighting */
 @media (prefers-color-scheme: dark) {
   .highlighter-rouge {
     background: #1a1a1a;
@@ -514,27 +568,6 @@ time {
   display: inline;
 }
 
-/* Темная тема */
-@media (prefers-color-scheme: dark) {
-  .tag-menu {
-    border-bottom-color: #333;
-  }
-  
-  .tag-menu a {
-    color: #64b2ff;
-    border-bottom: 1px solid rgba(100,178,255,0.8);
-  }
-  
-  .tag-menu a:hover {
-    color: #ff453a;
-    border-color: rgba(255,69,68,.7);
-  }
-  
-  .tag-menu li.active h1 {
-    color: #e0e0e0;
-  }
-}
-
 /* Post Tags */
 .post-tags {
   margin-top: 2em;
@@ -557,30 +590,7 @@ time {
   border-color: rgba(244,18,36,.3);
 }
 
-@media (prefers-color-scheme: dark) {
-  .post-tags .tag {
-    color: #64b2ff;
-    border-bottom: 1px solid rgba(100,178,255,0.8);
-  }
-  
-  .post-tags .tag:hover {
-    color: #ff453a;
-    border-color: rgba(255,69,68,.7);
-  }
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  .author-footer {
-    background-color: #1a1a1a;
-    color: white;
-  }
-  
-  .author-footer .bio {
-    color: rgba(255,255,255,0.9);
-  }
-}
-
+/* YouTube container */
 .youtube-container {
   position: relative;
   padding-bottom: 56.25%; /* Соотношение сторон 16:9 */
@@ -600,22 +610,10 @@ time {
   box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-@media (prefers-color-scheme: dark) {
-  .youtube-container iframe {
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-}
-
+/* Reading time */
 .read-time {
   color: #777;
   font-size: 0.8em;
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  .read-time {
-    color: #888;
-  }
 }
 
 /* Blockquotes styling */
@@ -635,8 +633,45 @@ blockquote p:last-child {
   margin-bottom: 0;
 }
 
-/* Dark mode */
+/* Dark mode for various elements */
 @media (prefers-color-scheme: dark) {
+  .author-footer {
+    background-color: #1a1a1a;
+    color: white;
+  }
+  
+  .author-footer .bio {
+    color: rgba(255,255,255,0.9);
+  }
+  
+  .tag-menu a {
+    color: #64b2ff;
+    border-bottom: 1px solid rgba(100,178,255,0.8);
+  }
+  
+  .tag-menu a:hover {
+    color: #ff453a;
+    border-color: rgba(255,69,68,.7);
+  }
+  
+  .tag-menu li.active h1 {
+    color: #e0e0e0;
+  }
+  
+  .post-tags .tag {
+    color: #64b2ff;
+    border-bottom: 1px solid rgba(100,178,255,0.8);
+  }
+  
+  .post-tags .tag:hover {
+    color: #ff453a;
+    border-color: rgba(255,69,68,.7);
+  }
+  
+  .youtube-container iframe {
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+  
   .read-time {
     color: #888;
   }

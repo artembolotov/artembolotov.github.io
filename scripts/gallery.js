@@ -1,7 +1,6 @@
 /**
- * Simplified Gallery Controller with Loading State
- * Shows galleries only after all images are fully loaded
- * No complex aspect ratio calculations needed
+ * Enhanced Gallery Controller with Independent Loading
+ * Each gallery shows independently when its images are loaded
  */
 class GalleryController {
   constructor() {
@@ -59,7 +58,7 @@ class GalleryController {
     const progressBar = galleryElement.querySelector('.gallery-loading-bar');
 
     if (!scrollContainer || !loadingElement || !contentElement) {
-      console.log('Gallery elements not found for:', galleryId);
+      console.warn('Gallery elements not found for:', galleryId);
       return;
     }
 
@@ -75,6 +74,7 @@ class GalleryController {
       progressBar: progressBar,
       scrollTimeout: null,
       resizeTimeout: null,
+      loadingTimeout: null,
       imagesLoaded: 0,
       totalImages: 0,
       isLoaded: false
@@ -96,7 +96,7 @@ class GalleryController {
     galleryData.totalImages = images.length;
     galleryData.imagesLoaded = 0;
 
-    console.log(`Loading ${galleryData.totalImages} images for gallery:`, galleryId);
+    console.log(`Setting up loading for ${galleryData.totalImages} images in gallery:`, galleryId);
 
     // If no images, show gallery immediately
     if (galleryData.totalImages === 0) {
@@ -104,32 +104,81 @@ class GalleryController {
       return;
     }
 
-    // Set up image loading
-    images.forEach((img, index) => {
-      if (img.complete && img.naturalHeight !== 0) {
-        // Image already loaded
-        this.onImageLoad(galleryId);
-      } else {
-        // Set up load listeners
-        img.addEventListener('load', () => {
-          console.log(`Image ${index + 1} loaded for gallery:`, galleryId);
-          this.onImageLoad(galleryId);
-        });
-        
-        img.addEventListener('error', () => {
-          console.warn(`Image ${index + 1} failed to load for gallery:`, galleryId);
-          this.onImageLoad(galleryId); // Still count as "loaded" to not block gallery
-        });
+    // Set a maximum loading timeout (10 seconds)
+    galleryData.loadingTimeout = setTimeout(() => {
+      console.warn(`Force showing gallery ${galleryId} after timeout`);
+      this.showGallery(galleryId);
+    }, 10000);
 
-        // Force loading if src is not set
-        if (!img.src && (img.getAttribute('src') || img.dataset.src)) {
-          img.src = img.getAttribute('src') || img.dataset.src;
-        }
-      }
+    // Check each image independently
+    images.forEach((img, index) => {
+      this.setupImageLoadListener(img, index, galleryId);
     });
 
     // Initial progress update
     this.updateProgress(galleryId);
+  }
+
+  setupImageLoadListener(img, index, galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData) return;
+
+    // Function to handle successful load
+    const handleLoad = () => {
+      console.log(`Image ${index + 1} loaded for gallery:`, galleryId);
+      
+      // Add loaded class for fade-in effect
+      img.classList.add('loaded');
+      img.style.opacity = '1';
+      
+      this.onImageLoad(galleryId);
+    };
+
+    // Function to handle error
+    const handleError = () => {
+      console.warn(`Image ${index + 1} failed to load for gallery:`, galleryId);
+      
+      // Still show the image placeholder
+      img.style.opacity = '0.3';
+      img.classList.add('loaded');
+      
+      this.onImageLoad(galleryId); // Still count as "loaded" to not block gallery
+    };
+
+    // Check if image is already loaded
+    if (this.isImageLoaded(img)) {
+      // Image is already loaded
+      handleLoad();
+      return;
+    }
+
+    // Set up load listeners
+    img.addEventListener('load', handleLoad, { once: true });
+    img.addEventListener('error', handleError, { once: true });
+
+    // Ensure src is set to trigger loading
+    if (!img.src) {
+      const srcAttribute = img.getAttribute('src') || img.dataset.src;
+      if (srcAttribute) {
+        img.src = srcAttribute;
+      }
+    }
+  }
+
+  isImageLoaded(img) {
+    // Multiple checks to ensure image is actually loaded
+    const basicCheck = img.complete && 
+                      img.naturalWidth > 0 && 
+                      img.naturalHeight > 0 && 
+                      img.src !== '';
+    
+    // If image is loaded, make sure it's visible
+    if (basicCheck && !img.classList.contains('loaded')) {
+      img.classList.add('loaded');
+      img.style.opacity = '1';
+    }
+    
+    return basicCheck;
   }
 
   onImageLoad(galleryId) {
@@ -139,12 +188,20 @@ class GalleryController {
     galleryData.imagesLoaded++;
     this.updateProgress(galleryId);
 
+    console.log(`Gallery ${galleryId}: ${galleryData.imagesLoaded}/${galleryData.totalImages} images loaded`);
+
     // Check if all images are loaded
     if (galleryData.imagesLoaded >= galleryData.totalImages) {
+      // Clear the timeout
+      if (galleryData.loadingTimeout) {
+        clearTimeout(galleryData.loadingTimeout);
+        galleryData.loadingTimeout = null;
+      }
+
       // Small delay to ensure smooth transition
       setTimeout(() => {
         this.showGallery(galleryId);
-      }, 100);
+      }, 150);
     }
   }
 
@@ -157,6 +214,12 @@ class GalleryController {
       : 100;
 
     galleryData.progressBar.style.width = `${progress}%`;
+
+    // Update counter
+    const loadedCountElement = galleryData.element.querySelector('.gallery-loaded-count');
+    if (loadedCountElement) {
+      loadedCountElement.textContent = galleryData.imagesLoaded;
+    }
   }
 
   showGallery(galleryId) {
@@ -186,7 +249,7 @@ class GalleryController {
     // Initial state setup - wait for transition to complete
     setTimeout(() => {
       this.updateButtonStates(galleryId);
-    }, 500);
+    }, 600);
   }
 
   setupEventDelegation() {
@@ -243,10 +306,10 @@ class GalleryController {
 
     if (allImagesFit) {
       // All images fit - keep controls hidden
-      controlsContainer.style.visibility = 'hidden';
+      controlsContainer.classList.remove('visible');
     } else {
       // Images don't fit - show controls and update button states
-      controlsContainer.style.visibility = 'visible';
+      controlsContainer.classList.add('visible');
       
       // Check if at start or end (with small threshold)
       const atStart = scrollLeft <= 5;
@@ -310,6 +373,16 @@ class GalleryController {
   forceShowGallery(galleryId) {
     this.showGallery(galleryId);
   }
+
+  // Force show all galleries (fallback method)
+  forceShowAllGalleries() {
+    this.galleries.forEach((galleryData, galleryId) => {
+      if (!galleryData.isLoaded) {
+        console.log('Force showing gallery:', galleryId);
+        this.showGallery(galleryId);
+      }
+    });
+  }
 }
 
 // Initialize gallery controller
@@ -317,6 +390,13 @@ const galleryController = new GalleryController();
 
 // Make it globally available
 window.galleryController = galleryController;
+
+// Fallback: if galleries still not shown after 15 seconds, force show them all
+setTimeout(() => {
+  if (window.galleryController) {
+    window.galleryController.forceShowAllGalleries();
+  }
+}, 15000);
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {

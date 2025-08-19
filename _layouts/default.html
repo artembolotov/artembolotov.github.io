@@ -3,7 +3,7 @@ layout: compress
 ---
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="no-js">
 <head>
   <meta charset="UTF-8">
   <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
@@ -21,6 +21,8 @@ layout: compress
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript" >
+    document.documentElement.classList.remove('no-js');
+    
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
     m[i].l=1*new Date();
     for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
