@@ -2,6 +2,7 @@
  * Universal Gallery Controller
  * Handles all image galleries on the page
  * Uses CSS scroll-snap for precise image alignment
+ * Supports lazy loading with smooth transitions
  */
 class GalleryController {
   constructor() {
@@ -83,12 +84,34 @@ class GalleryController {
       this.handleResize(galleryId);
     });
 
-    // Set up image load listeners
+    // Set up image load listeners for smooth loading and layout stability
     const images = scrollContainer.querySelectorAll('img');
     images.forEach(img => {
-      img.addEventListener('load', () => {
-        this.updateButtonStates(galleryId);
-      });
+      // Handle lazy loaded images
+      if (img.hasAttribute('loading') && img.getAttribute('loading') === 'lazy') {
+        // If image is already loaded
+        if (img.complete && img.naturalHeight !== 0) {
+          img.classList.add('loaded');
+        } else {
+          // Wait for image to load
+          img.addEventListener('load', () => {
+            img.classList.add('loaded');
+            // Update button states after image loads
+            this.updateButtonStates(galleryId);
+          });
+          
+          // Handle loading errors
+          img.addEventListener('error', () => {
+            img.classList.add('loaded'); // Still show it even if failed
+            this.updateButtonStates(galleryId);
+          });
+        }
+      } else {
+        // For non-lazy images, just listen for load events
+        img.addEventListener('load', () => {
+          this.updateButtonStates(galleryId);
+        });
+      }
     });
 
     // Initial state
@@ -200,6 +223,45 @@ class GalleryController {
   refresh() {
     this.initializeGalleries();
   }
+
+  // Public method to preload images in a specific gallery
+  preloadGalleryImages(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData) return;
+
+    const images = galleryData.scrollContainer.querySelectorAll('img[loading="lazy"]');
+    images.forEach(img => {
+      // Remove lazy loading to force immediate load
+      img.removeAttribute('loading');
+      
+      // If image hasn't started loading yet, trigger it
+      if (!img.complete) {
+        // Create a new image element to preload
+        const preloadImg = new Image();
+        preloadImg.onload = () => {
+          img.src = preloadImg.src;
+          img.classList.add('loaded');
+        };
+        preloadImg.src = img.src;
+      }
+    });
+  }
+
+  // Public method to get gallery statistics
+  getGalleryStats(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData) return null;
+
+    const images = galleryData.scrollContainer.querySelectorAll('img');
+    const loadedImages = galleryData.scrollContainer.querySelectorAll('img.loaded');
+    
+    return {
+      totalImages: images.length,
+      loadedImages: loadedImages.length,
+      loadingProgress: images.length > 0 ? (loadedImages.length / images.length) * 100 : 100,
+      isScrollable: galleryData.scrollContainer.scrollWidth > galleryData.scrollContainer.clientWidth
+    };
+  }
 }
 
 // Initialize gallery controller when script loads
@@ -207,3 +269,8 @@ const galleryController = new GalleryController();
 
 // Make it globally available for manual refresh if needed
 window.galleryController = galleryController;
+
+// Export for module systems if needed
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = GalleryController;
+}

@@ -59,7 +59,7 @@ h3 {
   margin-top: 1.2em;
 }
 
-/* Image Gallery */
+/* Image Gallery - IMPROVED VERSION */
 .image-gallery {
   margin: 2rem 0;
 }
@@ -130,15 +130,39 @@ h3 {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   flex-shrink: 0;
+  
+  /* ✅ Reserve space and maintain aspect ratio */
+  aspect-ratio: var(--aspect-ratio, 1);
   max-height: 500px;
-  height: auto;
+  
+  /* Calculate width based on aspect ratio and max height */
   width: auto;
+  height: auto;
+  
   object-fit: contain;
+  
+  /* Smooth loading transition */
+  transition: opacity 0.2s ease;
+}
+
+/* Prevent layout shift during image loading */
+.image-gallery-inner img[loading="lazy"] {
+  opacity: 0;
+}
+
+.image-gallery-inner img[loading="lazy"].loaded,
+.image-gallery-inner img:not([loading="lazy"]) {
+  opacity: 1;
 }
 
 /* Gallery images sizing for all screens */
 .image-gallery-inner:not([data-count="1"]) img {
-  max-width: 85vw;
+  max-width: min(85vw, calc(500px * var(--aspect-ratio, 1)));
+}
+
+/* Single image galleries can be larger */
+.image-gallery-inner[data-count="1"] img {
+  max-width: min(100%, calc(500px * var(--aspect-ratio, 1)));
 }
 
 /* Dark mode adjustments */
@@ -171,6 +195,11 @@ h3 {
   .gallery-nav svg {
     width: 18px;
     height: 18px;
+  }
+  
+  /* Mobile images can be a bit larger */
+  .image-gallery-inner:not([data-count="1"]) img {
+    max-width: min(95vw, calc(400px * var(--aspect-ratio, 1)));
   }
 }
 
