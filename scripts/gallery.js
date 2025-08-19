@@ -1,13 +1,12 @@
 /**
- * Universal Gallery Controller
- * Handles all image galleries on the page
- * Uses CSS scroll-snap for precise image alignment
- * Supports lazy loading with smooth transitions
+ * Universal Gallery Controller with Loading State
+ * Shows galleries only after all images are fully loaded
+ * Provides smooth loading experience with progress indication
  */
 class GalleryController {
   constructor() {
     this.galleries = new Map();
-    this.eventDelegationSetup = false; // Flag to prevent multiple event listeners
+    this.eventDelegationSetup = false;
     this.init();
   }
 
@@ -55,8 +54,11 @@ class GalleryController {
     const prevBtn = galleryElement.querySelector('.gallery-prev');
     const nextBtn = galleryElement.querySelector('.gallery-next');
     const controlsContainer = galleryElement.querySelector('.gallery-controls');
+    const loadingElement = galleryElement.querySelector('.gallery-loading');
+    const contentElement = galleryElement.querySelector('.gallery-content');
+    const progressBar = galleryElement.querySelector('.gallery-loading-bar');
 
-    if (!scrollContainer || !prevBtn || !nextBtn || !controlsContainer) {
+    if (!scrollContainer || !loadingElement || !contentElement) {
       console.log('Gallery elements not found for:', galleryId);
       return;
     }
@@ -68,56 +70,123 @@ class GalleryController {
       prevBtn: prevBtn,
       nextBtn: nextBtn,
       controlsContainer: controlsContainer,
+      loadingElement: loadingElement,
+      contentElement: contentElement,
+      progressBar: progressBar,
       scrollTimeout: null,
-      resizeTimeout: null
+      resizeTimeout: null,
+      imagesLoaded: 0,
+      totalImages: 0,
+      isLoaded: false
     };
 
     this.galleries.set(galleryId, galleryData);
 
-    // Set up scroll listener for this gallery
-    scrollContainer.addEventListener('scroll', () => {
-      this.handleScroll(galleryId);
+    // Start loading process
+    this.setupImageLoading(galleryId);
+
+    console.log('Gallery initialized:', galleryId);
+  }
+
+  setupImageLoading(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData) return;
+
+    const images = galleryData.scrollContainer.querySelectorAll('img[data-gallery-image]');
+    galleryData.totalImages = images.length;
+    galleryData.imagesLoaded = 0;
+
+    console.log(`Loading ${galleryData.totalImages} images for gallery:`, galleryId);
+
+    // If no images, show gallery immediately
+    if (galleryData.totalImages === 0) {
+      this.showGallery(galleryId);
+      return;
+    }
+
+    // Set up image loading
+    images.forEach((img, index) => {
+      if (img.complete && img.naturalHeight !== 0) {
+        // Image already loaded
+        this.onImageLoad(galleryId);
+      } else {
+        // Set up load listeners
+        img.addEventListener('load', () => {
+          console.log(`Image ${index + 1} loaded for gallery:`, galleryId);
+          this.onImageLoad(galleryId);
+        });
+        
+        img.addEventListener('error', () => {
+          console.warn(`Image ${index + 1} failed to load for gallery:`, galleryId);
+          this.onImageLoad(galleryId); // Still count as "loaded" to not block gallery
+        });
+
+        // Force loading by setting src again if needed
+        if (!img.src) {
+          img.src = img.getAttribute('src') || img.dataset.src;
+        }
+      }
     });
 
-    // Set up resize listener
+    // Initial progress update
+    this.updateProgress(galleryId);
+  }
+
+  onImageLoad(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData || galleryData.isLoaded) return;
+
+    galleryData.imagesLoaded++;
+    this.updateProgress(galleryId);
+
+    // Check if all images are loaded
+    if (galleryData.imagesLoaded >= galleryData.totalImages) {
+      // Small delay to ensure smooth transition
+      setTimeout(() => {
+        this.showGallery(galleryId);
+      }, 100);
+    }
+  }
+
+  updateProgress(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData || !galleryData.progressBar) return;
+
+    const progress = galleryData.totalImages > 0 
+      ? (galleryData.imagesLoaded / galleryData.totalImages) * 100 
+      : 100;
+
+    galleryData.progressBar.style.width = `${progress}%`;
+  }
+
+  showGallery(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData || galleryData.isLoaded) return;
+
+    console.log('Showing gallery:', galleryId);
+
+    // Mark as loaded
+    galleryData.isLoaded = true;
+    galleryData.element.classList.add('loaded');
+
+    // Show content with smooth transition
+    galleryData.contentElement.classList.add('loaded');
+
+    // Set up scroll and resize listeners
+    if (galleryData.scrollContainer) {
+      galleryData.scrollContainer.addEventListener('scroll', () => {
+        this.handleScroll(galleryId);
+      });
+    }
+
     window.addEventListener('resize', () => {
       this.handleResize(galleryId);
     });
 
-    // Set up image load listeners for smooth loading and layout stability
-    const images = scrollContainer.querySelectorAll('img');
-    images.forEach(img => {
-      // Handle lazy loaded images
-      if (img.hasAttribute('loading') && img.getAttribute('loading') === 'lazy') {
-        // If image is already loaded
-        if (img.complete && img.naturalHeight !== 0) {
-          img.classList.add('loaded');
-        } else {
-          // Wait for image to load
-          img.addEventListener('load', () => {
-            img.classList.add('loaded');
-            // Update button states after image loads
-            this.updateButtonStates(galleryId);
-          });
-          
-          // Handle loading errors
-          img.addEventListener('error', () => {
-            img.classList.add('loaded'); // Still show it even if failed
-            this.updateButtonStates(galleryId);
-          });
-        }
-      } else {
-        // For non-lazy images, just listen for load events
-        img.addEventListener('load', () => {
-          this.updateButtonStates(galleryId);
-        });
-      }
-    });
-
-    // Initial state
-    this.updateButtonStates(galleryId);
-
-    console.log('Gallery initialized:', galleryId);
+    // Initial state setup
+    setTimeout(() => {
+      this.updateButtonStates(galleryId);
+    }, 500); // Wait for transition to complete
   }
 
   setupEventDelegation() {
@@ -138,31 +207,31 @@ class GalleryController {
 
   handleScroll(galleryId) {
     const galleryData = this.galleries.get(galleryId);
-    if (!galleryData) return;
+    if (!galleryData || !galleryData.isLoaded) return;
 
     if (galleryData.scrollTimeout) {
       clearTimeout(galleryData.scrollTimeout);
     }
     galleryData.scrollTimeout = setTimeout(() => {
       this.updateButtonStates(galleryId);
-    }, 10); // Faster response - was 50ms, now 10ms
+    }, 10);
   }
 
   handleResize(galleryId) {
     const galleryData = this.galleries.get(galleryId);
-    if (!galleryData) return;
+    if (!galleryData || !galleryData.isLoaded) return;
 
     if (galleryData.resizeTimeout) {
       clearTimeout(galleryData.resizeTimeout);
     }
     galleryData.resizeTimeout = setTimeout(() => {
       this.updateButtonStates(galleryId);
-    }, 25); // Faster response - was 100ms, now 25ms
+    }, 25);
   }
 
   updateButtonStates(galleryId) {
     const galleryData = this.galleries.get(galleryId);
-    if (!galleryData) return;
+    if (!galleryData || !galleryData.isLoaded || !galleryData.controlsContainer) return;
 
     const { scrollContainer, prevBtn, nextBtn, controlsContainer } = galleryData;
     const scrollLeft = scrollContainer.scrollLeft;
@@ -184,21 +253,24 @@ class GalleryController {
       const atEnd = scrollLeft + clientWidth >= scrollWidth - 5;
 
       // Update button states
-      prevBtn.disabled = atStart;
-      nextBtn.disabled = atEnd;
-
-      // Visual feedback
-      prevBtn.style.opacity = atStart ? '0.3' : '1';
-      nextBtn.style.opacity = atEnd ? '0.3' : '1';
+      if (prevBtn) {
+        prevBtn.disabled = atStart;
+        prevBtn.style.opacity = atStart ? '0.3' : '1';
+      }
+      
+      if (nextBtn) {
+        nextBtn.disabled = atEnd;
+        nextBtn.style.opacity = atEnd ? '0.3' : '1';
+      }
     }
   }
 
   scrollToDirection(galleryId, direction) {
     const galleryData = this.galleries.get(galleryId);
-    if (!galleryData) return;
+    if (!galleryData || !galleryData.isLoaded) return;
 
     const { scrollContainer } = galleryData;
-    const scrollAmount = scrollContainer.clientWidth * 0.5; // More conservative 50%
+    const scrollAmount = scrollContainer.clientWidth * 0.5;
     const currentScroll = scrollContainer.scrollLeft;
 
     let targetScroll;
@@ -215,36 +287,11 @@ class GalleryController {
       left: targetScroll,
       behavior: 'smooth'
     });
-    
-    // CSS scroll-snap will automatically align to the nearest image!
   }
 
-  // Public method to manually initialize new galleries (useful for dynamic content)
+  // Public method to manually initialize new galleries
   refresh() {
     this.initializeGalleries();
-  }
-
-  // Public method to preload images in a specific gallery
-  preloadGalleryImages(galleryId) {
-    const galleryData = this.galleries.get(galleryId);
-    if (!galleryData) return;
-
-    const images = galleryData.scrollContainer.querySelectorAll('img[loading="lazy"]');
-    images.forEach(img => {
-      // Remove lazy loading to force immediate load
-      img.removeAttribute('loading');
-      
-      // If image hasn't started loading yet, trigger it
-      if (!img.complete) {
-        // Create a new image element to preload
-        const preloadImg = new Image();
-        preloadImg.onload = () => {
-          img.src = preloadImg.src;
-          img.classList.add('loaded');
-        };
-        preloadImg.src = img.src;
-      }
-    });
   }
 
   // Public method to get gallery statistics
@@ -252,22 +299,25 @@ class GalleryController {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData) return null;
 
-    const images = galleryData.scrollContainer.querySelectorAll('img');
-    const loadedImages = galleryData.scrollContainer.querySelectorAll('img.loaded');
-    
     return {
-      totalImages: images.length,
-      loadedImages: loadedImages.length,
-      loadingProgress: images.length > 0 ? (loadedImages.length / images.length) * 100 : 100,
-      isScrollable: galleryData.scrollContainer.scrollWidth > galleryData.scrollContainer.clientWidth
+      totalImages: galleryData.totalImages,
+      loadedImages: galleryData.imagesLoaded,
+      loadingProgress: galleryData.totalImages > 0 ? (galleryData.imagesLoaded / galleryData.totalImages) * 100 : 100,
+      isLoaded: galleryData.isLoaded,
+      isScrollable: galleryData.isLoaded && galleryData.scrollContainer.scrollWidth > galleryData.scrollContainer.clientWidth
     };
+  }
+
+  // Public method to force show gallery (for debugging)
+  forceShowGallery(galleryId) {
+    this.showGallery(galleryId);
   }
 }
 
 // Initialize gallery controller when script loads
 const galleryController = new GalleryController();
 
-// Make it globally available for manual refresh if needed
+// Make it globally available
 window.galleryController = galleryController;
 
 // Export for module systems if needed
