@@ -1,7 +1,7 @@
 /**
- * Enhanced Gallery Controller with Priority-Based Loading
- * High priority galleries (first on page) load immediately
- * Low priority galleries load with delay to avoid resource contention
+ * Enhanced Gallery Controller with Instant Display
+ * No delays - galleries show immediately when all images are loaded
+ * Priority system ensures first gallery loads faster
  */
 class GalleryController {
   constructor() {
@@ -57,7 +57,7 @@ class GalleryController {
       this.initializeGallery(element, id);
     });
 
-    // Initialize low priority galleries with staggered delay
+    // Initialize low priority galleries
     this.initializeLowPriorityGalleries();
 
     // Set up global event delegation ONLY ONCE
@@ -72,11 +72,9 @@ class GalleryController {
     if ('IntersectionObserver' in window) {
       this.setupIntersectionObserver();
     } else {
-      // Fallback: initialize with delays
-      this.lowPriorityGalleries.forEach(({ element, id }, index) => {
-        setTimeout(() => {
-          this.initializeGallery(element, id);
-        }, 150 + (index * 50)); // Stagger initialization
+      // Fallback: initialize immediately
+      this.lowPriorityGalleries.forEach(({ element, id }) => {
+        this.initializeGallery(element, id);
       });
     }
   }
@@ -145,7 +143,7 @@ class GalleryController {
 
     this.galleries.set(galleryId, galleryData);
 
-    // Start loading process
+    // Start loading process immediately
     this.setupImageLoading(galleryId);
 
     console.log(`Gallery initialized: ${galleryId} (priority: ${priority})`);
@@ -167,7 +165,7 @@ class GalleryController {
       return;
     }
 
-    // Set loading timeout based on priority
+    // Set loading timeout based on priority (only for emergency fallback)
     const timeoutDuration = galleryData.priority === 'high' ? 8000 : 12000;
     galleryData.loadingTimeout = setTimeout(() => {
       console.warn(`Force showing gallery ${galleryId} after timeout (priority: ${galleryData.priority})`);
@@ -191,9 +189,8 @@ class GalleryController {
     const handleLoad = () => {
       console.log(`Image ${index + 1} loaded for gallery: ${galleryId} (priority: ${galleryData.priority})`);
       
-      // Add loaded class for fade-in effect
+      // Mark image as loaded but keep it hidden until gallery shows
       img.classList.add('loaded');
-      img.style.opacity = '1';
       
       this.onImageLoad(galleryId);
     };
@@ -202,9 +199,8 @@ class GalleryController {
     const handleError = () => {
       console.warn(`Image ${index + 1} failed to load for gallery: ${galleryId} (priority: ${galleryData.priority})`);
       
-      // Still show the image placeholder
-      img.style.opacity = '0.3';
-      img.classList.add('loaded');
+      // Mark as loaded with error state
+      img.classList.add('loaded', 'error');
       
       this.onImageLoad(galleryId); // Still count as "loaded" to not block gallery
     };
@@ -238,10 +234,9 @@ class GalleryController {
                       img.naturalHeight > 0 && 
                       img.src !== '';
     
-    // If image is loaded, make sure it's visible
+    // If image is loaded, mark it but don't show yet
     if (basicCheck && !img.classList.contains('loaded')) {
       img.classList.add('loaded');
-      img.style.opacity = '1';
     }
     
     return basicCheck;
@@ -256,7 +251,7 @@ class GalleryController {
 
     console.log(`Gallery ${galleryId}: ${galleryData.imagesLoaded}/${galleryData.totalImages} images loaded (priority: ${galleryData.priority})`);
 
-    // Check if all images are loaded
+    // Check if all images are loaded - show immediately if so
     if (galleryData.imagesLoaded >= galleryData.totalImages) {
       // Clear the timeout
       if (galleryData.loadingTimeout) {
@@ -264,11 +259,8 @@ class GalleryController {
         galleryData.loadingTimeout = null;
       }
 
-      // Show high priority galleries immediately, low priority with small delay
-      const showDelay = galleryData.priority === 'high' ? 100 : 200;
-      setTimeout(() => {
-        this.showGallery(galleryId);
-      }, showDelay);
+      // Show gallery immediately - no delays
+      this.showGallery(galleryId);
     }
   }
 
@@ -299,10 +291,16 @@ class GalleryController {
     galleryData.isLoaded = true;
     galleryData.element.classList.add('loaded');
 
-    // Show content with smooth transition
+    // Show content immediately - no transition delays
     galleryData.contentElement.classList.add('loaded');
 
-    // Set up scroll and resize listeners after gallery is shown
+    // Show all loaded images immediately
+    const images = galleryData.scrollContainer.querySelectorAll('img.loaded');
+    images.forEach(img => {
+      img.style.opacity = '1';
+    });
+
+    // Set up scroll and resize listeners
     if (galleryData.scrollContainer) {
       galleryData.scrollContainer.addEventListener('scroll', () => {
         this.handleScroll(galleryId);
@@ -313,10 +311,8 @@ class GalleryController {
       this.handleResize(galleryId);
     });
 
-    // Initial state setup - wait for transition to complete
-    setTimeout(() => {
-      this.updateButtonStates(galleryId);
-    }, 600);
+    // Update button states immediately
+    this.updateButtonStates(galleryId);
   }
 
   setupEventDelegation() {
@@ -484,18 +480,18 @@ if (window.performance && window.performance.mark) {
   window.performance.mark('gallery-controller-initialized');
 }
 
-// Fallback: if galleries still not shown after 20 seconds, force show them all
+// Fallback: if galleries still not shown after 15 seconds, force show them all
 setTimeout(() => {
   if (window.galleryController) {
     const stats = window.galleryController.getPerformanceStats();
     console.log('Gallery performance stats:', stats);
     
     if (stats.loadedGalleries < stats.totalGalleries) {
-      console.warn('Some galleries not loaded after 20s, forcing show all');
+      console.warn('Some galleries not loaded after 15s, forcing show all');
       window.galleryController.forceShowAllGalleries();
     }
   }
-}, 20000);
+}, 15000);
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
