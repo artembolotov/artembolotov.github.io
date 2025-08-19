@@ -65,18 +65,29 @@ h3 {
   /* Reserve space close to actual gallery height */
   min-height: 500px;
   position: relative;
+  transition: min-height 0.3s ease;
+}
+
+/* Remove reserved height after loading */
+.image-gallery.loaded {
+  min-height: auto;
 }
 
 /* Loading State Styles */
 .gallery-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 500px;
   background: rgba(0, 0, 0, 0.02);
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   transition: opacity 0.5s ease;
+  z-index: 1;
 }
 
 .gallery-loading-content {
@@ -142,8 +153,7 @@ h3 {
 
 /* Hide loading when gallery is loaded */
 .image-gallery.loaded .gallery-loading {
-  opacity: 0;
-  pointer-events: none;
+  display: none;
 }
 
 /* Individual image fade-in effect */
@@ -313,10 +323,17 @@ h3 {
   .image-gallery {
     /* Smaller but still realistic height on mobile */
     min-height: 300px;
+    transition: min-height 0.3s ease;
+  }
+  
+  /* Remove reserved height after loading on mobile */
+  .image-gallery.loaded {
+    min-height: auto;
   }
   
   .gallery-loading {
-    min-height: 300px;
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
   }
   
   .gallery-loading-content {
