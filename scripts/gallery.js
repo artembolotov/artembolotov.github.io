@@ -82,7 +82,7 @@ class GalleryController {
   setupIntersectionObserver() {
     const observerOptions = {
       root: null,
-      rootMargin: '100px', // Start loading when gallery is 100px from viewport
+      rootMargin: '500px', // Start loading when gallery is 500px from viewport
       threshold: 0.1
     };
 
