@@ -132,6 +132,7 @@ h3 {
   flex-shrink: 0;
   max-height: 500px;
   height: auto;
+  width: auto;
   object-fit: contain;
 }
 

@@ -5,8 +5,10 @@ Usage:
 {% include gallery.html images=gallery_test %}  (auto-generated random ID)
 
 Image paths support:
-- Full path: "/blog/img/2025-01-01-post/image.jpg|Alt text"
-- Auto path: "image.jpg|Alt text" (will become "/blog/img/YYYY-MM-DD-post-name/image.jpg")
+- Full path: "/blog/img/2025-01-01-post/image.jpg|Alt text|800|600"
+- Auto path: "image.jpg|Alt text|800|600" (will become "/blog/img/YYYY-MM-DD-post-name/image.jpg")
+- Without dimensions: "image.jpg|Alt text" or "/full/path/image.jpg|Alt text"
+- Without alt: "image.jpg" or "/full/path/image.jpg"
 {% endcomment %}
 
 {% if include.id %}
@@ -33,6 +35,8 @@ Image paths support:
         {% assign parts = trimmed_line | split: "|" %}
         {% assign raw_image_path = parts[0] | strip %}
         {% assign image_alt = parts[1] | strip | default: "" %}
+        {% assign image_width = parts[2] | strip | default: "" %}
+        {% assign image_height = parts[3] | strip | default: "" %}
         
         {% comment %}Check if we need to generate auto-path{% endcomment %}
         {% if raw_image_path contains '/' %}
@@ -49,7 +53,12 @@ Image paths support:
           {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
         {% endif %}
         
-        <img src="{{ image_path }}" alt="{{ image_alt }}">
+        {% comment %}Generate img tag with or without dimensions{% endcomment %}
+        {% if image_width != "" and image_height != "" %}
+          <img src="{{ image_path }}" alt="{{ image_alt }}" width="{{ image_width }}" height="{{ image_height }}">
+        {% else %}
+          <img src="{{ image_path }}" alt="{{ image_alt }}">
+        {% endif %}
       {% endunless %}
     {% endfor %}
   </div>
