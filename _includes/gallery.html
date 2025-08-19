@@ -1,12 +1,16 @@
 {% comment %}
-Improved Image gallery component with width/height support
+Improved Image gallery component with width/height support and auto-path generation
 Usage: 
 {% include gallery.html images=gallery_test id="custom_id" %}
 
-Formats supported:
-- /path/image.jpg|Alt text
-- /path/image.jpg|Alt text|800|600
-- /path/image.jpg (alt will be empty)
+Image path formats supported:
+- Full path: "/blog/img/2025-01-01-post/image.jpg|Alt text|800|600"
+- Auto path: "image.jpg|Alt text|800|600" (becomes "/blog/img/YYYY-MM-DD-post-name/image.jpg")
+- Without dimensions: "image.jpg|Alt text" or "/full/path/image.jpg|Alt text"
+- Without alt: "image.jpg" or "/full/path/image.jpg"
+
+Auto-path generation extracts date and slug from page.url to build:
+/blog/img/YYYY-MM-DD-post-slug/filename
 {% endcomment %}
 
 {% if include.id %}
@@ -31,10 +35,25 @@ Formats supported:
       {% assign trimmed_line = line | strip %}
       {% unless trimmed_line == "" %}
         {% assign parts = trimmed_line | split: "|" %}
-        {% assign image_path = parts[0] | strip %}
+        {% assign raw_image_path = parts[0] | strip %}
         {% assign image_alt = parts[1] | strip | default: "" %}
         {% assign image_width = parts[2] | strip | default: "" %}
         {% assign image_height = parts[3] | strip | default: "" %}
+        
+        {% comment %}Check if we need to generate auto-path{% endcomment %}
+        {% if raw_image_path contains '/' %}
+          {% comment %}If path contains slash, consider it a full path{% endcomment %}
+          {% assign image_path = raw_image_path %}
+        {% else %}
+          {% comment %}Otherwise generate automatic path{% endcomment %}
+          {% assign url_parts = page.url | split: '/' %}
+          {% assign year = url_parts[2] %}
+          {% assign month = url_parts[3] %}
+          {% assign day = url_parts[4] %}
+          {% assign title = url_parts[5] %}
+          {% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
+          {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
+        {% endif %}
         
         {% comment %}Generate img tag with or without dimensions{% endcomment %}
         {% if image_width != "" and image_height != "" %}
