@@ -55,25 +55,35 @@ ru_5.png
 
 ### 80 моделей — 80 радиусов
 
-У каждого iPhone свой радиус скругления. От 0 у старых моделей до 62 пикселей у iPhone 16 Pro:
+Белая линия должна идеально повторять радиус скругления iPhone. iOS может определить радиус программно, но Apple запрещает использовать приватные методы. Но нам разрешают получить идентификатор модели, например, iPhone17,1 — это iPhone16 Pro, iPhone17,5 — iPhone 16e. Для 11 дюймового iPad Air на M3 сразу четыре идентификатора: iPad15,3, iPad15,4, iPad15,5, iPad15,6.
+
+Поэтому делаем таблицу радиусов. Выглядит она примерно так: 
 
 ```swift
 // Each iPhone model has its own corner radius
+
 extension Model {
     var screenCornerRadius: CGFloat {
         switch self {
-        case .iPhone16Pro, .iPhone16ProMax: 62.0
-        case .iPhone15Pro, .iPhone15ProMax: 55.0
-        case .iPhone14Pro, .iPhone14ProMax: 55.0
-        case .iPhone13, .iPhone13Pro: 47.33
+                   
+        case .iPhoneX, .iPhoneXS, .iPhoneXSMax, .iPhone11Pro, .iPhone11ProMax: 39.0
+            
+        case .iPhoneXR, .iPhone11: 41.5
+            
+        case .iPhone12, .iPhone12Pro, .iPhone13, .iPhone13Pro, .iPhone14, .iPhone16e: 47.33
+        
+        case .iPhone12ProMax, .iPhone13ProMax, .iPhone14Plus: 53.33
+            
         case .iPhone12Mini, .iPhone13Mini: 44.0
-        // ... and so on for 80+ models
-        }
-    }
-}
-```
+                
+        case .iPhone14Pro, .iPhone14ProMax, .iPhone15, .iPhone15Plus,
+                .iPhone15Pro, .iPhone15ProMax, .iPhone16, .iPhone16Plus: 55.0
+            
+        case .iPhone16Pro, .iPhone16ProMax: 62.0
 
-iOS может определить радиус программно, но Apple запрещает использовать приватные методы. Пришлось создавать базу данных всех моделей и обновлять с каждым новым iPhone.
+        // ... and so on
+
+```
 
 ### HLS вместо встроенного видео
 
