@@ -133,6 +133,20 @@ h3 {
   max-height: 500px;
   height: auto;
   object-fit: contain;
+  
+  /* Handle images with intrinsic width/height */
+  max-width: 100%;
+  width: auto;
+}
+
+/* Gallery images sizing for all screens */
+.image-gallery-inner:not([data-count="1"]) img {
+  max-width: 85vw;
+}
+
+/* Ensure proper aspect ratio preservation */
+.image-gallery-inner img[width][height] {
+  aspect-ratio: attr(width) / attr(height);
 }
 
 /* Gallery images sizing for all screens */
