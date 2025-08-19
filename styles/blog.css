@@ -134,23 +134,12 @@ h3 {
   height: auto;
   object-fit: contain;
   
-  /* Handle images with intrinsic width/height */
-  max-width: 100%;
+  /* Важно: сначала width: auto, потом max-width */
   width: auto;
-}
-
-/* Gallery images sizing for all screens */
-.image-gallery-inner:not([data-count="1"]) img {
-  max-width: 85vw;
-}
-
-/* Ensure proper aspect ratio preservation */
-.image-gallery-inner img[width][height] {
   max-width: 100%;
-  height: auto;
 }
 
-/* Gallery images sizing for all screens */
+/* Размеры для разных экранов */
 .image-gallery-inner:not([data-count="1"]) img {
   max-width: 85vw;
 }

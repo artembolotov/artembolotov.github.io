@@ -1,16 +1,14 @@
 {% comment %}
-Improved Image gallery component with width/height support and auto-path generation
+Image gallery component with navigation buttons and auto-path support
 Usage: 
-{% include gallery.html images=gallery_test id="custom_id" %}
+{% include gallery.html images=gallery_test id="custom_id" %}  (with custom ID)
+{% include gallery.html images=gallery_test %}  (auto-generated random ID)
 
-Image path formats supported:
+Image paths support:
 - Full path: "/blog/img/2025-01-01-post/image.jpg|Alt text|800|600"
-- Auto path: "image.jpg|Alt text|800|600" (becomes "/blog/img/YYYY-MM-DD-post-name/image.jpg")
+- Auto path: "image.jpg|Alt text|800|600" (will become "/blog/img/YYYY-MM-DD-post-name/image.jpg")
 - Without dimensions: "image.jpg|Alt text" or "/full/path/image.jpg|Alt text"
 - Without alt: "image.jpg" or "/full/path/image.jpg"
-
-Auto-path generation extracts date and slug from page.url to build:
-/blog/img/YYYY-MM-DD-post-slug/filename
 {% endcomment %}
 
 {% if include.id %}
@@ -55,7 +53,7 @@ Auto-path generation extracts date and slug from page.url to build:
           {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
         {% endif %}
         
-        {% comment %}Generate img tag with or without dimensions{% endcomment %}
+        {% comment %}Generate img tag with dimensions for CLS prevention{% endcomment %}
         {% if image_width != "" and image_height != "" %}
           <img src="{{ image_path }}" alt="{{ image_alt }}" width="{{ image_width }}" height="{{ image_height }}">
         {% else %}
@@ -64,7 +62,6 @@ Auto-path generation extracts date and slug from page.url to build:
       {% endunless %}
     {% endfor %}
   </div>
-  
   {% if image_count > 1 %}
   <div class="gallery-controls">
     <button class="gallery-nav gallery-prev" data-gallery="{{ gallery_id }}" data-direction="prev" aria-label="Предыдущее изображение">
