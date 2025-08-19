@@ -38,6 +38,15 @@ Image paths support:
         {% assign image_width = parts[2] | strip | default: "" %}
         {% assign image_height = parts[3] | strip | default: "" %}
         
+        {% comment %}Calculate aspect ratio for CSS custom property{% endcomment %}
+        {% if image_width != "" and image_height != "" %}
+          {% assign width_num = image_width | plus: 0.0 %}
+          {% assign height_num = image_height | plus: 0.0 %}
+          {% assign aspect_ratio = width_num | divided_by: height_num %}
+        {% else %}
+          {% assign aspect_ratio = 1 %}
+        {% endif %}
+        
         {% comment %}Check if we need to generate auto-path{% endcomment %}
         {% if raw_image_path contains '/' %}
           {% comment %}If path contains slash, consider it a full path{% endcomment %}
@@ -53,11 +62,19 @@ Image paths support:
           {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
         {% endif %}
         
-        {% comment %}Generate img tag with or without dimensions{% endcomment %}
+        {% comment %}Generate img tag with dimensions and aspect ratio{% endcomment %}
         {% if image_width != "" and image_height != "" %}
-          <img src="{{ image_path }}" alt="{{ image_alt }}" width="{{ image_width }}" height="{{ image_height }}">
+          <img src="{{ image_path }}" 
+               alt="{{ image_alt }}" 
+               width="{{ image_width }}" 
+               height="{{ image_height }}"
+               style="--aspect-ratio: {{ aspect_ratio }}"
+               loading="lazy">
         {% else %}
-          <img src="{{ image_path }}" alt="{{ image_alt }}">
+          <img src="{{ image_path }}" 
+               alt="{{ image_alt }}"
+               style="--aspect-ratio: 1"
+               loading="lazy">
         {% endif %}
       {% endunless %}
     {% endfor %}
