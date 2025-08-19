@@ -1,13 +1,12 @@
 {% comment %}
-Image gallery component with loading state and navigation buttons
+Simplified image gallery component with loading state
 Usage: 
 {% include gallery.html images=gallery_test id="custom_id" %}  (with custom ID)
 {% include gallery.html images=gallery_test %}  (auto-generated random ID)
 
 Image paths support:
-- Full path: "/blog/img/2025-01-01-post/image.jpg|Alt text|800|600"
-- Auto path: "image.jpg|Alt text|800|600" (will become "/blog/img/YYYY-MM-DD-post-name/image.jpg")
-- Without dimensions: "image.jpg|Alt text" or "/full/path/image.jpg|Alt text"
+- Full path: "/blog/img/2025-01-01-post/image.jpg|Alt text"
+- Auto path: "image.jpg|Alt text" (will become "/blog/img/YYYY-MM-DD-post-name/image.jpg")
 - Without alt: "image.jpg" or "/full/path/image.jpg"
 {% endcomment %}
 
@@ -48,17 +47,6 @@ Image paths support:
           {% assign parts = trimmed_line | split: "|" %}
           {% assign raw_image_path = parts[0] | strip %}
           {% assign image_alt = parts[1] | strip | default: "" %}
-          {% assign image_width = parts[2] | strip | default: "" %}
-          {% assign image_height = parts[3] | strip | default: "" %}
-          
-          {% comment %}Calculate aspect ratio for CSS custom property{% endcomment %}
-          {% if image_width != "" and image_height != "" %}
-            {% assign width_num = image_width | plus: 0.0 %}
-            {% assign height_num = image_height | plus: 0.0 %}
-            {% assign aspect_ratio = width_num | divided_by: height_num %}
-          {% else %}
-            {% assign aspect_ratio = 1 %}
-          {% endif %}
           
           {% comment %}Check if we need to generate auto-path{% endcomment %}
           {% if raw_image_path contains '/' %}
@@ -75,22 +63,11 @@ Image paths support:
             {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
           {% endif %}
           
-          {% comment %}Generate img tag with dimensions and aspect ratio{% endcomment %}
-          {% if image_width != "" and image_height != "" %}
-            <img src="{{ image_path }}" 
-                 alt="{{ image_alt }}" 
-                 width="{{ image_width }}" 
-                 height="{{ image_height }}"
-                 style="--aspect-ratio: {{ aspect_ratio }}"
-                 loading="eager"
-                 data-gallery-image>
-          {% else %}
-            <img src="{{ image_path }}" 
-                 alt="{{ image_alt }}"
-                 style="--aspect-ratio: 1"
-                 loading="eager"
-                 data-gallery-image>
-          {% endif %}
+          {% comment %}Simple img tag without size complications{% endcomment %}
+          <img src="{{ image_path }}" 
+               alt="{{ image_alt }}" 
+               loading="eager"
+               data-gallery-image>
         {% endunless %}
       {% endfor %}
     </div>

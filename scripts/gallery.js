@@ -1,7 +1,7 @@
 /**
- * Universal Gallery Controller with Loading State
+ * Simplified Gallery Controller with Loading State
  * Shows galleries only after all images are fully loaded
- * Provides smooth loading experience with progress indication
+ * No complex aspect ratio calculations needed
  */
 class GalleryController {
   constructor() {
@@ -121,8 +121,8 @@ class GalleryController {
           this.onImageLoad(galleryId); // Still count as "loaded" to not block gallery
         });
 
-        // Force loading by setting src again if needed
-        if (!img.src) {
+        // Force loading if src is not set
+        if (!img.src && (img.getAttribute('src') || img.dataset.src)) {
           img.src = img.getAttribute('src') || img.dataset.src;
         }
       }
@@ -172,7 +172,7 @@ class GalleryController {
     // Show content with smooth transition
     galleryData.contentElement.classList.add('loaded');
 
-    // Set up scroll and resize listeners
+    // Set up scroll and resize listeners after gallery is shown
     if (galleryData.scrollContainer) {
       galleryData.scrollContainer.addEventListener('scroll', () => {
         this.handleScroll(galleryId);
@@ -183,10 +183,10 @@ class GalleryController {
       this.handleResize(galleryId);
     });
 
-    // Initial state setup
+    // Initial state setup - wait for transition to complete
     setTimeout(() => {
       this.updateButtonStates(galleryId);
-    }, 500); // Wait for transition to complete
+    }, 500);
   }
 
   setupEventDelegation() {
@@ -289,12 +289,11 @@ class GalleryController {
     });
   }
 
-  // Public method to manually initialize new galleries
+  // Public methods
   refresh() {
     this.initializeGalleries();
   }
 
-  // Public method to get gallery statistics
   getGalleryStats(galleryId) {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData) return null;
@@ -308,19 +307,18 @@ class GalleryController {
     };
   }
 
-  // Public method to force show gallery (for debugging)
   forceShowGallery(galleryId) {
     this.showGallery(galleryId);
   }
 }
 
-// Initialize gallery controller when script loads
+// Initialize gallery controller
 const galleryController = new GalleryController();
 
 // Make it globally available
 window.galleryController = galleryController;
 
-// Export for module systems if needed
+// Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = GalleryController;
 }

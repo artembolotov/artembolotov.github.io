@@ -59,7 +59,7 @@ h3 {
   margin-top: 1.2em;
 }
 
-/* Image Gallery with Loading State */
+/* Image Gallery with Loading State - SIMPLIFIED VERSION */
 .image-gallery {
   margin: 2rem 0;
   min-height: 200px; /* Reserve minimum space */
@@ -201,28 +201,23 @@ h3 {
   scroll-snap-stop: always;
   flex-shrink: 0;
   
-  /* ✅ Reserve space and maintain aspect ratio */
-  aspect-ratio: var(--aspect-ratio, 1);
+  /* ✅ Simple sizing - browser knows dimensions after loading */
   max-height: 500px;
-  
-  /* Calculate width based on aspect ratio and max height */
-  width: auto;
   height: auto;
+  width: auto;
   
   object-fit: contain;
-  
-  /* Images are fully loaded, no need for opacity transition */
   opacity: 1;
 }
 
 /* Gallery images sizing for all screens */
 .image-gallery-inner:not([data-count="1"]) img {
-  max-width: min(85vw, calc(500px * var(--aspect-ratio, 1)));
+  max-width: 85vw;
 }
 
 /* Single image galleries can be larger */
 .image-gallery-inner[data-count="1"] img {
-  max-width: min(100%, calc(500px * var(--aspect-ratio, 1)));
+  max-width: 100%;
 }
 
 /* Dark mode adjustments */
@@ -290,7 +285,7 @@ h3 {
   
   /* Mobile images can be a bit larger */
   .image-gallery-inner:not([data-count="1"]) img {
-    max-width: min(95vw, calc(400px * var(--aspect-ratio, 1)));
+    max-width: 95vw;
   }
 }
 
