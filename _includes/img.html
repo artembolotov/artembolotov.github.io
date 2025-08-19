@@ -1,16 +1,32 @@
 {% comment %}
 _includes/img.html
-Поддерживает как простые имена файлов, так и полные пути
+Enhanced single image component with loading prioritization
+First image gets eager loading + high priority, others get lazy loading + low priority
+
 Usage: 
   {% include img.html src="image1.png" alt="Description" %} (auto-path)
   {% include img.html src="/blog/img/custom/image.png" alt="Description" %} (full path)
+  {% include img.html src="image.png" alt="Description" caption="Optional caption" %} (with caption)
 {% endcomment %}
 
+{% comment %}Track image count for prioritization{% endcomment %}
+{% unless site.image_counter %}
+  {% assign site.image_counter = 0 %}
+{% endunless %}
+{% assign site.image_counter = site.image_counter | plus: 1 %}
+
+{% comment %}First image gets high priority, others get low priority{% endcomment %}
+{% assign is_first_image = false %}
+{% if site.image_counter == 1 %}
+  {% assign is_first_image = true %}
+{% endif %}
+
+{% comment %}Generate image path{% endcomment %}
 {% if include.src contains '/' %}
-  {% comment %}Если в src есть слеш, считаем что это полный путь{% endcomment %}
+  {% comment %}If src contains slash, consider it a full path{% endcomment %}
   {% assign image_path = include.src %}
 {% else %}
-  {% comment %}Иначе формируем автоматический путь{% endcomment %}
+  {% comment %}Otherwise generate automatic path{% endcomment %}
   {% assign url_parts = page.url | split: '/' %}
   {% assign year = url_parts[2] %}
   {% assign month = url_parts[3] %}  
@@ -21,7 +37,18 @@ Usage:
   {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: include.src %}
 {% endif %}
 
-<div class="single_image">
-<img src="{{ image_path }}" alt="{{ include.alt | default: '' }}">
-{% if include.caption %}<em class="image-caption">{{ include.caption }}</em>{% endif %}
+<div class="single_image" data-image-priority="{% if is_first_image %}high{% else %}low{% endif %}">
+  <img src="{{ image_path }}" 
+       alt="{{ include.alt | default: '' }}"
+       {% if is_first_image %}
+         loading="eager"
+         fetchpriority="high"
+       {% else %}
+         loading="lazy"
+         fetchpriority="low"
+       {% endif %}
+       data-single-image>
+  {% if include.caption %}
+    <em class="image-caption">{{ include.caption }}</em>
+  {% endif %}
 </div>
