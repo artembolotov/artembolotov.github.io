@@ -204,11 +204,6 @@ h3 {
 
 .gallery-nav:hover:not(:disabled) {
   background: rgba(0, 0, 0, 0.1);
-  transform: translateY(-1px);
-}
-
-.gallery-nav:active:not(:disabled) {
-  transform: translateY(0);
 }
 
 .gallery-nav:disabled {
