@@ -16,12 +16,12 @@ draft: true
 4700 скачиваний за три дня. 34 место в топе утилит App Store России. [Приложение недели](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank"} в сообществе [Indie iOS Apps](https://x.com/ios_dev_alb/status/1956656538841477335?s=46&t=XX_GDAhHPLfRalDTeluI4w){:target="_blank"}. И всё это — приложение, которое просто показывает белую линию на экране.
 
 {% capture gallery_appstore %}
-ru_0.png||1290|2796
-ru_1.png||1290|2796
-ru_2.png||1290|2796
-ru_3.png||1290|2796
-ru_4.png||1290|2796
-ru_5.png||1290|2796
+ru_0.png
+ru_1.png
+ru_2.png
+ru_3.png
+ru_4.png
+ru_5.png
 {% endcapture %}
 {% include gallery.html images=gallery_appstore %}
 
