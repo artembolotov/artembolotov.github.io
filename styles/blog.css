@@ -133,13 +133,9 @@ h3 {
   max-height: 500px;
   height: auto;
   object-fit: contain;
-  
-  /* Важно: сначала width: auto, потом max-width */
-  width: auto;
-  max-width: 100%;
 }
 
-/* Размеры для разных экранов */
+/* Gallery images sizing for all screens */
 .image-gallery-inner:not([data-count="1"]) img {
   max-width: 85vw;
 }
