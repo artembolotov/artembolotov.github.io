@@ -270,6 +270,11 @@ class GalleryController {
       img.style.opacity = '1';
     });
 
+    // Reset scroll position to beginning (no animation)
+    if (galleryData.scrollContainer) {
+      galleryData.scrollContainer.scrollLeft = 0;
+    }
+
     // Set up event-based button state management
     this.setupButtonStateManagement(galleryId);
 
