@@ -1,7 +1,6 @@
 /**
- * Enhanced Gallery Controller with Instant Display
- * No delays - galleries show immediately when all images are loaded
- * All galleries use consistent lazy loading
+ * Gallery Controller with Instant Display
+ * Clean, minimal implementation focused on core functionality
  */
 class GalleryController {
   constructor() {
@@ -276,14 +275,13 @@ class GalleryController {
 
     // Set up scroll and resize listeners
     if (galleryData.scrollContainer) {
-      galleryData.scrollContainer.addEventListener('scroll', () => {
-        this.handleScroll(galleryId);
-      });
+      const debouncedUpdate = this.debounce(() => {
+        this.updateButtonStates(galleryId);
+      }, 10);
+      
+      galleryData.scrollContainer.addEventListener('scroll', debouncedUpdate);
+      window.addEventListener('resize', debouncedUpdate);
     }
-
-    window.addEventListener('resize', () => {
-      this.handleResize(galleryId);
-    });
   }
 
   setupButtonStateManagement(galleryId) {
@@ -295,7 +293,7 @@ class GalleryController {
       this.updateButtonStates(galleryId);
     }, 50);
 
-    // 1. Listen for image load events (in case some images load after gallery shows)
+    // Listen for image load events (in case some images load after gallery shows)
     const images = galleryData.scrollContainer.querySelectorAll('img[data-gallery-image]');
     images.forEach(img => {
       if (!img.complete) {
@@ -304,33 +302,25 @@ class GalleryController {
       }
     });
 
-    // 2. Listen for transition end events on gallery content
+    // Listen for transition end events on gallery content
     galleryData.contentElement.addEventListener('transitionend', (e) => {
       if (e.target === galleryData.contentElement) {
         debouncedUpdate();
       }
     });
 
-    // 3. Use ResizeObserver for more accurate size change detection
-    if ('ResizeObserver' in window) {
-      const resizeObserver = new ResizeObserver(() => {
-        debouncedUpdate();
-      });
-      
-      resizeObserver.observe(galleryData.scrollContainer);
-      
-      // Store observer for cleanup
-      galleryData.resizeObserver = resizeObserver;
-    }
+    // Use ResizeObserver for accurate size change detection
+    const resizeObserver = new ResizeObserver(debouncedUpdate);
+    resizeObserver.observe(galleryData.scrollContainer);
 
-    // 4. Fallback: Use requestAnimationFrame for next frame update
+    // Fallback: Use requestAnimationFrame for next frame update
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         this.updateButtonStates(galleryId);
       });
     });
 
-    // 5. Additional fallback: Update after a short delay
+    // Additional fallback: Update after a short delay
     setTimeout(() => {
       this.updateButtonStates(galleryId);
     }, 100);
@@ -451,36 +441,7 @@ class GalleryController {
     });
   }
 
-  // Public methods
-  refresh() {
-    this.initializeGalleries();
-  }
-
-  // Cleanup gallery (useful for dynamic content)
-  destroyGallery(galleryId) {
-    const galleryData = this.galleries.get(galleryId);
-    if (!galleryData) return;
-
-    // Cleanup ResizeObserver
-    if (galleryData.resizeObserver) {
-      galleryData.resizeObserver.disconnect();
-    }
-
-    // Clear timeouts
-    if (galleryData.scrollTimeout) {
-      clearTimeout(galleryData.scrollTimeout);
-    }
-    if (galleryData.resizeTimeout) {
-      clearTimeout(galleryData.resizeTimeout);
-    }
-    if (galleryData.loadingTimeout) {
-      clearTimeout(galleryData.loadingTimeout);
-    }
-
-    // Remove from map
-    this.galleries.delete(galleryId);
-  }
-
+  // Public methods for external use
   getGalleryStats(galleryId) {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData) return null;
@@ -493,37 +454,6 @@ class GalleryController {
       isScrollable: galleryData.isLoaded && galleryData.scrollContainer.scrollWidth > galleryData.scrollContainer.clientWidth
     };
   }
-
-  forceShowGallery(galleryId) {
-    this.showGallery(galleryId);
-  }
-
-  // Force show all galleries (fallback method)
-  forceShowAllGalleries() {
-    this.galleries.forEach((galleryData, galleryId) => {
-      if (!galleryData.isLoaded) {
-        this.showGallery(galleryId);
-      }
-    });
-  }
-
-  // Performance monitoring method
-  getPerformanceStats() {
-    const stats = {
-      totalGalleries: this.galleries.size,
-      loadedGalleries: 0,
-      totalImages: 0,
-      loadedImages: 0
-    };
-
-    this.galleries.forEach(galleryData => {
-      if (galleryData.isLoaded) stats.loadedGalleries++;
-      stats.totalImages += galleryData.totalImages;
-      stats.loadedImages += galleryData.imagesLoaded;
-    });
-
-    return stats;
-  }
 }
 
 // Initialize gallery controller
@@ -531,22 +461,6 @@ const galleryController = new GalleryController();
 
 // Make it globally available
 window.galleryController = galleryController;
-
-// Performance monitoring (optional)
-if (window.performance && window.performance.mark) {
-  window.performance.mark('gallery-controller-initialized');
-}
-
-// Fallback: if galleries still not shown after 10 seconds, force show them all
-setTimeout(() => {
-  if (window.galleryController) {
-    const stats = window.galleryController.getPerformanceStats();
-    
-    if (stats.loadedGalleries < stats.totalGalleries) {
-      window.galleryController.forceShowAllGalleries();
-    }
-  }
-}, 10000);
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
