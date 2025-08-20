@@ -1,5 +1,5 @@
 {% comment %}
-Image gallery component with navigation buttons and auto-path support
+Enhanced image gallery component with consistent lazy loading
 Usage: 
 {% include gallery.html images=gallery_test id="custom_id" %}  (with custom ID)
 {% include gallery.html images=gallery_test %}  (auto-generated random ID)
@@ -7,6 +7,7 @@ Usage:
 Image paths support:
 - Full path: "/blog/img/2025-01-01-post/image.jpg|Alt text"
 - Auto path: "image.jpg|Alt text" (will become "/blog/img/YYYY-MM-DD-post-name/image.jpg")
+- Without alt: "image.jpg" or "/full/path/image.jpg"
 {% endcomment %}
 
 {% if include.id %}
@@ -26,45 +27,99 @@ Image paths support:
     {% endunless %}
   {% endfor %}
   
-  <div class="image-gallery-inner" data-count="{{ image_count }}">
-    {% for line in lines %}
-      {% assign trimmed_line = line | strip %}
-      {% unless trimmed_line == "" %}
-        {% assign parts = trimmed_line | split: "|" %}
-        {% assign raw_image_path = parts[0] | strip %}
-        {% assign image_alt = parts[1] | strip | default: "" %}
-        
-        {% comment %}Check if we need to generate auto-path{% endcomment %}
-        {% if raw_image_path contains '/' %}
-          {% comment %}If path contains slash, consider it a full path{% endcomment %}
-          {% assign image_path = raw_image_path %}
-        {% else %}
-          {% comment %}Otherwise generate automatic path{% endcomment %}
-          {% assign url_parts = page.url | split: '/' %}
-          {% assign year = url_parts[2] %}
-          {% assign month = url_parts[3] %}
-          {% assign day = url_parts[4] %}
-          {% assign title = url_parts[5] %}
-          {% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
-          {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
-        {% endif %}
-        
-        <img src="{{ image_path }}" alt="{{ image_alt }}">
-      {% endunless %}
-    {% endfor %}
+  <!-- Loading State -->
+  <div class="gallery-loading" data-images-count="{{ image_count }}">
+    <div class="gallery-loading-content">
+      <div class="gallery-loading-spinner"></div>
+      <span class="gallery-loading-text">Загрузка изображений...</span>
+      <div class="gallery-loading-progress">
+        <div class="gallery-loading-bar"></div>
+      </div>
+      <div class="gallery-loading-counter">
+        <span class="gallery-loaded-count">0</span>/<span class="gallery-total-count">{{ image_count }}</span>
+      </div>
+    </div>
   </div>
-  {% if image_count > 1 %}
-  <div class="gallery-controls">
-    <button class="gallery-nav gallery-prev" data-gallery="{{ gallery_id }}" data-direction="prev" aria-label="Предыдущее изображение">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
-    <button class="gallery-nav gallery-next" data-gallery="{{ gallery_id }}" data-direction="next" aria-label="Следующее изображение">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
+  
+  <!-- Gallery Content (hidden by default) -->
+  <div class="gallery-content" style="opacity: 0; visibility: hidden;">
+    <div class="image-gallery-inner" data-count="{{ image_count }}">
+      {% for line in lines %}
+        {% assign trimmed_line = line | strip %}
+        {% unless trimmed_line == "" %}
+          {% assign parts = trimmed_line | split: "|" %}
+          {% assign raw_image_path = parts[0] | strip %}
+          {% assign image_alt = parts[1] | strip | default: "" %}
+          
+          {% comment %}Check if we need to generate auto-path{% endcomment %}
+          {% if raw_image_path contains '/' %}
+            {% comment %}If path contains slash, consider it a full path{% endcomment %}
+            {% assign image_path = raw_image_path %}
+          {% else %}
+            {% comment %}Otherwise generate automatic path{% endcomment %}
+            {% assign url_parts = page.url | split: '/' %}
+            {% assign year = url_parts[2] %}
+            {% assign month = url_parts[3] %}
+            {% assign day = url_parts[4] %}
+            {% assign title = url_parts[5] %}
+            {% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
+            {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
+          {% endif %}
+          
+          <img src="{{ image_path }}" 
+               alt="{{ image_alt }}" 
+               loading="lazy"
+               fetchpriority="low"
+               data-gallery-image
+               data-gallery-id="{{ gallery_id }}"
+               style="opacity: 0; transition: opacity 0.3s ease;">
+        {% endunless %}
+      {% endfor %}
+    </div>
+    
+    {% if image_count > 1 %}
+    <div class="gallery-controls">
+      <button class="gallery-nav gallery-prev" data-gallery="{{ gallery_id }}" data-direction="prev" aria-label="Предыдущее изображение">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="gallery-nav gallery-next" data-gallery="{{ gallery_id }}" data-direction="next" aria-label="Следующее изображение">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+    {% endif %}
   </div>
-  {% endif %}
+  
+  <!-- Fallback for no-JS -->
+  <noscript>
+    <div class="gallery-fallback">
+      <div class="image-gallery-inner" data-count="{{ image_count }}">
+        {% for line in lines %}
+          {% assign trimmed_line = line | strip %}
+          {% unless trimmed_line == "" %}
+            {% assign parts = trimmed_line | split: "|" %}
+            {% assign raw_image_path = parts[0] | strip %}
+            {% assign image_alt = parts[1] | strip | default: "" %}
+            
+            {% if raw_image_path contains '/' %}
+              {% assign image_path = raw_image_path %}
+            {% else %}
+              {% assign url_parts = page.url | split: '/' %}
+              {% assign year = url_parts[2] %}
+              {% assign month = url_parts[3] %}
+              {% assign day = url_parts[4] %}
+              {% assign title = url_parts[5] %}
+              {% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
+              {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
+            {% endif %}
+            
+            <img src="{{ image_path }}" alt="{{ image_alt }}">
+          {% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+  </noscript>
 </div>

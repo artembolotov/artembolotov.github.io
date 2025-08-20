@@ -1,16 +1,19 @@
 {% comment %}
 _includes/img.html
-Поддерживает как простые имена файлов, так и полные пути
+Single image component with consistent lazy loading
+
 Usage: 
   {% include img.html src="image1.png" alt="Description" %} (auto-path)
   {% include img.html src="/blog/img/custom/image.png" alt="Description" %} (full path)
+  {% include img.html src="image.png" alt="Description" caption="Optional caption" %} (with caption)
 {% endcomment %}
 
+{% comment %}Generate image path{% endcomment %}
 {% if include.src contains '/' %}
-  {% comment %}Если в src есть слеш, считаем что это полный путь{% endcomment %}
+  {% comment %}If src contains slash, consider it a full path{% endcomment %}
   {% assign image_path = include.src %}
 {% else %}
-  {% comment %}Иначе формируем автоматический путь{% endcomment %}
+  {% comment %}Otherwise generate automatic path{% endcomment %}
   {% assign url_parts = page.url | split: '/' %}
   {% assign year = url_parts[2] %}
   {% assign month = url_parts[3] %}  
@@ -22,6 +25,12 @@ Usage:
 {% endif %}
 
 <div class="single_image">
-<img src="{{ image_path }}" alt="{{ include.alt | default: '' }}">
-{% if include.caption %}<em class="image-caption">{{ include.caption }}</em>{% endif %}
+  <img src="{{ image_path }}" 
+       alt="{{ include.alt | default: '' }}"
+       loading="lazy"
+       fetchpriority="low"
+       data-single-image>
+  {% if include.caption %}
+    <em class="image-caption">{{ include.caption }}</em>
+  {% endif %}
 </div>
