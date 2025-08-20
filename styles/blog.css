@@ -62,6 +62,7 @@ h3 {
 /* Image Gallery */
 .image-gallery {
   margin: 2rem 0;
+  user-select: none;
 }
 
 /* Gallery navigation controls */
