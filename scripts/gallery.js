@@ -177,6 +177,11 @@ class GalleryController {
       img.classList.add('loaded');
       
       this.onImageLoad(galleryId);
+      
+      // Trigger button state update after image load (for cases where gallery is already shown)
+      if (galleryData.isLoaded) {
+        this.updateButtonStates(galleryId);
+      }
     };
 
     // Function to handle error
@@ -186,7 +191,12 @@ class GalleryController {
       // Mark as loaded with error state
       img.classList.add('loaded', 'error');
       
-      this.onImageLoad(galleryId); // Still count as "loaded" to not block gallery
+      this.onImageLoad(galleryId);
+      
+      // Trigger button state update even on error
+      if (galleryData.isLoaded) {
+        this.updateButtonStates(galleryId);
+      }
     };
 
     // Check if image is already loaded
@@ -274,6 +284,9 @@ class GalleryController {
       img.style.opacity = '1';
     });
 
+    // Set up event-based button state management
+    this.setupButtonStateManagement(galleryId);
+
     // Set up scroll and resize listeners
     if (galleryData.scrollContainer) {
       galleryData.scrollContainer.addEventListener('scroll', () => {
@@ -284,9 +297,73 @@ class GalleryController {
     window.addEventListener('resize', () => {
       this.handleResize(galleryId);
     });
+  }
 
-    // Update button states immediately
-    this.updateButtonStates(galleryId);
+  setupButtonStateManagement(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData) return;
+
+    // Debounced update function to avoid excessive calls
+    const debouncedUpdate = this.debounce(() => {
+      this.updateButtonStates(galleryId);
+    }, 50);
+
+    // 1. Listen for image load events (in case some images load after gallery shows)
+    const images = galleryData.scrollContainer.querySelectorAll('img[data-gallery-image]');
+    images.forEach(img => {
+      if (!img.complete) {
+        img.addEventListener('load', debouncedUpdate, { once: true });
+        img.addEventListener('error', debouncedUpdate, { once: true });
+      }
+    });
+
+    // 2. Listen for transition end events on gallery content
+    galleryData.contentElement.addEventListener('transitionend', (e) => {
+      if (e.target === galleryData.contentElement) {
+        console.log(`Gallery ${galleryId}: transition ended, updating buttons`);
+        debouncedUpdate();
+      }
+    });
+
+    // 3. Use ResizeObserver for more accurate size change detection
+    if ('ResizeObserver' in window) {
+      const resizeObserver = new ResizeObserver(() => {
+        console.log(`Gallery ${galleryId}: container resized, updating buttons`);
+        debouncedUpdate();
+      });
+      
+      resizeObserver.observe(galleryData.scrollContainer);
+      
+      // Store observer for cleanup
+      galleryData.resizeObserver = resizeObserver;
+    }
+
+    // 4. Fallback: Use requestAnimationFrame for next frame update
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        console.log(`Gallery ${galleryId}: initial button state update (RAF)`);
+        this.updateButtonStates(galleryId);
+      });
+    });
+
+    // 5. Additional fallback: Update after a short delay
+    setTimeout(() => {
+      console.log(`Gallery ${galleryId}: fallback button state update`);
+      this.updateButtonStates(galleryId);
+    }, 100);
+  }
+
+  // Utility debounce function
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   }
 
   setupEventDelegation() {
@@ -334,19 +411,30 @@ class GalleryController {
     if (!galleryData || !galleryData.isLoaded || !galleryData.controlsContainer) return;
 
     const { scrollContainer, prevBtn, nextBtn, controlsContainer } = galleryData;
+    
+    // Wait for layout to be stable
     const scrollLeft = scrollContainer.scrollLeft;
     const scrollWidth = scrollContainer.scrollWidth;
     const clientWidth = scrollContainer.clientWidth;
 
-    // Check if all images fit in the visible area
-    const allImagesFit = scrollWidth <= clientWidth + 5; // 5px threshold
+    console.log(`Gallery ${galleryId} dimensions:`, {
+      scrollLeft,
+      scrollWidth,
+      clientWidth,
+      diff: scrollWidth - clientWidth
+    });
+
+    // Check if all images fit in the visible area (with small threshold)
+    const allImagesFit = scrollWidth <= clientWidth + 5;
 
     if (allImagesFit) {
-      // All images fit - keep controls hidden
+      // All images fit - hide controls
       controlsContainer.classList.remove('visible');
+      console.log(`Gallery ${galleryId}: all images fit, hiding controls`);
     } else {
       // Images don't fit - show controls and update button states
       controlsContainer.classList.add('visible');
+      console.log(`Gallery ${galleryId}: images overflow, showing controls`);
       
       // Check if at start or end (with small threshold)
       const atStart = scrollLeft <= 5;
@@ -362,6 +450,13 @@ class GalleryController {
         nextBtn.disabled = atEnd;
         nextBtn.style.opacity = atEnd ? '0.3' : '1';
       }
+
+      console.log(`Gallery ${galleryId} button states:`, {
+        atStart,
+        atEnd,
+        prevDisabled: prevBtn?.disabled,
+        nextDisabled: nextBtn?.disabled
+      });
     }
   }
 
@@ -392,6 +487,33 @@ class GalleryController {
   // Public methods
   refresh() {
     this.initializeGalleries();
+  }
+
+  // Cleanup gallery (useful for dynamic content)
+  destroyGallery(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData) return;
+
+    // Cleanup ResizeObserver
+    if (galleryData.resizeObserver) {
+      galleryData.resizeObserver.disconnect();
+    }
+
+    // Clear timeouts
+    if (galleryData.scrollTimeout) {
+      clearTimeout(galleryData.scrollTimeout);
+    }
+    if (galleryData.resizeTimeout) {
+      clearTimeout(galleryData.resizeTimeout);
+    }
+    if (galleryData.loadingTimeout) {
+      clearTimeout(galleryData.loadingTimeout);
+    }
+
+    // Remove from map
+    this.galleries.delete(galleryId);
+    
+    console.log(`Gallery ${galleryId} destroyed and cleaned up`);
   }
 
   getGalleryStats(galleryId) {
