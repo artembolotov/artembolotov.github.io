@@ -153,7 +153,7 @@ results_4.png
 {% endcapture %}
 {% include gallery.html images=gallery_results %}
 
-А ещё получило звание Indie App of the Week
+А ещё получило звание [Indie App of the Week](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank"}
 
 {% capture gallery_indie %}
 indie_0.png
@@ -162,11 +162,6 @@ indie_1.png
 {% include gallery.html images=gallery_indie %}
 
 ### Отзывы
-
-Меня всегда раздражали фейковые отзывы: «Андрей, фото, должность, восторг». Все понимают, что люди не существуют. Но структура лендинга подразумевает обязательный раздел с отзывами.
-Пусть будет понятно, что эти отзывы написал я сам. Кошка Луна, Щенок Топик, Кролик Бургер, Пандочка Лапочка и Лисичка Искринка — первые пользователи приложения.
-
-А теперь есть и настоящие отзывы:
 
 {% capture gallery_reviews %}
 reviews_0.png
