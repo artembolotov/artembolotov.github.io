@@ -42,8 +42,6 @@ class GalleryController {
       }
     });
 
-    console.log(`Found ${galleryElements.length} galleries for initialization`);
-
     // Set up global event delegation ONLY ONCE
     if (!this.eventDelegationSetup) {
       this.setupEventDelegation();
@@ -141,8 +139,6 @@ class GalleryController {
     galleryData.totalImages = images.length;
     galleryData.imagesLoaded = 0;
 
-    console.log(`Setting up loading for ${galleryData.totalImages} images in gallery: ${galleryId}`);
-
     // If no images, show gallery immediately
     if (galleryData.totalImages === 0) {
       this.showGallery(galleryId);
@@ -152,7 +148,6 @@ class GalleryController {
     // Set loading timeout for emergency fallback
     const timeoutDuration = 10000; // 10 seconds for all galleries
     galleryData.loadingTimeout = setTimeout(() => {
-      console.warn(`Force showing gallery ${galleryId} after timeout`);
       this.showGallery(galleryId);
     }, timeoutDuration);
 
@@ -171,8 +166,6 @@ class GalleryController {
 
     // Function to handle successful load
     const handleLoad = () => {
-      console.log(`Image ${index + 1} loaded for gallery: ${galleryId}`);
-      
       // Mark image as loaded but keep it hidden until gallery shows
       img.classList.add('loaded');
       
@@ -186,8 +179,6 @@ class GalleryController {
 
     // Function to handle error
     const handleError = () => {
-      console.warn(`Image ${index + 1} failed to load for gallery: ${galleryId}`);
-      
       // Mark as loaded with error state
       img.classList.add('loaded', 'error');
       
@@ -233,8 +224,6 @@ class GalleryController {
     galleryData.imagesLoaded++;
     this.updateProgress(galleryId);
 
-    console.log(`Gallery ${galleryId}: ${galleryData.imagesLoaded}/${galleryData.totalImages} images loaded`);
-
     // Check if all images are loaded - show immediately if so
     if (galleryData.imagesLoaded >= galleryData.totalImages) {
       // Clear the timeout
@@ -268,8 +257,6 @@ class GalleryController {
   showGallery(galleryId) {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData || galleryData.isLoaded) return;
-
-    console.log(`Showing gallery: ${galleryId}`);
 
     // Mark as loaded
     galleryData.isLoaded = true;
@@ -320,7 +307,6 @@ class GalleryController {
     // 2. Listen for transition end events on gallery content
     galleryData.contentElement.addEventListener('transitionend', (e) => {
       if (e.target === galleryData.contentElement) {
-        console.log(`Gallery ${galleryId}: transition ended, updating buttons`);
         debouncedUpdate();
       }
     });
@@ -328,7 +314,6 @@ class GalleryController {
     // 3. Use ResizeObserver for more accurate size change detection
     if ('ResizeObserver' in window) {
       const resizeObserver = new ResizeObserver(() => {
-        console.log(`Gallery ${galleryId}: container resized, updating buttons`);
         debouncedUpdate();
       });
       
@@ -341,14 +326,12 @@ class GalleryController {
     // 4. Fallback: Use requestAnimationFrame for next frame update
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        console.log(`Gallery ${galleryId}: initial button state update (RAF)`);
         this.updateButtonStates(galleryId);
       });
     });
 
     // 5. Additional fallback: Update after a short delay
     setTimeout(() => {
-      console.log(`Gallery ${galleryId}: fallback button state update`);
       this.updateButtonStates(galleryId);
     }, 100);
   }
@@ -417,24 +400,15 @@ class GalleryController {
     const scrollWidth = scrollContainer.scrollWidth;
     const clientWidth = scrollContainer.clientWidth;
 
-    console.log(`Gallery ${galleryId} dimensions:`, {
-      scrollLeft,
-      scrollWidth,
-      clientWidth,
-      diff: scrollWidth - clientWidth
-    });
-
     // Check if all images fit in the visible area (with small threshold)
     const allImagesFit = scrollWidth <= clientWidth + 5;
 
     if (allImagesFit) {
       // All images fit - hide controls
       controlsContainer.classList.remove('visible');
-      console.log(`Gallery ${galleryId}: all images fit, hiding controls`);
     } else {
       // Images don't fit - show controls and update button states
       controlsContainer.classList.add('visible');
-      console.log(`Gallery ${galleryId}: images overflow, showing controls`);
       
       // Check if at start or end (with small threshold)
       const atStart = scrollLeft <= 5;
@@ -450,13 +424,6 @@ class GalleryController {
         nextBtn.disabled = atEnd;
         nextBtn.style.opacity = atEnd ? '0.3' : '1';
       }
-
-      console.log(`Gallery ${galleryId} button states:`, {
-        atStart,
-        atEnd,
-        prevDisabled: prevBtn?.disabled,
-        nextDisabled: nextBtn?.disabled
-      });
     }
   }
 
@@ -512,8 +479,6 @@ class GalleryController {
 
     // Remove from map
     this.galleries.delete(galleryId);
-    
-    console.log(`Gallery ${galleryId} destroyed and cleaned up`);
   }
 
   getGalleryStats(galleryId) {
@@ -537,7 +502,6 @@ class GalleryController {
   forceShowAllGalleries() {
     this.galleries.forEach((galleryData, galleryId) => {
       if (!galleryData.isLoaded) {
-        console.log(`Force showing gallery: ${galleryId}`);
         this.showGallery(galleryId);
       }
     });
@@ -577,10 +541,8 @@ if (window.performance && window.performance.mark) {
 setTimeout(() => {
   if (window.galleryController) {
     const stats = window.galleryController.getPerformanceStats();
-    console.log('Gallery performance stats:', stats);
     
     if (stats.loadedGalleries < stats.totalGalleries) {
-      console.warn('Some galleries not loaded after 10s, forcing show all');
       window.galleryController.forceShowAllGalleries();
     }
   }
