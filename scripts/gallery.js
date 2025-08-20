@@ -1,14 +1,12 @@
 /**
  * Enhanced Gallery Controller with Instant Display
  * No delays - galleries show immediately when all images are loaded
- * Priority system ensures first gallery loads faster
+ * All galleries use consistent lazy loading
  */
 class GalleryController {
   constructor() {
     this.galleries = new Map();
     this.eventDelegationSetup = false;
-    this.highPriorityGalleries = [];
-    this.lowPriorityGalleries = [];
     this.init();
   }
 
@@ -26,10 +24,8 @@ class GalleryController {
     const galleryElements = document.querySelectorAll('.image-gallery');
     let autoIdCounter = 1;
     
-    // Separate galleries by priority
     galleryElements.forEach(gallery => {
       let galleryId = gallery.getAttribute('data-gallery-id');
-      const priority = gallery.getAttribute('data-gallery-priority') || 'low';
       
       // Generate unique ID for auto galleries
       if (galleryId === 'gallery-auto') {
@@ -42,23 +38,11 @@ class GalleryController {
       }
       
       if (galleryId && !this.galleries.has(galleryId)) {
-        if (priority === 'high') {
-          this.highPriorityGalleries.push({ element: gallery, id: galleryId });
-        } else {
-          this.lowPriorityGalleries.push({ element: gallery, id: galleryId });
-        }
+        this.initializeGallery(gallery, galleryId);
       }
     });
 
-    console.log(`Found ${this.highPriorityGalleries.length} high priority and ${this.lowPriorityGalleries.length} low priority galleries`);
-
-    // Initialize high priority galleries immediately
-    this.highPriorityGalleries.forEach(({ element, id }) => {
-      this.initializeGallery(element, id);
-    });
-
-    // Initialize low priority galleries
-    this.initializeLowPriorityGalleries();
+    console.log(`Found ${galleryElements.length} galleries for initialization`);
 
     // Set up global event delegation ONLY ONCE
     if (!this.eventDelegationSetup) {
@@ -82,7 +66,7 @@ class GalleryController {
   setupIntersectionObserver() {
     const observerOptions = {
       root: null,
-      rootMargin: '500px', // Start loading when gallery is 500px from viewport
+      rootMargin: '100px', // Start loading when gallery is 100px from viewport
       threshold: 0.1
     };
 
@@ -157,7 +141,7 @@ class GalleryController {
     galleryData.totalImages = images.length;
     galleryData.imagesLoaded = 0;
 
-    console.log(`Setting up loading for ${galleryData.totalImages} images in gallery: ${galleryId} (priority: ${galleryData.priority})`);
+    console.log(`Setting up loading for ${galleryData.totalImages} images in gallery: ${galleryId}`);
 
     // If no images, show gallery immediately
     if (galleryData.totalImages === 0) {
@@ -165,10 +149,10 @@ class GalleryController {
       return;
     }
 
-    // Set loading timeout based on priority (only for emergency fallback)
-    const timeoutDuration = galleryData.priority === 'high' ? 8000 : 12000;
+    // Set loading timeout for emergency fallback
+    const timeoutDuration = 10000; // 10 seconds for all galleries
     galleryData.loadingTimeout = setTimeout(() => {
-      console.warn(`Force showing gallery ${galleryId} after timeout (priority: ${galleryData.priority})`);
+      console.warn(`Force showing gallery ${galleryId} after timeout`);
       this.showGallery(galleryId);
     }, timeoutDuration);
 
@@ -187,7 +171,7 @@ class GalleryController {
 
     // Function to handle successful load
     const handleLoad = () => {
-      console.log(`Image ${index + 1} loaded for gallery: ${galleryId} (priority: ${galleryData.priority})`);
+      console.log(`Image ${index + 1} loaded for gallery: ${galleryId}`);
       
       // Mark image as loaded but keep it hidden until gallery shows
       img.classList.add('loaded');
@@ -197,7 +181,7 @@ class GalleryController {
 
     // Function to handle error
     const handleError = () => {
-      console.warn(`Image ${index + 1} failed to load for gallery: ${galleryId} (priority: ${galleryData.priority})`);
+      console.warn(`Image ${index + 1} failed to load for gallery: ${galleryId}`);
       
       // Mark as loaded with error state
       img.classList.add('loaded', 'error');
@@ -215,16 +199,6 @@ class GalleryController {
     // Set up load listeners
     img.addEventListener('load', handleLoad, { once: true });
     img.addEventListener('error', handleError, { once: true });
-
-    // For high priority galleries, ensure src is set immediately
-    if (galleryData.priority === 'high') {
-      if (!img.src) {
-        const srcAttribute = img.getAttribute('src') || img.dataset.src;
-        if (srcAttribute) {
-          img.src = srcAttribute;
-        }
-      }
-    }
   }
 
   isImageLoaded(img) {
@@ -249,7 +223,7 @@ class GalleryController {
     galleryData.imagesLoaded++;
     this.updateProgress(galleryId);
 
-    console.log(`Gallery ${galleryId}: ${galleryData.imagesLoaded}/${galleryData.totalImages} images loaded (priority: ${galleryData.priority})`);
+    console.log(`Gallery ${galleryId}: ${galleryData.imagesLoaded}/${galleryData.totalImages} images loaded`);
 
     // Check if all images are loaded - show immediately if so
     if (galleryData.imagesLoaded >= galleryData.totalImages) {
@@ -285,7 +259,7 @@ class GalleryController {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData || galleryData.isLoaded) return;
 
-    console.log(`Showing gallery: ${galleryId} (priority: ${galleryData.priority})`);
+    console.log(`Showing gallery: ${galleryId}`);
 
     // Mark as loaded
     galleryData.isLoaded = true;
@@ -429,7 +403,6 @@ class GalleryController {
       loadedImages: galleryData.imagesLoaded,
       loadingProgress: galleryData.totalImages > 0 ? (galleryData.imagesLoaded / galleryData.totalImages) * 100 : 100,
       isLoaded: galleryData.isLoaded,
-      priority: galleryData.priority,
       isScrollable: galleryData.isLoaded && galleryData.scrollContainer.scrollWidth > galleryData.scrollContainer.clientWidth
     };
   }
@@ -442,7 +415,7 @@ class GalleryController {
   forceShowAllGalleries() {
     this.galleries.forEach((galleryData, galleryId) => {
       if (!galleryData.isLoaded) {
-        console.log(`Force showing gallery: ${galleryId} (priority: ${galleryData.priority})`);
+        console.log(`Force showing gallery: ${galleryId}`);
         this.showGallery(galleryId);
       }
     });
@@ -452,8 +425,6 @@ class GalleryController {
   getPerformanceStats() {
     const stats = {
       totalGalleries: this.galleries.size,
-      highPriorityCount: this.highPriorityGalleries.length,
-      lowPriorityCount: this.lowPriorityGalleries.length,
       loadedGalleries: 0,
       totalImages: 0,
       loadedImages: 0
@@ -480,18 +451,18 @@ if (window.performance && window.performance.mark) {
   window.performance.mark('gallery-controller-initialized');
 }
 
-// Fallback: if galleries still not shown after 15 seconds, force show them all
+// Fallback: if galleries still not shown after 10 seconds, force show them all
 setTimeout(() => {
   if (window.galleryController) {
     const stats = window.galleryController.getPerformanceStats();
     console.log('Gallery performance stats:', stats);
     
     if (stats.loadedGalleries < stats.totalGalleries) {
-      console.warn('Some galleries not loaded after 15s, forcing show all');
+      console.warn('Some galleries not loaded after 10s, forcing show all');
       window.galleryController.forceShowAllGalleries();
     }
   }
-}, 15000);
+}, 10000);
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {

@@ -1,25 +1,12 @@
 {% comment %}
 _includes/img.html
-Enhanced single image component with loading prioritization
-First image gets eager loading + high priority, others get lazy loading + low priority
+Single image component with consistent lazy loading
 
 Usage: 
   {% include img.html src="image1.png" alt="Description" %} (auto-path)
   {% include img.html src="/blog/img/custom/image.png" alt="Description" %} (full path)
   {% include img.html src="image.png" alt="Description" caption="Optional caption" %} (with caption)
 {% endcomment %}
-
-{% comment %}Track image count for prioritization{% endcomment %}
-{% unless site.image_counter %}
-  {% assign site.image_counter = 0 %}
-{% endunless %}
-{% assign site.image_counter = site.image_counter | plus: 1 %}
-
-{% comment %}First image gets high priority, others get low priority{% endcomment %}
-{% assign is_first_image = false %}
-{% if site.image_counter == 1 %}
-  {% assign is_first_image = true %}
-{% endif %}
 
 {% comment %}Generate image path{% endcomment %}
 {% if include.src contains '/' %}
@@ -37,16 +24,11 @@ Usage:
   {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: include.src %}
 {% endif %}
 
-<div class="single_image" data-image-priority="{% if is_first_image %}high{% else %}low{% endif %}">
+<div class="single_image">
   <img src="{{ image_path }}" 
        alt="{{ include.alt | default: '' }}"
-       {% if is_first_image %}
-         loading="eager"
-         fetchpriority="high"
-       {% else %}
-         loading="lazy"
-         fetchpriority="low"
-       {% endif %}
+       loading="lazy"
+       fetchpriority="low"
        data-single-image>
   {% if include.caption %}
     <em class="image-caption">{{ include.caption }}</em>

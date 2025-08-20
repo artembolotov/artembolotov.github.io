@@ -1,8 +1,5 @@
 {% comment %}
-Enhanced image gallery component with loading prioritization
-First gallery on page gets eager loading + high priority
-Subsequent galleries use lazy loading + low priority
-
+Enhanced image gallery component with consistent lazy loading
 Usage: 
 {% include gallery.html images=gallery_test id="custom_id" %}  (with custom ID)
 {% include gallery.html images=gallery_test %}  (auto-generated random ID)
@@ -13,23 +10,13 @@ Image paths support:
 - Without alt: "image.jpg" or "/full/path/image.jpg"
 {% endcomment %}
 
-{% comment %}Determine if this is the first gallery on the page{% endcomment %}
-{% unless site.gallery_counter %}
-  {% assign site.gallery_counter = 0 %}
-{% endunless %}
-{% assign site.gallery_counter = site.gallery_counter | plus: 1 %}
-{% assign is_first_gallery = false %}
-{% if site.gallery_counter == 1 %}
-  {% assign is_first_gallery = true %}
-{% endif %}
-
 {% if include.id %}
   {% assign gallery_id = include.id %}
 {% else %}
   {% assign gallery_id = 'gallery-auto' %}
 {% endif %}
 
-<div class="image-gallery" data-gallery-id="{{ gallery_id }}" data-gallery-priority="{% if is_first_gallery %}high{% else %}low{% endif %}">
+<div class="image-gallery" data-gallery-id="{{ gallery_id }}">
   {% assign lines = include.images | strip | split: "
 " %}
   {% assign image_count = 0 %}
@@ -81,13 +68,8 @@ Image paths support:
           
           <img src="{{ image_path }}" 
                alt="{{ image_alt }}" 
-               {% if is_first_gallery %}
-                 loading="eager"
-                 fetchpriority="high"
-               {% else %}
-                 loading="lazy"
-                 fetchpriority="low"
-               {% endif %}
+               loading="lazy"
+               fetchpriority="low"
                data-gallery-image
                data-gallery-id="{{ gallery_id }}"
                style="opacity: 0; transition: opacity 0.3s ease;">
