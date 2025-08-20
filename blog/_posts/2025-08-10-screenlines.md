@@ -163,6 +163,8 @@ indie_1.png
 
 ### Отзывы
 
+Что пишут пользователи:
+
 {% capture gallery_reviews %}
 reviews_0.png
 reviews_1.png
