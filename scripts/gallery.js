@@ -48,46 +48,6 @@ class GalleryController {
     }
   }
 
-  initializeLowPriorityGalleries() {
-    // Use Intersection Observer for better performance if available
-    if ('IntersectionObserver' in window) {
-      this.setupIntersectionObserver();
-    } else {
-      // Fallback: initialize immediately
-      this.lowPriorityGalleries.forEach(({ element, id }) => {
-        this.initializeGallery(element, id);
-      });
-    }
-  }
-
-  setupIntersectionObserver() {
-    const observerOptions = {
-      root: null,
-      rootMargin: '100px', // Start loading when gallery is 100px from viewport
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const gallery = entry.target;
-          const galleryId = gallery.getAttribute('data-gallery-id');
-          
-          if (galleryId && !this.galleries.has(galleryId)) {
-            console.log(`Initializing low-priority gallery on scroll: ${galleryId}`);
-            this.initializeGallery(gallery, galleryId);
-            observer.unobserve(gallery); // Stop observing once initialized
-          }
-        }
-      });
-    }, observerOptions);
-
-    // Observe all low priority galleries
-    this.lowPriorityGalleries.forEach(({ element }) => {
-      observer.observe(element);
-    });
-  }
-
   initializeGallery(galleryElement, galleryId) {
     const scrollContainer = galleryElement.querySelector('.image-gallery-inner');
     const prevBtn = galleryElement.querySelector('.gallery-prev');
@@ -96,7 +56,6 @@ class GalleryController {
     const loadingElement = galleryElement.querySelector('.gallery-loading');
     const contentElement = galleryElement.querySelector('.gallery-content');
     const progressBar = galleryElement.querySelector('.gallery-loading-bar');
-    const priority = galleryElement.getAttribute('data-gallery-priority') || 'low';
 
     if (!scrollContainer || !loadingElement || !contentElement) {
       console.warn('Gallery elements not found for:', galleryId);
@@ -115,7 +74,6 @@ class GalleryController {
       loadingElement: loadingElement,
       contentElement: contentElement,
       progressBar: progressBar,
-      priority: priority,
       scrollTimeout: null,
       resizeTimeout: null,
       loadingTimeout: null,
@@ -129,7 +87,7 @@ class GalleryController {
     // Start loading process immediately
     this.setupImageLoading(galleryId);
 
-    console.log(`Gallery initialized: ${galleryId} (priority: ${priority})`);
+    console.log(`Gallery initialized: ${galleryId}`);
   }
 
   setupImageLoading(galleryId) {
