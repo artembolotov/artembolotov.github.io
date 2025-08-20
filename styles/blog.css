@@ -249,10 +249,6 @@ h3 {
   max-height: 500px;
   height: auto;
   object-fit: contain;
-}
-
-/* Gallery images sizing for all screens */
-.image-gallery-inner:not([data-count="1"]) img {
   max-width: 85vw;
 }
 
@@ -288,22 +284,6 @@ h3 {
   
   .gallery-nav:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.1);
-  }
-}
-
-/* Mobile adjustments */
-@media screen and (max-width: 640px) {
-  .gallery-controls {
-    padding: 0 0.5rem;
-  }
-  
-  .gallery-nav {
-    padding: 0.4rem;
-  }
-  
-  .gallery-nav svg {
-    width: 18px;
-    height: 18px;
   }
 }
 

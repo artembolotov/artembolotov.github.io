@@ -1,6 +1,6 @@
 /**
- * Gallery Controller with Instant Display
- * Clean, minimal implementation focused on core functionality
+ * Gallery Controller - Simplified for multiple images only
+ * Single images should use img.html component
  */
 class GalleryController {
   constructor() {
@@ -57,7 +57,7 @@ class GalleryController {
     const contentElement = galleryElement.querySelector('.gallery-content');
     const progressBar = galleryElement.querySelector('.gallery-loading-bar');
 
-    if (!scrollContainer || !loadingElement || !contentElement) {
+    if (!scrollContainer || !loadingElement || !contentElement || !controlsContainer) {
       console.warn('Gallery elements not found for:', galleryId);
       return;
     }
@@ -98,14 +98,8 @@ class GalleryController {
     galleryData.totalImages = images.length;
     galleryData.imagesLoaded = 0;
 
-    // If no images, show gallery immediately
-    if (galleryData.totalImages === 0) {
-      this.showGallery(galleryId);
-      return;
-    }
-
     // Set loading timeout for emergency fallback
-    const timeoutDuration = 10000; // 10 seconds for all galleries
+    const timeoutDuration = 10000; // 10 seconds
     galleryData.loadingTimeout = setTimeout(() => {
       this.showGallery(galleryId);
     }, timeoutDuration);
@@ -125,12 +119,10 @@ class GalleryController {
 
     // Function to handle successful load
     const handleLoad = () => {
-      // Mark image as loaded but keep it hidden until gallery shows
       img.classList.add('loaded');
-      
       this.onImageLoad(galleryId);
       
-      // Trigger button state update after image load (for cases where gallery is already shown)
+      // Trigger button state update after image load
       if (galleryData.isLoaded) {
         this.updateButtonStates(galleryId);
       }
@@ -138,9 +130,7 @@ class GalleryController {
 
     // Function to handle error
     const handleError = () => {
-      // Mark as loaded with error state
       img.classList.add('loaded', 'error');
-      
       this.onImageLoad(galleryId);
       
       // Trigger button state update even on error
@@ -151,7 +141,6 @@ class GalleryController {
 
     // Check if image is already loaded
     if (this.isImageLoaded(img)) {
-      // Image is already loaded
       handleLoad();
       return;
     }
@@ -162,13 +151,11 @@ class GalleryController {
   }
 
   isImageLoaded(img) {
-    // Multiple checks to ensure image is actually loaded
     const basicCheck = img.complete && 
                       img.naturalWidth > 0 && 
                       img.naturalHeight > 0 && 
                       img.src !== '';
     
-    // If image is loaded, mark it but don't show yet
     if (basicCheck && !img.classList.contains('loaded')) {
       img.classList.add('loaded');
     }
@@ -183,7 +170,7 @@ class GalleryController {
     galleryData.imagesLoaded++;
     this.updateProgress(galleryId);
 
-    // Check if all images are loaded - show immediately if so
+    // Check if all images are loaded
     if (galleryData.imagesLoaded >= galleryData.totalImages) {
       // Clear the timeout
       if (galleryData.loadingTimeout) {
@@ -191,7 +178,6 @@ class GalleryController {
         galleryData.loadingTimeout = null;
       }
 
-      // Show gallery immediately - no delays
       this.showGallery(galleryId);
     }
   }
@@ -221,7 +207,7 @@ class GalleryController {
     galleryData.isLoaded = true;
     galleryData.element.classList.add('loaded');
 
-    // Show content immediately - no transition delays
+    // Show content immediately
     galleryData.contentElement.classList.add('loaded');
 
     // Show all loaded images immediately
@@ -230,25 +216,15 @@ class GalleryController {
       img.style.opacity = '1';
     });
 
-    // Set up event-based button state management
-    this.setupButtonStateManagement(galleryId);
-
-    // Set up scroll and resize listeners
-    if (galleryData.scrollContainer) {
-      const debouncedUpdate = this.debounce(() => {
-        this.updateButtonStates(galleryId);
-      }, 10);
-      
-      galleryData.scrollContainer.addEventListener('scroll', debouncedUpdate);
-      window.addEventListener('resize', debouncedUpdate);
-    }
+    // Set up navigation management
+    this.setupNavigationManagement(galleryId);
   }
 
-  setupButtonStateManagement(galleryId) {
+  setupNavigationManagement(galleryId) {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData) return;
 
-    // Debounced update function to avoid excessive calls
+    // Debounced update function
     const debouncedUpdate = this.debounce(() => {
       this.updateButtonStates(galleryId);
     }, 50);
@@ -262,31 +238,29 @@ class GalleryController {
       }
     });
 
-    // Listen for transition end events on gallery content
-    galleryData.contentElement.addEventListener('transitionend', (e) => {
-      if (e.target === galleryData.contentElement) {
-        debouncedUpdate();
-      }
-    });
+    // Listen for scroll events
+    galleryData.scrollContainer.addEventListener('scroll', debouncedUpdate);
+    
+    // Listen for resize events
+    window.addEventListener('resize', debouncedUpdate);
 
     // Use ResizeObserver for accurate size change detection
     const resizeObserver = new ResizeObserver(debouncedUpdate);
     resizeObserver.observe(galleryData.scrollContainer);
 
-    // Fallback: Use requestAnimationFrame for next frame update
+    // Initial update
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         this.updateButtonStates(galleryId);
       });
     });
 
-    // Additional fallback: Update after a short delay
+    // Fallback update
     setTimeout(() => {
       this.updateButtonStates(galleryId);
     }, 100);
   }
 
-  // Utility debounce function
   debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -300,7 +274,7 @@ class GalleryController {
   }
 
   setupEventDelegation() {
-    // Use event delegation to handle all gallery button clicks
+    // Handle all gallery button clicks
     document.addEventListener('click', (e) => {
       if (e.target.closest('.gallery-nav')) {
         e.preventDefault();
@@ -315,42 +289,17 @@ class GalleryController {
     });
   }
 
-  handleScroll(galleryId) {
-    const galleryData = this.galleries.get(galleryId);
-    if (!galleryData || !galleryData.isLoaded) return;
-
-    if (galleryData.scrollTimeout) {
-      clearTimeout(galleryData.scrollTimeout);
-    }
-    galleryData.scrollTimeout = setTimeout(() => {
-      this.updateButtonStates(galleryId);
-    }, 10);
-  }
-
-  handleResize(galleryId) {
-    const galleryData = this.galleries.get(galleryId);
-    if (!galleryData || !galleryData.isLoaded) return;
-
-    if (galleryData.resizeTimeout) {
-      clearTimeout(galleryData.resizeTimeout);
-    }
-    galleryData.resizeTimeout = setTimeout(() => {
-      this.updateButtonStates(galleryId);
-    }, 25);
-  }
-
   updateButtonStates(galleryId) {
     const galleryData = this.galleries.get(galleryId);
-    if (!galleryData || !galleryData.isLoaded || !galleryData.controlsContainer) return;
+    if (!galleryData || !galleryData.isLoaded) return;
 
     const { scrollContainer, prevBtn, nextBtn, controlsContainer } = galleryData;
     
-    // Wait for layout to be stable
     const scrollLeft = scrollContainer.scrollLeft;
     const scrollWidth = scrollContainer.scrollWidth;
     const clientWidth = scrollContainer.clientWidth;
 
-    // Check if all images fit in the visible area (with small threshold)
+    // Check if all images fit in the visible area
     const allImagesFit = scrollWidth <= clientWidth + 5;
 
     if (allImagesFit) {
@@ -360,7 +309,7 @@ class GalleryController {
       // Images don't fit - show controls and update button states
       controlsContainer.classList.add('visible');
       
-      // Check if at start or end (with small threshold)
+      // Check if at start or end
       const atStart = scrollLeft <= 5;
       const atEnd = scrollLeft + clientWidth >= scrollWidth - 5;
 
@@ -401,7 +350,7 @@ class GalleryController {
     });
   }
 
-  // Public methods for external use
+  // Public method for external use
   getGalleryStats(galleryId) {
     const galleryData = this.galleries.get(galleryId);
     if (!galleryData) return null;

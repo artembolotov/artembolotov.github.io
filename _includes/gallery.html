@@ -1,8 +1,10 @@
 {% comment %}
-Enhanced image gallery component with consistent lazy loading
+Simplified image gallery component for multiple images only
+Single images should use img.html component instead
+
 Usage: 
-{% include gallery.html images=gallery_test id="custom_id" %}  (with custom ID)
-{% include gallery.html images=gallery_test %}  (auto-generated random ID)
+{% include gallery.html images=gallery_variable id="custom_id" %}  (with custom ID)
+{% include gallery.html images=gallery_variable %}  (auto-generated random ID)
 
 Image paths support:
 - Full path: "/blog/img/2025-01-01-post/image.jpg|Alt text"
@@ -77,7 +79,7 @@ Image paths support:
       {% endfor %}
     </div>
     
-    {% if image_count > 1 %}
+    <!-- Navigation controls - always present for galleries -->
     <div class="gallery-controls">
       <button class="gallery-nav gallery-prev" data-gallery="{{ gallery_id }}" data-direction="prev" aria-label="Предыдущее изображение">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -90,7 +92,6 @@ Image paths support:
         </svg>
       </button>
     </div>
-    {% endif %}
   </div>
   
   <!-- Fallback for no-JS -->
