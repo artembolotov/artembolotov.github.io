@@ -46,7 +46,7 @@ ru_5.png
 
 ### 80 моделей — 80 радиусов
 
-Белая линия должна идеально повторять радиус скругления iPhone. iOS может определить радиус программно, но Apple запрещает использовать приватные методы. Спасибо, что можно получить идентификатор модели: например, iPhone17,1 — это iPhone16 Pro, iPhone17,5 — iPhone 16e. Для 11 дюймового iPad Air на M3 сразу четыре идентификатора: iPad15,3, iPad15,4, iPad15,5, iPad15,6.
+Белая линия должна идеально повторять радиус скругления iPhone. iOS может определить радиус программно, но Apple запрещает использовать приватные методы. Спасибо, что можно получить идентификатор модели: например, `iPhone17,1` — это iPhone16 Pro, `iPhone17,5` — iPhone 16e. Для 11 дюймового iPad Air на M3 сразу четыре идентификатора: `iPad15,3`, `iPad15,4`, `iPad15,5`, `iPad15,6`.
 
 Поэтому делаем таблицу радиусов. Выглядит она примерно так: 
 
@@ -55,10 +55,8 @@ ru_5.png
 
 extension Model {
     var screenCornerRadius: CGFloat {
-        switch self {
-                   
+        switch self {    
         // ... 
-        
         case .iPhone12ProMax, .iPhone13ProMax, .iPhone14Plus: 53.33
             
         case .iPhone12Mini, .iPhone13Mini: 44.0
@@ -67,9 +65,7 @@ extension Model {
                 .iPhone15Pro, .iPhone15ProMax, .iPhone16, .iPhone16Plus: 55.0
             
         case .iPhone16Pro, .iPhone16ProMax: 62.0
-
         // ... 
-
 ```
 
 ### HLS вместо встроенного видео
