@@ -34,4 +34,4 @@ extension UIScreen {
 
 Запускаем приложение на симуляторе и видим это:
 
-{% include img.html src="air-corners-problem" alt="iPhone Air corners problem" %}
+{% include img.html src="air-corners-problem.png" alt="iPhone Air corners problem" %}
