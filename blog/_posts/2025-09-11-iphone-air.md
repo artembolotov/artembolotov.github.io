@@ -32,4 +32,6 @@ extension UIScreen {
 
 {% include img.html src="corners.png" alt="Радуисы скругления новых айфонов" %}
 
-![Радуисы скругления новых айфонов](/blog/img/2025-09-11-iphone-air/corners.png)
+Запускаем приложение на симуляторе и видим это:
+
+{% include img.html src="air-corners-problem" alt="iPhone Air corners problem" %}
