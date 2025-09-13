@@ -28,5 +28,8 @@ extension UIScreen {
     }
 }
 ```
+И получаем такие же углы, как и в iPhone 16 Pro
 
 {% include img.html src="corners.png" alt="Радуисы скругления новых айфонов" %}
+
+![Радуисы скругления новых айфонов](/blog/img/2025-09-11-iphone-air/corners.png)
