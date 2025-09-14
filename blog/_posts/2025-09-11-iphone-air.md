@@ -31,9 +31,25 @@ extension UIScreen {
 ```
 И получаем такие же углы, как и в iPhone 16 Pro
 
-{% include img.html src="corners.png" alt="Радуисы скругления новых айфонов" %}
+```swift
+extension Model {
+    var screenCornerRadius: CGFloat {
+        switch self {
+            //...
+        case .iPhone16Pro, .iPhone16ProMax: 62.0
 
-Запускаем приложение на симуляторе и видим, что углы обрезаны:
+        case .iPhone17: 62.0
+        case .iPhone17Pro: 62.0
+        case .iPhone17ProMax: 62.0
+        case .iPhoneAir: 62.0
+            //...
+        }
+    }
+    //...
+}
+```
+
+Но запускаем приложение на симуляторе и видим, что углы обрезаны:
 
 {% include img.html src="air-corners-problem.png" alt="iPhone Air corners problem" %}
 
