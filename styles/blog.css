@@ -366,6 +366,13 @@ div.highlight {
   margin: 1.5em auto;
 }
   
+.highlight.wrap-text {
+  overflow-x: visible;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 .highlight pre {
   padding-top: 1em;
   padding-bottom: 1em;
