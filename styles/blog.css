@@ -382,7 +382,7 @@ div.highlight {
 }
 
 /* Code blocks with wrap-text class */
-.highlight.wrap-text {
+.highlight.wrap-text pre{
   overflow-x: visible;
   white-space: pre-wrap;
   word-wrap: break-word;
