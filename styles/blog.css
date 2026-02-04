@@ -365,13 +365,6 @@ main li {
 div.highlight {
   margin: 1.5em auto;
 }
-  
-.code-wrap .highlight {
-  overflow-x: visible;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
 
 .highlight pre {
   padding-top: 1em;
@@ -386,6 +379,14 @@ div.highlight {
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 0.9em;
   line-height: 1.5;
+}
+
+/* Code blocks with wrap-text class */
+.highlight.wrap-text {
+  overflow-x: visible;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
   
 /* Syntax highlighting colors */
