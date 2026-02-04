@@ -366,7 +366,7 @@ div.highlight {
   margin: 1.5em auto;
 }
   
-.highlight.wrap-text {
+.code-wrap .highlight {
   overflow-x: visible;
   white-space: pre-wrap;
   word-wrap: break-word;
