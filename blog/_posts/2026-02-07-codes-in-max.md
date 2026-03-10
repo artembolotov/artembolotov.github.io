@@ -6,45 +6,45 @@ draft: true
 ---
 
 {% capture gallery_start %}
-01.jpg
-02.jpg
-03.jpg
+01.png
+02.png
+03.png
 {% endcapture %}
 {% include gallery.html images=gallery_start %}
 
 {% capture gallery_auth %}
-04.jpg
-05.jpg
-06.jpg
-07.jpg
-08.jpg
+04.png
+05.png
+06.png
+07.png
+08.png
 {% endcapture %}
 {% include gallery.html images=gallery_auth %}
 
 {% capture gallery_profile %}
-09.jpg
+09.png
 {% endcapture %}
 {% include gallery.html images=gallery_profile %}
 
 {% capture gallery_add_code %}
-10.jpg
-11.jpg
-12.jpg
-13.jpg
+10.png
+11.png
+12.png
+13.png
 {% endcapture %}
 {% include gallery.html images=gallery_add_code %}
 
 
 {% capture gallery_scan %}
-14.jpg
-15.jpg
-16.jpg
+14.png
+15.png
+16.png
 {% endcapture %}
 {% include gallery.html images=gallery_scan %}
 
 
 {% capture gallery_done %}
-17.jpg
-18.jpg
+17.png
+18.png
 {% endcapture %}
 {% include gallery.html images=gallery_done %}
