@@ -223,10 +223,14 @@ section h4 {
 #social li:last-child * { width: auto; line-height: 40px; }
 
 /* Hover effects */
+#social svg {
+  transition: transform .2s;
+  will-change: transform;
+}
+
 @media (hover: hover) {
-  #social a:hover svg { 
-    transform: scale(1.1,1.1); 
-    transition: .2s; 
+  #social a:hover svg {
+    transform: scale(1.1,1.1);
   }
   
   a:link:hover, a:visited:hover { 
