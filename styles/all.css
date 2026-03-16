@@ -215,7 +215,7 @@ section h4 {
 #social { list-style: none; padding-left: 0; }
 #social * { width: 40px; height: 40px;}
 #social li { display: inline-block; margin: 0 5px; }
-#social a { display: inline-block; }
+#social a { display: inline-block; vertical-align: top; }
 #social a.email { display: inline; }
 #social a.icon { border-bottom: none; }
 #social svg path { fill: #202020; }
