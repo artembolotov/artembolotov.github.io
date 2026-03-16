@@ -212,7 +212,7 @@ section h4 {
 }
 
 /* Social links */
-#social { list-style: none; }
+#social { list-style: none; padding-left: 0; }
 #social * { width: 40px; height: 40px;}
 #social li { display: inline-block; margin: 0 5px; }
 #social a { display: inline-block; }
