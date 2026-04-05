@@ -216,8 +216,12 @@ class GalleryController {
       img.style.opacity = '1';
     });
 
-    // Set up navigation management
-    this.setupNavigationManagement(galleryId);
+    // Reset scroll position AFTER element is visible and layout is painted,
+    // then set up navigation management
+    requestAnimationFrame(() => {
+      galleryData.scrollContainer.scrollLeft = 0;
+      this.setupNavigationManagement(galleryId);
+    });
   }
 
   setupNavigationManagement(galleryId) {
