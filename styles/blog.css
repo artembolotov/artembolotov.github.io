@@ -145,6 +145,11 @@ h3 {
   visibility: visible !important;
 }
 
+/* Prevent scroll accumulation while gallery is loading */
+.gallery-content:not(.loaded) .image-gallery-inner {
+  overflow: hidden;
+}
+
 /* Hide loading when gallery is loaded */
 .image-gallery.loaded .gallery-loading {
   display: none;
