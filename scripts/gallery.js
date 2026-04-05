@@ -210,21 +210,24 @@ class GalleryController {
     galleryData.contentElement.classList.add('loaded');
 
     // scrollTo MUST run after the browser processes the CSS layout change above.
-    // Without rAF, scrollTo targets an overflow:hidden element (no scroll context)
-    // and is ignored; when the browser then applies overflow:auto + scroll-snap,
-    // it may snap to an incorrect position.
+    // Single rAF fires before style recalculation, so scrollTo still targets an
+    // overflow:hidden element and is ignored. Double rAF ensures the callback runs
+    // after style recalc and layout — when overflow:auto and scroll-snap are in
+    // effect — so the scroll reset actually takes hold.
     requestAnimationFrame(() => {
-      galleryData.scrollContainer.scrollTo({ left: 0, behavior: 'instant' });
-      galleryData.scrollContainer.scrollLeft = 0; // fallback for older browsers
+      requestAnimationFrame(() => {
+        galleryData.scrollContainer.scrollTo({ left: 0, behavior: 'instant' });
+        galleryData.scrollContainer.scrollLeft = 0; // fallback for older browsers
 
-      // Show all loaded images immediately
-      const images = galleryData.scrollContainer.querySelectorAll('img.loaded');
-      images.forEach(img => {
-        img.style.opacity = '1';
+        // Show all loaded images immediately
+        const images = galleryData.scrollContainer.querySelectorAll('img.loaded');
+        images.forEach(img => {
+          img.style.opacity = '1';
+        });
+
+        // Set up navigation management
+        this.setupNavigationManagement(galleryId);
       });
-
-      // Set up navigation management
-      this.setupNavigationManagement(galleryId);
     });
   }
 
