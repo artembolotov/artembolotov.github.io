@@ -208,6 +208,10 @@ class GalleryController {
     // Show content immediately
     galleryData.contentElement.classList.add('loaded');
 
+    // Reset to first slide using 'instant' to bypass CSS scroll-behavior: smooth
+    // and prevent scroll-snap from snapping to a wrong position on first paint
+    galleryData.scrollContainer.scrollTo({ left: 0, behavior: 'instant' });
+
     // Show all loaded images immediately
     const images = galleryData.scrollContainer.querySelectorAll('img.loaded');
     images.forEach(img => {

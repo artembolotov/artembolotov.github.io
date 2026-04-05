@@ -148,6 +148,7 @@ h3 {
 /* Prevent scroll accumulation while gallery is loading */
 .gallery-content:not(.loaded) .image-gallery-inner {
   overflow: hidden;
+  scroll-snap-type: none;
 }
 
 /* Hide loading when gallery is loaded */
