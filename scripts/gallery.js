@@ -205,21 +205,27 @@ class GalleryController {
     galleryData.isLoaded = true;
     galleryData.element.classList.add('loaded');
 
-    // Show content immediately
+    // Show content — this CSS change makes .image-gallery-inner scrollable
+    // (removes overflow:hidden and scroll-snap-type:none from the :not(.loaded) rule)
     galleryData.contentElement.classList.add('loaded');
 
-    // Reset to first slide using 'instant' to bypass CSS scroll-behavior: smooth
-    // and prevent scroll-snap from snapping to a wrong position on first paint
-    galleryData.scrollContainer.scrollTo({ left: 0, behavior: 'instant' });
+    // scrollTo MUST run after the browser processes the CSS layout change above.
+    // Without rAF, scrollTo targets an overflow:hidden element (no scroll context)
+    // and is ignored; when the browser then applies overflow:auto + scroll-snap,
+    // it may snap to an incorrect position.
+    requestAnimationFrame(() => {
+      galleryData.scrollContainer.scrollTo({ left: 0, behavior: 'instant' });
+      galleryData.scrollContainer.scrollLeft = 0; // fallback for older browsers
 
-    // Show all loaded images immediately
-    const images = galleryData.scrollContainer.querySelectorAll('img.loaded');
-    images.forEach(img => {
-      img.style.opacity = '1';
+      // Show all loaded images immediately
+      const images = galleryData.scrollContainer.querySelectorAll('img.loaded');
+      images.forEach(img => {
+        img.style.opacity = '1';
+      });
+
+      // Set up navigation management
+      this.setupNavigationManagement(galleryId);
     });
-
-    // Set up navigation management
-    this.setupNavigationManagement(galleryId);
   }
 
   setupNavigationManagement(galleryId) {
