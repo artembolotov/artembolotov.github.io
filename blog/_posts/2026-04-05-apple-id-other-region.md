@@ -1,6 +1,6 @@
 ---
 title: "Аккаунт Apple другого региона: проще, чем кажется"
-description: "Все советуют иностранный номер, eSIM или покупку готового аккаунта на Авито. Покажу, как обойтись без всего этого."
+description: "Без иностранной eSIM и Авито. Регистрируем учётку Apple для американского App Store."
 tags: [notes]
 image: /blog/img/2026-04-05-apple-id-other-region/og-image.png
 draft: true
