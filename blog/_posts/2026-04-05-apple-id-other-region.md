@@ -13,32 +13,20 @@ draft: true
 
 ## Создаём новый Apple ID
 
-Открываем **Настройки**, листаем вниз до раздела **Приложения**, заходим в **Заметки** и нажимаем **Учётные записи Заметок**.
+Открываем **Настройки**, листаем вниз до раздела **Приложения**, заходим в **Заметки** → **Учётные записи Заметок** → **Добавить учётную запись** → **iCloud**.
 
 {% capture gallery_notes %}
 01.png
 02.png
-{% endcapture %}
-{% include gallery.html images=gallery_notes %}
-
-Нажимаем **Добавить учётную запись** и выбираем **iCloud**.
-
-{% capture gallery_add %}
 03.png
 04.png
 {% endcapture %}
-{% include gallery.html images=gallery_add %}
+{% include gallery.html images=gallery_notes %}
 
-На экране входа нажимаем **Создать новый аккаунт Apple**.
-
-{% capture gallery_create %}
-05.png
-{% endcapture %}
-{% include gallery.html images=gallery_create %}
-
-Для нового аккаунта нужен email. Нажимаем **Нет адреса электронной почты?** и выбираем **Получить e-mail в iCloud** — Apple сама создаст адрес вида `что-то@icloud.com`.
+На экране входа нажимаем **Создать новый аккаунт Apple**. Для нового аккаунта нужен email — нажимаем **Нет адреса электронной почты?** и выбираем **Получить e-mail в iCloud**: Apple сама создаст адрес вида `что-то@icloud.com`.
 
 {% capture gallery_email %}
+05.png
 06.png
 07.png
 {% endcapture %}
@@ -111,20 +99,14 @@ draft: true
 {% endcapture %}
 {% include gallery.html images=gallery_region %}
 
-Следующий экран — способ оплаты. Выбираем **Нет** и заполняем адрес. Адрес должен быть американским — можно взять любой из интернета. Я использую адрес в штате Монтана: там нет налога с продаж, поэтому цены в App Store будут ровно такими, как указано.
+Следующий экран — способ оплаты. Выбираем **Нет** и заполняем адрес. Адрес должен быть американским — можно взять любой из интернета. Я использую адрес в штате Монтана: там нет налога с продаж, поэтому цены в App Store будут ровно такими, как указано. При следующем открытии App Store попросит принять обновлённые условия — соглашаемся.
 
 {% capture gallery_payment %}
 29.png
-{% endcapture %}
-{% include gallery.html images=gallery_payment %}
-
-При следующем открытии App Store он попросит принять обновлённые условия — соглашаемся.
-
-{% capture gallery_new_terms %}
 30.png
 31.png
 {% endcapture %}
-{% include gallery.html images=gallery_new_terms %}
+{% include gallery.html images=gallery_payment %}
 
 Регион изменён. Теперь доступен американский App Store со всеми его приложениями.
 
