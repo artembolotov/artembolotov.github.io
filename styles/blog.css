@@ -233,6 +233,10 @@ h3 {
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
   scroll-padding: 0.5rem;
+  /* Disable scroll anchoring so lazy-loaded images reflowing the row
+     cannot shift scrollLeft away from slide #1. Works together with the
+     JS guard in gallery.js that neutralizes browser scroll-restoration. */
+  overflow-anchor: none;
   
   /* Magic CSS centering when content fits */
   width: fit-content;
