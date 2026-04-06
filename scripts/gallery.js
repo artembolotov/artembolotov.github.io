@@ -209,25 +209,84 @@ class GalleryController {
     // (removes overflow:hidden and scroll-snap-type:none from the :not(.loaded) rule)
     galleryData.contentElement.classList.add('loaded');
 
-    // scrollTo MUST run after the browser processes the CSS layout change above.
-    // Single rAF fires before style recalculation, so scrollTo still targets an
-    // overflow:hidden element and is ignored. Double rAF ensures the callback runs
-    // after style recalc and layout — when overflow:auto and scroll-snap are in
-    // effect — so the scroll reset actually takes hold.
+    // Install the "stay on slide #1" guard BEFORE the container becomes
+    // scrollable. This neutralizes three separate sources of unwanted drift
+    // that the previous double-rAF fix did not fully cover:
+    //   1. Browser scroll-restoration for nested scroll containers, which is
+    //      applied asynchronously the first time scrollWidth > clientWidth.
+    //   2. scroll-snap realignment when lazy-loaded images reflow the row
+    //      after showGallery has already run (e.g. via the 10s timeout path).
+    //   3. Any residual scrollLeft that accumulated before .loaded was added.
+    // The guard stays active until the user actually interacts with the page.
+    this.installFirstSlideGuard(galleryId);
+
+    // Reset once synchronously after the style change; the guard will catch
+    // any later drift (browser scroll-restoration fires asynchronously).
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        galleryData.scrollContainer.scrollTo({ left: 0, behavior: 'instant' });
-        galleryData.scrollContainer.scrollLeft = 0; // fallback for older browsers
+      const sc = galleryData.scrollContainer;
+      sc.scrollLeft = 0;
+      sc.scrollTo({ left: 0, behavior: 'instant' });
 
-        // Show all loaded images immediately
-        const images = galleryData.scrollContainer.querySelectorAll('img.loaded');
-        images.forEach(img => {
-          img.style.opacity = '1';
-        });
+      // Show all loaded images immediately
+      const images = sc.querySelectorAll('img.loaded');
+      images.forEach(img => { img.style.opacity = '1'; });
 
-        // Set up navigation management
-        this.setupNavigationManagement(galleryId);
-      });
+      // Set up navigation management
+      this.setupNavigationManagement(galleryId);
+    });
+  }
+
+  installFirstSlideGuard(galleryId) {
+    const galleryData = this.galleries.get(galleryId);
+    if (!galleryData || galleryData.guardInstalled) return;
+    galleryData.guardInstalled = true;
+
+    const sc = galleryData.scrollContainer;
+    let userInteracted = false;
+
+    const resetScroll = () => {
+      if (userInteracted) return;
+      if (sc.scrollLeft !== 0) {
+        sc.scrollLeft = 0;
+      }
+    };
+
+    // Any scroll not initiated by the user gets reverted. Browser scroll
+    // restoration and scroll-snap realignment both emit scroll events, so
+    // this catches both cases regardless of when they happen.
+    const onScroll = () => { resetScroll(); };
+
+    // Real user interaction releases the guard.
+    const releaseGuard = () => {
+      if (userInteracted) return;
+      userInteracted = true;
+      sc.removeEventListener('scroll', onScroll);
+      sc.removeEventListener('pointerdown', releaseGuard);
+      sc.removeEventListener('touchstart', releaseGuard);
+      sc.removeEventListener('wheel', releaseGuard);
+      sc.removeEventListener('keydown', releaseGuard);
+    };
+
+    sc.addEventListener('scroll', onScroll, { passive: true });
+    sc.addEventListener('pointerdown', releaseGuard, { passive: true });
+    sc.addEventListener('touchstart', releaseGuard, { passive: true });
+    sc.addEventListener('wheel', releaseGuard, { passive: true });
+    sc.addEventListener('keydown', releaseGuard);
+
+    // Also reset on every late image load — lazy images finishing after
+    // showGallery reflow the row and may nudge scrollLeft via snap.
+    const imgs = sc.querySelectorAll('img[data-gallery-image]');
+    imgs.forEach(img => {
+      if (!img.complete) {
+        img.addEventListener('load', resetScroll, { once: true });
+        img.addEventListener('error', resetScroll, { once: true });
+      }
+    });
+
+    // Safety net: a few delayed resets for async browser scroll-restoration
+    // that can land well after the style change.
+    [0, 50, 150, 400, 900].forEach(delay => {
+      setTimeout(resetScroll, delay);
     });
   }
 
