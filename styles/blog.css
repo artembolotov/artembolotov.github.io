@@ -231,7 +231,12 @@ h3 {
   overflow-x: auto;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
+  /* scroll-snap is enabled only after the user explicitly engages the
+     gallery (see installFirstSlideGuard in scripts/gallery.js). On iOS,
+     `scroll-snap-type: x mandatory` can emit scroll events during a vertical
+     page pan, which the JS guard would otherwise try to counteract,
+     producing flicker after reload. */
+  scroll-snap-type: none;
   scroll-padding: 0.5rem;
   /* Disable scroll anchoring so lazy-loaded images reflowing the row
      cannot shift scrollLeft away from slide #1. Works together with the
@@ -251,6 +256,10 @@ h3 {
 /* Hide scrollbar in WebKit browsers */
 .image-gallery-inner::-webkit-scrollbar {
   display: none;
+}
+
+.image-gallery-inner.user-engaged {
+  scroll-snap-type: x mandatory;
 }
 
 .image-gallery-inner img {
