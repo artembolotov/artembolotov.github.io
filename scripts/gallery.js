@@ -2,6 +2,16 @@
  * Gallery Controller - Simplified for multiple images only
  * Single images should use img.html component
  */
+
+// Disable browser scroll restoration entirely. The gallery uses a nested
+// horizontal scroll container, and Safari's async restoration of nested
+// scrollers is the root cause of horizontal drift after reload. Owning
+// scroll position ourselves removes the fight between the guard and the
+// browser, and eliminates the iOS flicker described in the bug.
+if (typeof history !== 'undefined' && 'scrollRestoration' in history) {
+  try { history.scrollRestoration = 'manual'; } catch (e) {}
+}
+
 class GalleryController {
   constructor() {
     this.galleries = new Map();
@@ -205,20 +215,13 @@ class GalleryController {
     galleryData.isLoaded = true;
     galleryData.element.classList.add('loaded');
 
+    // Install the "stay on slide #1" guard BEFORE the container becomes
+    // scrollable, so listeners are attached before any scroll event can fire.
+    this.installFirstSlideGuard(galleryId);
+
     // Show content — this CSS change makes .image-gallery-inner scrollable
     // (removes overflow:hidden and scroll-snap-type:none from the :not(.loaded) rule)
     galleryData.contentElement.classList.add('loaded');
-
-    // Install the "stay on slide #1" guard BEFORE the container becomes
-    // scrollable. This neutralizes three separate sources of unwanted drift
-    // that the previous double-rAF fix did not fully cover:
-    //   1. Browser scroll-restoration for nested scroll containers, which is
-    //      applied asynchronously the first time scrollWidth > clientWidth.
-    //   2. scroll-snap realignment when lazy-loaded images reflow the row
-    //      after showGallery has already run (e.g. via the 10s timeout path).
-    //   3. Any residual scrollLeft that accumulated before .loaded was added.
-    // The guard stays active until the user actually interacts with the page.
-    this.installFirstSlideGuard(galleryId);
 
     // Reset once synchronously after the style change; the guard will catch
     // any later drift (browser scroll-restoration fires asynchronously).
@@ -243,35 +246,105 @@ class GalleryController {
 
     const sc = galleryData.scrollContainer;
     let userInteracted = false;
+    let isTouching = false;
+    let pendingReset = false;
+    let rafScheduled = false;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    const pendingTimeouts = [];
 
-    const resetScroll = () => {
+    // Coalesced reset. Skips writes when:
+    //  - the guard has been released
+    //  - scrollLeft is already 0 (no drift to fix)
+    //  - the user is currently touching the screen (writing scrollLeft
+    //    during an iOS momentum pan interrupts the page scroll engine and
+    //    visibly jerks the outer page)
+    // While touching, the request is deferred until touchend.
+    const flushReset = () => {
+      rafScheduled = false;
       if (userInteracted) return;
+      if (isTouching) { pendingReset = true; return; }
       if (sc.scrollLeft !== 0) {
         sc.scrollLeft = 0;
       }
     };
 
-    // Any scroll not initiated by the user gets reverted. Browser scroll
-    // restoration and scroll-snap realignment both emit scroll events, so
-    // this catches both cases regardless of when they happen.
+    const resetScroll = () => {
+      if (userInteracted) return;
+      if (rafScheduled) return;
+      rafScheduled = true;
+      requestAnimationFrame(flushReset);
+    };
+
     const onScroll = () => { resetScroll(); };
 
-    // Real user interaction releases the guard.
+    // Real user interaction releases the guard. We only release on
+    // *unambiguous horizontal intent* — never on a bare touchstart, since
+    // on iOS a vertical page pan that happens to land on the gallery would
+    // otherwise release the guard prematurely.
     const releaseGuard = () => {
       if (userInteracted) return;
       userInteracted = true;
       sc.removeEventListener('scroll', onScroll);
-      sc.removeEventListener('pointerdown', releaseGuard);
-      sc.removeEventListener('touchstart', releaseGuard);
-      sc.removeEventListener('wheel', releaseGuard);
-      sc.removeEventListener('keydown', releaseGuard);
+      sc.removeEventListener('touchstart', onTouchStart);
+      sc.removeEventListener('touchmove', onTouchMove);
+      sc.removeEventListener('wheel', onWheel);
+      sc.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('touchstart', onWindowTouchStart);
+      window.removeEventListener('touchend', onWindowTouchEnd);
+      window.removeEventListener('touchcancel', onWindowTouchEnd);
+      // Cancel any pending blind resets so they cannot land mid-pan.
+      while (pendingTimeouts.length) {
+        clearTimeout(pendingTimeouts.pop());
+      }
+      // Switch the container into snap mode now that the user is engaged.
+      sc.classList.add('user-engaged');
+    };
+
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) releaseGuard();
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') releaseGuard();
+    };
+    const onTouchStart = (e) => {
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+    };
+    const onTouchMove = (e) => {
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      const dx = Math.abs(t.clientX - touchStartX);
+      const dy = Math.abs(t.clientY - touchStartY);
+      if (dx > 6 && dx > dy) releaseGuard();
+    };
+
+    // Track whether *any* touch is in progress on the page so we can avoid
+    // mutating scrollLeft during iOS momentum scrolling.
+    const onWindowTouchStart = () => { isTouching = true; };
+    const onWindowTouchEnd = () => {
+      isTouching = false;
+      if (pendingReset && !userInteracted) {
+        pendingReset = false;
+        // Defer to next frame so we don't write inside the touchend handler.
+        requestAnimationFrame(flushReset);
+      }
     };
 
     sc.addEventListener('scroll', onScroll, { passive: true });
-    sc.addEventListener('pointerdown', releaseGuard, { passive: true });
-    sc.addEventListener('touchstart', releaseGuard, { passive: true });
-    sc.addEventListener('wheel', releaseGuard, { passive: true });
-    sc.addEventListener('keydown', releaseGuard);
+    sc.addEventListener('touchstart', onTouchStart, { passive: true });
+    sc.addEventListener('touchmove', onTouchMove, { passive: true });
+    sc.addEventListener('wheel', onWheel, { passive: true });
+    sc.addEventListener('keydown', onKeyDown);
+    window.addEventListener('touchstart', onWindowTouchStart, { passive: true });
+    window.addEventListener('touchend', onWindowTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', onWindowTouchEnd, { passive: true });
+
+    // Expose releaseGuard so the gallery-nav click handler can release on
+    // explicit horizontal navigation.
+    galleryData.releaseGuard = releaseGuard;
 
     // Also reset on every late image load — lazy images finishing after
     // showGallery reflow the row and may nudge scrollLeft via snap.
@@ -283,11 +356,9 @@ class GalleryController {
       }
     });
 
-    // Safety net: a few delayed resets for async browser scroll-restoration
-    // that can land well after the style change.
-    [0, 50, 150, 400, 900].forEach(delay => {
-      setTimeout(resetScroll, delay);
-    });
+    // Single immediate reset; with history.scrollRestoration = 'manual'
+    // the long blind timeout chain is no longer needed.
+    pendingTimeouts.push(setTimeout(resetScroll, 0));
   }
 
   setupNavigationManagement(galleryId) {
@@ -353,6 +424,8 @@ class GalleryController {
         const direction = button.getAttribute('data-direction');
         
         if (galleryId && direction && !button.disabled) {
+          const gd = this.galleries.get(galleryId);
+          if (gd && typeof gd.releaseGuard === 'function') gd.releaseGuard();
           this.scrollToDirection(galleryId, direction);
         }
       }
