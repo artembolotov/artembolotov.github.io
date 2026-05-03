@@ -4,6 +4,7 @@ baseurl: "/"
 url: "https://bolotov.dev"
 permalink: /blog/:year/:month/:day/:title/
 lang: "ru-RU"
+future: true
 author: "Артём Болотов"
 email: "ar@bolotov.dev"
 
@@ -17,7 +18,6 @@ social:
     - https://x.com/artembolotov
     - https://t.me/artembolotov
     - https://t.me/bolotovblog
-    - https://t.me/bolotov_logs
 
 # Плагины
 plugins:
