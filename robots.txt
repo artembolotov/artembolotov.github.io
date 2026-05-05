@@ -3,7 +3,6 @@ User-agent: *
 Allow: /
 Disallow: /+1
 Disallow: /skip
-Disallow: /blog/img/
 Disallow: /icons/
 Disallow: /styles/
 
