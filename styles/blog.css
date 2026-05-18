@@ -683,3 +683,14 @@ blockquote p:last-child {
     color: rgba(255,255,255,0.9);
   }
 }
+
+/* Upcoming (draft) articles in series pages */
+.article-upcoming {
+  opacity: 0.45;
+}
+
+@media (prefers-color-scheme: dark) {
+  .article-upcoming {
+    opacity: 0.4;
+  }
+}
