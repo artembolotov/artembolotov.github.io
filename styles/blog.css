@@ -689,8 +689,17 @@ blockquote p:last-child {
   opacity: 0.45;
 }
 
+.series-num {
+  color: #999;
+  font-weight: normal;
+}
+
 @media (prefers-color-scheme: dark) {
   .article-upcoming {
     opacity: 0.4;
+  }
+
+  .series-num {
+    color: #666;
   }
 }
