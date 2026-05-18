@@ -22,9 +22,6 @@ layout: default
           <h2><span>{{ series_num }}.</span> {{ post.title }}</h2>
           {% assign month_index = post.date | date: "%-m" | minus: 1 %}
           <time datetime="{{ post.date }}">(выйдет {{ post.date | date: "%-d" }} {{ months[month_index] }})</time>
-          {% if post.description %}
-          <p>{{ post.description }}</p>
-          {% endif %}
         </article>
         {% else %}
         <article>
