@@ -18,9 +18,9 @@ draft: false
 
 {% capture gallery_notes %}
 01.png||603x1311
-02.png
-03.png
-04.png
+02.png||603x1311
+03.png||603x1311
+04.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_notes %}
 
@@ -28,8 +28,8 @@ draft: false
 
 {% capture gallery_email %}
 05.png||603x1311
-06.png
-07.png
+06.png||603x1311
+07.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_email %}
 
@@ -37,8 +37,8 @@ draft: false
 
 {% capture gallery_password %}
 08.png||603x1311
-09.png
-10.png
+09.png||603x1311
+10.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_password %}
 
@@ -50,9 +50,9 @@ draft: false
 
 {% capture gallery_icloud %}
 11.png||603x1311
-12.png
-13.png
-14.png
+12.png||603x1311
+13.png||603x1311
+14.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_icloud %}
 
@@ -64,8 +64,8 @@ draft: false
 
 {% capture gallery_signout %}
 15.png||603x1311
-16.png
-17.png
+16.png||603x1311
+17.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_signout %}
 
@@ -73,9 +73,9 @@ draft: false
 
 {% capture gallery_signin %}
 18.png||603x1311
-19.png
-20.png
-21.png
+19.png||603x1311
+20.png||603x1311
+21.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_signin %}
 
@@ -85,8 +85,8 @@ draft: false
 
 {% capture gallery_appstore_open %}
 22.png||603x1311
-23.png
-24.png
+23.png||603x1311
+24.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_appstore_open %}
 
@@ -94,9 +94,9 @@ draft: false
 
 {% capture gallery_region %}
 25.png||603x1311
-26.png
-27.png
-28.png
+26.png||603x1311
+27.png||603x1311
+28.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_region %}
 
@@ -104,8 +104,8 @@ draft: false
 
 {% capture gallery_payment %}
 29.png||603x1311
-30.png
-31.png
+30.png||603x1311
+31.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_payment %}
 
@@ -121,9 +121,9 @@ draft: false
 
 {% capture gallery_buycard %}
 32.png||603x1311
-33.png
-34.png
-35.png
+33.png||603x1311
+34.png||603x1311
+35.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_buycard %}
 
@@ -131,7 +131,7 @@ draft: false
 
 {% capture gallery_activate %}
 36.png||603x1311
-37.png
+37.png||603x1311
 {% endcapture %}
 {% include gallery.html images=gallery_activate %}
 
