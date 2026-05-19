@@ -1,5 +1,5 @@
 html, body { width: 100%; background-color: #ECEFF1;}
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 50px; }
 
 @media (prefers-color-scheme: dark) {
   html, body {
