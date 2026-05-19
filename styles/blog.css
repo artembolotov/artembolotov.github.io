@@ -261,6 +261,7 @@ h3 {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   flex-shrink: 0;
+  width: auto;
   max-height: 500px;
   height: auto;
   object-fit: contain;
