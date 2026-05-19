@@ -215,6 +215,14 @@ class GalleryController {
     galleryData.isLoaded = true;
     galleryData.element.classList.add('loaded');
 
+    // Fade out the loading overlay (position:absolute, so no layout shift).
+    // After the transition completes, remove from paint entirely.
+    galleryData.loadingElement.style.opacity = '0';
+    galleryData.loadingElement.style.pointerEvents = 'none';
+    setTimeout(() => {
+      galleryData.loadingElement.style.display = 'none';
+    }, 500);
+
     // Install the "stay on slide #1" guard BEFORE the container becomes
     // scrollable, so listeners are attached before any scroll event can fire.
     this.installFirstSlideGuard(galleryId);

@@ -52,7 +52,8 @@ Image paths support:
           {% assign parts = trimmed_line | split: "|" %}
           {% assign raw_image_path = parts[0] | strip %}
           {% assign image_alt = parts[1] | strip | default: "" %}
-          
+          {% assign image_dims = parts[2] | strip | default: "" %}
+
           {% comment %}Check if we need to generate auto-path{% endcomment %}
           {% if raw_image_path contains '/' %}
             {% comment %}If path contains slash, consider it a full path{% endcomment %}
@@ -67,9 +68,11 @@ Image paths support:
             {% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
             {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
           {% endif %}
-          
-          <img src="{{ image_path }}" 
-               alt="{{ image_alt }}" 
+
+          {% assign dim_parts = image_dims | split: "x" %}
+          <img src="{{ image_path }}"
+               alt="{{ image_alt }}"
+               {% if image_dims != "" %}width="{{ dim_parts[0] | strip }}" height="{{ dim_parts[1] | strip }}"{% endif %}
                loading="lazy"
                fetchpriority="low"
                data-gallery-image
@@ -104,7 +107,8 @@ Image paths support:
             {% assign parts = trimmed_line | split: "|" %}
             {% assign raw_image_path = parts[0] | strip %}
             {% assign image_alt = parts[1] | strip | default: "" %}
-            
+            {% assign image_dims = parts[2] | strip | default: "" %}
+
             {% if raw_image_path contains '/' %}
               {% assign image_path = raw_image_path %}
             {% else %}
@@ -116,8 +120,9 @@ Image paths support:
               {% assign post_name = year | append: '-' | append: month | append: '-' | append: day | append: '-' | append: title %}
               {% assign image_path = '/blog/img/' | append: post_name | append: '/' | append: raw_image_path %}
             {% endif %}
-            
-            <img src="{{ image_path }}" alt="{{ image_alt }}">
+
+            {% assign dim_parts = image_dims | split: "x" %}
+            <img src="{{ image_path }}" alt="{{ image_alt }}"{% if image_dims != "" %} width="{{ dim_parts[0] | strip }}" height="{{ dim_parts[1] | strip }}"{% endif %}>
           {% endunless %}
         {% endfor %}
       </div>

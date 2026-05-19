@@ -65,11 +65,7 @@ h3 {
   margin: 2rem 0;
   position: relative;
   user-select: none;
-}
-
-/* Remove reserved height after loading */
-.image-gallery.loaded {
-  min-height: auto;
+  min-height: 500px;
 }
 
 /* Loading State Styles */
@@ -77,7 +73,9 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 500px;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
   background: rgba(0, 0, 0, 0.02);
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -151,10 +149,7 @@ h3 {
   scroll-snap-type: none;
 }
 
-/* Hide loading when gallery is loaded */
-.image-gallery.loaded .gallery-loading {
-  display: none;
-}
+/* Loading overlay fades out via JS opacity transition */
 
 /* Individual image fade-in effect */
 .image-gallery-inner img {
@@ -310,16 +305,8 @@ h3 {
 /* Mobile adjustments for gallery */
 @media screen and (max-width: 640px) {
   .image-gallery {
-    /* Smaller but still realistic height on mobile */
-    min-height: 300px;
-    transition: min-height 0.3s ease;
   }
-  
-  /* Remove reserved height after loading on mobile */
-  .image-gallery.loaded {
-    min-height: auto;
-  }
-  
+
   .gallery-loading-content {
     max-width: 220px;
   }
