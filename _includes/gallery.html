@@ -77,7 +77,7 @@ Image paths support:
                fetchpriority="low"
                data-gallery-image
                data-gallery-id="{{ gallery_id }}"
-               style="opacity: 0; transition: opacity 0.3s ease;">
+               style="opacity: 0; transition: opacity 0.3s ease;{% if image_dims != "" %} aspect-ratio: {{ dim_parts[0] | strip }} / {{ dim_parts[1] | strip }};{% endif %}">
         {% endunless %}
       {% endfor %}
     </div>
@@ -122,7 +122,7 @@ Image paths support:
             {% endif %}
 
             {% assign dim_parts = image_dims | split: "x" %}
-            <img src="{{ image_path }}" alt="{{ image_alt }}"{% if image_dims != "" %} width="{{ dim_parts[0] | strip }}" height="{{ dim_parts[1] | strip }}"{% endif %}>
+            <img src="{{ image_path }}" alt="{{ image_alt }}"{% if image_dims != "" %} width="{{ dim_parts[0] | strip }}" height="{{ dim_parts[1] | strip }}" style="aspect-ratio: {{ dim_parts[0] | strip }} / {{ dim_parts[1] | strip }};"{% endif %}>
           {% endunless %}
         {% endfor %}
       </div>

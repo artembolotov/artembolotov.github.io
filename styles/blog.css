@@ -65,7 +65,10 @@ h3 {
   margin: 2rem 0;
   position: relative;
   user-select: none;
-  min-height: 500px;
+  --gallery-row-h: 500px;
+  --gallery-controls-h: 54px;
+  min-height: calc(var(--gallery-row-h) + var(--gallery-controls-h));
+  contain: layout;
 }
 
 /* Loading State Styles */
@@ -223,6 +226,8 @@ h3 {
 .image-gallery-inner {
   display: flex;
   gap: 6px;
+  height: var(--gallery-row-h);
+  align-items: center;
   overflow-x: auto;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -261,11 +266,11 @@ h3 {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   flex-shrink: 0;
+  max-height: 100%;
+  max-width: 85vw;
   width: auto;
-  max-height: 500px;
   height: auto;
   object-fit: contain;
-  max-width: 85vw;
 }
 
 /* Dark mode adjustments for gallery */
@@ -306,6 +311,7 @@ h3 {
 /* Mobile adjustments for gallery */
 @media screen and (max-width: 640px) {
   .image-gallery {
+    --gallery-controls-h: 50px;
   }
 
   .gallery-loading-content {
