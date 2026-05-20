@@ -1,25 +1,56 @@
----
-layout: default
-title: Политика конфиденциальности — Артём Болотов
-description: Информация об использовании аналитики на сайте bolotov.dev
----
-
-<article class="post-content container">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Политика конфиденциальности — Артём Болотов</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+      max-width: 680px;
+      margin: 3rem auto;
+      padding: 0 1.25rem;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.05rem; margin-top: 2rem; }
+    p, pre { margin: 0.75rem 0; }
+    a { color: #0089ff; }
+    pre {
+      background: #f4f4f4;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      overflow-x: auto;
+      font-size: 0.875rem;
+    }
+    .meta { color: #666; font-size: 0.875rem; margin-top: 0.25rem; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #111; color: #e0e0e0; }
+      pre { background: #222; }
+    }
+  </style>
+</head>
+<body>
   <h1>Политика конфиденциальности</h1>
+  <p class="meta">bolotov.dev</p>
 
   <p>Этот сайт принадлежит Артёму Болотову и не собирает персональные данные напрямую. Для анализа посещаемости используется Яндекс Метрика.</p>
 
   <h2>Что собирается</h2>
-  <p>Яндекс Метрика фиксирует данные о посещениях: просмотренные страницы, источники трафика, действия на сайте (клики, скроллинг), тип устройства и браузера, страну посетителя. Данные передаются в Яндекс LLC и обрабатываются согласно их <a href="https://yandex.ru/legal/confidential/">политике конфиденциальности</a>.</p>
+  <p>Яндекс Метрика фиксирует данные о посещениях: просмотренные страницы, источники трафика, действия на сайте (клики, скроллинг), тип устройства и браузера, страну посетителя. Данные передаются в Яндекс LLC и обрабатываются согласно их <a href="https://yandex.ru/legal/confidential/" target="_blank" rel="noopener">политике конфиденциальности</a>.</p>
 
   <h2>Правовая основа</h2>
   <p>Обработка данных производится на основании вашего согласия, данного при принятии уведомления на сайте. Сбор данных начинается только после нажатия кнопки «Понятно».</p>
 
   <h2>Отзыв согласия</h2>
   <p>Вы можете в любой момент отозвать согласие. Для этого откройте консоль браузера (F12) и выполните:</p>
-  <pre><code>localStorage.removeItem('ym_consent')</code></pre>
+  <pre>localStorage.removeItem('ym_consent')</pre>
   <p>После этого при следующем визите баннер появится снова, а сбор данных остановится до повторного согласия.</p>
 
   <h2>Контакт</h2>
-  <p>По вопросам обработки данных: <a href="/#contact">artem@bolotov.dev</a>.</p>
-</article>
+  <p>По вопросам обработки данных: <a href="mailto:ar@bolotov.dev">ar@bolotov.dev</a>.</p>
+</body>
+</html>

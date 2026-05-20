@@ -28,7 +28,7 @@
     banner.id = 'ym-consent-banner';
     banner.innerHTML =
       '<p>Сайт использует Яндекс Метрику для анализа трафика. ' +
-      '<a href="/privacy/">Подробнее</a></p>' +
+      '<a href="/privacy/" target="_blank" rel="noopener">Подробнее</a></p>' +
       '<button id="ym-consent-btn">Понятно</button>';
 
     function onReady() {
