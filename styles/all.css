@@ -52,20 +52,6 @@ a:link, a:visited {
   padding-top: env(safe-area-inset-top);
 }
 
-/* Covers the gap between the stale fixed-nav layer (50px) and the
-   correctly-computed safe-area padding after landscape→portrait rotation.
-   height = 0 in landscape (env=0), so it is invisible until needed. */
-body::before {
-  content: '';
-  position: fixed;
-  top: 50px;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top);
-  z-index: 998;
-  pointer-events: none;
-}
-
 #page-nav::before {
   content: '';
   position: absolute;
