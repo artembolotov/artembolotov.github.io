@@ -1,9 +1,8 @@
-html { width: 100%; background-color: #000; }
-body { width: 100%; background-color: #ECEFF1; }
+html, body { width: 100%; background-color: #ECEFF1; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(50px + env(safe-area-inset-top)); }
 
 @media (prefers-color-scheme: dark) {
-  body {
+  html, body {
     background-color: #000;
   }
 }

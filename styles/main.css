@@ -1,4 +1,5 @@
-html, body { height: 100%; }
+html { height: 100%; background-color: #000; }
+body { min-height: 100%; }
 
 /* Section headings */
 section h2 { 
@@ -22,7 +23,7 @@ section h2 {
 /* Header section */
 #top {
   display: table;
-  height: calc(100% - 50px - env(safe-area-inset-top));
+  height: calc(100dvh - 50px - env(safe-area-inset-top));
   min-height: 400px;
   margin-top: calc(50px + env(safe-area-inset-top));
   width: 100%;
