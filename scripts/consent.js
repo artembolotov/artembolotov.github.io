@@ -27,9 +27,11 @@
     var banner = document.createElement('div');
     banner.id = 'ym-consent-banner';
     banner.innerHTML =
+      '<div id="ym-consent-inner">' +
       '<p>Сайт использует Яндекс Метрику для анализа трафика. ' +
       '<a href="/privacy/" target="_blank" rel="noopener">Подробнее</a></p>' +
-      '<button id="ym-consent-btn">Понятно</button>';
+      '<button id="ym-consent-btn">Понятно</button>' +
+      '</div>';
 
     function onReady() {
       document.body.appendChild(banner);
