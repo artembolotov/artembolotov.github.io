@@ -22,9 +22,9 @@ section h2 {
 /* Header section */
 #top {
   display: table;
-  height: calc(100% - 50px);
+  height: calc(100% - 50px - env(safe-area-inset-top));
   min-height: 400px;
-  margin-top: 50px;
+  margin-top: calc(50px + env(safe-area-inset-top));
   width: 100%;
   padding: 0;
   background: url(/img/bg-tall-web.jpg) center center;

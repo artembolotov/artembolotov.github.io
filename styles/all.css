@@ -1,5 +1,5 @@
 html, body { width: 100%; background-color: #ECEFF1; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: 50px; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(50px + env(safe-area-inset-top)); }
 
 @media (prefers-color-scheme: dark) {
   html, body {
@@ -49,6 +49,7 @@ a:link, a:visited {
   position: fixed;
   top: 0;
   z-index: 999;
+  padding-top: env(safe-area-inset-top);
 }
 
 #page-nav div a { 
