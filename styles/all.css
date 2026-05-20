@@ -52,16 +52,6 @@ a:link, a:visited {
   padding-top: env(safe-area-inset-top);
 }
 
-#page-nav::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  background: #000;
-}
-
 #page-nav div a { 
   line-height: 50px;
   display: inline-block;
