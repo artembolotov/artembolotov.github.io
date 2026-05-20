@@ -1,8 +1,8 @@
-html, body { width: 100%; background-color: #ECEFF1; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(50px + env(safe-area-inset-top)); }
+html { width: 100%; background-color: #000; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(50px + env(safe-area-inset-top)); }
+body { width: 100%; background-color: #ECEFF1; }
 
 @media (prefers-color-scheme: dark) {
-  html, body {
+  body {
     background-color: #000;
   }
 }
