@@ -50,6 +50,7 @@ a:link, a:visited {
   top: 0;
   z-index: 999;
   padding-top: env(safe-area-inset-top);
+  transform: translateZ(0);
 }
 
 #page-nav::before {
