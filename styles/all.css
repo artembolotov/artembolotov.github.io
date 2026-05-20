@@ -50,22 +50,16 @@ a:link, a:visited {
   top: 0;
   z-index: 999;
   padding-top: env(safe-area-inset-top);
-  transform: translateZ(0);
 }
 
-/* Covers the gap between the stale fixed-nav GPU layer (50px) and the
-   safe-area inset that reappears after landscape→portrait rotation.
-   height is 0 in landscape, so invisible there. */
-body::before {
+#page-nav::before {
   content: '';
-  position: fixed;
-  top: 50px;
+  position: absolute;
+  bottom: 100%;
   left: 0;
   right: 0;
-  height: env(safe-area-inset-top);
+  height: 100vh;
   background: #000;
-  z-index: 998;
-  pointer-events: none;
 }
 
 #page-nav div a { 

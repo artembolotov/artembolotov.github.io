@@ -67,6 +67,15 @@ layout: compress
           hamburger.checked = false
         }
       })
+
+      // iOS Safari: after landscape→portrait rotation the fixed-nav GPU layer
+      // can be composited with the stale (landscape) env(safe-area-inset-top).
+      // Force a re-evaluation by momentarily overriding padding-top inline.
+      window.addEventListener("resize", () => {
+        menu.style.paddingTop = "0px"
+        menu.offsetHeight // force sync reflow
+        menu.style.paddingTop = ""
+      })
     </script>
     </div>
   </nav>
