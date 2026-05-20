@@ -17,7 +17,6 @@ layout: compress
   <link rel="shortcut icon" href="/icons/favicon.ico">
   <meta name="msapplication-TileColor" content="#2d89ef">
   <meta name="msapplication-config" content="/icons/browserconfig.xml">
-  <meta name="theme-color" content="#ECEFF1" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <script>document.documentElement.classList.remove('no-js');</script>
   <noscript><div><img src="https://mc.yandex.ru/watch/102280899" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
@@ -68,15 +67,7 @@ layout: compress
         }
       })
 
-      // iOS Safari: after landscape→portrait rotation the fixed-nav GPU layer
-      // can be composited with the stale (landscape) env(safe-area-inset-top).
-      // Force a re-evaluation by momentarily overriding padding-top inline.
-      window.addEventListener("resize", () => {
-        menu.style.paddingTop = "0px"
-        menu.offsetHeight // force sync reflow
-        menu.style.paddingTop = ""
-      })
-    </script>
+</script>
     </div>
   </nav>
   <main>
