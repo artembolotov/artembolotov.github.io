@@ -62,7 +62,6 @@ body::before {
   left: 0;
   right: 0;
   height: env(safe-area-inset-top);
-  background: #000;
   z-index: 998;
   pointer-events: none;
 }
