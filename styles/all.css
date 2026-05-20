@@ -1,11 +1,5 @@
-html { width: 100%; background-color: #000; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(50px + env(safe-area-inset-top)); }
-body { width: 100%; background-color: #ECEFF1; }
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #000;
-  }
-}
+html, body { width: 100%; }
+html { -webkit-text-size-adjust: 100%; }
 
 /* Base styles */
 body { 
@@ -43,38 +37,12 @@ a:link, a:visited {
 /* Navigation */
 #hamburger { display: none; }
 
-#page-nav {
-  width: 100%;
-  background: #000;
-  position: fixed;
-  top: 0;
-  z-index: 999;
-  padding-top: env(safe-area-inset-top);
-}
-
-/* Covers the gap between the stale fixed-nav layer (50px) and the
-   correctly-computed safe-area padding after landscape→portrait rotation.
-   height = 0 in landscape (env=0), so it is invisible until needed. */
-body::before {
-  content: '';
-  position: fixed;
-  top: 50px;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top);
-  background: #000;
-  z-index: 998;
-  pointer-events: none;
-}
-
-#page-nav::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  background: #000;
+#page-nav { 
+  width: 100%; 
+  background: #000; 
+  position: fixed; 
+  top: 0; 
+  z-index: 999; 
 }
 
 #page-nav div a { 
@@ -313,71 +281,8 @@ section h4 {
 }
 
 @media (hover: hover) and (prefers-color-scheme: dark) {
-  a:link:hover, a:visited:hover {
-    color: #ff453a;
-    border-color: rgba(255,69,68,.7);
-  }
-}
-
-/* Cookie consent banner */
-#ym-consent-banner {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background: #000;
-  color: #fff;
-  padding: 0.875rem max(1rem, env(safe-area-inset-right)) max(calc(0.875rem + env(safe-area-inset-bottom)), 0.875rem) max(1rem, env(safe-area-inset-left));
-  font-size: 0.875rem;
-  box-shadow: 0 -2px 8px rgba(0,0,0,.4);
-}
-
-#ym-consent-inner {
-  max-width: 970px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-#ym-consent-banner p {
-  margin: 0;
-  flex: 1;
-  line-height: 1.4;
-}
-
-#ym-consent-banner a:link,
-#ym-consent-banner a:visited {
-  color: #0089ff;
-  border-color: rgba(0,137,255,.3);
-}
-
-#ym-consent-btn {
-  flex-shrink: 0;
-  background: #0089ff;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1.25rem;
-  font-size: 0.875rem;
-  cursor: pointer;
-  font-family: system-ui;
-  line-height: 1.4;
-}
-
-@media (max-width: 400px) {
-  #ym-consent-inner {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  #ym-consent-btn {
-    text-align: center;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  #ym-consent-banner {
-    background: #111;
+  a:link:hover, a:visited:hover { 
+    color: #ff453a; 
+    border-color: rgba(255,69,68,.7); 
   }
 }
