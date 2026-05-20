@@ -23,6 +23,7 @@ section h2 {
 #top {
   display: table;
   height: calc(100% - 50px);
+  min-height: 400px;
   margin-top: 50px;
   width: 100%;
   padding: 0;
