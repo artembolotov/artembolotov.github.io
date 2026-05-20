@@ -20,16 +20,17 @@ section h2 {
 }  
 
 /* Header section */
-#top { 
-  display: table; 
-  height: 100%; 
-  width: 100%; 
-  padding: 0; 
-  background: url(/img/bg-tall-web.jpg) center center; 
-  -webkit-background-size: cover; 
-  -moz-background-size: cover; 
-  -o-background-size: cover; 
-  background-size: cover; 
+#top {
+  display: table;
+  height: calc(100% - 50px);
+  margin-top: 50px;
+  width: 100%;
+  padding: 0;
+  background: url(/img/bg-tall-web.jpg) center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 #top h1, #top h2 {  
