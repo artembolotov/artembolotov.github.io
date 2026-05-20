@@ -648,7 +648,13 @@ blockquote p:last-child {
   .author-footer .bio {
     color: rgba(255,255,255,0.9);
   }
-  
+
+  .author-footer .privacy-link a:link,
+  .author-footer .privacy-link a:visited {
+    color: rgba(255,255,255,.35);
+    border-color: rgba(255,255,255,.12);
+  }
+
   .tag-menu a {
     color: #64b2ff;
     border-bottom: 1px solid rgba(100,178,255,0.8);
