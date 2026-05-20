@@ -27,6 +27,19 @@
       font-size: 0.875rem;
     }
     .meta { color: #666; font-size: 0.875rem; margin-top: 0.25rem; }
+    #revoke-btn {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      background: #e53935;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: system-ui;
+      cursor: pointer;
+    }
+    #revoke-status { margin-top: 0.75rem; }
     @media (prefers-color-scheme: dark) {
       body { background: #111; color: #e0e0e0; }
       pre { background: #222; }
@@ -46,9 +59,20 @@
   <p>Обработка данных производится на основании вашего согласия, данного при принятии уведомления на сайте. Сбор данных начинается только после нажатия кнопки «Понятно».</p>
 
   <h2>Отзыв согласия</h2>
-  <p>Вы можете в любой момент отозвать согласие. Для этого откройте консоль браузера (F12) и выполните:</p>
-  <pre>localStorage.removeItem('ym_consent')</pre>
-  <p>После этого при следующем визите баннер появится снова, а сбор данных остановится до повторного согласия.</p>
+  <p>Вы можете отозвать согласие в любой момент:</p>
+  <div id="revoke-status"></div>
+  <script>
+    var el = document.getElementById('revoke-status');
+    if (localStorage.getItem('ym_consent') === '1') {
+      el.innerHTML = '<button id="revoke-btn">Отозвать согласие</button>';
+      document.getElementById('revoke-btn').addEventListener('click', function () {
+        localStorage.removeItem('ym_consent');
+        el.innerHTML = '<p>Согласие отозвано. При следующем посещении сайта баннер появится снова.</p>';
+      });
+    } else {
+      el.innerHTML = '<p>Согласие не дано — аналитика не собирается.</p>';
+    }
+  </script>
 
   <h2>Контакт</h2>
   <p>По вопросам обработки данных: <a href="mailto:ar@bolotov.dev">ar@bolotov.dev</a>.</p>
