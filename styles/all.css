@@ -52,6 +52,10 @@ a:link, a:visited {
   padding-top: env(safe-area-inset-top);
 }
 
+#page-nav > .container {
+  width: 100%;
+}
+
 #page-nav div a { 
   line-height: 50px;
   display: inline-block;
