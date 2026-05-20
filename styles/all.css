@@ -1,8 +1,8 @@
-html { width: 100%; background-color: #000; -webkit-text-size-adjust: 100%; scroll-padding-top: 50px; }
-body { width: 100%; background-color: #ECEFF1; }
+html, body { width: 100%; background-color: #ECEFF1; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 50px; }
 
 @media (prefers-color-scheme: dark) {
-  body {
+  html, body {
     background-color: #000;
   }
 }
@@ -43,12 +43,13 @@ a:link, a:visited {
 /* Navigation */
 #hamburger { display: none; }
 
-#page-nav { 
-  width: 100%; 
-  background: #000; 
-  position: fixed; 
-  top: 0; 
-  z-index: 999; 
+#page-nav {
+  width: 100%;
+  background: #000;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 -9999px 0 9999px #000;
 }
 
 #page-nav div a { 
