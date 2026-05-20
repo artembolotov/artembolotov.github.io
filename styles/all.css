@@ -293,6 +293,34 @@ section h4 {
   }
 }
 
+/* Site footer */
+#site-footer {
+  text-align: center;
+  padding: 1.5rem 1rem max(1.5rem, env(safe-area-inset-bottom));
+  font-size: 0.8rem;
+}
+
+#site-footer a:link,
+#site-footer a:visited {
+  color: rgba(0,0,0,.4);
+  border-color: rgba(0,0,0,.15);
+}
+
+#site-footer a:hover {
+  color: rgba(0,0,0,.7);
+}
+
+@media (prefers-color-scheme: dark) {
+  #site-footer a:link,
+  #site-footer a:visited {
+    color: rgba(255,255,255,.35);
+    border-color: rgba(255,255,255,.15);
+  }
+  #site-footer a:hover {
+    color: rgba(255,255,255,.65);
+  }
+}
+
 /* Cookie consent banner */
 #ym-consent-banner {
   position: fixed;
