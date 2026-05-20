@@ -520,6 +520,17 @@ time {
   margin-top: 0.5em;
 }
 
+.author-footer .privacy-link {
+  margin-top: 1.5em;
+  font-size: 0.8em;
+}
+
+.author-footer .privacy-link a:link,
+.author-footer .privacy-link a:visited {
+  color: rgba(0,0,0,.35);
+  border-color: rgba(0,0,0,.12);
+}
+
 /* Tag Menu */
 .tag-menu {
   margin: 0.5em 0 1em;

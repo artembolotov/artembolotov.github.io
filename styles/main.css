@@ -49,8 +49,27 @@ section h2 {
   margin-top: 6.25em; 
 }
 
-#contact { 
+#contact {
   padding-bottom: 9.375em;
+}
+
+#contact .privacy-link {
+  margin-top: 2em;
+  font-size: 0.8rem;
+}
+
+#contact .privacy-link a:link,
+#contact .privacy-link a:visited {
+  color: rgba(0,0,0,.35);
+  border-color: rgba(0,0,0,.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  #contact .privacy-link a:link,
+  #contact .privacy-link a:visited {
+    color: rgba(255,255,255,.35);
+    border-color: rgba(255,255,255,.12);
+  }
 }
 
 /* Timeline styling */
