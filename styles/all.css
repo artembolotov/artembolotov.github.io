@@ -287,8 +287,66 @@ section h4 {
 }
 
 @media (hover: hover) and (prefers-color-scheme: dark) {
-  a:link:hover, a:visited:hover { 
-    color: #ff453a; 
-    border-color: rgba(255,69,68,.7); 
+  a:link:hover, a:visited:hover {
+    color: #ff453a;
+    border-color: rgba(255,69,68,.7);
+  }
+}
+
+/* Cookie consent banner */
+#ym-consent-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #000;
+  color: #fff;
+  padding: 0.875rem max(1rem, env(safe-area-inset-right)) max(calc(0.875rem + env(safe-area-inset-bottom)), 0.875rem) max(1rem, env(safe-area-inset-left));
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+  box-shadow: 0 -2px 8px rgba(0,0,0,.4);
+}
+
+#ym-consent-banner p {
+  margin: 0;
+  flex: 1;
+  line-height: 1.4;
+}
+
+#ym-consent-banner a:link,
+#ym-consent-banner a:visited {
+  color: #0089ff;
+  border-color: rgba(0,137,255,.3);
+}
+
+#ym-consent-btn {
+  flex-shrink: 0;
+  background: #0089ff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  font-family: system-ui;
+  line-height: 1.4;
+}
+
+@media (max-width: 400px) {
+  #ym-consent-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #ym-consent-btn {
+    text-align: center;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #ym-consent-banner {
+    background: #111;
   }
 }
