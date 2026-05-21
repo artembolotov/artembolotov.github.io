@@ -47,7 +47,7 @@ a:link, a:visited {
   width: 100%;
   background: #fff;
   border-bottom: 1px solid rgba(0,0,0,.1);
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 999;
   padding-top: env(safe-area-inset-top);
