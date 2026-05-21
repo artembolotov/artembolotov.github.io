@@ -47,9 +47,8 @@ a:link, a:visited {
   width: 100%;
   background: #000;
   position: fixed;
-  top: 0;
+  top: 10px;
   z-index: 999;
-  padding-top: env(safe-area-inset-top);
 }
 
 #page-nav > .container {
