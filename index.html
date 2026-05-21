@@ -70,8 +70,10 @@
         })
         window.addEventListener('orientationchange', () => {
           setTimeout(() => {
-            menu.style.display = 'none'
-            requestAnimationFrame(() => { menu.style.display = '' })
+            const parent = menu.parentNode
+            const next = menu.nextSibling
+            menu.remove()
+            requestAnimationFrame(() => parent.insertBefore(menu, next))
           }, 300)
         })
         const emailE = ('ar@' + 'bolotov.dev')
