@@ -68,6 +68,11 @@
             hamburger.checked = false
           }
         })
+        window.addEventListener('resize', () => {
+          menu.style.display = 'none'
+          menu.offsetHeight
+          menu.style.display = ''
+        })
         const emailE = ('ar@' + 'bolotov.dev')
       </script>
       </div>
