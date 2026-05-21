@@ -47,7 +47,7 @@ a:link, a:visited {
   width: 100%;
   background: #000;
   position: fixed;
-  top: 1px;
+  top: 0;
   z-index: 999;
 }
 
