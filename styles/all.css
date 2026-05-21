@@ -45,12 +45,15 @@ a:link, a:visited {
 
 #page-nav {
   width: 100%;
-  background: #000;
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,.1);
   position: sticky;
   top: 0;
   z-index: 999;
   padding-top: env(safe-area-inset-top);
 }
+
+#logo .logo-text { fill: rgba(0,0,0,.87); }
 
 
 #page-nav > .container {
@@ -75,26 +78,26 @@ a:link, a:visited {
   transition: .5s 
 }
 
-#page-nav ul li.current { 
-  background: rgba(255,255,255,.5); 
+#page-nav ul li.current {
+  background: rgba(0,0,0,.07);
 }
 
-#page-nav ul li a { 
-  display: block; 
-  padding: 0 0.9375em; 
-  color: #fff; 
-  text-decoration: none; 
-  font-size: 0.875em; 
-  font-weight: 500; 
+#page-nav ul li a {
+  display: block;
+  padding: 0 0.9375em;
+  color: rgba(0,0,0,.8);
+  text-decoration: none;
+  font-size: 0.875em;
+  font-weight: 500;
   width: 100%;
 }
 
-#page-nav label { 
-  display: block; 
-  color: #fff; 
-  font-style: normal; 
-  font-size: 1.2em; 
-  float: right; 
+#page-nav label {
+  display: block;
+  color: rgba(0,0,0,.8);
+  font-style: normal;
+  font-size: 1.2em;
+  float: right;
 }
 
 #page-nav input:checked ~ ul { 
@@ -138,12 +141,12 @@ section h4 {
   cursor: pointer; 
 }
 
-#menu-label span { 
-  display: block; 
-  position: absolute; 
-  height: 2px; 
-  width: 18px; 
-  background: rgba(255,255,255,.87); 
+#menu-label span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 18px;
+  background: rgba(0,0,0,.7);
   opacity: 1;
   left: 16px;
   -webkit-transform: rotate(0deg);
@@ -282,14 +285,37 @@ section h4 {
 
 /* Dark theme adjustments */
 @media (prefers-color-scheme: dark) {
-  body { 
-    color: rgba(255,255,255,0.8); 
+  body {
+    color: rgba(255,255,255,0.8);
   }
-  
-  a:link, a:visited { 
-    color: #64b2ff; 
-    border-bottom: 1px solid rgba(100,178,255,0.8); 
-  }  
+
+  a:link, a:visited {
+    color: #64b2ff;
+    border-bottom: 1px solid rgba(100,178,255,0.8);
+  }
+
+  #page-nav {
+    background: #000;
+    border-bottom-color: transparent;
+  }
+
+  #logo .logo-text { fill: #fff; }
+
+  #page-nav ul li.current {
+    background: rgba(255,255,255,.5);
+  }
+
+  #page-nav ul li a {
+    color: #fff;
+  }
+
+  #page-nav label {
+    color: #fff;
+  }
+
+  #menu-label span {
+    background: rgba(255,255,255,.87);
+  }
 }
 
 @media (hover: hover) and (prefers-color-scheme: dark) {
