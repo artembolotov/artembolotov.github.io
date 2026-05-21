@@ -68,10 +68,11 @@
             hamburger.checked = false
           }
         })
-        window.addEventListener('resize', () => {
-          menu.style.display = 'none'
-          menu.offsetHeight
-          menu.style.display = ''
+        window.addEventListener('orientationchange', () => {
+          setTimeout(() => {
+            menu.style.display = 'none'
+            requestAnimationFrame(() => { menu.style.display = '' })
+          }, 300)
         })
         const emailE = ('ar@' + 'bolotov.dev')
       </script>
