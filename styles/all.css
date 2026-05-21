@@ -53,7 +53,7 @@ a:link, a:visited {
   padding-top: env(safe-area-inset-top);
 }
 
-#logo .logo-text { fill: rgba(0,0,0,.87); }
+#logo .logo-text path { fill: rgba(0,0,0,.87); }
 
 
 #page-nav > .container {
@@ -299,7 +299,7 @@ section h4 {
     border-bottom-color: transparent;
   }
 
-  #logo .logo-text { fill: #fff; }
+  #logo .logo-text path { fill: #fff; }
 
   #page-nav ul li.current {
     background: rgba(255,255,255,.5);
