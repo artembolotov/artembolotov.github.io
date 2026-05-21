@@ -1,4 +1,4 @@
-html { width: 100%; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(50px + env(safe-area-inset-top)); }
+html { width: 100%; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(50px + env(safe-area-inset-top)); overscroll-behavior: none; }
 body { width: 100%; background-color: #ECEFF1; }
 
 @media (prefers-color-scheme: dark) {
