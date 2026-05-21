@@ -28,6 +28,7 @@
     <script src="https://gdeya.bolotov.dev/loader.v1.js" defer></script>
   </head>
   <body>
+    <div id="safe-area-top" aria-hidden="true"></div>
     <nav id="page-nav">
       <div class="container">
       <a href="#top">
@@ -67,14 +68,6 @@
           if (event.target instanceof HTMLAnchorElement) {
             hamburger.checked = false
           }
-        })
-        window.addEventListener('orientationchange', () => {
-          setTimeout(() => {
-            const parent = menu.parentNode
-            const next = menu.nextSibling
-            menu.remove()
-            requestAnimationFrame(() => parent.insertBefore(menu, next))
-          }, 300)
         })
         const emailE = ('ar@' + 'bolotov.dev')
       </script>

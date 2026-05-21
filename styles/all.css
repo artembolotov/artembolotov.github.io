@@ -51,6 +51,27 @@ a:link, a:visited {
   z-index: 999;
 }
 
+/* Dedicated fixed element that physically covers the top safe-area region.
+   Two reasons this fixes the iOS Safari repaint bug:
+   1. It paints a guaranteed black layer over the safe-area zone, so even if
+      iOS leaves a stale page-background tint there after rotation, this
+      element is on top and hides it.
+   2. It is a permanent position:fixed element that keeps the fixed-element
+      compositor layer "alive" after the consent banner is removed. The
+      banner.remove() observation showed that recomposing the fixed layer is
+      what triggers the correct repaint of the safe-area region; keeping a
+      persistent fixed element ensures that layer is always present. */
+#safe-area-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top);
+  background: #000;
+  z-index: 1001;
+  pointer-events: none;
+}
+
 #page-nav > .container {
   width: 100%;
 }
