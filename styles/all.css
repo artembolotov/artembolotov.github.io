@@ -269,6 +269,7 @@ section h4 {
   #page-nav ul { 
     display: block; 
     float: right; 
+    padding-bottom: 0;
   }
   
   #page-nav ul li { 
