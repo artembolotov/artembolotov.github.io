@@ -265,16 +265,26 @@ section h4 {
   .container { width: 750px; }
   
   #page-nav label, #hamburger { display: none; }
-  
-  #page-nav ul { 
-    display: block; 
-    float: right; 
+
+  #page-nav div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+  }
+
+  #page-nav div > a {
+    display: block;
+    line-height: normal;
+  }
+
+  #page-nav ul {
+    display: flex;
     padding-bottom: 0;
   }
-  
-  #page-nav ul li { 
-    display: inline-block; 
-    margin-left: -4px; 
+
+  #page-nav ul li {
+    display: block;
   }
   
   section { font-size: 1.25em; }
