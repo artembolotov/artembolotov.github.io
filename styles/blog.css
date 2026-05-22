@@ -3,7 +3,7 @@ main { margin-top: calc(50px + env(safe-area-inset-top)); line-height: 1.5; }
 main img { display: block; max-width: 100%; margin: 0 auto; }
 
 /* Auto-container for all elements except galleries */
-main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge), #page-nav div, 
+main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge),
 .gallery-controls, .author-footer-container, div.highlight, .single_image {
   margin-left: auto;
   margin-right: auto;
@@ -11,8 +11,8 @@ main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge), #page-
   box-sizing: border-box;
 }
 
-main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge):not(.single_image), 
-#page-nav div, .gallery-controls, .author-footer-container {
+main > *:not(.image-gallery):not(.author-footer):not(.highlighter-rouge):not(.single_image),
+.gallery-controls, .author-footer-container {
   padding-left: max(1rem, max(1rem, env(safe-area-inset-left), env(safe-area-inset-right)));
   padding-right: max(1rem, max(1rem, env(safe-area-inset-left), env(safe-area-inset-right)));
 }
