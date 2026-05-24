@@ -70,4 +70,4 @@ draft: true
 
 ## Пополняем баланс
 
-Самый удобный вариант — подарочная карта через Сбер. Как это сделать в статье об [аккаунте Apple другого региона](/blog/2026/04/05/apple-id-other-region#top-up-balance){:target="_blank" rel="noopener"}.
+Самый удобный вариант — подарочная карта через Сбер. Как это сделать читайте в статье про [аккаунт Apple другого региона](/blog/2026/04/05/apple-id-other-region#top-up-balance){:target="_blank" rel="noopener"}.
