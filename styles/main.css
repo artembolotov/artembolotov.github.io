@@ -23,8 +23,8 @@ section h2 {
 /* Header section */
 #top {
   display: table;
-  height: calc(100vh - 50px - env(safe-area-inset-top));
-  height: calc(100svh - 50px - env(safe-area-inset-top));
+  height: 100vh;
+  height: 100svh;
   min-height: 400px;
   margin-top: 0;
   width: 100%;
