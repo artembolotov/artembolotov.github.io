@@ -2,7 +2,7 @@
 title: "Как вернуть push-уведомления в Макс на iPhone?"
 description: "Обходной путь через PWA-версию мессенджера, которую раньше категорически не рекомендовали ставить."
 tags: [notes]
-draft: true
+draft: false
 ---
 
 Заходите на [web.max.ru](https://web.max.ru/){:target="_blank" rel="noopener noreferrer"}, нажимайте **Поделиться → Добавить на экран «Домой»**.
