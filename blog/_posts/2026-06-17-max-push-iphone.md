@@ -5,7 +5,7 @@ tags: [notes]
 draft: true
 ---
 
-Заходите на web.max.ru, нажимайте «Поделиться» → «Добавить на экран «Домой».
+Заходите на [web.max.ru](https://web.max.ru/){:target="_blank" rel="noopener noreferrer"}, нажимайте **Поделиться → Добавить на экран «Домой»**.
 
 {% capture gallery_share %}
 01.jpeg|Меню «Поделиться» в Safari с выделенным пунктом «Добавить на экран «Домой»
