@@ -2,6 +2,7 @@
 title: "Из чего сделаны веб-страницы"
 description: "HTML, CSS и JavaScript простыми словами. Каркас, отделка и электричество — как браузер собирает из этого сайт."
 tags: [internet]
+styles: [internet]
 draft: true
 ---
 

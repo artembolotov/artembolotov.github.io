@@ -24,7 +24,8 @@ Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with
 ## Layouts and styles
 
 - Layout chain: `compress` ← `default` ← `post` / `tag-page`. `default.html` contains the whole page shell (nav, logo) and loads all CSS/JS.
-- CSS is plain, no preprocessor: `styles/all.css` (base + nav, loaded everywhere), `styles/main.css` (homepage only), `styles/blog.css` (all blog components: galleries, code highlighting, live editor, author footer...). New component styles go into `blog.css` by convention.
+- CSS is plain, no preprocessor: `styles/all.css` (base + nav, loaded everywhere), `styles/main.css` (homepage only), `styles/blog.css` (shared blog components: galleries, code highlighting, author footer...). New shared component styles go into `blog.css` by convention.
+- Page-specific stylesheets are opt-in via front matter: `styles: [internet]` loads `/styles/internet.css` (see the `page.styles` loop in `default.html`). Interactive-element styles for a series live in `styles/<tag>.css`; posts that use those includes must list the stylesheet in `styles:`.
 - Dark theme is handled via `@media (prefers-color-scheme: dark)` blocks in each stylesheet — every new component needs one. Accent colors: `#0089ff` (dark: `#64b2ff`), hover red `#f41224` (dark: `#ff453a`).
 - `html.no-js` class is removed by an inline script in `default.html`; use it for no-JavaScript fallbacks (see galleries).
 
@@ -32,7 +33,7 @@ Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with
 
 - `img.html` — single image; bare filenames auto-resolve to `/blog/img/<post-slug>/<file>`.
 - `gallery.html` + `scripts/gallery.js` (loaded globally), `youtube.html`, `code-block.html`, `reading-time.html`, `author-footer.html`.
-- Series-specific interactive components live in subfolders named after the series tag, e.g. `_includes/internet/live-editor.html` (self-contained markup + inline JS; its styles are in `blog.css`).
+- Series-specific interactive components live in subfolders named after the series tag, e.g. `_includes/internet/live-editor.html` (self-contained markup + inline JS; styles are in `styles/internet.css`, loaded via `styles: [internet]` front matter).
 
 ## HTML compression caveats
 
