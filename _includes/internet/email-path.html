@@ -1,0 +1,263 @@
+<div class="email-path" id="email-path">
+  <noscript><p>Для работы схемы нужен JavaScript — сейчас он выключен в браузере. Ниже видна сама схема, но письмо по ней не поедет.</p></noscript>
+  <div class="email-path-window">
+    <div class="email-path-head">
+      <span class="email-path-title">Путь письма: от «Отправить» до ящика</span>
+    </div>
+    <div class="email-path-actions-label">Выберите сценарий:</div>
+    <div class="email-path-actions">
+      <button type="button" class="email-path-btn" data-ep-action="honest">&#9993;&#65039; честное письмо</button>
+      <button type="button" class="email-path-btn" data-ep-action="spoof">&#127917; поддельный адрес</button>
+      <button type="button" class="email-path-btn" data-ep-action="twin">&#129698; похожий домен</button>
+      <button type="button" class="email-path-btn" data-ep-action="down">&#128244; сервер прилёг</button>
+    </div>
+    <div class="email-path-letter">
+      <div class="email-path-letter-row"><span class="email-path-letter-key">От:</span> <span data-ep-from><b>Вася</b> &lt;vasya@yandex.ru&gt;</span></div>
+      <div class="email-path-letter-row"><span class="email-path-letter-key">Кому:</span> <span><b>Петя</b> &lt;petya@mail.ru&gt;</span></div>
+    </div>
+    <div class="email-path-stage">
+      <svg class="email-path-svg" viewBox="0 0 360 150" role="img" aria-label="Схема пути письма: клиент, сервер отправителя, DNS, сервер получателя и два исхода — «Входящие» или «Спам»">
+        <path class="email-path-route" data-ep-path="cli" d="M38 68 L104 68"/>
+        <path class="email-path-route" data-ep-path="dns" d="M118 57 Q135 22 158 18"/>
+        <path class="email-path-route" data-ep-path="smtp" d="M122 72 L216 72"/>
+        <path class="email-path-route" data-ep-path="inbox" d="M234 63 Q276 44 300 38"/>
+        <path class="email-path-route" data-ep-path="spam" d="M234 74 Q276 100 300 104"/>
+        <rect class="email-path-client" x="24" y="56" width="14" height="24" rx="2"/>
+        <text class="email-path-label" data-ep-sender-label x="31" y="94" text-anchor="middle">Вася</text>
+        <text class="email-path-sub" x="31" y="103" text-anchor="middle">клиент</text>
+        <rect class="email-path-server" data-ep-sender-rect x="104" y="59" width="18" height="18" rx="2"/>
+        <text class="email-path-label" data-ep-server-label x="113" y="94" text-anchor="middle">Сервер Яндекса</text>
+        <text class="email-path-queue" data-ep-queue x="113" y="104" text-anchor="middle"></text>
+        <rect class="email-path-dns" x="160" y="10" width="16" height="16" rx="2"/>
+        <text class="email-path-label" x="181" y="21" text-anchor="start">DNS (MX)</text>
+        <rect class="email-path-server" data-ep-rcpt-rect x="216" y="59" width="18" height="18" rx="2"/>
+        <text class="email-path-label" x="225" y="94" text-anchor="middle">Сервер Mail.ru</text>
+        <text class="email-path-status" data-ep-rcpt-status x="225" y="104" text-anchor="middle"></text>
+        <text class="email-path-emoji" x="316" y="42" text-anchor="middle">&#128229;</text>
+        <text class="email-path-label" x="316" y="56" text-anchor="middle">Входящие</text>
+        <text class="email-path-emoji" x="316" y="110" text-anchor="middle">&#128465;</text>
+        <text class="email-path-label" x="316" y="124" text-anchor="middle">Спам</text>
+        <circle class="email-path-q" data-ep-q r="2.8"/>
+        <text class="email-path-mail" data-ep-mail text-anchor="middle">&#9993;&#65039;</text>
+      </svg>
+    </div>
+    <div class="email-path-results-label">Проверки сервера Mail.ru:</div>
+    <div class="email-path-results">
+      <span class="email-path-chip"><span class="email-path-chip-name">SPF</span><b class="email-path-chip-val" data-ep-check="spf">—</b></span>
+      <span class="email-path-chip"><span class="email-path-chip-name">DKIM</span><b class="email-path-chip-val" data-ep-check="dkim">—</b></span>
+      <span class="email-path-chip"><span class="email-path-chip-name">DMARC</span><b class="email-path-chip-val" data-ep-check="dmarc">—</b></span>
+    </div>
+    <div class="email-path-caption" data-ep-caption aria-live="polite">Письмо идёт от Васи к Пете через два независимых сервера — и на входе его ждут три проверки. Выберите сценарий и проследите путь конверта.</div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('email-path');
+    if (!root) { return; }
+
+    var caption = root.querySelector('[data-ep-caption]');
+    var buttons = root.querySelectorAll('[data-ep-action]');
+    var fromEl = root.querySelector('[data-ep-from]');
+    var mail = root.querySelector('[data-ep-mail]');
+    var qDot = root.querySelector('[data-ep-q]');
+    var senderLabel = root.querySelector('[data-ep-sender-label]');
+    var serverLabel = root.querySelector('[data-ep-server-label]');
+    var senderRect = root.querySelector('[data-ep-sender-rect]');
+    var rcptRect = root.querySelector('[data-ep-rcpt-rect]');
+    var rcptStatus = root.querySelector('[data-ep-rcpt-status]');
+    var queueEl = root.querySelector('[data-ep-queue]');
+
+    var paths = {}, checks = {};
+    var list = root.querySelectorAll('[data-ep-path]');
+    for (var i = 0; i < list.length; i++) { paths[list[i].getAttribute('data-ep-path')] = list[i]; }
+    list = root.querySelectorAll('[data-ep-check]');
+    for (i = 0; i < list.length; i++) { checks[list[i].getAttribute('data-ep-check')] = list[i]; }
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var running = false;
+
+    var SCENARIOS = {
+      honest: {
+        from: '<b>Вася</b> &lt;vasya@yandex.ru&gt;',
+        sender: 'Вася', server: 'Сервер Яндекса', evil: false,
+        checks: { spf: 'pass', dkim: 'pass', dmarc: 'pass' }, dest: 'inbox',
+        run: 'Клиент передаёт письмо серверу Яндекса. Тот спрашивает у DNS: «где MX для mail.ru?» — и несёт письмо по SMTP на сервер получателя.',
+        done: 'SPF: письмо пришло с разрешённого сервера Яндекса. DKIM: подпись сходится. DMARC доволен. Письмо во «Входящих», весь путь занял доли секунды. Теперь посмотрите на подделку.'
+      },
+      spoof: {
+        from: '<b>Сбербанк</b> &lt;support@sberbank.ru&gt;',
+        sender: 'Мошенник', server: 'Сервер мошенника', evil: true,
+        checks: { spf: 'fail', dkim: 'fail', dmarc: 'fail' }, dest: 'spam',
+        run: 'Мошенник шлёт письмо со своего сервера, а в поле «От» вписал support@sberbank.ru — SMTP это не запрещает: обратный адрес может быть любым.',
+        done: 'SPF: сервера мошенника нет в списке разрешённых для sberbank.ru. DKIM: подписи настоящего банка нет. А DMARC-политика Сбербанка велит такое отклонять — письмо уехало в спам, Петя его даже не откроет.'
+      },
+      twin: {
+        from: '<b>Сбербанк</b> &lt;support@sberbank-online.ru&gt;',
+        sender: 'Мошенник', server: 'Сервер мошенника', evil: true,
+        checks: { spf: 'pass', dkim: 'pass', dmarc: 'pass' }, dest: 'inbox',
+        run: 'Хитрее: мошенник купил домен sberbank-online.ru и честно настроил на нём собственные SPF, DKIM и DMARC.',
+        done: 'Все проверки пройдены — и это не сбой: письмо действительно от sberbank-online.ru. Просто этот домен не имеет отношения к банку. Здесь техника бессильна — спасает только привычка смотреть на адрес после собачки.'
+      },
+      down: {
+        from: '<b>Вася</b> &lt;vasya@yandex.ru&gt;',
+        sender: 'Вася', server: 'Сервер Яндекса', evil: false, retry: true,
+        checks: { spf: 'pass', dkim: 'pass', dmarc: 'pass' }, dest: 'inbox',
+        run: 'Сервер Mail.ru прилёг — техобслуживание. Смотрим, что сервер Яндекса сделает с письмом, которому некуда доехать.',
+        done: 'Письмо не пропало: сервер отправителя положил его в очередь и повторил попытку — в жизни через несколько минут, потом через час, и так сутки-двое. Получатель ожил — и письмо доехало, как ни в чём не бывало.'
+      }
+    };
+
+    var CHECK_TEXT = {
+      spf: { pass: '✓ pass', fail: '✕ fail' },
+      dkim: { pass: '✓ pass', fail: '✕ fail' },
+      dmarc: { pass: '✓ ок', fail: '✕ в спам' }
+    };
+
+    function setCaption(html, isResult) {
+      caption.innerHTML = html;
+      caption.classList.toggle('email-path-caption--result', !!isResult);
+    }
+
+    function setCheck(key, state) {
+      var el = checks[key];
+      el.classList.remove('is-pass', 'is-fail');
+      if (state) {
+        el.textContent = CHECK_TEXT[key][state];
+        el.classList.add(state === 'pass' ? 'is-pass' : 'is-fail');
+      } else {
+        el.textContent = '—';
+      }
+    }
+
+    function setBusy(busy) {
+      running = busy;
+      for (var b = 0; b < buttons.length; b++) { buttons[b].disabled = busy; }
+    }
+
+    function placeOn(el, pathEl, dist) {
+      var pt = pathEl.getPointAtLength(dist);
+      if (el === mail) {
+        el.setAttribute('x', pt.x);
+        el.setAttribute('y', pt.y + 4);
+      } else {
+        el.setAttribute('cx', pt.x);
+        el.setAttribute('cy', pt.y);
+      }
+    }
+
+    // Проводит el по пути pathKey; rev — в обратную сторону, mark — подсветить путь пройденным
+    function glide(el, pathKey, opts, cb) {
+      var pathEl = paths[pathKey];
+      var len = pathEl.getTotalLength();
+      var dur = reduceMotion ? 0 : opts.ms;
+      function finish() {
+        if (opts.mark) { pathEl.classList.add('is-done'); }
+        cb();
+      }
+      if (!dur) { placeOn(el, pathEl, opts.rev ? 0 : len); finish(); return; }
+      placeOn(el, pathEl, opts.rev ? len : 0);
+      el.classList.add('is-shown');
+      var start = null;
+      function frame(ts) {
+        if (start === null) { start = ts; }
+        var t = Math.min((ts - start) / dur, 1);
+        placeOn(el, pathEl, len * (opts.rev ? 1 - t : t));
+        if (t < 1) { requestAnimationFrame(frame); } else { finish(); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function pause(ms) {
+      return function (next) { setTimeout(next, reduceMotion ? 60 : ms); };
+    }
+
+    function seq(steps) {
+      var i = 0;
+      function next() {
+        if (i >= steps.length) { return; }
+        steps[i++](next);
+      }
+      next();
+    }
+
+    function reset(scn) {
+      for (var key in paths) { paths[key].classList.remove('is-done', 'is-fail'); }
+      for (key in checks) { setCheck(key, null); }
+      fromEl.innerHTML = scn.from;
+      senderLabel.textContent = scn.sender;
+      serverLabel.textContent = scn.server;
+      senderRect.classList.toggle('is-evil', !!scn.evil);
+      rcptRect.classList.toggle('is-down', !!scn.retry);
+      rcptStatus.textContent = scn.retry ? 'недоступен' : '';
+      queueEl.textContent = '';
+      qDot.classList.remove('is-shown');
+      mail.classList.remove('is-shown');
+      placeOn(mail, paths.cli, 0);
+    }
+
+    function run(mode) {
+      var scn = SCENARIOS[mode];
+      reset(scn);
+      setBusy(true);
+      setCaption(scn.run, false);
+      var steps = [];
+      // Клиент → сервер отправителя
+      steps.push(function (next) { glide(mail, 'cli', { ms: 800, mark: true }, next); });
+      steps.push(pause(350));
+      // MX-запрос к DNS и обратно
+      steps.push(function (next) { glide(qDot, 'dns', { ms: 550, mark: true }, next); });
+      steps.push(function (next) { glide(qDot, 'dns', { ms: 550, rev: true }, next); });
+      steps.push(function (next) { qDot.classList.remove('is-shown'); next(); });
+      steps.push(pause(250));
+      if (scn.retry) {
+        // Первая попытка: получатель лежит, письмо возвращается в очередь
+        steps.push(function (next) { glide(mail, 'smtp', { ms: 900 }, next); });
+        steps.push(function (next) { paths.smtp.classList.add('is-fail'); next(); });
+        steps.push(pause(500));
+        steps.push(function (next) { glide(mail, 'smtp', { ms: 900, rev: true }, next); });
+        steps.push(function (next) {
+          paths.smtp.classList.remove('is-fail');
+          queueEl.textContent = 'письмо в очереди';
+          next();
+        });
+        steps.push(pause(1300));
+        // Получатель ожил — вторая попытка
+        steps.push(function (next) {
+          rcptRect.classList.remove('is-down');
+          rcptStatus.textContent = '';
+          queueEl.textContent = '';
+          next();
+        });
+        steps.push(pause(300));
+      }
+      // Серверы общаются по SMTP
+      steps.push(function (next) { glide(mail, 'smtp', { ms: 900, mark: true }, next); });
+      steps.push(pause(400));
+      // Проверки на входе
+      steps.push(function (next) { setCheck('spf', scn.checks.spf); next(); });
+      steps.push(pause(650));
+      steps.push(function (next) { setCheck('dkim', scn.checks.dkim); next(); });
+      steps.push(pause(650));
+      steps.push(function (next) { setCheck('dmarc', scn.checks.dmarc); next(); });
+      steps.push(pause(650));
+      // Вердикт: во «Входящие» или в спам
+      steps.push(function (next) { glide(mail, scn.dest, { ms: 700, mark: true }, next); });
+      steps.push(function (next) {
+        setCaption(scn.done, true);
+        setBusy(false);
+        next();
+      });
+      seq(steps);
+    }
+
+    for (var b = 0; b < buttons.length; b++) {
+      buttons[b].addEventListener('click', function () {
+        if (running) { return; }
+        for (var j = 0; j < buttons.length; j++) {
+          buttons[j].classList.toggle('is-active', buttons[j] === this);
+        }
+        run(this.getAttribute('data-ep-action'));
+      });
+    }
+  })();
+  </script>
+</div>
