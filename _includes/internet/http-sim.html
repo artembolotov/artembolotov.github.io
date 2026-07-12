@@ -1,0 +1,229 @@
+<div class="http-sim" id="http-sim">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
+  <div class="http-sim-window">
+    <div class="http-sim-head">
+      <span class="http-sim-title">Симулятор HTTP-запросов</span>
+    </div>
+    <div class="http-sim-bar">
+      <div class="http-sim-proto" role="group" aria-label="Протокол">
+        <button type="button" class="http-sim-proto-btn is-on" data-http-proto="http">http</button>
+        <button type="button" class="http-sim-proto-btn" data-http-proto="https">https</button>
+      </div>
+      <span class="http-sim-url"><span class="http-sim-lock" data-http-lock hidden>&#128274;</span><span data-http-url>http://cafe.example</span></span>
+    </div>
+    <div class="http-sim-paths-label">Какую страницу запросить:</div>
+    <div class="http-sim-paths">
+      <button type="button" class="http-sim-path" data-http-path="/menu">/menu</button>
+      <button type="button" class="http-sim-path" data-http-path="/old-menu">/old-menu</button>
+      <button type="button" class="http-sim-path" data-http-path="/kitchen">/kitchen</button>
+      <button type="button" class="http-sim-path" data-http-path="/pizza">/pizza</button>
+      <button type="button" class="http-sim-path" data-http-path="/coffee">/coffee</button>
+      <button type="button" class="http-sim-path" data-http-path="/broken">/broken</button>
+    </div>
+    <div class="http-sim-log" data-http-log aria-live="polite"></div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('http-sim');
+    if (!root) { return; }
+
+    var log = root.querySelector('[data-http-log]');
+    var urlEl = root.querySelector('[data-http-url]');
+    var lockEl = root.querySelector('[data-http-lock]');
+    var protoButtons = root.querySelectorAll('[data-http-proto]');
+    var pathButtons = root.querySelectorAll('[data-http-path]');
+
+    var proto = 'http';
+    var lastPath = null;
+    var running = false;
+
+    var scenarios = {
+      '/menu': {
+        code: 200, reason: 'OK', cls: 'ok',
+        headers: 'Content-Type: text/html; charset=utf-8\nContent-Length: 419',
+        body: '<html>\n  <h1>Меню</h1>\n  <p>Капучино — 190 ₽</p>\n  …',
+        say: 'Секунду… нашёл. Несу!',
+        explain: '<b class="http-sim-code--ok">200 OK</b> — «пожалуйста, вот ваше блюдо». Сервер нашёл страницу и вернул её содержимое, браузер тут же нарисует его на экране.'
+      },
+      '/old-menu': {
+        code: 301, reason: 'Moved Permanently', cls: 'redirect',
+        headers: 'Location: /menu',
+        body: null, redirectTo: '/menu',
+        say: 'Эту страницу мы перенесли. Вот новый адрес:',
+        explain: '<b class="http-sim-code--redirect">301 Moved Permanently</b> — «мы переехали». Заметьте: браузер не показал вам этот ответ, а молча сходил по адресу из заголовка <code>Location</code>. Ровно так работают короткие ссылки.'
+      },
+      '/kitchen': {
+        code: 403, reason: 'Forbidden', cls: 'client',
+        headers: 'Content-Type: text/html',
+        body: '<html><h1>Посторонним нельзя</h1>',
+        say: 'На кухню — только персонал!',
+        explain: '<b class="http-sim-code--client">403 Forbidden</b> — «вам сюда нельзя». Страница существует, но сервер отказался её отдавать: не хватает прав.'
+      },
+      '/pizza': {
+        code: 404, reason: 'Not Found', cls: 'client',
+        headers: 'Content-Type: text/html',
+        body: '<html><h1>Такого блюда нет</h1>',
+        say: 'Смотрел в меню, смотрел на кухне — пиццы у нас нет и не было.',
+        explain: '<b class="http-sim-code--client">404 Not Found</b> — «такого блюда в меню нет». Сервер работает, но страницы <code>/pizza</code> у него не существует. Самый знаменитый код из всех.'
+      },
+      '/coffee': {
+        code: 418, reason: "I'm a teapot", cls: 'client',
+        headers: 'Content-Type: text/plain',
+        body: 'Я чайник. Кофе не завариваю.',
+        say: 'Кхм. Неловко признаваться, но…',
+        explain: '<b class="http-sim-code--client">418 I’m a teapot</b> — «я чайник, кофе не завариваю». Первоапрельская шутка 1998 года, которая до сих пор живёт в официальной спецификации HTTP.'
+      },
+      '/broken': {
+        code: 500, reason: 'Internal Server Error', cls: 'server',
+        headers: 'Content-Type: text/html',
+        body: '<html><h1>Что-то пошло не так</h1>',
+        say: 'Ай!.. У нас тут на кухне всё в дыму, простите.',
+        explain: '<b class="http-sim-code--server">500 Internal Server Error</b> — сломалась кухня. Вы всё сделали правильно, ошибка на стороне сервера. Обычно помогает подождать пару минут и обновить страницу.'
+      }
+    };
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function cipherHex(n) {
+      var s = '17 03 03';
+      for (var i = 0; i < n; i++) {
+        s += ' ' + (Math.floor(Math.random() * 240) + 16).toString(16);
+      }
+      return s + ' …';
+    }
+
+    function setUrl(path) {
+      urlEl.textContent = proto + '://cafe.example' + (path || '');
+      lockEl.hidden = proto !== 'https';
+    }
+
+    function setBusy(busy) {
+      running = busy;
+      for (var i = 0; i < pathButtons.length; i++) {
+        pathButtons[i].disabled = busy;
+      }
+    }
+
+    function addBubble(cls, html) {
+      var el = document.createElement('div');
+      el.className = 'http-sim-step ' + cls;
+      el.innerHTML = html;
+      log.appendChild(el);
+      // Class is added a frame later so the fade-in transition fires
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { el.classList.add('is-shown'); });
+      });
+    }
+
+    function bubble(side, name, text, pre) {
+      var html = '<span class="http-sim-step-name">' + name + '</span>';
+      if (text) { html += '<p>' + text + '</p>'; }
+      if (pre) { html += '<pre>' + pre + '</pre>'; }
+      addBubble('http-sim-step--' + side, html);
+    }
+
+    function requestPre(path) {
+      return escapeHtml('GET ' + path + ' HTTP/1.1\nHost: cafe.example\nAccept-Language: ru');
+    }
+
+    function responsePre(scn) {
+      var head = 'HTTP/1.1 <b class="http-sim-code--' + scn.cls + '">' + scn.code + ' ' + escapeHtml(scn.reason) + '</b>\n' + escapeHtml(scn.headers);
+      if (scn.body) { head += '\n\n' + escapeHtml(scn.body); }
+      return head;
+    }
+
+    function run(steps) {
+      setBusy(true);
+      var i = 0;
+      function next() {
+        var step = steps[i++];
+        step();
+        if (i < steps.length) {
+          setTimeout(next, 950);
+        } else {
+          setBusy(false);
+        }
+      }
+      next();
+    }
+
+    function browserStep(path, follow) {
+      var say = follow
+        ? 'Ага, переехали на <code>' + follow + '</code>. Схожу по новому адресу сам, пользователю даже кликать не нужно.'
+        : (proto === 'https'
+          ? 'Хочу страницу <code>' + path + '</code>. Пишу записку и запечатываю её в конверт — снаружи только адрес:'
+          : 'Хочу страницу <code>' + path + '</code>. Пишу официанту записку:');
+      bubble('left', 'Браузер', say, requestPre(follow || path));
+    }
+
+    function spyStep(path) {
+      if (proto === 'https') {
+        bubble('spy', 'Кто-то по пути &#128064;',
+          'Вижу только, что кто-то говорит с <code>cafe.example</code>. Дальше — шифрованный поток: <code>' + cipherHex(4) + '</code> Не разберу ни слова.');
+      } else {
+        bubble('spy', 'Кто-то по пути &#128064;',
+          'Открытка! Читаю всё: <code>GET ' + path + '</code>, заголовки — и ответ сервера тоже увижу целиком.');
+      }
+    }
+
+    function serverStep(scn) {
+      bubble('right', 'Сервер cafe.example', scn.say, responsePre(scn));
+    }
+
+    function explainStep(scn) {
+      addBubble('http-sim-step--explain', '<p>' + scn.explain + '</p>');
+    }
+
+    function lookup(path) {
+      var scn = scenarios[path];
+      log.innerHTML = '';
+      lastPath = path;
+      setUrl(path);
+      var steps = [
+        function () { browserStep(path); },
+        function () { spyStep(path); },
+        function () { serverStep(scn); }
+      ];
+      if (scn.redirectTo) {
+        var target = scenarios[scn.redirectTo];
+        steps.push(function () { browserStep(path, scn.redirectTo); });
+        steps.push(function () { setUrl(scn.redirectTo); serverStep(target); });
+      }
+      steps.push(function () { explainStep(scn); });
+      if (proto === 'http') {
+        steps.push(function () {
+          addBubble('http-sim-step--hint',
+            '<p>Переключите на <b>https</b> — и посмотрите, что останется от улова наблюдателя.</p>');
+        });
+      }
+      run(steps);
+    }
+
+    for (var p = 0; p < protoButtons.length; p++) {
+      protoButtons[p].addEventListener('click', function () {
+        if (running) { return; }
+        proto = this.getAttribute('data-http-proto');
+        for (var j = 0; j < protoButtons.length; j++) {
+          protoButtons[j].classList.toggle('is-on', protoButtons[j] === this);
+        }
+        setUrl(lastPath);
+        // Re-run the same request so the difference is visible immediately
+        if (lastPath) { lookup(lastPath); }
+      });
+    }
+
+    for (var b = 0; b < pathButtons.length; b++) {
+      pathButtons[b].addEventListener('click', function () {
+        if (running) { return; }
+        var path = this.getAttribute('data-http-path');
+        for (var j = 0; j < pathButtons.length; j++) {
+          pathButtons[j].classList.toggle('is-active', pathButtons[j] === this);
+        }
+        lookup(path);
+      });
+    }
+  })();
+  </script>
+</div>

@@ -1128,6 +1128,333 @@ blockquote p:last-child {
   }
 }
 
+/* HTTP request simulator */
+.http-sim {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+.http-sim-window {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f8f8;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.http-sim-head {
+  background: #ececec;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.http-sim-title {
+  display: block;
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 0.8em 1.5em;
+  color: #666;
+}
+
+.http-sim-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 1em 1em 0;
+}
+
+.http-sim-proto {
+  display: flex;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.http-sim-proto-btn {
+  padding: 0.5em 0.9em;
+  border: none;
+  background: transparent;
+  color: #999;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.http-sim-proto-btn.is-on {
+  background: #0089ff;
+  color: #fff;
+}
+
+.http-sim-url {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.5em 0.9em;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  flex: 1;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8em;
+}
+
+.http-sim-lock {
+  margin-right: 0.4em;
+  font-size: 0.9em;
+}
+
+.http-sim-paths-label {
+  padding: 1em 1em 0;
+  font-size: 0.75em;
+  color: #999;
+}
+
+.http-sim-paths {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  padding: 0.5em 1em 0;
+}
+
+.http-sim-path {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.75em;
+  padding: 0.45em 0.9em;
+  border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
+}
+
+.http-sim-path:hover {
+  border-color: #0089ff;
+  color: #0089ff;
+}
+
+.http-sim-path.is-active {
+  background: #0089ff;
+  border-color: #0089ff;
+  color: #fff;
+}
+
+.http-sim-path:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.http-sim-log {
+  padding: 0.5em 1em 1em;
+}
+
+.http-sim-log:empty {
+  padding: 0.5em 0 0;
+}
+
+.http-sim-step {
+  position: relative;
+  box-sizing: border-box;
+  max-width: 88%;
+  margin-top: 0.7em;
+  padding: 0.7em 0.9em;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  font-size: 0.85em;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.http-sim-step.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.http-sim-step p {
+  margin: 0;
+  background: none;
+  padding: 0;
+}
+
+.http-sim-step pre {
+  margin: 0.5em 0 0;
+  padding: 0.6em 0.8em;
+  border-radius: 6px;
+  background: #f4f4f4;
+  overflow-x: auto;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+.http-sim-step--right {
+  margin-left: auto;
+  background: #e6f2ff;
+}
+
+.http-sim-step--right pre {
+  background: rgba(255,255,255,0.75);
+}
+
+.http-sim-step--spy {
+  max-width: 100%;
+  background: none;
+  box-shadow: none;
+  border: 1px dashed rgba(0,0,0,0.25);
+}
+
+.http-sim-step-name {
+  display: block;
+  margin-bottom: 0.25em;
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #0089ff;
+}
+
+.http-sim-step--spy .http-sim-step-name {
+  color: #999;
+}
+
+.http-sim-step--explain {
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0,137,255,0.4);
+  font-size: 0.9em;
+}
+
+.http-sim-step--hint {
+  max-width: 100%;
+  background: none;
+  box-shadow: none;
+  text-align: center;
+  color: #999;
+  font-size: 0.8em;
+}
+
+.http-sim-code--ok { color: #178a3d; }
+.http-sim-code--redirect { color: #0089ff; }
+.http-sim-code--client { color: #c96a00; }
+.http-sim-code--server { color: #f41224; }
+
+@media screen and (max-width: 767px) {
+  .http-sim-step {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .http-sim-step {
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .http-sim-window {
+    background: #1a1a1a;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+
+  .http-sim-head {
+    background: #111;
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+
+  .http-sim-title {
+    color: #999;
+  }
+
+  .http-sim-proto {
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .http-sim-proto-btn {
+    color: #777;
+  }
+
+  .http-sim-proto-btn.is-on {
+    background: #64b2ff;
+    color: #111;
+  }
+
+  .http-sim-url {
+    background: #242424;
+    border-color: rgba(255,255,255,0.12);
+    color: #e0e0e0;
+  }
+
+  .http-sim-paths-label {
+    color: #777;
+  }
+
+  .http-sim-path {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #999;
+  }
+
+  .http-sim-path:hover {
+    border-color: #64b2ff;
+    color: #64b2ff;
+  }
+
+  .http-sim-path.is-active {
+    background: #64b2ff;
+    border-color: #64b2ff;
+    color: #111;
+  }
+
+  .http-sim-step {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .http-sim-step pre {
+    background: #1a1a1a;
+  }
+
+  .http-sim-step--right {
+    background: #17293d;
+  }
+
+  .http-sim-step--right pre {
+    background: rgba(0,0,0,0.35);
+  }
+
+  .http-sim-step--spy {
+    background: none;
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  .http-sim-step-name {
+    color: #64b2ff;
+  }
+
+  .http-sim-step--spy .http-sim-step-name {
+    color: #777;
+  }
+
+  .http-sim-step--explain {
+    background: #242424;
+    border-color: rgba(100,178,255,0.45);
+  }
+
+  .http-sim-step--hint {
+    background: none;
+    color: #777;
+  }
+
+  .http-sim-code--ok { color: #4cc46e; }
+  .http-sim-code--redirect { color: #64b2ff; }
+  .http-sim-code--client { color: #ffa53d; }
+  .http-sim-code--server { color: #ff453a; }
+}
+
 /* Upcoming (draft) articles in series pages */
 .article-upcoming {
   opacity: 0.45;
