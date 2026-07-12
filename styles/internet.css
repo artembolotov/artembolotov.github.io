@@ -4044,9 +4044,11 @@
   padding: 0.3em 0.4em;
 }
 
+/* cursor:pointer also makes iOS Safari deliver click events here */
 .api-sim-screen [data-api-bind],
 .api-sim-line[data-api-bind] {
   border-radius: 4px;
+  cursor: pointer;
   transition: background 0.15s, box-shadow 0.15s;
 }
 
@@ -4319,6 +4321,10 @@
   .api-sim-phone {
     width: 220px;
     align-self: center;
+  }
+
+  .api-sim-screen {
+    min-height: 200px;
   }
 }
 

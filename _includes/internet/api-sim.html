@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="api-sim-explain" data-api-explain hidden></div>
-    <div class="api-sim-hint" data-api-hint hidden>Наведите на строку JSON или на элемент экрана — подсветится, что из чего нарисовано.</div>
+    <div class="api-sim-hint" data-api-hint hidden>Наведите курсор или коснитесь строки JSON либо элемента экрана — подсветится, что из чего нарисовано.</div>
   </div>
   <script>
   (function () {
@@ -238,8 +238,24 @@
 
     root.addEventListener('mouseover', function (e) { setHl(bindOf(e.target)); });
     root.addEventListener('mouseleave', function () { setHl(null); });
-    // Tap works as highlight too (no hover on touchscreens)
-    root.addEventListener('click', function (e) { setHl(bindOf(e.target)); });
+    // Tap works as highlight too (no hover on touchscreens). When the stage
+    // is stacked in a column, the paired element is usually off-screen, so
+    // scroll it into view — block:'nearest' keeps desktop clicks scroll-free.
+    root.addEventListener('click', function (e) {
+      var bind = bindOf(e.target);
+      setHl(bind);
+      if (!bind) { return; }
+      var phone = root.querySelector('.api-sim-phone');
+      var fromPhone = phone.contains(e.target);
+      var els = root.querySelectorAll('[data-api-bind="' + bind + '"]');
+      var motion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+      for (var i = 0; i < els.length; i++) {
+        if (phone.contains(els[i]) !== fromPhone) {
+          els[i].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: motion });
+          break;
+        }
+      }
+    });
 
     for (var b = 0; b < buttons.length; b++) {
       buttons[b].addEventListener('click', function () {
