@@ -1,0 +1,94 @@
+<div class="live-editor" id="live-editor">
+  <noscript><p>Для работы редактора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
+  <div class="live-editor-window">
+    <div class="live-editor-head">
+      <button type="button" class="live-editor-tab is-active" data-le-tab="html">HTML</button>
+      <button type="button" class="live-editor-tab" data-le-tab="css">CSS</button>
+      <button type="button" class="live-editor-reset" data-le-reset>Сбросить</button>
+    </div>
+    <textarea class="live-editor-input" data-le-input="html" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-label="Код HTML"></textarea>
+    <textarea class="live-editor-input" data-le-input="css" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-label="Код CSS" hidden></textarea>
+  </div>
+  <div class="live-editor-window">
+    <div class="live-editor-head">
+      <span class="live-editor-title">Результат</span>
+    </div>
+    <iframe class="live-editor-preview" data-le-preview title="Результат: страница, которую браузер собрал из кода" sandbox="allow-scripts allow-modals"></iframe>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('live-editor');
+    if (!root) { return; }
+
+    var defaults = {
+      html: [
+        '<h1>Привет, мир</h1>',
+        '<p>Это мой первый сайт.</p>',
+        '<p>А это <a href="https://example.com">ссылка</a> на другой сайт.</p>'
+      ].join('\n'),
+      css: [
+        'h1 {',
+        '  color: #0089ff;',
+        '  font-size: 40px;',
+        '  text-align: center;',
+        '}',
+        '',
+        'p {',
+        '  color: #333;',
+        '  font-size: 24px;',
+        '  line-height: 1.5;',
+        '}'
+      ].join('\n')
+    };
+
+    var inputs = {
+      html: root.querySelector('[data-le-input="html"]'),
+      css: root.querySelector('[data-le-input="css"]')
+    };
+    var preview = root.querySelector('[data-le-preview]');
+    var tabs = root.querySelectorAll('[data-le-tab]');
+    var resetButton = root.querySelector('[data-le-reset]');
+    var timer = null;
+
+    function render() {
+      preview.srcdoc = '<!DOCTYPE html><html><head><meta charset="utf-8"><style>' +
+        inputs.css.value +
+        '</style></head><body>' +
+        inputs.html.value +
+        '</body></html>';
+    }
+
+    function scheduleRender() {
+      clearTimeout(timer);
+      timer = setTimeout(render, 150);
+    }
+
+    function showTab(name) {
+      inputs.html.hidden = name !== 'html';
+      inputs.css.hidden = name !== 'css';
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.toggle('is-active', tabs[i].getAttribute('data-le-tab') === name);
+      }
+    }
+
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].addEventListener('click', function () {
+        showTab(this.getAttribute('data-le-tab'));
+      });
+    }
+
+    inputs.html.addEventListener('input', scheduleRender);
+    inputs.css.addEventListener('input', scheduleRender);
+
+    resetButton.addEventListener('click', function () {
+      inputs.html.value = defaults.html;
+      inputs.css.value = defaults.css;
+      render();
+    });
+
+    inputs.html.value = defaults.html;
+    inputs.css.value = defaults.css;
+    render();
+  })();
+  </script>
+</div>
