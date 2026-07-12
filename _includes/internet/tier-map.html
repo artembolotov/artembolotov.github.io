@@ -1,0 +1,253 @@
+<div class="tier-map" id="tier-map">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере. Ниже видна сама схема, но пакет по ней не побежит.</p></noscript>
+  <div class="tier-map-window">
+    <div class="tier-map-head">
+      <span class="tier-map-title">Пирамида провайдеров: путь пакета и путь денег</span>
+    </div>
+    <div class="tier-map-actions-label">Отправить пакет:</div>
+    <div class="tier-map-actions">
+      <button type="button" class="tier-map-btn" data-tier-action="local">&#127961;&#65039; на сайт в вашем городе</button>
+      <button type="button" class="tier-map-btn" data-tier-action="abroad">&#128509; на сервер в Нью-Йорке</button>
+      <button type="button" class="tier-map-btn" data-tier-action="money">&#128176; кто кому платит</button>
+    </div>
+    <div class="tier-map-scroll">
+      <svg class="tier-map-svg" viewBox="0 0 700 400" role="img" aria-label="Схема: внизу абоненты, над ними провайдеры Tier 3 и точка обмена, выше операторы Tier 2, наверху Tier 1 и подводный кабель через океан к Нью-Йорку">
+        <defs>
+          <marker id="tierMapArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+            <path class="tier-map-arrow-head" d="M0 0 L8 4 L0 8 z"/>
+          </marker>
+        </defs>
+        <rect class="tier-map-band" x="0" y="33" width="700" height="54"/>
+        <rect class="tier-map-band" x="0" y="118" width="700" height="54"/>
+        <rect class="tier-map-band" x="0" y="208" width="700" height="54"/>
+        <rect class="tier-map-band" x="0" y="318" width="700" height="54"/>
+        <text class="tier-map-band-label" x="8" y="63">Tier 1</text>
+        <text class="tier-map-band-label" x="8" y="148">Tier 2</text>
+        <text class="tier-map-band-label" x="8" y="238">Tier 3</text>
+        <text class="tier-map-band-label" x="8" y="348">клиенты</text>
+        <rect class="tier-map-ocean" x="398" y="0" width="122" height="400"/>
+        <text class="tier-map-ocean-label" x="459" y="390" text-anchor="middle">Атлантика</text>
+        <text class="tier-map-city" x="222" y="390" text-anchor="middle">ваш город</text>
+        <text class="tier-map-city" x="580" y="390" text-anchor="middle">Нью-Йорк, США</text>
+        <path class="tier-map-edge" data-tier-edge="e1" d="M104 326 L104 254"/>
+        <path class="tier-map-edge" data-tier-edge="e2" d="M156 235 L185 235"/>
+        <path class="tier-map-edge" data-tier-edge="e3" d="M265 235 L288 235"/>
+        <path class="tier-map-edge" data-tier-edge="e4" d="M340 326 L340 254"/>
+        <path class="tier-map-edge" data-tier-edge="e5" d="M104 216 L104 164"/>
+        <path class="tier-map-edge" data-tier-edge="e6" d="M146 126 L286 79"/>
+        <path class="tier-map-edge" data-tier-edge="e7" d="M382 60 C 424 112, 486 112, 528 60"/>
+        <path class="tier-map-edge" data-tier-edge="e8" d="M580 126 L580 79"/>
+        <path class="tier-map-edge" data-tier-edge="e9" d="M580 326 L580 164"/>
+        <text class="tier-map-tag tier-map-tag--paid" data-tier-tag="e1" x="112" y="294">абонентская плата</text>
+        <text class="tier-map-tag tier-map-tag--paid" data-tier-tag="e4" x="348" y="294">плата за доступ</text>
+        <text class="tier-map-tag tier-map-tag--paid" data-tier-tag="e5" x="112" y="193">транзит &middot; платно</text>
+        <text class="tier-map-tag tier-map-tag--paid" data-tier-tag="e6" x="213" y="95" text-anchor="middle">транзит &middot; платно</text>
+        <text class="tier-map-tag tier-map-tag--free" data-tier-tag="ixp" x="225" y="272" text-anchor="middle">пиринг &middot; бесплатно</text>
+        <text class="tier-map-tag tier-map-tag--free" data-tier-tag="e7" x="455" y="130" text-anchor="middle">пиринг &middot; бесплатно</text>
+        <text class="tier-map-tag tier-map-tag--paid" data-tier-tag="e8" x="590" y="106">транзит &middot; платно</text>
+        <text class="tier-map-tag tier-map-tag--paid" data-tier-tag="e9" x="590" y="248">транзит &middot; платно</text>
+        <g class="tier-map-node" data-tier-node="you">
+          <rect x="52" y="326" width="104" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="104" y="343" text-anchor="middle">&#127968; Вы</text>
+          <text class="tier-map-node-sub" x="104" y="356" text-anchor="middle">и ваш роутер</text>
+        </g>
+        <g class="tier-map-node" data-tier-node="nb">
+          <rect x="288" y="326" width="104" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="340" y="343" text-anchor="middle">&#128421;&#65039; Сервер сайта</text>
+          <text class="tier-map-node-sub" x="340" y="356" text-anchor="middle">у другого провайдера</text>
+        </g>
+        <g class="tier-map-node" data-tier-node="dc">
+          <rect x="528" y="326" width="104" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="580" y="343" text-anchor="middle">&#127970; Дата-центр</text>
+          <text class="tier-map-node-sub" x="580" y="356" text-anchor="middle">сервер сайта</text>
+        </g>
+        <g class="tier-map-node" data-tier-node="t3a">
+          <rect x="52" y="216" width="104" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="104" y="233" text-anchor="middle">Ваш провайдер</text>
+          <text class="tier-map-node-sub" x="104" y="246" text-anchor="middle">Tier 3</text>
+        </g>
+        <g class="tier-map-node tier-map-node--ixp" data-tier-node="ixp">
+          <rect x="185" y="216" width="80" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="225" y="233" text-anchor="middle">Точка обмена</text>
+          <text class="tier-map-node-sub" x="225" y="246" text-anchor="middle">IXP</text>
+        </g>
+        <g class="tier-map-node" data-tier-node="t3b">
+          <rect x="288" y="216" width="104" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="340" y="233" text-anchor="middle">Другой провайдер</text>
+          <text class="tier-map-node-sub" x="340" y="246" text-anchor="middle">Tier 3</text>
+        </g>
+        <g class="tier-map-node" data-tier-node="t2a">
+          <rect x="52" y="126" width="104" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="104" y="143" text-anchor="middle">Оператор региона</text>
+          <text class="tier-map-node-sub" x="104" y="156" text-anchor="middle">Tier 2</text>
+        </g>
+        <g class="tier-map-node" data-tier-node="t2b">
+          <rect x="528" y="126" width="104" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="580" y="143" text-anchor="middle">Оператор в США</text>
+          <text class="tier-map-node-sub" x="580" y="156" text-anchor="middle">Tier 2</text>
+        </g>
+        <g class="tier-map-node" data-tier-node="t1a">
+          <rect x="278" y="41" width="104" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="330" y="58" text-anchor="middle">Магистраль</text>
+          <text class="tier-map-node-sub" x="330" y="71" text-anchor="middle">Tier 1</text>
+        </g>
+        <g class="tier-map-node" data-tier-node="t1b">
+          <rect x="528" y="41" width="104" height="38" rx="8"/>
+          <text class="tier-map-node-name" x="580" y="58" text-anchor="middle">Магистраль США</text>
+          <text class="tier-map-node-sub" x="580" y="71" text-anchor="middle">Tier 1</text>
+        </g>
+        <circle class="tier-map-packet" data-tier-packet r="6" cx="104" cy="326"/>
+      </svg>
+    </div>
+    <div class="tier-map-caption" data-tier-caption aria-live="polite">Куда отправить пакет? Выберите наверху — и следите, как он пойдёт по пирамиде провайдеров.</div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('tier-map');
+    if (!root) { return; }
+
+    var caption = root.querySelector('[data-tier-caption]');
+    var packet = root.querySelector('[data-tier-packet]');
+    var buttons = root.querySelectorAll('[data-tier-action]');
+
+    var nodes = {}, edges = {}, tags = {};
+    var list = root.querySelectorAll('[data-tier-node]');
+    for (var i = 0; i < list.length; i++) { nodes[list[i].getAttribute('data-tier-node')] = list[i]; }
+    list = root.querySelectorAll('[data-tier-edge]');
+    for (i = 0; i < list.length; i++) { edges[list[i].getAttribute('data-tier-edge')] = list[i]; }
+    list = root.querySelectorAll('[data-tier-tag]');
+    for (i = 0; i < list.length; i++) { tags[list[i].getAttribute('data-tier-tag')] = list[i]; }
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var EDGE_MS = reduceMotion ? 0 : 650;
+    var CABLE_MS = reduceMotion ? 0 : 1500;
+    var HOP_MS = 1900;
+
+    var PAID = ['e1', 'e4', 'e5', 'e6', 'e8', 'e9'];
+    var FREE = ['e2', 'e3', 'e7'];
+
+    var SCENARIOS = {
+      local: {
+        nodes: ['you', 't3a', 'ixp', 't3b', 'nb'],
+        edges: [{ id: 'e1' }, { id: 'e2', tag: 'ixp' }, { id: 'e3' }, { id: 'e4', rev: true }],
+        captions: [
+          'Пакет выходит из квартиры. Первый шаг всегда один — к вашему провайдеру.',
+          'Провайдер смотрит на адрес: это клиент другого провайдера в этом же городе. С ним есть пиринг на точке обмена.',
+          'Точка обмена — общий коммутатор в нейтральном дата-центре. Заехали, передали соседу напрямую, бесплатно.',
+          'Другой провайдер получил пакет и везёт его по своей сети до своего клиента.',
+          'Готово! Пакет так и не поднялся выше Tier 3: локальный трафик срезает путь через точку обмена.'
+        ]
+      },
+      abroad: {
+        nodes: ['you', 't3a', 't2a', 't1a', 't1b', 't2b', 'dc'],
+        edges: [{ id: 'e1' }, { id: 'e5', tag: 'e5' }, { id: 'e6', tag: 'e6' }, { id: 'e7', tag: 'e7', slow: true }, { id: 'e8', rev: true, tag: 'e8' }, { id: 'e9', rev: true, tag: 'e9' }],
+        captions: [
+          'Пакет выходит из квартиры — как всегда, сначала к вашему провайдеру.',
+          'Адрес — за океаном. Своих кабелей туда у провайдера нет: он отдаёт пакет наверх, оператору региона. За этот транзит он платит.',
+          'У оператора региона сеть на всю страну — но не через океан. Дальше наверх, магистральному Tier 1. Тоже за деньги.',
+          'Tier 1. Выше некуда — зато у него есть собственный кабель по дну Атлантики. Ныряем.',
+          '6500 км по дну океана — и пакет у американского Tier 1. Друг другу они не платят: между Tier 1 только пиринг.',
+          'Теперь вниз по той же пирамиде: Tier 1 передаёт пакет оператору, у которого обслуживается дата-центр.',
+          'Пакет прошёл пирамиду насквозь: вверх, через океан и вниз. А деньги за этот путь текли только снизу вверх — нажмите „Кто кому платит“.'
+        ]
+      }
+    };
+
+    var running = false;
+    var ran = { local: false, abroad: false };
+
+    function setCaption(html, isResult) {
+      caption.innerHTML = html;
+      caption.classList.toggle('tier-map-caption--result', !!isResult);
+    }
+
+    function clearState() {
+      var key;
+      for (key in nodes) { nodes[key].classList.remove('is-active', 'is-done'); }
+      for (key in edges) { edges[key].classList.remove('is-done', 'is-paid', 'is-free'); }
+      for (key in tags) { tags[key].classList.remove('is-shown'); }
+      packet.classList.remove('is-shown');
+    }
+
+    function setBusy(busy) {
+      running = busy;
+      for (var b = 0; b < buttons.length; b++) { buttons[b].disabled = busy; }
+    }
+
+    function movePacket(pathEl, rev, dur, done) {
+      var len = pathEl.getTotalLength();
+      var start = null;
+      function place(dist) {
+        var p = pathEl.getPointAtLength(dist);
+        packet.setAttribute('cx', p.x);
+        packet.setAttribute('cy', p.y);
+      }
+      if (!dur) { place(rev ? 0 : len); done(); return; }
+      place(rev ? len : 0);
+      packet.classList.add('is-shown');
+      function frame(ts) {
+        if (start === null) { start = ts; }
+        var t = Math.min((ts - start) / dur, 1);
+        place(len * (rev ? 1 - t : t));
+        if (t < 1) { requestAnimationFrame(frame); } else { done(); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function run(key) {
+      var sc = SCENARIOS[key];
+      clearState();
+      setBusy(true);
+      function arrive(idx) {
+        var name = sc.nodes[idx];
+        if (idx > 0) {
+          var prev = nodes[sc.nodes[idx - 1]];
+          prev.classList.remove('is-active');
+          prev.classList.add('is-done');
+        }
+        nodes[name].classList.add('is-active');
+        var last = idx === sc.nodes.length - 1;
+        var text = sc.captions[idx];
+        if (last) {
+          ran[key] = true;
+          if (key === 'local' && !ran.abroad) { text += ' Теперь отправьте пакет за океан — маршрут будет совсем другой.'; }
+          packet.classList.remove('is-shown');
+          setCaption(text, true);
+          setBusy(false);
+          return;
+        }
+        setCaption(text, false);
+        setTimeout(function () {
+          var step = sc.edges[idx];
+          movePacket(edges[step.id], step.rev, step.slow ? CABLE_MS : EDGE_MS, function () {
+            edges[step.id].classList.add('is-done');
+            if (step.tag) { tags[step.tag].classList.add('is-shown'); }
+            arrive(idx + 1);
+          });
+        }, HOP_MS);
+      }
+      arrive(0);
+    }
+
+    function money() {
+      clearState();
+      var i;
+      for (i = 0; i < PAID.length; i++) { edges[PAID[i]].classList.add('is-paid'); }
+      for (i = 0; i < FREE.length; i++) { edges[FREE[i]].classList.add('is-free'); }
+      for (var key in tags) { tags[key].classList.add('is-shown'); }
+      setCaption('Деньги текут снизу вверх: вы платите своему провайдеру, он — оператору региона, тот — магистрали. Дата-центр на той стороне платит так же. Оранжевые стрелки — платный транзит, зелёное — пиринг, бесплатный обмен между равными.', false);
+    }
+
+    for (var b = 0; b < buttons.length; b++) {
+      buttons[b].addEventListener('click', function () {
+        if (running) { return; }
+        for (var j = 0; j < buttons.length; j++) {
+          buttons[j].classList.toggle('is-active', buttons[j] === this);
+        }
+        var action = this.getAttribute('data-tier-action');
+        if (action === 'money') { money(); } else { run(action); }
+      });
+    }
+  })();
+  </script>
+</div>
