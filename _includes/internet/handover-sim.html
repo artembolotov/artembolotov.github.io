@@ -1,0 +1,247 @@
+<div class="handover-sim" id="handover-sim">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере. Ниже видна сама схема, но телефон по улице не пойдёт.</p></noscript>
+  <div class="handover-sim-window">
+    <div class="handover-sim-head">
+      <span class="handover-sim-title">Эстафета между вышками: проведите телефон через две соты</span>
+    </div>
+    <div class="handover-sim-stage">
+      <svg class="handover-sim-svg" viewBox="0 0 420 228" role="img" aria-label="Схема: внизу улица с телефоном и две вышки, каждая со своей сотой, выше — опорная сеть оператора и интернет. Радиосигнал идёт от телефона до вышки, дальше — по проводам.">
+        <defs>
+          <clipPath id="handoverSimClip"><rect x="0" y="0" width="420" height="203"/></clipPath>
+        </defs>
+        <circle class="handover-sim-cell" data-hos-cell="a" cx="90" cy="204" r="150" clip-path="url(#handoverSimClip)"/>
+        <circle class="handover-sim-cell" data-hos-cell="b" cx="330" cy="204" r="150" clip-path="url(#handoverSimClip)"/>
+        <line class="handover-sim-ground" x1="12" y1="204" x2="408" y2="204"/>
+        <path class="handover-sim-fiber" data-hos-fiber="a" d="M90 138 Q 90 98 160 98"/>
+        <path class="handover-sim-fiber" data-hos-fiber="b" d="M330 138 Q 330 98 260 98"/>
+        <line class="handover-sim-fiber is-active" x1="210" y1="64" x2="210" y2="42"/>
+        <g class="handover-sim-node">
+          <rect x="160" y="12" width="100" height="30" rx="8"/>
+          <text class="handover-sim-node-name" x="210" y="26" text-anchor="middle">&#127760; Интернет</text>
+          <text class="handover-sim-node-sub" x="210" y="37" text-anchor="middle">весь остальной мир</text>
+        </g>
+        <g class="handover-sim-node">
+          <rect x="135" y="64" width="150" height="34" rx="8"/>
+          <text class="handover-sim-node-name" x="210" y="79" text-anchor="middle">Опорная сеть</text>
+          <text class="handover-sim-node-sub" x="210" y="91" text-anchor="middle">оборудование оператора</text>
+        </g>
+        <g class="handover-sim-tower" data-hos-tower="a">
+          <path d="M82 204 L90 134 L98 204 M85.2 176 L94.8 176 M87.3 158 L92.7 158"/>
+          <circle class="handover-sim-ant" cx="90" cy="132" r="2.5"/>
+        </g>
+        <g class="handover-sim-tower" data-hos-tower="b">
+          <path d="M322 204 L330 134 L338 204 M325.2 176 L334.8 176 M327.3 158 L332.7 158"/>
+          <circle class="handover-sim-ant" cx="330" cy="132" r="2.5"/>
+        </g>
+        <text class="handover-sim-label" x="90" y="217" text-anchor="middle">Вышка А</text>
+        <text class="handover-sim-label" x="330" y="217" text-anchor="middle">Вышка Б</text>
+        <line class="handover-sim-radio" data-hos-link="a" x1="60" y1="188" x2="90" y2="134"/>
+        <line class="handover-sim-radio" data-hos-link="b" x1="60" y1="188" x2="330" y2="134"/>
+        <text class="handover-sim-flash" data-hos-flash x="210" y="122" text-anchor="middle">хэндовер!</text>
+        <text class="handover-sim-phone" data-hos-phone x="60" y="200" text-anchor="middle">&#128241;</text>
+      </svg>
+    </div>
+    <div class="handover-sim-chips">
+      <span class="handover-sim-chip" data-hos-chip="a">
+        <span class="handover-sim-chip-name">Вышка А</span>
+        <span class="handover-sim-bars" data-hos-bars="a"><i></i><i></i><i></i><i></i></span>
+        <span class="handover-sim-chip-state" data-hos-state="a">обслуживает</span>
+      </span>
+      <span class="handover-sim-chip" data-hos-chip="b">
+        <span class="handover-sim-chip-name">Вышка Б</span>
+        <span class="handover-sim-bars" data-hos-bars="b"><i></i><i></i><i></i><i></i></span>
+        <span class="handover-sim-chip-state" data-hos-state="b">далеко</span>
+      </span>
+      <span class="handover-sim-chip">
+        <span class="handover-sim-chip-name">Хэндоверов</span>
+        <b class="handover-sim-count" data-hos-count>0</b>
+      </span>
+    </div>
+    <div class="handover-sim-controls">
+      <label class="handover-sim-slider-label" for="handover-sim-pos">Ведите телефон по улице:</label>
+      <input class="handover-sim-slider" id="handover-sim-pos" type="range" min="0" max="1000" value="60" aria-label="Положение телефона на улице между двумя вышками">
+      <button type="button" class="handover-sim-btn" data-hos-bus>&#128652; Проехать из конца в конец</button>
+    </div>
+    <div class="handover-sim-caption" data-hos-caption aria-live="polite">Двигайте ползунок — телефон пойдёт по улице из соты вышки А в соту вышки Б. Следите, где радио, а где провода, и что произойдёт на границе сот.</div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('handover-sim');
+    if (!root) { return; }
+
+    var slider = root.querySelector('.handover-sim-slider');
+    var busBtn = root.querySelector('[data-hos-bus]');
+    var caption = root.querySelector('[data-hos-caption]');
+    var phone = root.querySelector('[data-hos-phone]');
+    var flash = root.querySelector('[data-hos-flash]');
+    var countEl = root.querySelector('[data-hos-count]');
+
+    function pair(attr) {
+      return {
+        a: root.querySelector('[' + attr + '="a"]'),
+        b: root.querySelector('[' + attr + '="b"]')
+      };
+    }
+    var cells = pair('data-hos-cell');
+    var towers = pair('data-hos-tower');
+    var fibers = pair('data-hos-fiber');
+    var links = pair('data-hos-link');
+    var chips = pair('data-hos-chip');
+    var states = pair('data-hos-state');
+    var bars = pair('data-hos-bars');
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var X_MIN = 40, X_MAX = 380;
+    var TOWER_X = { a: 90, b: 330 };
+    var RADIUS = 300;   // расстояние, на котором сигнал вышки сходит на ноль
+    var HYST = 0.06;    // гистерезис: новая вышка должна быть заметно сильнее, иначе связь прыгала бы туда-сюда на границе
+    var PREP = 0.2;     // порог, с которого сеть начинает присматриваться к соседней вышке
+
+    var ZONES = {
+      'a-deep': 'Телефон подключён к вышке А. Радио — только первый прыжок: от вышки сигнал уходит по оптоволокну в опорную сеть оператора и дальше в интернет.',
+      'a-prep': 'Вы подходите к границе соты. Вышка Б уже слышит ваш телефон (пунктир) — сеть сравнивает сигналы и готовит эстафету.',
+      'b-deep': 'Теперь вас обслуживает вышка Б. Для сайта на том конце ничего не произошло: пакеты как шли из опорной сети оператора, так и идут.',
+      'b-prep': 'Вы у границы соты. Вышка А наготове (пунктир) — сеть заранее держит кандидата на эстафету.'
+    };
+    var HANDOVER = {
+      b: 'Хэндовер! Сеть передала соединение вышке Б — не прерывая ни разговор, ни загрузку. Заметьте: путь в интернет за вышкой не изменился.',
+      a: 'Хэндовер обратно — вышка А снова приняла вас. В поездке через город таких передач десятки, и в идеале вы не замечаете ни одной.'
+    };
+
+    var serving = 'a';
+    var lastZone = 'a-deep';
+    var hoCount = 0;
+    var flashTimer = null;
+    var busRunning = false;
+
+    function strengthAt(x, tower) {
+      var d = Math.abs(x - TOWER_X[tower]);
+      return Math.max(0, 1 - d / RADIUS);
+    }
+
+    function barsFor(s) {
+      if (s <= 0.03) { return 0; }
+      if (s < 0.28) { return 1; }
+      if (s < 0.5) { return 2; }
+      if (s < 0.72) { return 3; }
+      return 4;
+    }
+
+    function setCaption(html, isResult) {
+      caption.innerHTML = html;
+      caption.classList.toggle('handover-sim-caption--result', !!isResult);
+    }
+
+    function setBars(el, n) {
+      var items = el.children;
+      for (var i = 0; i < items.length; i++) {
+        items[i].classList.toggle('is-on', i < n);
+      }
+    }
+
+    function xFromSlider() {
+      return X_MIN + (X_MAX - X_MIN) * slider.value / 1000;
+    }
+
+    function render(x, s, measuring) {
+      phone.setAttribute('x', x);
+      var other = serving === 'a' ? 'b' : 'a';
+      var key;
+      for (key in links) {
+        links[key].setAttribute('x1', x);
+        links[key].setAttribute('y1', 188);
+        links[key].classList.toggle('is-serving', key === serving);
+        links[key].classList.toggle('is-measuring', key === other && measuring);
+      }
+      for (key in cells) { cells[key].classList.toggle('is-active', key === serving); }
+      for (key in towers) { towers[key].classList.toggle('is-serving', key === serving); }
+      for (key in fibers) { fibers[key].classList.toggle('is-active', key === serving); }
+      for (key in bars) { setBars(bars[key], barsFor(s[key])); }
+      for (key in chips) { chips[key].classList.toggle('is-serving', key === serving); }
+      states[serving].textContent = 'обслуживает';
+      states[other].textContent = measuring ? 'готовится' : 'далеко';
+    }
+
+    function showFlash() {
+      if (reduceMotion) { return; }
+      flash.classList.add('is-shown');
+      if (flashTimer) { clearTimeout(flashTimer); }
+      flashTimer = setTimeout(function () { flash.classList.remove('is-shown'); }, 1400);
+    }
+
+    function update(isFirst) {
+      var x = xFromSlider();
+      var s = { a: strengthAt(x, 'a'), b: strengthAt(x, 'b') };
+      var other = serving === 'a' ? 'b' : 'a';
+      var handedOver = false;
+
+      if (s[other] > s[serving] + HYST) {
+        serving = other;
+        other = serving === 'a' ? 'b' : 'a';
+        handedOver = true;
+      }
+
+      var measuring = s[other] > s[serving] - PREP && s[other] > 0.15;
+      render(x, s, measuring);
+
+      var zone = serving + (measuring ? '-prep' : '-deep');
+      if (handedOver) {
+        hoCount++;
+        countEl.textContent = hoCount;
+        showFlash();
+        setCaption(HANDOVER[serving], true);
+        lastZone = zone;
+      } else if (!isFirst && zone !== lastZone) {
+        setCaption(ZONES[zone], false);
+        lastZone = zone;
+      } else if (isFirst) {
+        lastZone = zone;
+      }
+    }
+
+    function stopBus() {
+      busRunning = false;
+      busBtn.disabled = false;
+    }
+
+    function rideBus() {
+      if (busRunning) { return; }
+      var from = +slider.value;
+      var to = from < 500 ? 1000 : 0;
+      if (reduceMotion) {
+        // без анимации: проходим маршрут крупными шагами, чтобы хэндовер всё равно сработал
+        var step = to > from ? 50 : -50;
+        for (var v = from; to > from ? v < to : v > to; v += step) {
+          slider.value = v;
+          update();
+        }
+        slider.value = to;
+        update();
+        return;
+      }
+      busRunning = true;
+      busBtn.disabled = true;
+      var dur = 5000 * Math.abs(to - from) / 1000;
+      var start = null;
+      function frame(ts) {
+        if (!busRunning) { return; }
+        if (start === null) { start = ts; }
+        var t = Math.min((ts - start) / dur, 1);
+        slider.value = from + (to - from) * t;
+        update();
+        if (t < 1) { requestAnimationFrame(frame); } else { stopBus(); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    slider.addEventListener('input', function () {
+      if (busRunning) { stopBus(); }
+      update();
+    });
+    busBtn.addEventListener('click', rideBus);
+
+    update(true);
+  })();
+  </script>
+</div>
