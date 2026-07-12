@@ -33,4 +33,7 @@ draft: true
 
 Судя по всему, примерно так авторы закона видят идеальную авторизацию:
 
-{% include img.html src="nsis.png" alt="Экран авторизации НСИС с кнопками входа через Госуслуги, Сбер ID, Т-ID, Альфа ID и ВТБ ID" %}
+{% capture gallery_nsis %}
+nsis.png|Экран авторизации НСИС с кнопками входа через Госуслуги, Сбер ID, Т-ID, Альфа ID и ВТБ ID|1206x2622
+{% endcapture %}
+{% include gallery.html images=gallery_nsis %}
