@@ -1,0 +1,211 @@
+<div class="route-sim" id="route-sim">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
+  <div class="route-sim-window">
+    <div class="route-sim-head">
+      <span class="route-sim-title">Путь пакета: из квартиры в Амстердам</span>
+    </div>
+    <div class="route-sim-devices-label">Открыть example.com (сервер в Амстердаме, IP 93.184.216.34):</div>
+    <div class="route-sim-devices">
+      <button type="button" class="route-sim-device" data-route-device="laptop">&#128187; с ноутбука &middot; 192.168.1.5</button>
+      <button type="button" class="route-sim-device" data-route-device="phone">&#128241; с телефона &middot; 192.168.1.7</button>
+    </div>
+    <div class="route-sim-hops">
+      <span class="route-sim-hop" data-route-hop="device">Устройство</span>
+      <span class="route-sim-hop" data-route-hop="router">Роутер &middot; NAT</span>
+      <span class="route-sim-hop" data-route-hop="isp">Провайдер</span>
+      <span class="route-sim-hop" data-route-hop="backbone">Магистраль</span>
+      <span class="route-sim-hop" data-route-hop="server">Сервер</span>
+    </div>
+    <div class="route-sim-nat" data-route-nat hidden>
+      <span class="route-sim-nat-title">Таблица NAT на роутере</span>
+      <table>
+        <thead><tr><th>Внутри дома</th><th>Снаружи</th></tr></thead>
+        <tbody data-route-nat-rows></tbody>
+      </table>
+    </div>
+    <div class="route-sim-log" data-route-log aria-live="polite"></div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('route-sim');
+    if (!root) { return; }
+
+    var log = root.querySelector('[data-route-log]');
+    var natBox = root.querySelector('[data-route-nat]');
+    var natRows = root.querySelector('[data-route-nat-rows]');
+    var deviceButtons = root.querySelectorAll('[data-route-device]');
+    var hops = root.querySelectorAll('[data-route-hop]');
+
+    var PUBLIC_IP = '203.0.113.42';
+    var SERVER_IP = '93.184.216.34';
+    var devices = {
+      laptop: { icon: '&#128187;', name: 'Ноутбук', ip: '192.168.1.5' },
+      phone: { icon: '&#128241;', name: 'Телефон', ip: '192.168.1.7' }
+    };
+    var nextExtPort = 62001;
+    var usedDevices = {};
+    var running = false;
+
+    function setHop(name) {
+      for (var i = 0; i < hops.length; i++) {
+        var h = hops[i].getAttribute('data-route-hop');
+        hops[i].classList.toggle('is-active', h === name);
+        if (h === name) { hops[i].classList.add('is-done'); }
+      }
+    }
+
+    function resetHops() {
+      for (var i = 0; i < hops.length; i++) {
+        hops[i].classList.remove('is-active', 'is-done');
+      }
+    }
+
+    function setBusy(busy) {
+      running = busy;
+      for (var i = 0; i < deviceButtons.length; i++) {
+        deviceButtons[i].disabled = busy;
+      }
+    }
+
+    function addBubble(cls, html) {
+      var el = document.createElement('div');
+      el.className = 'route-sim-step ' + cls;
+      el.innerHTML = html;
+      log.appendChild(el);
+      // Class is added a frame later so the fade-in transition fires
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { el.classList.add('is-shown'); });
+      });
+    }
+
+    function bubble(hop, side, name, text, pre, ms) {
+      setHop(hop);
+      var html = '<span class="route-sim-step-name">' + name + '</span><p>' + text + '</p>';
+      if (pre) { html += '<pre>' + pre + '</pre>'; }
+      if (ms) { html += '<span class="route-sim-step-ms">+' + ms + ' мс</span>'; }
+      addBubble('route-sim-step--' + side, html);
+    }
+
+    // Two aligned lines of the packet "envelope"
+    function packet(from, to) {
+      return 'От кого: ' + from + '\nКому:    ' + to;
+    }
+
+    function addNatRow(inside, outside) {
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + inside + '</td><td>' + outside + '</td>';
+      natRows.appendChild(tr);
+      // The table only demonstrates the idea — no point growing it forever
+      while (natRows.children.length > 4) { natRows.removeChild(natRows.firstChild); }
+      natBox.hidden = false;
+      return tr;
+    }
+
+    function highlightNat(tr) {
+      var rows = natRows.children;
+      for (var i = 0; i < rows.length; i++) { rows[i].classList.remove('is-active'); }
+      if (tr) { tr.classList.add('is-active'); }
+    }
+
+    function run(steps) {
+      setBusy(true);
+      var i = 0;
+      function next() {
+        var step = steps[i++];
+        step();
+        if (i < steps.length) {
+          setTimeout(next, 1000);
+        } else {
+          setBusy(false);
+        }
+      }
+      next();
+    }
+
+    function send(key) {
+      var d = devices[key];
+      var srcPort = 50000 + Math.floor(Math.random() * 9999);
+      var extPort = nextExtPort++;
+      var src = d.ip + ':' + srcPort;
+      var ext = PUBLIC_IP + ':' + extPort;
+      var dst = SERVER_IP + ':443';
+      var msIsp = 2 + Math.floor(Math.random() * 3);
+      var msBackbone = 32 + Math.floor(Math.random() * 12);
+      var msBack = msIsp + msBackbone + Math.floor(Math.random() * 4);
+      var total = msIsp + msBackbone + msBack + 2;
+      var firstRun = !usedDevices.laptop && !usedDevices.phone;
+      usedDevices[key] = true;
+      var bothUsed = usedDevices.laptop && usedDevices.phone;
+      var row;
+
+      log.innerHTML = '';
+      resetHops();
+      highlightNat(null);
+
+      run([
+        function () {
+          bubble('device', 'left', d.icon + ' ' + d.name,
+            'Адрес мне уже подсказал DNS: <code>example.com</code> — это <code>' + SERVER_IP + '</code>. Собираю пакет. Дороги наружу я не знаю — отдам роутеру, он мой шлюз.',
+            packet(src, dst));
+        },
+        function () {
+          bubble('router', 'left', 'Роутер (NAT)',
+            'Обратный адрес <code>' + d.ip + '</code> — частный, в большом интернете он ни о чём. Подменяю его на наш публичный и записываю в таблицу, кому потом вернуть ответ.',
+            packet('<s>' + src + '</s> → <b>' + ext + '</b>', dst));
+          row = addNatRow(src, ext);
+          highlightNat(row);
+        },
+        function () {
+          bubble('isp', 'right', 'Роутер провайдера',
+            '<code>' + SERVER_IP + '</code>? Это не мой район. По моей таблице маршрутов всё в ту сторону уходит магистральному оператору.',
+            null, msIsp);
+        },
+        function () {
+          bubble('backbone', 'right', 'Магистральный роутер',
+            'Весь путь не знаю и я. Но для диапазона <code>93.184.216.0/24</code> у меня записан следующий шаг — точка обмена трафиком в Амстердаме. Туда!',
+            null, msBackbone);
+        },
+        function () {
+          bubble('server', 'right', 'Сервер example.com',
+            'Пакет дошёл! Отвечаю тому, кто указан в графе «от кого»: <code>' + ext + '</code>. Есть ли за этим адресом ноутбук, телефон или целый офис — мне не видно.',
+            packet(dst, ext));
+        },
+        function () {
+          setHop('isp');
+          bubble('isp', 'right', 'Обратный путь',
+            'Ответ бежит назад тем же манером: Амстердам, магистраль, провайдер. Каждый роутер по-прежнему знает только следующий шаг — и этого хватает.',
+            null, msBack);
+        },
+        function () {
+          bubble('router', 'left', 'Роутер (NAT)',
+            'Пакет на порт <code>' + extPort + '</code>! Смотрю в таблицу: это для <code>' + src + '</code>. Переписываю получателя и передаю в квартиру.',
+            packet(dst, '<s>' + ext + '</s> → <b>' + src + '</b>'));
+          highlightNat(row);
+        },
+        function () {
+          setHop('device');
+          addBubble('route-sim-step--result',
+            'Ответ получен за ~<b>' + total + ' мс</b>. Сервер всё это время видел только адрес дома — <code>' + PUBLIC_IP + '</code>. Кто именно спрашивал, знает один роутер.');
+          if (bothUsed) {
+            addBubble('route-sim-step--hint',
+              '<p>Оба устройства вышли в интернет под одним публичным адресом — в таблице NAT они различаются только портами. Так один IP обслуживает целый дом.</p>');
+          } else if (firstRun) {
+            addBubble('route-sim-step--hint',
+              '<p>Теперь отправьте пакет со второго устройства: частный адрес будет другой, а публичный — тот же. Следите за таблицей NAT.</p>');
+          }
+        }
+      ]);
+    }
+
+    for (var b = 0; b < deviceButtons.length; b++) {
+      deviceButtons[b].addEventListener('click', function () {
+        if (running) { return; }
+        for (var j = 0; j < deviceButtons.length; j++) {
+          deviceButtons[j].classList.toggle('is-active', deviceButtons[j] === this);
+        }
+        send(this.getAttribute('data-route-device'));
+      });
+    }
+  })();
+  </script>
+</div>
