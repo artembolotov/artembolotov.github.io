@@ -1,0 +1,213 @@
+<div class="dns-sim" id="dns-sim">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
+  <div class="dns-sim-window">
+    <div class="dns-sim-head">
+      <span class="dns-sim-title">Симулятор DNS-запроса</span>
+      <button type="button" class="dns-sim-clear" data-dns-clear hidden>Очистить кэш</button>
+    </div>
+    <form class="dns-sim-form" data-dns-form>
+      <input class="dns-sim-input" data-dns-input type="text" value="example.com" inputmode="url" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" aria-label="Доменное имя">
+      <button type="submit" class="dns-sim-go" data-dns-go>Узнать IP</button>
+    </form>
+    <div class="dns-sim-actors">
+      <span class="dns-sim-actor" data-dns-actor="browser">Браузер</span>
+      <span class="dns-sim-actor" data-dns-actor="resolver">Резолвер</span>
+      <span class="dns-sim-actor" data-dns-actor="root">Корневой</span>
+      <span class="dns-sim-actor" data-dns-actor="tld">Зона TLD</span>
+      <span class="dns-sim-actor" data-dns-actor="auth">Авторитативный</span>
+    </div>
+    <div class="dns-sim-log" data-dns-log aria-live="polite"></div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('dns-sim');
+    if (!root) { return; }
+
+    var form = root.querySelector('[data-dns-form]');
+    var input = root.querySelector('[data-dns-input]');
+    var goButton = root.querySelector('[data-dns-go]');
+    var clearButton = root.querySelector('[data-dns-clear]');
+    var log = root.querySelector('[data-dns-log]');
+    var actors = root.querySelectorAll('[data-dns-actor]');
+
+    var knownIps = {
+      'example.com': '93.184.216.34',
+      'google.com': '142.250.190.78',
+      'bolotov.dev': '185.199.108.153'
+    };
+    var cache = {};
+    var running = false;
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // Deterministic pseudo-IP: same domain always gets the same address
+    function fakeIp(domain) {
+      if (knownIps[domain]) { return knownIps[domain]; }
+      var h = 0;
+      for (var i = 0; i < domain.length; i++) {
+        h = (h * 31 + domain.charCodeAt(i)) >>> 0;
+      }
+      return [
+        20 + (h & 0xff) % 200,
+        (h >>> 8) & 0xff,
+        (h >>> 16) & 0xff,
+        1 + ((h >>> 24) & 0xff) % 254
+      ].join('.');
+    }
+
+    function parseDomain(raw) {
+      var d = raw.trim().toLowerCase();
+      d = d.replace(/^[a-z]+:\/\//, '').split('/')[0].split('?')[0];
+      d = d.replace(/\.$/, '');
+      if (!/^[0-9a-zа-яё-]+(\.[0-9a-zа-яё-]+)+$/.test(d)) { return null; }
+      return d;
+    }
+
+    function setActor(name) {
+      for (var i = 0; i < actors.length; i++) {
+        var a = actors[i].getAttribute('data-dns-actor');
+        actors[i].classList.toggle('is-active', a === name);
+        if (a === name) { actors[i].classList.add('is-done'); }
+      }
+    }
+
+    function resetActors() {
+      for (var i = 0; i < actors.length; i++) {
+        actors[i].classList.remove('is-active', 'is-done');
+      }
+    }
+
+    function addBubble(cls, html) {
+      var el = document.createElement('div');
+      el.className = 'dns-sim-step ' + cls;
+      el.innerHTML = html;
+      log.appendChild(el);
+      // Class is added a frame later so the fade-in transition fires
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { el.classList.add('is-shown'); });
+      });
+      return el;
+    }
+
+    function bubble(actor, side, name, text, ms) {
+      setActor(actor);
+      var html = '<span class="dns-sim-step-name">' + name + '</span><p>' + text + '</p>';
+      if (ms) { html += '<span class="dns-sim-step-ms">+' + ms + ' мс</span>'; }
+      addBubble('dns-sim-step--' + side, html);
+    }
+
+    function finish(domain, ip, totalMs, fromCache) {
+      var note = fromCache ? 'из кэша, ~0 мс' : 'за ' + totalMs + ' мс';
+      addBubble('dns-sim-step--result',
+        '<code>' + escapeHtml(domain) + '</code> → <b>' + ip + '</b>' +
+        '<span class="dns-sim-step-ms">' + note + '</span>');
+      if (!fromCache) {
+        addBubble('dns-sim-step--hint',
+          '<p>Спросите тот же домен ещё раз — увидите, как срабатывает кэш.</p>');
+      }
+      setActor(null);
+      clearButton.hidden = false;
+      running = false;
+      goButton.disabled = false;
+    }
+
+    function run(steps) {
+      running = true;
+      goButton.disabled = true;
+      var i = 0;
+      function next() {
+        if (i >= steps.length) { return; }
+        var step = steps[i++];
+        step();
+        if (i < steps.length) { setTimeout(next, 950); }
+      }
+      next();
+    }
+
+    function lookup(domain) {
+      log.innerHTML = '';
+      resetActors();
+      var ip = fakeIp(domain);
+      var tld = '.' + domain.split('.').pop();
+      var name = escapeHtml(domain);
+
+      if (cache[domain]) {
+        run([
+          function () {
+            bubble('browser', 'left', 'Браузер',
+              'Открываю <code>' + name + '</code>… Стоп, я же недавно туда ходил — адрес ещё лежит в моём кэше!');
+          },
+          function () { finish(domain, ip, 0, true); }
+        ]);
+        return;
+      }
+
+      var ms = {
+        resolver: 2 + Math.floor(Math.random() * 4),
+        rootQ: 8 + Math.floor(Math.random() * 8),
+        tldQ: 7 + Math.floor(Math.random() * 7),
+        authQ: 6 + Math.floor(Math.random() * 8)
+      };
+      var total = ms.resolver + ms.rootQ + ms.tldQ + ms.authQ + 1;
+
+      run([
+        function () {
+          bubble('browser', 'left', 'Браузер',
+            'Хочу открыть <code>' + name + '</code>, но знаю только имя. В кэше пусто — спрошу у резолвера.');
+        },
+        function () {
+          bubble('resolver', 'left', 'Резолвер',
+            'В моём кэше такого тоже нет. Ладно, пойду по цепочке — начну с корневого сервера.', ms.resolver);
+        },
+        function () {
+          bubble('root', 'right', 'Корневой сервер',
+            'Про зону <code>' + tld + '</code> я сам ничего не храню, но знаю, кто хранит. Вот адреса её серверов.', ms.rootQ);
+        },
+        function () {
+          bubble('tld', 'right', 'Сервер зоны ' + tld,
+            'Домен <code>' + name + '</code> зарегистрирован, вот его серверы имён. Спросите у них.', ms.tldQ);
+        },
+        function () {
+          bubble('auth', 'right', 'Авторитативный сервер',
+            'Это ко мне! <code>' + name + '</code> — это <b>' + ip + '</b>.', ms.authQ);
+        },
+        function () {
+          bubble('resolver', 'left', 'Резолвер',
+            'Отлично. Запомню ответ на срок TTL, чтобы в следующий раз не бегать по всей цепочке. Передаю браузеру.', 1);
+        },
+        function () {
+          cache[domain] = ip;
+          finish(domain, ip, total, false);
+        }
+      ]);
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (running) { return; }
+      var domain = parseDomain(input.value);
+      if (!domain) {
+        log.innerHTML = '';
+        resetActors();
+        addBubble('dns-sim-step--hint',
+          '<p>Это не похоже на доменное имя. Нужно что-то вроде <code>example.com</code>.</p>');
+        return;
+      }
+      input.value = domain;
+      lookup(domain);
+    });
+
+    clearButton.addEventListener('click', function () {
+      if (running) { return; }
+      cache = {};
+      clearButton.hidden = true;
+      log.innerHTML = '';
+      resetActors();
+      addBubble('dns-sim-step--hint',
+        '<p>Кэш очищен — следующий запрос снова пойдёт по всей цепочке.</p>');
+    });
+  })();
+  </script>
+</div>
