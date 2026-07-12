@@ -1,0 +1,271 @@
+<div class="api-sim" id="api-sim">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
+  <div class="api-sim-window">
+    <div class="api-sim-head">
+      <span class="api-sim-title">Симулятор API: приложение «Мой Банк»</span>
+    </div>
+    <div class="api-sim-actions-label">Что сделать в приложении:</div>
+    <div class="api-sim-actions">
+      <button type="button" class="api-sim-action" data-api-action="balance">Главный экран <b>GET</b></button>
+      <button type="button" class="api-sim-action" data-api-action="operations">История операций <b>GET</b></button>
+      <button type="button" class="api-sim-action" data-api-action="transfer">Перевод 500 ₽ <b>POST</b></button>
+      <button type="button" class="api-sim-action" data-api-action="expired">Истёкший токен <b>GET</b></button>
+    </div>
+    <div class="api-sim-stage">
+      <div class="api-sim-phone">
+        <div class="api-sim-statusbar"><span>9:41</span><span>5G</span></div>
+        <div class="api-sim-screen" data-api-screen>
+          <div class="api-sim-splash"><b>Мой Банк</b><span>выберите действие сверху</span></div>
+        </div>
+      </div>
+      <div class="api-sim-net" aria-live="polite">
+        <div class="api-sim-placeholder" data-api-placeholder>Здесь будет видно, что летит по сети: запрос приложения и ответ сервера.</div>
+        <div class="api-sim-panel" data-api-req hidden>
+          <div class="api-sim-panel-name">Запрос приложения &#8594;</div>
+          <div class="api-sim-codebox" data-api-req-box></div>
+        </div>
+        <div class="api-sim-panel" data-api-res hidden>
+          <div class="api-sim-panel-name" data-api-res-name></div>
+          <div class="api-sim-codebox" data-api-res-box></div>
+        </div>
+      </div>
+    </div>
+    <div class="api-sim-explain" data-api-explain hidden></div>
+    <div class="api-sim-hint" data-api-hint hidden>Наведите курсор или коснитесь строки JSON либо элемента экрана — подсветится, что из чего нарисовано.</div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('api-sim');
+    if (!root) { return; }
+
+    var screen = root.querySelector('[data-api-screen]');
+    var placeholder = root.querySelector('[data-api-placeholder]');
+    var reqPanel = root.querySelector('[data-api-req]');
+    var reqBox = root.querySelector('[data-api-req-box]');
+    var resPanel = root.querySelector('[data-api-res]');
+    var resName = root.querySelector('[data-api-res-name]');
+    var resBox = root.querySelector('[data-api-res-box]');
+    var explain = root.querySelector('[data-api-explain]');
+    var hint = root.querySelector('[data-api-hint]');
+    var buttons = root.querySelectorAll('[data-api-action]');
+    var running = false;
+
+    function K(name) { return '<span class="api-sim-k">"' + name + '"</span>: '; }
+    function S(v) { return '<span class="api-sim-s">"' + v + '"</span>'; }
+    function N(v) { return '<span class="api-sim-n">' + v + '</span>'; }
+
+    var scenarios = {
+      balance: {
+        req: [
+          { h: '<b class="api-sim-m-get">GET</b> /v1/balance HTTP/1.1' },
+          { h: 'Host: api.bank.ru' },
+          { h: 'Authorization: Bearer eyJhbGciOi…' }
+        ],
+        status: '<b class="api-sim-code--ok">200 OK</b>',
+        json: [
+          { h: '{' },
+          { h: '  ' + K('owner') + S('Иван И.') + ',', b: 'owner' },
+          { h: '  ' + K('card') + '{', b: 'card' },
+          { h: '    ' + K('title') + S('Основная карта') + ',', b: 'card-title' },
+          { h: '    ' + K('last4') + S('4321'), b: 'card-last4' },
+          { h: '  },', b: 'card' },
+          { h: '  ' + K('balance') + N('12345.67') + ',', b: 'balance' },
+          { h: '  ' + K('currency') + S('RUB'), b: 'currency' },
+          { h: '}' }
+        ],
+        screen: '<div class="api-sim-hello">Привет, <span data-api-bind="owner">Иван И.</span>!</div>' +
+          '<div class="api-sim-cardw" data-api-bind="card">' +
+          '<div class="api-sim-card-top"><span data-api-bind="card-title">Основная карта</span><span data-api-bind="card-last4">·· 4321</span></div>' +
+          '<div class="api-sim-card-sum"><span data-api-bind="balance">12 345,67</span>&nbsp;<span data-api-bind="currency">₽</span></div>' +
+          '</div>' +
+          '<div class="api-sim-fakebtns"><span>Перевести</span><span>Пополнить</span></div>',
+        explain: 'Сервер прислал не страницу, а голые данные: пару чисел и несколько строк — байтов сто. Всё остальное — вёрстка, шрифты, кнопки «Перевести» и «Пополнить» — в ответе не приходило: оно зашито в само приложение.'
+      },
+      operations: {
+        req: [
+          { h: '<b class="api-sim-m-get">GET</b> /v1/operations HTTP/1.1' },
+          { h: 'Host: api.bank.ru' },
+          { h: 'Authorization: Bearer eyJhbGciOi…' }
+        ],
+        status: '<b class="api-sim-code--ok">200 OK</b>',
+        json: [
+          { h: '{' },
+          { h: '  ' + K('operations') + '[' },
+          { h: '    {', b: 'op1' },
+          { h: '      ' + K('title') + S('Кофейня «Зерно»') + ',', b: 'op1-title' },
+          { h: '      ' + K('amount') + N('-290') + ',', b: 'op1-amount' },
+          { h: '      ' + K('date') + S('2026-10-11'), b: 'op1-date' },
+          { h: '    },', b: 'op1' },
+          { h: '    {', b: 'op2' },
+          { h: '      ' + K('title') + S('Зарплата') + ',', b: 'op2-title' },
+          { h: '      ' + K('amount') + N('87000') + ',', b: 'op2-amount' },
+          { h: '      ' + K('date') + S('2026-10-10'), b: 'op2-date' },
+          { h: '    },', b: 'op2' },
+          { h: '    {', b: 'op3' },
+          { h: '      ' + K('title') + S('Перевод от Анны') + ',', b: 'op3-title' },
+          { h: '      ' + K('amount') + N('1500') + ',', b: 'op3-amount' },
+          { h: '      ' + K('date') + S('2026-10-09'), b: 'op3-date' },
+          { h: '    }', b: 'op3' },
+          { h: '  ]' },
+          { h: '}' }
+        ],
+        screen: '<div class="api-sim-apptitle">История</div>' +
+          '<div class="api-sim-op" data-api-bind="op1"><span class="api-sim-op-l"><span data-api-bind="op1-title">Кофейня «Зерно»</span><span class="api-sim-op-d" data-api-bind="op1-date">11 октября</span></span><span class="api-sim-op-sum" data-api-bind="op1-amount">−290 ₽</span></div>' +
+          '<div class="api-sim-op" data-api-bind="op2"><span class="api-sim-op-l"><span data-api-bind="op2-title">Зарплата</span><span class="api-sim-op-d" data-api-bind="op2-date">10 октября</span></span><span class="api-sim-op-sum is-plus" data-api-bind="op2-amount">+87 000 ₽</span></div>' +
+          '<div class="api-sim-op" data-api-bind="op3"><span class="api-sim-op-l"><span data-api-bind="op3-title">Перевод от Анны</span><span class="api-sim-op-d" data-api-bind="op3-date">9 октября</span></span><span class="api-sim-op-sum is-plus" data-api-bind="op3-amount">+1 500 ₽</span></div>',
+        explain: 'В JSON дата лежит как <code>2026-10-11</code>, а сумма — как голое число <code>-290</code>. «11 октября», знак минус и зелёный цвет зачислений сервер не присылал — это приложение само оформило сырые данные при отрисовке.'
+      },
+      transfer: {
+        req: [
+          { h: '<b class="api-sim-m-post">POST</b> /v1/transfer HTTP/1.1' },
+          { h: 'Host: api.bank.ru' },
+          { h: 'Authorization: Bearer eyJhbGciOi…' },
+          { h: 'Content-Type: application/json' },
+          { h: '' },
+          { h: '{' },
+          { h: '  ' + K('to') + S('Мама') + ',', b: 'to' },
+          { h: '  ' + K('amount') + N('500'), b: 'amount' },
+          { h: '}' }
+        ],
+        status: '<b class="api-sim-code--ok">200 OK</b>',
+        json: [
+          { h: '{' },
+          { h: '  ' + K('status') + S('success') + ',', b: 'status' },
+          { h: '  ' + K('new_balance') + N('11845.67'), b: 'new_balance' },
+          { h: '}' }
+        ],
+        screen: '<div class="api-sim-center">' +
+          '<div class="api-sim-check" data-api-bind="status">&#10003;</div>' +
+          '<div class="api-sim-big" data-api-bind="status">Перевод выполнен</div>' +
+          '<div class="api-sim-sub"><span data-api-bind="to">Маме</span> — <span data-api-bind="amount">500 ₽</span></div>' +
+          '<div class="api-sim-note">Остаток: <span data-api-bind="new_balance">11 845,67 ₽</span></div>' +
+          '</div>',
+        explain: 'У POST-запроса, в отличие от GET, есть тело: на сервер уехал собственный маленький JSON с данными перевода. И заметьте: «Маме» и «500 ₽» на экране успеха приложение взяло из своего же запроса, а вот новый остаток — уже из ответа сервера.'
+      },
+      expired: {
+        req: [
+          { h: '<b class="api-sim-m-get">GET</b> /v1/balance HTTP/1.1' },
+          { h: 'Host: api.bank.ru' },
+          { h: 'Authorization: Bearer eyJ0b2tlbi…' }
+        ],
+        status: '<b class="api-sim-code--client">401 Unauthorized</b>',
+        json: [
+          { h: '{' },
+          { h: '  ' + K('error') + S('token_expired') + ',', b: 'error' },
+          { h: '  ' + K('message') + S('Требуется повторный вход'), b: 'message' },
+          { h: '}' }
+        ],
+        screen: '<div class="api-sim-center">' +
+          '<div class="api-sim-lockicon">&#128274;</div>' +
+          '<div class="api-sim-big" data-api-bind="error">Сессия истекла</div>' +
+          '<div class="api-sim-sub" data-api-bind="message">Войдите в приложение заново</div>' +
+          '<div class="api-sim-fakebtn">Войти</div>' +
+          '</div>',
+        explain: '<b class="api-sim-code--client">401 Unauthorized</b> — сервер не пустил в окошко: токен истёк, «пропуск» больше не действует. Пользователь этого JSON никогда не увидит: приложение перехватило ошибку и нарисовало вместо неё человеческий экран входа.'
+      }
+    };
+
+    function renderLines(lines) {
+      var html = '';
+      for (var i = 0; i < lines.length; i++) {
+        html += '<div class="api-sim-line"' +
+          (lines[i].b ? ' data-api-bind="' + lines[i].b + '"' : '') + '>' +
+          (lines[i].h || ' ') + '</div>';
+      }
+      return html;
+    }
+
+    function show(el) {
+      el.hidden = false;
+      el.classList.remove('is-shown');
+      // Class is added a frame later so the fade-in transition fires
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { el.classList.add('is-shown'); });
+      });
+    }
+
+    function bindOf(el) {
+      while (el && el !== root) {
+        if (el.getAttribute && el.getAttribute('data-api-bind')) {
+          return el.getAttribute('data-api-bind');
+        }
+        el = el.parentNode;
+      }
+      return null;
+    }
+
+    function setHl(bind) {
+      var els = root.querySelectorAll('[data-api-bind]');
+      for (var i = 0; i < els.length; i++) {
+        els[i].classList.toggle('is-hl', !!bind && els[i].getAttribute('data-api-bind') === bind);
+      }
+    }
+
+    function setBusy(busy) {
+      running = busy;
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = busy;
+      }
+    }
+
+    function run(name) {
+      var scn = scenarios[name];
+      setBusy(true);
+      setHl(null);
+      placeholder.hidden = true;
+      explain.hidden = true;
+      hint.hidden = true;
+      resPanel.classList.remove('is-shown');
+      resPanel.hidden = true;
+      reqBox.innerHTML = renderLines(scn.req);
+      show(reqPanel);
+      screen.innerHTML = '<div class="api-sim-loading"><div class="api-sim-spinner"></div></div>';
+      setTimeout(function () {
+        resName.innerHTML = '&#8592; Ответ сервера · HTTP/1.1 ' + scn.status;
+        resBox.innerHTML = renderLines(scn.json);
+        show(resPanel);
+      }, 900);
+      setTimeout(function () {
+        screen.innerHTML = scn.screen;
+      }, 1800);
+      setTimeout(function () {
+        explain.innerHTML = scn.explain;
+        show(explain);
+        hint.hidden = false;
+        setBusy(false);
+      }, 2400);
+    }
+
+    root.addEventListener('mouseover', function (e) { setHl(bindOf(e.target)); });
+    root.addEventListener('mouseleave', function () { setHl(null); });
+    // Tap works as highlight too (no hover on touchscreens). When the stage
+    // is stacked in a column, the paired element is usually off-screen, so
+    // scroll it into view — block:'nearest' keeps desktop clicks scroll-free.
+    root.addEventListener('click', function (e) {
+      var bind = bindOf(e.target);
+      setHl(bind);
+      if (!bind) { return; }
+      var phone = root.querySelector('.api-sim-phone');
+      var fromPhone = phone.contains(e.target);
+      var els = root.querySelectorAll('[data-api-bind="' + bind + '"]');
+      var motion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+      for (var i = 0; i < els.length; i++) {
+        if (phone.contains(els[i]) !== fromPhone) {
+          els[i].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: motion });
+          break;
+        }
+      }
+    });
+
+    for (var b = 0; b < buttons.length; b++) {
+      buttons[b].addEventListener('click', function () {
+        if (running) { return; }
+        for (var j = 0; j < buttons.length; j++) {
+          buttons[j].classList.toggle('is-active', buttons[j] === this);
+        }
+        run(this.getAttribute('data-api-action'));
+      });
+    }
+  })();
+  </script>
+</div>
