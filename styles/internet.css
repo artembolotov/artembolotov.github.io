@@ -3025,3 +3025,418 @@
     border-color: rgba(100,178,255,0.45);
   }
 }
+
+/* Почта: путь письма с проверками SPF/DKIM/DMARC */
+
+.email-path {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+.email-path-window {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f8f8;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.email-path-head {
+  background: #ececec;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.email-path-title {
+  display: block;
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 0.8em 1.5em;
+  color: #666;
+}
+
+.email-path-actions-label {
+  padding: 1em 1em 0;
+  font-size: 0.75em;
+  color: #999;
+}
+
+.email-path-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  padding: 0.5em 1em 0;
+}
+
+.email-path-btn {
+  font-family: inherit;
+  font-size: 0.75em;
+  padding: 0.45em 0.9em;
+  border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
+}
+
+.email-path-btn:hover {
+  border-color: #0089ff;
+  color: #0089ff;
+}
+
+.email-path-btn.is-active {
+  background: #0089ff;
+  border-color: #0089ff;
+  color: #fff;
+}
+
+.email-path-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.email-path-letter {
+  margin: 1em 1em 0;
+  padding: 0.6em 0.9em;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  font-size: 0.8em;
+  line-height: 1.5;
+}
+
+.email-path-letter-key {
+  color: #999;
+}
+
+.email-path-stage {
+  padding: 0.5em 1em 0;
+}
+
+.email-path-svg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  height: auto;
+}
+
+.email-path-client {
+  fill: #0089ff;
+  stroke: #f8f8f8;
+  stroke-width: 1;
+}
+
+.email-path-server {
+  fill: #e08a00;
+  stroke: #f8f8f8;
+  stroke-width: 1;
+  transition: fill 0.3s, opacity 0.3s;
+}
+
+.email-path-server.is-evil {
+  fill: #c9302c;
+}
+
+.email-path-server.is-down {
+  fill: #aaa;
+  opacity: 0.7;
+}
+
+.email-path-dns {
+  fill: #2da44e;
+  stroke: #f8f8f8;
+  stroke-width: 1;
+}
+
+.email-path-route {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 1.2;
+  transition: stroke 0.3s;
+}
+
+.email-path-route.is-done {
+  stroke: rgba(0,137,255,0.45);
+}
+
+.email-path-route.is-fail {
+  stroke: rgba(201,48,44,0.6);
+  stroke-dasharray: 3 3;
+}
+
+.email-path-label {
+  fill: #555;
+  font-size: 8px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: #f8f8f8;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+.email-path-sub {
+  fill: #999;
+  font-size: 7px;
+  paint-order: stroke;
+  stroke: #f8f8f8;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+.email-path-status {
+  fill: #c9302c;
+  font-size: 7px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: #f8f8f8;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+.email-path-queue {
+  fill: #e08a00;
+  font-size: 7px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: #f8f8f8;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+.email-path-emoji {
+  font-size: 12px;
+}
+
+.email-path-q {
+  fill: #2da44e;
+  stroke: #f8f8f8;
+  stroke-width: 1.5;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.email-path-q.is-shown {
+  opacity: 1;
+}
+
+.email-path-mail {
+  font-size: 11px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.email-path-mail.is-shown {
+  opacity: 1;
+}
+
+.email-path-results-label {
+  padding: 0.8em 1em 0;
+  font-size: 0.75em;
+  color: #999;
+}
+
+.email-path-results {
+  display: flex;
+  gap: 0.5em;
+  padding: 0.4em 1em 0;
+}
+
+.email-path-chip {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.5em 0.3em;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.email-path-chip-name {
+  display: block;
+  font-size: 0.7em;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.email-path-chip-val {
+  display: block;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+
+.email-path-chip-val.is-pass {
+  color: #2da44e;
+}
+
+.email-path-chip-val.is-fail {
+  color: #c9302c;
+}
+
+.email-path-caption {
+  box-sizing: border-box;
+  margin: 1em;
+  padding: 0.7em 0.9em;
+  min-height: 4.4em;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  font-size: 0.85em;
+  line-height: 1.45;
+  transition: border-color 0.3s;
+}
+
+.email-path-caption--result {
+  border-color: rgba(0,137,255,0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .email-path-route,
+  .email-path-server,
+  .email-path-q,
+  .email-path-mail,
+  .email-path-chip-val {
+    transition: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .email-path-window {
+    background: #1a1a1a;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+
+  .email-path-head {
+    background: #111;
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+
+  .email-path-title {
+    color: #999;
+  }
+
+  .email-path-actions-label {
+    color: #777;
+  }
+
+  .email-path-btn {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #999;
+  }
+
+  .email-path-btn:hover {
+    border-color: #64b2ff;
+    color: #64b2ff;
+  }
+
+  .email-path-btn.is-active {
+    background: #64b2ff;
+    border-color: #64b2ff;
+    color: #111;
+  }
+
+  .email-path-letter {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .email-path-letter-key {
+    color: #777;
+  }
+
+  .email-path-client {
+    fill: #64b2ff;
+    stroke: #1a1a1a;
+  }
+
+  .email-path-server {
+    fill: #e8a33d;
+    stroke: #1a1a1a;
+  }
+
+  .email-path-server.is-evil {
+    fill: #ff453a;
+  }
+
+  .email-path-server.is-down {
+    fill: #555;
+  }
+
+  .email-path-dns {
+    fill: #4cc38a;
+    stroke: #1a1a1a;
+  }
+
+  .email-path-route.is-done {
+    stroke: rgba(100,178,255,0.5);
+  }
+
+  .email-path-route.is-fail {
+    stroke: rgba(255,69,58,0.6);
+  }
+
+  .email-path-label {
+    fill: #ccc;
+    stroke: #1a1a1a;
+  }
+
+  .email-path-sub {
+    fill: #777;
+    stroke: #1a1a1a;
+  }
+
+  .email-path-status {
+    fill: #ff453a;
+    stroke: #1a1a1a;
+  }
+
+  .email-path-queue {
+    fill: #e8a33d;
+    stroke: #1a1a1a;
+  }
+
+  .email-path-q {
+    fill: #4cc38a;
+    stroke: #1a1a1a;
+  }
+
+  .email-path-results-label {
+    color: #777;
+  }
+
+  .email-path-chip {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .email-path-chip-name {
+    color: #777;
+  }
+
+  .email-path-chip-val {
+    color: #e0e0e0;
+  }
+
+  .email-path-chip-val.is-pass {
+    color: #4cc38a;
+  }
+
+  .email-path-chip-val.is-fail {
+    color: #ff453a;
+  }
+
+  .email-path-caption {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .email-path-caption--result {
+    border-color: rgba(100,178,255,0.45);
+  }
+}
