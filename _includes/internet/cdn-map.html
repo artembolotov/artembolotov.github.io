@@ -1,0 +1,250 @@
+<div class="cdn-map" id="cdn-map">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере. Ниже видна сама карта, но запросы по ней не побегут.</p></noscript>
+  <div class="cdn-map-window">
+    <div class="cdn-map-head">
+      <span class="cdn-map-title">Три города, один сайт: за сколько прилетит ответ</span>
+    </div>
+    <div class="cdn-map-actions-label">Выберите сценарий:</div>
+    <div class="cdn-map-actions">
+      <button type="button" class="cdn-map-btn" data-cdn-action="direct">&#128034; без CDN</button>
+      <button type="button" class="cdn-map-btn" data-cdn-action="first">&#128230; с CDN: первый запрос</button>
+      <button type="button" class="cdn-map-btn" data-cdn-action="cached">&#9889; с CDN: из кэша</button>
+    </div>
+    <div class="cdn-map-stage">
+      <svg class="cdn-map-svg" viewBox="0 0 360 195" role="img" aria-label="Карта мира: origin-сервер в Калифорнии, edge-серверы во Франкфурте, Сингапуре и Сан-Паулу, пользователи в Москве, Токио и Сан-Паулу">
+        <path class="cdn-map-land" d="M12 14 L40 8 L90 8 L105 19 L125 34 L115 45 L105 59 L99 74 L83 72 L75 82 L85 88 L97 98 L95 98 L75 77 L63 62 L55 52 L56 40 L45 25 L14 31 Z"/>
+        <path class="cdn-map-land" d="M103 99 L128 104 L145 123 L140 144 L132 152 L122 162 L115 172 L109 188 L107 171 L110 138 L99 119 L101 109 Z"/>
+        <path class="cdn-map-land" d="M163 89 L174 59 L190 57 L212 65 L223 94 L231 95 L220 135 L215 162 L197 160 L192 138 L189 105 L172 105 Z"/>
+        <path class="cdn-map-land" d="M171 57 L171 48 L180 38 L185 25 L190 18 L208 6 L230 9 L270 4 L320 5 L350 14 L360 19 L342 25 L330 37 L315 48 L302 66 L291 94 L284 109 L279 99 L271 79 L260 99 L252 82 L237 74 L224 92 L214 69 L216 58 L206 52 L198 52 L183 48 Z"/>
+        <path class="cdn-map-land" d="M294 144 L302 132 L317 128 L326 134 L333 151 L326 168 L315 163 L304 160 Z"/>
+        <path class="cdn-map-route" data-cdn-path="msk-org" d="M218 28 Q135 4 58 56"/>
+        <path class="cdn-map-route" data-cdn-path="tyo-org" d="M320 58 Q190 8 58 56"/>
+        <path class="cdn-map-route" data-cdn-path="sao-org" d="M133 146 Q72 108 58 56"/>
+        <path class="cdn-map-route" data-cdn-path="msk-fra" d="M218 28 Q203 23 189 37"/>
+        <path class="cdn-map-route" data-cdn-path="tyo-sin" d="M320 58 Q308 86 284 109"/>
+        <path class="cdn-map-route" data-cdn-path="sao-edge" d="M133 146 L141 146"/>
+        <path class="cdn-map-route" data-cdn-path="fra-org" d="M189 37 Q118 12 58 56"/>
+        <path class="cdn-map-route" data-cdn-path="sin-org" d="M284 109 Q165 140 58 56"/>
+        <path class="cdn-map-route" data-cdn-path="sao2-org" d="M141 146 Q80 110 58 56"/>
+        <rect class="cdn-map-origin" x="52" y="50" width="12" height="12" rx="2"/>
+        <text class="cdn-map-label" x="58" y="71" text-anchor="middle">Калифорния</text>
+        <text class="cdn-map-sub" x="58" y="79" text-anchor="middle">origin-сервер</text>
+        <rect class="cdn-map-edge-dot" x="185.5" y="33.5" width="7" height="7" rx="1.5"/>
+        <text class="cdn-map-label" x="182" y="34" text-anchor="end">Франкфурт</text>
+        <text class="cdn-map-cache" data-cdn-cache="fra" x="189" y="50" text-anchor="middle"></text>
+        <rect class="cdn-map-edge-dot" x="280.5" y="105.5" width="7" height="7" rx="1.5"/>
+        <text class="cdn-map-label" x="284" y="102" text-anchor="middle">Сингапур</text>
+        <text class="cdn-map-cache" data-cdn-cache="sin" x="284" y="123" text-anchor="middle"></text>
+        <rect class="cdn-map-edge-dot" x="137.5" y="142.5" width="7" height="7" rx="1.5"/>
+        <circle class="cdn-map-user" cx="133" cy="146" r="3.2"/>
+        <text class="cdn-map-label" x="136" y="159" text-anchor="middle">Сан-Паулу</text>
+        <text class="cdn-map-cache" data-cdn-cache="sao" x="136" y="169" text-anchor="middle"></text>
+        <circle class="cdn-map-user" cx="218" cy="28" r="3.2"/>
+        <text class="cdn-map-label" x="224" y="26" text-anchor="start">Москва</text>
+        <circle class="cdn-map-user" cx="320" cy="58" r="3.2"/>
+        <text class="cdn-map-label" x="326" y="55" text-anchor="start">Токио</text>
+        <circle class="cdn-map-packet" data-cdn-packet="msk" r="2.8"/>
+        <circle class="cdn-map-packet" data-cdn-packet="tyo" r="2.8"/>
+        <circle class="cdn-map-packet" data-cdn-packet="sao" r="2.8"/>
+      </svg>
+    </div>
+    <div class="cdn-map-results">
+      <span class="cdn-map-chip"><span class="cdn-map-chip-city">Москва</span><b class="cdn-map-chip-ms" data-cdn-ms="msk">—</b></span>
+      <span class="cdn-map-chip"><span class="cdn-map-chip-city">Токио</span><b class="cdn-map-chip-ms" data-cdn-ms="tyo">—</b></span>
+      <span class="cdn-map-chip"><span class="cdn-map-chip-city">Сан-Паулу</span><b class="cdn-map-chip-ms" data-cdn-ms="sao">—</b></span>
+    </div>
+    <div class="cdn-map-caption" data-cdn-caption aria-live="polite">Три пользователя открывают один сайт. Его origin-сервер — в Калифорнии, а во Франкфурте, Сингапуре и Сан-Паулу стоят edge-серверы CDN (зелёные квадраты). Выберите сценарий и сравните время ответа.</div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('cdn-map');
+    if (!root) { return; }
+
+    var caption = root.querySelector('[data-cdn-caption]');
+    var buttons = root.querySelectorAll('[data-cdn-action]');
+
+    var paths = {}, packets = {}, counters = {}, caches = {};
+    var list = root.querySelectorAll('[data-cdn-path]');
+    for (var i = 0; i < list.length; i++) { paths[list[i].getAttribute('data-cdn-path')] = list[i]; }
+    list = root.querySelectorAll('[data-cdn-packet]');
+    for (i = 0; i < list.length; i++) { packets[list[i].getAttribute('data-cdn-packet')] = list[i]; }
+    list = root.querySelectorAll('[data-cdn-ms]');
+    for (i = 0; i < list.length; i++) { counters[list[i].getAttribute('data-cdn-ms')] = list[i]; }
+    list = root.querySelectorAll('[data-cdn-cache]');
+    for (i = 0; i < list.length; i++) { caches[list[i].getAttribute('data-cdn-cache')] = list[i]; }
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var SPEED = 9; // миллисекунды анимации на одну миллисекунду задержки
+    var MIN_LEG = 300;
+    var MISS_WAIT = 700;
+
+    var USERS = [
+      { id: 'msk', edge: 'fra', toEdge: 'msk-fra', edgeOrg: 'fra-org', direct: 'msk-org', ms: { direct: 180, first: 190, cached: 40 } },
+      { id: 'tyo', edge: 'sin', toEdge: 'tyo-sin', edgeOrg: 'sin-org', direct: 'tyo-org', ms: { direct: 110, first: 240, cached: 60 } },
+      { id: 'sao', edge: 'sao', toEdge: 'sao-edge', edgeOrg: 'sao2-org', direct: 'sao-org', ms: { direct: 190, first: 195, cached: 5 } }
+    ];
+
+    var CAPTIONS = {
+      direct: {
+        run: 'Все три запроса летят к одному серверу в Калифорнии. Счётчики показывают время полёта туда и обратно.',
+        done: 'Без CDN каждый запрос идёт через полмира: 110–190 мс на один только полёт туда-обратно. А таких полётов до первого байта нужно три-четыре — рукопожатия, помните? Теперь включите CDN.'
+      },
+      first: {
+        run: 'Кэш edge-серверов пока пуст: запрос добегает до ближайшей точки, не находит там копию — и edge сам отправляется к origin за оригиналом.',
+        done: 'Первый посетитель выигрыша почти не получил: edge всё равно сходил в Калифорнию. Зато копия осталась в кэше — нажмите «из кэша» и посмотрите, что достанется следующим.'
+      },
+      cached: {
+        run: 'Копии уже разложены по edge-серверам. Запросы дальше соседнего дата-центра не уходят.',
+        done: '5 мс в Сан-Паулу — PoP в том же городе. 60 мс в Токио — из Сингапура. 40 мс в Москве — из Франкфурта: коробки поближе, увы, выключены. Сравните со 110–190 мс без CDN — и так с каждым файлом страницы.'
+      }
+    };
+
+    var running = false;
+
+    function setCaption(html, isResult) {
+      caption.innerHTML = html;
+      caption.classList.toggle('cdn-map-caption--result', !!isResult);
+    }
+
+    function setCache(edgeId, state) {
+      var el = caches[edgeId];
+      el.classList.remove('is-miss', 'is-hit');
+      if (state === 'miss') {
+        el.textContent = '✕ мимо кэша';
+        el.classList.add('is-miss');
+      } else if (state === 'hit') {
+        el.textContent = '📦 копия в кэше';
+        el.classList.add('is-hit');
+      } else {
+        el.textContent = '';
+      }
+    }
+
+    function clearState() {
+      var key;
+      for (key in paths) { paths[key].classList.remove('is-done'); }
+      for (key in packets) { packets[key].classList.remove('is-shown'); }
+      for (key in counters) {
+        counters[key].textContent = '—';
+        counters[key].classList.remove('is-final');
+      }
+      for (key in caches) { setCache(key, null); }
+    }
+
+    function setBusy(busy) {
+      running = busy;
+      for (var b = 0; b < buttons.length; b++) { buttons[b].disabled = busy; }
+    }
+
+    function legsFor(u, mode) {
+      var h;
+      if (mode === 'direct') {
+        h = u.ms.direct / 2;
+        return [{ p: u.direct, ms: h }, { p: u.direct, rev: true, ms: h }];
+      }
+      if (mode === 'cached') {
+        h = u.ms.cached / 2;
+        return [{ p: u.toEdge, ms: h }, { p: u.toEdge, rev: true, ms: h }];
+      }
+      var eh = u.ms.cached / 2;
+      var oh = (u.ms.first - u.ms.cached) / 2;
+      return [
+        { p: u.toEdge, ms: eh },
+        { wait: true, cache: 'miss' },
+        { p: u.edgeOrg, ms: oh },
+        { p: u.edgeOrg, rev: true, ms: oh },
+        { cache: 'hit' },
+        { p: u.toEdge, rev: true, ms: eh }
+      ];
+    }
+
+    function runUser(u, mode, done) {
+      var legs = legsFor(u, mode);
+      var total = u.ms[mode];
+      var packet = packets[u.id];
+      var counter = counters[u.id];
+      var moved = 0;
+
+      function tick(v) { counter.textContent = Math.round(v) + ' мс'; }
+
+      function step(idx) {
+        if (idx >= legs.length) {
+          tick(total);
+          counter.classList.add('is-final');
+          packet.classList.remove('is-shown');
+          done();
+          return;
+        }
+        var leg = legs[idx];
+        if (leg.wait) {
+          setCache(u.edge, leg.cache);
+          setTimeout(function () { step(idx + 1); }, reduceMotion ? 0 : MISS_WAIT);
+          return;
+        }
+        if (leg.cache) {
+          setCache(u.edge, leg.cache);
+          step(idx + 1);
+          return;
+        }
+        var pathEl = paths[leg.p];
+        var len = pathEl.getTotalLength();
+        var dur = reduceMotion ? 0 : Math.max(leg.ms * SPEED, MIN_LEG);
+        function place(dist) {
+          var pt = pathEl.getPointAtLength(dist);
+          packet.setAttribute('cx', pt.x);
+          packet.setAttribute('cy', pt.y);
+        }
+        function finish() {
+          moved += leg.ms;
+          tick(moved);
+          pathEl.classList.add('is-done');
+          step(idx + 1);
+        }
+        if (!dur) { place(leg.rev ? 0 : len); finish(); return; }
+        place(leg.rev ? len : 0);
+        packet.classList.add('is-shown');
+        var start = null;
+        function frame(ts) {
+          if (start === null) { start = ts; }
+          var t = Math.min((ts - start) / dur, 1);
+          place(len * (leg.rev ? 1 - t : t));
+          tick(moved + leg.ms * t);
+          if (t < 1) { requestAnimationFrame(frame); } else { finish(); }
+        }
+        requestAnimationFrame(frame);
+      }
+
+      step(0);
+    }
+
+    function run(mode) {
+      clearState();
+      if (mode === 'cached') {
+        for (var key in caches) { setCache(key, 'hit'); }
+      }
+      setBusy(true);
+      setCaption(CAPTIONS[mode].run, false);
+      var left = USERS.length;
+      for (var i = 0; i < USERS.length; i++) {
+        runUser(USERS[i], mode, function () {
+          left--;
+          if (left === 0) {
+            setCaption(CAPTIONS[mode].done, true);
+            setBusy(false);
+          }
+        });
+      }
+    }
+
+    for (var b = 0; b < buttons.length; b++) {
+      buttons[b].addEventListener('click', function () {
+        if (running) { return; }
+        for (var j = 0; j < buttons.length; j++) {
+          buttons[j].classList.toggle('is-active', buttons[j] === this);
+        }
+        run(this.getAttribute('data-cdn-action'));
+      });
+    }
+  })();
+  </script>
+</div>
