@@ -6,7 +6,7 @@ image: /blog/img/2025-08-10-screenlines/preview.png
 draft: false
 ---
 
-4700 скачиваний за три дня. 34 место в топе утилит App Store России. [Приложение недели](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank"} в сообществе [Indie iOS Apps](https://x.com/ios_dev_alb/status/1956656538841477335?s=46&t=XX_GDAhHPLfRalDTeluI4w){:target="_blank"}. И всё это — приложение, которое просто показывает белую линию на экране.
+4700 скачиваний за три дня. 34 место в топе утилит App Store России. [Приложение недели](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank" rel="noopener"} в сообществе [Indie iOS Apps](https://x.com/ios_dev_alb/status/1956656538841477335?s=46&t=XX_GDAhHPLfRalDTeluI4w){:target="_blank" rel="noopener"}. И всё это — приложение, которое просто показывает белую линию на экране.
 
 {% capture gallery_appstore %}
 ru_0.png
@@ -95,7 +95,7 @@ HLS разбивает видео на короткие сегменты по 6-
 ## Эволюция помощников
 
 Проекту нужен сайт. Использовал ChatGPT, DeepSeek, Qwen, Gemini — все изображали бурную деятельность, но результат был так себе.
-[Claude](https://claude.ai){:target="_blank"} оказался единственным, кто подходит для работы. Давно купил подписку и сейчас использую везде. Даже на платной версии есть лимиты на количество сообщений, но результат стоит того.
+[Claude](https://claude.ai){:target="_blank" rel="noopener"} оказался единственным, кто подходит для работы. Давно купил подписку и сейчас использую везде. Даже на платной версии есть лимиты на количество сообщений, но результат стоит того.
 
 С енотом, кстати, вышло случайно — просил разные нейросети рисовать что-то абсурдное. ChatGPT предложил такую идею.
 
@@ -138,7 +138,7 @@ results_4.png
 {% endcapture %}
 {% include gallery.html images=gallery_results %}
 
-А ещё получило звание [Indie App of the Week](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank"}
+А ещё получило звание [Indie App of the Week](https://x.com/ios_dev_alb/status/1956656538841477335){:target="_blank" rel="noopener"}
 
 {% capture gallery_indie %}
 indie_0.png
@@ -162,7 +162,7 @@ reviews_3.png
 
 С MacBook и терпением можно создать продукт, который займёт своё место в App Store и будет доступен во всём мире. Да, вам не обязательны дизайнеры, аудиторы и куча бюрократии. Не нужно согласовывать ни с кем ничего. Просто делайте.
 ScreenLines показал: в App Store всегда есть место для простых, но полезных решений. Не обязательно создавать сложные платформы — иногда достаточно элегантно решить одну проблему.
-Но дело не только в этом. Приложение вряд ли так быстро вылезло в топ, если бы о нём не [рассказал](https://t.me/Romancev768/13550){:target="_blank"} блогер с аудиторией 788k подписчиков. 
+Но дело не только в этом. Приложение вряд ли так быстро вылезло в топ, если бы о нём не [рассказал](https://t.me/Romancev768/13550){:target="_blank" rel="noopener"} блогер с аудиторией 788k подписчиков. 
 
 {% capture gallery_marketing %}
 marketing_1.jpg
@@ -176,15 +176,15 @@ marketing_4.png
 
 ---
 
-**P.S.** Если у вас iPhone — попробуйте [ScreenLines](https://apps.apple.com/app/id6739783494){:target="_blank"}. Бесплатно.
+**P.S.** Если у вас iPhone — попробуйте [ScreenLines](https://apps.apple.com/app/id6739783494){:target="_blank" rel="noopener"}. Бесплатно.
 
 **P.P.S.** Енот передаёт привет 👋
 
-**P.P.P.S.** Оказывается, Георгий Лямин, главред iGuides, тоже написал про ScreenLines в [своём канале](https://t.me/mediatrolling/7172){:target="_blank"}. Спасибо!
+**P.P.P.S.** Оказывается, Георгий Лямин, главред iGuides, тоже написал про ScreenLines в [своём канале](https://t.me/mediatrolling/7172){:target="_blank" rel="noopener"}. Спасибо!
 
 ---
 
 ## Ссылки
 
-- [ScreenLines в App Store](https://apps.apple.com/app/id6739783494){:target="_blank"}
-- [Сайт проекта](https://screenlines.app){:target="_blank"}
+- [ScreenLines в App Store](https://apps.apple.com/app/id6739783494){:target="_blank" rel="noopener"}
+- [Сайт проекта](https://screenlines.app){:target="_blank" rel="noopener"}

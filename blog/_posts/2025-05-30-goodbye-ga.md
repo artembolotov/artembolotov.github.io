@@ -26,7 +26,7 @@ image: /blog/img/2025-05-30-goodbye-ga/migrate.png
 
 Процесс довольно простой:
 
-1. Заходим на&nbsp;[metrika.yandex.ru](https://metrika.yandex.ru/){:target="_blank"}
+1. Заходим на&nbsp;[metrika.yandex.ru](https://metrika.yandex.ru/){:target="_blank" rel="noopener"}
 2. Нажимаем &laquo;Добавить счётчик&raquo;
 3. Указываем адрес сайта
 4. Получаем код
