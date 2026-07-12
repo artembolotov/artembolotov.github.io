@@ -1455,6 +1455,770 @@ blockquote p:last-child {
   .http-sim-code--server { color: #ff453a; }
 }
 
+/* DevTools simulator */
+.dt-sim {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+/* Component classes below set their own display, which would defeat
+   the hidden attribute — this wins by specificity. */
+.dt-sim [hidden] {
+  display: none;
+}
+
+.dt-sim-window {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f8f8;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.dt-sim-window + .dt-sim-window {
+  margin-top: 0.8em;
+}
+
+/* Mini browser chrome */
+.dt-sim-tabstrip {
+  display: flex;
+  background: #dcdcdc;
+  padding: 0.5em 0.8em 0;
+}
+
+.dt-sim-btab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  max-width: 75%;
+  padding: 0.45em 1em;
+  border-radius: 8px 8px 0 0;
+  background: #ececec;
+  font-size: 0.75em;
+  color: #333;
+}
+
+.dt-sim-btab-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dt-sim-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.5em 0.8em;
+  background: #ececec;
+}
+
+.dt-sim-reload {
+  flex-shrink: 0;
+  width: 2.2em;
+  height: 2.2em;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #0089ff;
+  font-size: 1em;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.dt-sim-reload.is-spinning {
+  animation: dt-sim-spin 0.5s ease;
+}
+
+@keyframes dt-sim-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.dt-sim-addr {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.45em 1em;
+  border-radius: 100px;
+  background: #fff;
+  font-size: 0.8em;
+  color: #333;
+}
+
+/* The mini page stays light in dark mode on purpose: it plays
+   the role of a website being inspected, like live-editor's preview. */
+.dt-sim-page {
+  position: relative;
+  padding: 1em 1.2em 1.2em;
+  background: #fff;
+}
+
+.dt-sim-el {
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dt-sim-el.is-inspected {
+  background: rgba(0,137,255,0.12);
+  box-shadow: 0 0 0 2px rgba(0,137,255,0.55);
+}
+
+.dt-sim-h1 {
+  margin: 0.2em 0 0.4em;
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #333;
+}
+
+.dt-sim-p {
+  margin: 0 0 0.8em;
+  font-size: 0.95em;
+  line-height: 1.5;
+  color: #333;
+}
+
+.dt-sim-img {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 72px;
+  border-radius: 8px;
+  background: #f2f2f2;
+  font-size: 2.6em;
+}
+
+.dt-sim-banner {
+  margin-top: 0.9em;
+  padding: 0.6em 0.9em;
+  border: 1px solid #f0d47a;
+  border-radius: 8px;
+  background: #fff3cd;
+  font-size: 0.85em;
+  color: #6b5b13;
+  animation: dt-sim-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dt-sim-pulse {
+  0%, 100% { transform: none; }
+  50% { transform: scale(1.015); }
+}
+
+.dt-sim-alertwrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 1em;
+  background: rgba(0,0,0,0.25);
+}
+
+.dt-sim-alertbox {
+  max-width: 85%;
+  padding: 0.9em 1.1em;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  font-size: 0.85em;
+  color: #333;
+}
+
+.dt-sim-alertfrom {
+  display: block;
+  margin-bottom: 0.3em;
+  font-size: 0.85em;
+  color: #999;
+}
+
+.dt-sim-alertbox p {
+  margin: 0 0 0.7em;
+  background: none;
+  padding: 0;
+}
+
+.dt-sim-alertok {
+  display: block;
+  margin-left: auto;
+  padding: 0.4em 1.4em;
+  border: none;
+  border-radius: 100px;
+  background: #0089ff;
+  color: #fff;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+/* DevTools panel */
+.dt-sim-head {
+  display: flex;
+  align-items: center;
+  background: #ececec;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.dt-sim-devtools-label {
+  padding: 0 1em;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #999;
+}
+
+.dt-sim-tab {
+  padding: 0.9em 1em;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 0.8em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s, box-shadow 0.2s;
+}
+
+.dt-sim-tab.is-active {
+  color: #0089ff;
+  box-shadow: inset 0 -2px 0 #0089ff;
+}
+
+.dt-sim-badge {
+  display: inline-block;
+  min-width: 1.4em;
+  margin-left: 0.4em;
+  padding: 0.05em 0.3em;
+  border-radius: 100px;
+  background: #f41224;
+  color: #fff;
+  font-size: 0.75em;
+  text-align: center;
+}
+
+.dt-sim-pane {
+  padding: 0.9em 1em 1.1em;
+}
+
+.dt-sim-note {
+  margin-top: 0.8em;
+  font-size: 0.8em;
+  color: #999;
+}
+
+/* Elements tab */
+.dt-sim-tree {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8em;
+  line-height: 1.4;
+}
+
+.dt-sim-line {
+  padding: 0.3em 0.4em;
+  color: #666;
+}
+
+.dt-sim-line--1 { padding-left: 1.6em; }
+.dt-sim-line--2 { padding-left: 3.2em; }
+
+.dt-sim-node {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 0.45em;
+  padding-bottom: 0.45em;
+  padding-right: 0.4em;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #333;
+  font: inherit;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dt-sim-node.is-selected {
+  background: rgba(0,137,255,0.14);
+}
+
+.dt-sim-tag { color: #881391; }
+.dt-sim-attr { color: #994500; }
+
+.dt-sim-actions,
+.dt-sim-editrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 0.7em;
+}
+
+.dt-sim-actbtn {
+  padding: 0.55em 1em;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 100px;
+  background: #fff;
+  color: #666;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.dt-sim-actbtn:hover {
+  border-color: #0089ff;
+  color: #0089ff;
+}
+
+.dt-sim-actbtn--danger:hover {
+  border-color: #f41224;
+  color: #f41224;
+}
+
+.dt-sim-editinput {
+  flex: 1;
+  min-width: 0;
+  padding: 0.45em 0.8em;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  font-size: 16px;
+}
+
+.dt-sim-styles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em;
+  margin-top: 0.8em;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8em;
+  color: #333;
+}
+
+.dt-sim-swatches {
+  display: flex;
+  gap: 0.45em;
+}
+
+.dt-sim-swatch {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid rgba(0,0,0,0.15);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Network tab */
+.dt-sim-nethead,
+.dt-sim-netrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2.4em 4.2em 4.2em;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.dt-sim-nethead {
+  padding: 0.2em 0.5em 0.5em;
+  border-bottom: 1px solid rgba(0,0,0,0.09);
+  font-size: 0.75em;
+  color: #999;
+}
+
+.dt-sim-netitem {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.dt-sim-netitem.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.dt-sim-netrow {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.6em 0.5em;
+  border: none;
+  background: transparent;
+  color: #333;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.75em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dt-sim-netitem.is-open .dt-sim-netrow {
+  background: rgba(0,137,255,0.08);
+}
+
+.dt-sim-netname {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dt-sim-netstat,
+.dt-sim-netsize,
+.dt-sim-nettime {
+  text-align: right;
+}
+
+.dt-sim-ok { color: #178a3d; }
+.dt-sim-err { color: #f41224; font-weight: 700; }
+
+.dt-sim-netinfo {
+  display: none;
+  padding: 0 0.5em 0.7em;
+  font-size: 0.8em;
+  color: #666;
+}
+
+.dt-sim-netitem.is-open .dt-sim-netinfo {
+  display: block;
+}
+
+.dt-sim-netsum {
+  margin-top: 0.6em;
+  font-size: 0.75em;
+  font-weight: 600;
+  color: #666;
+}
+
+/* Console tab */
+.dt-sim-cwarn {
+  padding: 0.7em 0.9em;
+  border-radius: 8px;
+  background: #fff3cd;
+  color: #6b5b13;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.dt-sim-clog {
+  margin-top: 0.6em;
+  max-height: 14em;
+  overflow-y: auto;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.78em;
+  line-height: 1.5;
+}
+
+.dt-sim-clog:empty {
+  display: none;
+}
+
+.dt-sim-cline {
+  padding: 0.35em 0.5em;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  color: #333;
+  word-break: break-word;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.dt-sim-cline.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.dt-sim-cline--warn {
+  background: #fffbe5;
+  color: #8a6d00;
+}
+
+.dt-sim-cline--error {
+  background: #fdeaea;
+  color: #c00000;
+}
+
+.dt-sim-cline--input::before {
+  content: "\203A\00a0";
+  color: #0089ff;
+  font-weight: 700;
+}
+
+.dt-sim-cline--result::before {
+  content: "\2039\00a0";
+  color: #999;
+}
+
+.dt-sim-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-top: 0.6em;
+}
+
+.dt-sim-chip {
+  padding: 0.45em 0.9em;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 100px;
+  background: #fff;
+  color: #666;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.75em;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.dt-sim-chip:hover {
+  border-color: #0089ff;
+  color: #0089ff;
+}
+
+.dt-sim-cform {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 0.7em;
+}
+
+.dt-sim-prompt {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-weight: 700;
+  color: #0089ff;
+}
+
+.dt-sim-cinput {
+  flex: 1;
+  min-width: 0;
+  padding: 0.45em 0.8em;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 767px) {
+  .dt-sim-pane {
+    padding: 0.8em 0.7em 1em;
+  }
+
+  .dt-sim-tab {
+    padding: 0.9em 0.7em;
+  }
+
+  .dt-sim-devtools-label {
+    padding: 0 0.7em;
+  }
+
+  .dt-sim-line--1 { padding-left: 1em; }
+  .dt-sim-line--2 { padding-left: 2em; }
+
+  .dt-sim-nethead,
+  .dt-sim-netrow {
+    grid-template-columns: minmax(0, 1fr) 2.2em 4em 4em;
+    gap: 0.4em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dt-sim-banner {
+    animation: none;
+  }
+
+  .dt-sim-reload.is-spinning {
+    animation: none;
+  }
+
+  .dt-sim-netitem,
+  .dt-sim-cline {
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .dt-sim-window {
+    background: #1a1a1a;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+
+  .dt-sim-tabstrip {
+    background: #000;
+  }
+
+  .dt-sim-btab {
+    background: #1f1f1f;
+    color: #e0e0e0;
+  }
+
+  .dt-sim-bar {
+    background: #1f1f1f;
+  }
+
+  .dt-sim-reload {
+    color: #64b2ff;
+  }
+
+  .dt-sim-addr {
+    background: #2e2e2e;
+    color: #e0e0e0;
+  }
+
+  .dt-sim-head {
+    background: #111;
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+
+  .dt-sim-devtools-label {
+    color: #777;
+  }
+
+  .dt-sim-tab {
+    color: #999;
+  }
+
+  .dt-sim-tab.is-active {
+    color: #64b2ff;
+    box-shadow: inset 0 -2px 0 #64b2ff;
+  }
+
+  .dt-sim-badge {
+    background: #ff453a;
+    color: #111;
+  }
+
+  .dt-sim-note {
+    color: #777;
+  }
+
+  .dt-sim-line {
+    color: #999;
+  }
+
+  .dt-sim-node {
+    color: #e0e0e0;
+  }
+
+  .dt-sim-node.is-selected {
+    background: rgba(100,178,255,0.18);
+  }
+
+  .dt-sim-tag { color: #d38ede; }
+  .dt-sim-attr { color: #ffa657; }
+
+  .dt-sim-actbtn {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #999;
+  }
+
+  .dt-sim-actbtn:hover {
+    border-color: #64b2ff;
+    color: #64b2ff;
+  }
+
+  .dt-sim-actbtn--danger:hover {
+    border-color: #ff453a;
+    color: #ff453a;
+  }
+
+  .dt-sim-editinput {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #e0e0e0;
+    caret-color: #64b2ff;
+  }
+
+  .dt-sim-styles {
+    color: #e0e0e0;
+  }
+
+  .dt-sim-swatch {
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  .dt-sim-nethead {
+    border-bottom-color: rgba(255,255,255,0.09);
+    color: #777;
+  }
+
+  .dt-sim-netitem {
+    border-bottom-color: rgba(255,255,255,0.05);
+  }
+
+  .dt-sim-netrow {
+    color: #e0e0e0;
+  }
+
+  .dt-sim-netitem.is-open .dt-sim-netrow {
+    background: rgba(100,178,255,0.1);
+  }
+
+  .dt-sim-ok { color: #4cc46e; }
+  .dt-sim-err { color: #ff453a; }
+
+  .dt-sim-netinfo {
+    color: #999;
+  }
+
+  .dt-sim-netsum {
+    color: #999;
+  }
+
+  .dt-sim-cwarn {
+    background: #332b06;
+    color: #ffd60a;
+  }
+
+  .dt-sim-cline {
+    border-bottom-color: rgba(255,255,255,0.05);
+    color: #e0e0e0;
+  }
+
+  .dt-sim-cline--warn {
+    background: rgba(255,214,10,0.08);
+    color: #ffd60a;
+  }
+
+  .dt-sim-cline--error {
+    background: rgba(255,69,58,0.12);
+    color: #ff6961;
+  }
+
+  .dt-sim-cline--input::before {
+    color: #64b2ff;
+  }
+
+  .dt-sim-cline--result::before {
+    color: #777;
+  }
+
+  .dt-sim-chip {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #999;
+  }
+
+  .dt-sim-chip:hover {
+    border-color: #64b2ff;
+    color: #64b2ff;
+  }
+
+  .dt-sim-prompt {
+    color: #64b2ff;
+  }
+
+  .dt-sim-cinput {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #e0e0e0;
+    caret-color: #64b2ff;
+  }
+}
+
 /* Upcoming (draft) articles in series pages */
 .article-upcoming {
   opacity: 0.45;

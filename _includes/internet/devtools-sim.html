@@ -1,0 +1,387 @@
+<div class="dt-sim" id="dt-sim">
+  <noscript><p>Для работы тренажёра нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
+  <div class="dt-sim-window">
+    <div class="dt-sim-tabstrip">
+      <span class="dt-sim-btab"><span class="dt-sim-favicon">&#128049;</span><span class="dt-sim-btab-title" data-dt-title>Котики</span></span>
+    </div>
+    <div class="dt-sim-bar">
+      <button type="button" class="dt-sim-reload" data-dt-reload aria-label="Перезагрузить мини-страницу">&#10227;</button>
+      <span class="dt-sim-addr">kotiki.example</span>
+    </div>
+    <div class="dt-sim-page" data-dt-page>
+      <div class="dt-sim-h1 dt-sim-el" data-dt-el="h1">Котики</div>
+      <div class="dt-sim-p dt-sim-el" data-dt-el="p">Пушистые, тёплые и мурчат. Идеальны по всем параметрам.</div>
+      <div class="dt-sim-img dt-sim-el" data-dt-el="img" aria-label="Фото кота">&#128008;</div>
+      <div class="dt-sim-banner dt-sim-el" data-dt-el="banner">&#128276; Подпишитесь на нашу рассылку!</div>
+      <div class="dt-sim-alertwrap" data-dt-alert hidden>
+        <div class="dt-sim-alertbox">
+          <span class="dt-sim-alertfrom">kotiki.example сообщает:</span>
+          <p data-dt-alert-text></p>
+          <button type="button" class="dt-sim-alertok" data-dt-alert-ok>ОК</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dt-sim-window">
+    <div class="dt-sim-head">
+      <span class="dt-sim-devtools-label">DevTools</span>
+      <button type="button" class="dt-sim-tab is-active" data-dt-tab="elements">Elements</button>
+      <button type="button" class="dt-sim-tab" data-dt-tab="network">Network</button>
+      <button type="button" class="dt-sim-tab" data-dt-tab="console">Console<span class="dt-sim-badge" data-dt-badge hidden>1</span></button>
+    </div>
+    <div class="dt-sim-pane" data-dt-pane="elements">
+      <div class="dt-sim-tree">
+        <div class="dt-sim-line">&lt;<span class="dt-sim-tag">html</span>&gt;</div>
+        <div class="dt-sim-line dt-sim-line--1">&lt;<span class="dt-sim-tag">body</span>&gt;</div>
+        <button type="button" class="dt-sim-node dt-sim-line--2" data-dt-node="h1">&lt;<span class="dt-sim-tag">h1</span>&gt;<span data-dt-tree-text="h1">Котики</span>&lt;/<span class="dt-sim-tag">h1</span>&gt;</button>
+        <button type="button" class="dt-sim-node dt-sim-line--2" data-dt-node="p">&lt;<span class="dt-sim-tag">p</span>&gt;<span data-dt-tree-text="p">Пушистые, тёплые и мурчат. Идеальны по всем параметрам.</span>&lt;/<span class="dt-sim-tag">p</span>&gt;</button>
+        <button type="button" class="dt-sim-node dt-sim-line--2" data-dt-node="img">&lt;<span class="dt-sim-tag">img</span> <span class="dt-sim-attr">src</span>="cat.jpg"&gt;</button>
+        <button type="button" class="dt-sim-node dt-sim-line--2" data-dt-node="banner">&lt;<span class="dt-sim-tag">div</span> <span class="dt-sim-attr">class</span>="banner"&gt;<span data-dt-tree-text="banner">&#128276; Подпишитесь на нашу рассылку!</span>&lt;/<span class="dt-sim-tag">div</span>&gt;</button>
+        <div class="dt-sim-line dt-sim-line--1">&lt;/<span class="dt-sim-tag">body</span>&gt;</div>
+        <div class="dt-sim-line">&lt;/<span class="dt-sim-tag">html</span>&gt;</div>
+      </div>
+      <div class="dt-sim-actions" data-dt-actions hidden>
+        <button type="button" class="dt-sim-actbtn" data-dt-edit>&#9998; Изменить текст</button>
+        <button type="button" class="dt-sim-actbtn dt-sim-actbtn--danger" data-dt-delete>&#128465; Удалить</button>
+      </div>
+      <div class="dt-sim-editrow" data-dt-editrow hidden>
+        <input class="dt-sim-editinput" data-dt-editinput type="text" maxlength="80" spellcheck="false" autocomplete="off" aria-label="Новый текст элемента">
+        <button type="button" class="dt-sim-actbtn" data-dt-editok>Готово</button>
+      </div>
+      <div class="dt-sim-styles" data-dt-styles hidden>
+        <span class="dt-sim-stylerule"><span class="dt-sim-tag" data-dt-stylesel>h1</span> { color: <span data-dt-styleval>#333333</span>; }</span>
+        <span class="dt-sim-swatches" role="group" aria-label="Выбор цвета">
+          <button type="button" class="dt-sim-swatch" data-dt-color="" style="background:#333333" aria-label="Исходный цвет"></button>
+          <button type="button" class="dt-sim-swatch" data-dt-color="#0089ff" style="background:#0089ff" aria-label="Синий"></button>
+          <button type="button" class="dt-sim-swatch" data-dt-color="#f41224" style="background:#f41224" aria-label="Красный"></button>
+          <button type="button" class="dt-sim-swatch" data-dt-color="#178a3d" style="background:#178a3d" aria-label="Зелёный"></button>
+          <button type="button" class="dt-sim-swatch" data-dt-color="#ff9500" style="background:#ff9500" aria-label="Оранжевый"></button>
+        </span>
+      </div>
+      <div class="dt-sim-note" data-dt-note>Нажмите на строку в дереве — или прямо на элемент мини-страницы выше.</div>
+    </div>
+    <div class="dt-sim-pane" data-dt-pane="network" hidden>
+      <div class="dt-sim-nethead"><span>Имя</span><span>Код</span><span>Размер</span><span>Время</span></div>
+      <div class="dt-sim-netrows" data-dt-netrows></div>
+      <div class="dt-sim-netsum" data-dt-netsum hidden>6 запросов &middot; 460 КБ передано &middot; 0,7 с</div>
+      <div class="dt-sim-note" data-dt-nethint>Пока пусто. Нажмите &#10227; в мини-браузере выше — и увидите всё, что он скачает.</div>
+    </div>
+    <div class="dt-sim-pane" data-dt-pane="console" hidden>
+      <div class="dt-sim-cwarn">&#9888; Стойте! Если кто-то посоветовал вам вставить сюда код — не делайте этого: так угоняют аккаунты. Здесь, в тренажёре, можно.</div>
+      <div class="dt-sim-clog" data-dt-clog aria-live="polite"></div>
+      <div class="dt-sim-note" data-dt-chint>Нажмите &#10227; наверху — сайт кое-что сюда напишет. Или введите команду сами:</div>
+      <div class="dt-sim-chips">
+        <button type="button" class="dt-sim-chip" data-dt-chip>2 + 2</button>
+        <button type="button" class="dt-sim-chip" data-dt-chip>alert('Мяу!')</button>
+        <button type="button" class="dt-sim-chip" data-dt-chip>document.title = 'Взломано &#128526;'</button>
+      </div>
+      <form class="dt-sim-cform" data-dt-cform>
+        <span class="dt-sim-prompt" aria-hidden="true">&gt;</span>
+        <input class="dt-sim-cinput" data-dt-cinput type="text" maxlength="80" placeholder="Например: 2 + 2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-label="Команда для консоли">
+        <button type="submit" class="dt-sim-actbtn">Ввод</button>
+      </form>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('dt-sim');
+    if (!root) { return; }
+
+    function q(sel) { return root.querySelector(sel); }
+    function qa(sel) { return root.querySelectorAll(sel); }
+
+    var titleEl = q('[data-dt-title]');
+    var reloadBtn = q('[data-dt-reload]');
+    var alertWrap = q('[data-dt-alert]');
+    var alertText = q('[data-dt-alert-text]');
+    var tabs = qa('[data-dt-tab]');
+    var badge = q('[data-dt-badge]');
+    var actions = q('[data-dt-actions]');
+    var editBtn = q('[data-dt-edit]');
+    var deleteBtn = q('[data-dt-delete]');
+    var editRow = q('[data-dt-editrow]');
+    var editInput = q('[data-dt-editinput]');
+    var stylesBox = q('[data-dt-styles]');
+    var styleSel = q('[data-dt-stylesel]');
+    var styleVal = q('[data-dt-styleval]');
+    var note = q('[data-dt-note]');
+    var netRowsEl = q('[data-dt-netrows]');
+    var netSum = q('[data-dt-netsum]');
+    var netHint = q('[data-dt-nethint]');
+    var clog = q('[data-dt-clog]');
+    var chint = q('[data-dt-chint]');
+    var cinput = q('[data-dt-cinput]');
+
+    var nodes = {
+      h1: { tag: 'h1', text: 'Котики' },
+      p: { tag: 'p', text: 'Пушистые, тёплые и мурчат. Идеальны по всем параметрам.' },
+      img: { tag: 'img', text: null },
+      banner: { tag: 'div.banner', text: '🔔 Подпишитесь на нашу рассылку!' }
+    };
+    var selected = null;
+    var timers = [];
+
+    var netData = [
+      { name: 'kotiki.example', status: 200, size: '12 КБ', time: '45 мс', info: 'Сам HTML — «скелет» страницы из угловых скобок.' },
+      { name: 'style.css', status: 200, size: '4 КБ', time: '30 мс', info: 'Таблица стилей: цвета, шрифты, отступы. Без неё страница была бы голым текстом.' },
+      { name: 'script.js', status: 200, size: '8 КБ', time: '38 мс', info: 'JavaScript — «мозги» страницы. Кстати, это он пишет сообщения в Console.' },
+      { name: 'cat.jpg', status: 200, size: '340 КБ', time: '310 мс', info: 'Картинка — самый тяжёлый файл на странице. С картинками почти всегда так.' },
+      { name: 'tracker.js', status: 200, size: '96 КБ', time: '210 мс', info: 'Трекер аналитики. Вам он не нужен, но трафик тратит. На больших сайтах таких десятки.' },
+      { name: 'promo.png', status: 404, size: '—', time: '18 мс', info: 'Файла нет на сервере — браузер получил 404. Загляните в Console: ошибка уже там.' }
+    ];
+
+    function pageEl(id) { return q('[data-dt-el="' + id + '"]'); }
+    function treeNode(id) { return q('[data-dt-node="' + id + '"]'); }
+    function treeText(id) { return q('[data-dt-tree-text="' + id + '"]'); }
+
+    function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+    function clearTimers() {
+      for (var i = 0; i < timers.length; i++) { clearTimeout(timers[i]); }
+      timers = [];
+    }
+
+    function fadeIn(el) {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { el.classList.add('is-shown'); });
+      });
+    }
+
+    function setNote(text) { note.textContent = text; }
+
+    // --- Tabs ---
+    function showTab(name) {
+      var panes = qa('[data-dt-pane]');
+      for (var i = 0; i < panes.length; i++) {
+        panes[i].hidden = panes[i].getAttribute('data-dt-pane') !== name;
+      }
+      for (var j = 0; j < tabs.length; j++) {
+        tabs[j].classList.toggle('is-active', tabs[j].getAttribute('data-dt-tab') === name);
+      }
+      if (name === 'console') { badge.hidden = true; }
+    }
+
+    for (var t = 0; t < tabs.length; t++) {
+      tabs[t].addEventListener('click', function () {
+        showTab(this.getAttribute('data-dt-tab'));
+      });
+    }
+
+    // --- Elements: select / edit / delete / color ---
+    function select(id) {
+      selected = id;
+      var els = qa('[data-dt-el]');
+      for (var i = 0; i < els.length; i++) {
+        els[i].classList.toggle('is-inspected', els[i].getAttribute('data-dt-el') === id);
+      }
+      var lines = qa('[data-dt-node]');
+      for (var j = 0; j < lines.length; j++) {
+        lines[j].classList.toggle('is-selected', lines[j].getAttribute('data-dt-node') === id);
+      }
+      editRow.hidden = true;
+      if (!id) {
+        actions.hidden = true;
+        stylesBox.hidden = true;
+        setNote('Нажмите на строку в дереве — или прямо на элемент мини-страницы выше.');
+        return;
+      }
+      actions.hidden = false;
+      editBtn.hidden = nodes[id].text === null;
+      if (nodes[id].text === null) {
+        stylesBox.hidden = true;
+        setNote('Картинку не отредактируешь, зато можно удалить.');
+      } else {
+        stylesBox.hidden = false;
+        styleSel.textContent = nodes[id].tag;
+        styleVal.textContent = pageEl(id).style.color || '#333333';
+        setNote('Выбрано: ' + nodes[id].tag + '. Синяя подсветка на мини-странице — это он и есть.');
+      }
+    }
+
+    var nodeButtons = qa('[data-dt-node]');
+    for (var n = 0; n < nodeButtons.length; n++) {
+      nodeButtons[n].addEventListener('click', function () {
+        var id = this.getAttribute('data-dt-node');
+        select(selected === id ? null : id);
+      });
+    }
+
+    var pageEls = qa('[data-dt-el]');
+    for (var pe = 0; pe < pageEls.length; pe++) {
+      pageEls[pe].addEventListener('click', function () {
+        select(this.getAttribute('data-dt-el'));
+        showTab('elements');
+      });
+    }
+
+    editBtn.addEventListener('click', function () {
+      editRow.hidden = false;
+      editInput.value = pageEl(selected).textContent;
+      editInput.focus();
+    });
+
+    function applyEdit() {
+      if (!selected) { return; }
+      var v = editInput.value;
+      pageEl(selected).textContent = v;
+      treeText(selected).textContent = v;
+      editRow.hidden = true;
+      setNote('Готово! Но это только у вас на экране — нажмите ⟳, и всё вернётся.');
+    }
+
+    q('[data-dt-editok]').addEventListener('click', applyEdit);
+    editInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); applyEdit(); }
+    });
+
+    deleteBtn.addEventListener('click', function () {
+      if (!selected) { return; }
+      pageEl(selected).hidden = true;
+      treeNode(selected).hidden = true;
+      var id = selected;
+      select(null);
+      setNote('Удалено. Настоящий сайт не пострадал: нажмите ⟳ — и ' + nodes[id].tag + ' вернётся.');
+    });
+
+    var swatches = qa('[data-dt-color]');
+    for (var s = 0; s < swatches.length; s++) {
+      swatches[s].addEventListener('click', function () {
+        if (!selected || nodes[selected].text === null) { return; }
+        var c = this.getAttribute('data-dt-color');
+        pageEl(selected).style.color = c;
+        styleVal.textContent = c || '#333333';
+        setNote('Цвет поменялся мгновенно. Так дизайнеры и подбирают оттенки — прямо в DevTools.');
+      });
+    }
+
+    // --- Network ---
+    function addNetRow(row) {
+      var item = document.createElement('div');
+      item.className = 'dt-sim-netitem';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'dt-sim-netrow';
+      var cells = [
+        ['dt-sim-netname', row.name],
+        ['dt-sim-netstat ' + (row.status === 200 ? 'dt-sim-ok' : 'dt-sim-err'), String(row.status)],
+        ['dt-sim-netsize', row.size],
+        ['dt-sim-nettime', row.time]
+      ];
+      for (var i = 0; i < cells.length; i++) {
+        var span = document.createElement('span');
+        span.className = cells[i][0];
+        span.textContent = cells[i][1];
+        btn.appendChild(span);
+      }
+      var info = document.createElement('div');
+      info.className = 'dt-sim-netinfo';
+      info.textContent = row.info;
+      btn.addEventListener('click', function () { item.classList.toggle('is-open'); });
+      item.appendChild(btn);
+      item.appendChild(info);
+      netRowsEl.appendChild(item);
+      fadeIn(item);
+    }
+
+    // --- Console ---
+    function cline(kind, text) {
+      var el = document.createElement('div');
+      el.className = 'dt-sim-cline dt-sim-cline--' + kind;
+      el.textContent = text;
+      clog.appendChild(el);
+      while (clog.children.length > 40) { clog.removeChild(clog.firstChild); }
+      fadeIn(el);
+      clog.scrollTop = clog.scrollHeight;
+    }
+
+    function showAlert(text) {
+      alertText.textContent = text;
+      alertWrap.hidden = false;
+    }
+
+    q('[data-dt-alert-ok]').addEventListener('click', function () {
+      alertWrap.hidden = true;
+    });
+
+    function runCommand(raw) {
+      var cmd = raw.replace(/^\s+|\s+$/g, '');
+      if (!cmd) { return; }
+      cline('input', cmd);
+      var m;
+      if (/^[0-9+\-*/().\s]+$/.test(cmd) && /[0-9]/.test(cmd)) {
+        try {
+          cline('result', String(Function('return (' + cmd + ')')()));
+        } catch (e) {
+          cline('error', 'Uncaught SyntaxError: что-то не так с выражением');
+        }
+      } else if ((m = cmd.match(/^document\.title\s*=\s*(['"])(.*)\1\s*;?$/))) {
+        titleEl.textContent = m[2] || 'Котики';
+        cline('result', "'" + m[2] + "'");
+      } else if ((m = cmd.match(/^alert\(\s*(['"])(.*)\1\s*\)\s*;?$/))) {
+        showAlert(m[2]);
+        cline('result', 'undefined');
+      } else if ((m = cmd.match(/^console\.log\(\s*(['"])(.*)\1\s*\)\s*;?$/))) {
+        cline('log', m[2]);
+        cline('result', 'undefined');
+      } else {
+        cline('error', "Мини-консоль такого не умеет. Попробуйте: 2 + 2, alert('Мяу!') или document.title = 'Привет'");
+      }
+    }
+
+    q('[data-dt-cform]').addEventListener('submit', function (e) {
+      e.preventDefault();
+      runCommand(cinput.value);
+      cinput.value = '';
+    });
+
+    var chips = qa('[data-dt-chip]');
+    for (var c = 0; c < chips.length; c++) {
+      chips[c].addEventListener('click', function () {
+        runCommand(this.textContent);
+      });
+    }
+
+    // --- Reload: restore the page, replay Network and Console ---
+    function reload() {
+      clearTimers();
+      alertWrap.hidden = true;
+      titleEl.textContent = 'Котики';
+      for (var id in nodes) {
+        if (!nodes.hasOwnProperty(id)) { continue; }
+        var el = pageEl(id);
+        el.hidden = false;
+        el.style.color = '';
+        treeNode(id).hidden = false;
+        if (nodes[id].text !== null) {
+          el.textContent = nodes[id].text;
+          treeText(id).textContent = nodes[id].text;
+        }
+      }
+      select(null);
+      reloadBtn.classList.remove('is-spinning');
+      // Force restart of the spin animation
+      void reloadBtn.offsetWidth;
+      reloadBtn.classList.add('is-spinning');
+      netRowsEl.innerHTML = '';
+      netSum.hidden = true;
+      netHint.textContent = 'Нажмите на строку — расскажу, что это за файл.';
+      clog.innerHTML = '';
+      chint.hidden = true;
+      for (var i = 0; i < netData.length; i++) {
+        (function (row, idx) {
+          later(function () { addNetRow(row); }, 250 + idx * 300);
+        })(netData[i], i);
+      }
+      later(function () { netSum.hidden = false; }, 250 + netData.length * 300);
+      later(function () { cline('log', 'script.js загрузился. Привет из console.log()!'); }, 600);
+      later(function () { cline('warn', 'Баннер рассылки перекрывает контент. Ну и пусть, — маркетинг.'); }, 1400);
+      later(function () {
+        cline('error', 'GET https://kotiki.example/promo.png 404 (Not Found)');
+        var consoleOpen = !q('[data-dt-pane="console"]').hidden;
+        badge.hidden = consoleOpen;
+      }, 250 + 5 * 300);
+    }
+
+    reloadBtn.addEventListener('click', reload);
+  })();
+  </script>
+</div>
