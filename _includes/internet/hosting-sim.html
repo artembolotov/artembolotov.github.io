@@ -1,0 +1,353 @@
+<div class="hosting-sim" id="hosting-sim">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере. Ниже видна сама схема, но нагрузка по ней не побежит.</p></noscript>
+  <div class="hosting-sim-window">
+    <div class="hosting-sim-head">
+      <span class="hosting-sim-title">Стресс-тест хостинга: кто переживёт наплыв?</span>
+    </div>
+    <div class="hosting-sim-actions-label">Вид хостинга:</div>
+    <div class="hosting-sim-actions">
+      <button type="button" class="hosting-sim-btn is-active" data-hs-hosting="shared">&#127970; Shared — коммуналка</button>
+      <button type="button" class="hosting-sim-btn" data-hs-hosting="vps">&#127968; VPS — квартира</button>
+      <button type="button" class="hosting-sim-btn" data-hs-hosting="dedicated">&#127969; Dedicated — дом</button>
+      <button type="button" class="hosting-sim-btn" data-hs-hosting="cloud">&#127976; Облако — гостиница</button>
+    </div>
+    <div class="hosting-sim-actions-label">Что происходит:</div>
+    <div class="hosting-sim-actions">
+      <button type="button" class="hosting-sim-btn" data-hs-scenario="calm">&#9728;&#65039; обычный день</button>
+      <button type="button" class="hosting-sim-btn" data-hs-scenario="surge">&#128293; наплыв посетителей</button>
+      <button type="button" class="hosting-sim-btn" data-hs-scenario="ddos">&#128163; DDoS-атака</button>
+    </div>
+    <div class="hosting-sim-scroll">
+      <svg class="hosting-sim-svg" viewBox="0 0 700 300" role="img" aria-label="Схема: слева посетители и счёт за хостинг, справа сервер выбранного вида хостинга с индикатором нагрузки">
+        <g class="hosting-sim-crowd" data-hs-crowd>
+          <circle class="hosting-sim-crowd-dot" cx="70" cy="140" r="7"/>
+          <circle class="hosting-sim-crowd-dot" cx="92" cy="123" r="7"/>
+          <circle class="hosting-sim-crowd-dot" cx="112" cy="146" r="7"/>
+          <circle class="hosting-sim-crowd-dot" cx="80" cy="166" r="7"/>
+          <circle class="hosting-sim-crowd-dot" cx="104" cy="170" r="7"/>
+          <text class="hosting-sim-crowd-label" data-hs-crowd-label x="90" y="198" text-anchor="middle">посетители</text>
+        </g>
+        <text class="hosting-sim-bill-label" x="90" y="234" text-anchor="middle">ваш счёт</text>
+        <text class="hosting-sim-bill" data-hs-bill x="90" y="252" text-anchor="middle">&#8776;200 &#8381;/мес</text>
+        <g class="hosting-sim-scene" data-hs-scene="shared">
+          <rect class="hosting-sim-server-body" x="380" y="50" width="230" height="180" rx="10"/>
+          <g data-hs-grid></g>
+          <rect class="hosting-sim-cell hosting-sim-mine" x="461" y="97" width="32" height="26" rx="3"/>
+          <text class="hosting-sim-sub" x="495" y="248" text-anchor="middle">один сервер, сотни сайтов; синий — ваш</text>
+        </g>
+        <g class="hosting-sim-scene is-hidden" data-hs-scene="vps">
+          <rect class="hosting-sim-server-body" x="380" y="50" width="230" height="180" rx="10"/>
+          <rect class="hosting-sim-vm hosting-sim-mine" x="387" y="57" width="107" height="80" rx="6"/>
+          <rect class="hosting-sim-vm" x="500" y="57" width="103" height="80" rx="6"/>
+          <rect class="hosting-sim-vm" x="387" y="143" width="107" height="80" rx="6"/>
+          <rect class="hosting-sim-vm" x="500" y="143" width="103" height="80" rx="6"/>
+          <text class="hosting-sim-sub" x="495" y="248" text-anchor="middle">один сервер, четыре изолированные виртуалки; синяя — ваша</text>
+        </g>
+        <g class="hosting-sim-scene is-hidden" data-hs-scene="dedicated">
+          <rect class="hosting-sim-server-body hosting-sim-mine" x="380" y="50" width="230" height="180" rx="10"/>
+          <rect class="hosting-sim-slat" x="395" y="66" width="200" height="30" rx="4"/>
+          <rect class="hosting-sim-slat" x="395" y="104" width="200" height="30" rx="4"/>
+          <rect class="hosting-sim-slat" x="395" y="142" width="200" height="30" rx="4"/>
+          <rect class="hosting-sim-slat" x="395" y="180" width="200" height="30" rx="4"/>
+          <text class="hosting-sim-sub" x="495" y="248" text-anchor="middle">весь сервер — ваш, соседей нет</text>
+        </g>
+        <g class="hosting-sim-scene is-hidden" data-hs-scene="cloud">
+          <rect class="hosting-sim-node hosting-sim-mine" x="380" y="70" width="48" height="140" rx="8"/>
+          <rect class="hosting-sim-node hosting-sim-ghost" data-hs-ghost x="440" y="70" width="48" height="140" rx="8"/>
+          <rect class="hosting-sim-node hosting-sim-ghost" data-hs-ghost x="500" y="70" width="48" height="140" rx="8"/>
+          <rect class="hosting-sim-node hosting-sim-ghost" data-hs-ghost x="560" y="70" width="48" height="140" rx="8"/>
+          <text class="hosting-sim-sub" x="495" y="248" text-anchor="middle">виртуалки в облаке; пунктирные поднимет автоматика</text>
+        </g>
+        <text class="hosting-sim-meter-label" x="372" y="267" text-anchor="end">нагрузка:</text>
+        <rect class="hosting-sim-meter-track" x="380" y="258" width="230" height="10" rx="5"/>
+        <rect class="hosting-sim-meter-fill" data-hs-meter x="380" y="258" width="69" height="10" rx="5"/>
+        <text class="hosting-sim-status" data-hs-status x="495" y="290" text-anchor="middle"></text>
+        <g data-hs-dots></g>
+      </svg>
+    </div>
+    <div class="hosting-sim-caption" data-hs-caption aria-live="polite">Выберите вид хостинга и устройте сайту проверку: обычный день, внезапная слава и DDoS-атака.</div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('hosting-sim');
+    if (!root) { return; }
+
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    var caption = root.querySelector('[data-hs-caption]');
+    var meter = root.querySelector('[data-hs-meter]');
+    var status = root.querySelector('[data-hs-status]');
+    var bill = root.querySelector('[data-hs-bill]');
+    var crowd = root.querySelector('[data-hs-crowd]');
+    var crowdLabel = root.querySelector('[data-hs-crowd-label]');
+    var ghosts = root.querySelectorAll('[data-hs-ghost]');
+    var hostingBtns = root.querySelectorAll('[data-hs-hosting]');
+    var scenarioBtns = root.querySelectorAll('[data-hs-scenario]');
+
+    var scenes = {};
+    var list = root.querySelectorAll('[data-hs-scene]');
+    for (var i = 0; i < list.length; i++) { scenes[list[i].getAttribute('data-hs-scene')] = list[i]; }
+
+    // сетка соседских сайтов на shared-сервере (свой квадратик нарисован в разметке отдельно)
+    var grid = root.querySelector('[data-hs-grid]');
+    for (var row = 0; row < 5; row++) {
+      for (var col = 0; col < 6; col++) {
+        if (row === 1 && col === 2) { continue; }
+        var cell = document.createElementNS(SVG_NS, 'rect');
+        cell.setAttribute('class', 'hosting-sim-cell');
+        cell.setAttribute('x', 389 + col * 36);
+        cell.setAttribute('y', 67 + row * 30);
+        cell.setAttribute('width', 32);
+        cell.setAttribute('height', 26);
+        cell.setAttribute('rx', 3);
+        grid.appendChild(cell);
+      }
+    }
+
+    var dotsGroup = root.querySelector('[data-hs-dots]');
+    var dots = [];
+    for (i = 0; i < 12; i++) {
+      var dot = document.createElementNS(SVG_NS, 'circle');
+      dot.setAttribute('class', 'hosting-sim-dot');
+      dot.setAttribute('r', 5);
+      dotsGroup.appendChild(dot);
+      dots.push(dot);
+    }
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var RISE_MS = reduceMotion ? 0 : 1600;
+    var DROP_MS = reduceMotion ? 0 : 1100;
+    var TOTAL_MS = reduceMotion ? 400 : 4200;
+
+    var HOSTING = {
+      shared: {
+        base: 30,
+        bill: '≈200 ₽/мес',
+        idle: 'Коммуналка: на одном сервере живут сотни сайтов, синий квадратик — ваш. Зато всего рублей двести в месяц. Теперь выберите наверху, что происходит.'
+      },
+      vps: {
+        base: 12,
+        bill: '≈500 ₽/мес',
+        idle: 'Квартира: сервер нарезан на изолированные виртуалки. Одна из них ваша — со своим гарантированным куском процессора и памяти.'
+      },
+      dedicated: {
+        base: 3,
+        bill: '≈6000 ₽/мес',
+        idle: 'Частный дом: весь сервер ваш, соседей нет. И платить за него придётся целиком — даже когда он простаивает.'
+      },
+      cloud: {
+        base: 12,
+        bill: 'от ≈150 ₽/мес',
+        idle: 'Гостиница: сейчас работает одна маленькая виртуалка. Понадобится больше — автоматика поднимет соседние за секунды. Платите по счётчику.'
+      }
+    };
+
+    var SCENARIOS = {
+      calm: { mid: 'Обычный день: посетители заходят по одному, сервер отвечает не напрягаясь…', n: 3, dur: 2600, bad: false },
+      surge: { mid: 'Вышло интервью в крупном СМИ — на сайт хлынула толпа…', n: 12, dur: 1000, bad: false },
+      ddos: { mid: 'Проснулся ботнет: миллионы запросов со взломанных роутеров и камер летят на сайт…', n: 12, dur: 500, bad: true }
+    };
+
+    var OK = '✅ ', WARN = '⚠️ ', FAIL = '❌ ', MONEY = '💸 ';
+
+    var OUTCOMES = {
+      shared: {
+        calm: { peak: 38, status: 'всё работает', statusClass: 'ok',
+          text: OK + 'Сотня посетителей в день для сервера — ничто, даже для перенаселённого. Сайт работает, вы платите двести рублей и не вспоминаете о железе. Для блога или сайта мастерской shared — то, что нужно.' },
+        surge: { peak: 100, meterClass: 'fail', fail: 'all', status: 'сайт недоступен', statusClass: 'fail',
+          text: FAIL + 'Толпа упёрлась в общий сервер: тормозит не только ваш сайт, но и все соседи. Хостер, скорее всего, просто отключит ваш сайт, чтобы спасти остальные. Обидно: столько внимания — и мимо.' },
+        ddos: { peak: 100, meterClass: 'fail', fail: 'all', status: 'сайт недоступен', statusClass: 'fail',
+          text: FAIL + 'Сервер лёг почти мгновенно — вместе со всеми соседями. Против миллиона запросов в секунду у общей машины за двести рублей не было ни единого шанса.' }
+      },
+      vps: {
+        calm: { peak: 15, status: 'всё работает', statusClass: 'ok',
+          text: OK + 'Виртуалка почти спит: ресурсов с запасом. Дороже shared, зато соседи не помешают даже теоретически, и поставить внутрь можно что угодно.' },
+        surge: { peak: 100, meterClass: 'fail', fail: 'mine', status: 'ваш сайт еле отвечает', statusClass: 'fail',
+          text: FAIL + 'Ваша виртуалка выжала свой кусок процессора и захлебнулась. Соседи в порядке — изоляция работает, — но вашим посетителям от этого не легче. У фиксированного куска есть фиксированный потолок.' },
+        ddos: { peak: 100, meterClass: 'fail', fail: 'mine', status: 'сайт недоступен', statusClass: 'fail',
+          text: FAIL + 'Виртуалка забита под завязку, и канал сервера тоже. Изоляция спасает от шумных соседей, но не от толпы, ломящейся снаружи.' }
+      },
+      dedicated: {
+        calm: { peak: 5, status: 'всё работает', statusClass: 'ok',
+          text: MONEY + 'Работает идеально — ещё бы, целый сервер на горстку посетителей. 95% мощности простаивает, а деньги капают. Как купить автобус, чтобы ездить за хлебом.' },
+        surge: { peak: 78, meterClass: 'warn', status: 'работает на пределе', statusClass: 'warn',
+          text: WARN + 'Целый сервер держит удар — запас мощности наконец-то пригодился. Но если завтра толпа будет вдвое больше, быстро докупить второй сервер не выйдет: его надо заказывать, ставить, настраивать.' },
+        ddos: { peak: 100, meterClass: 'fail', fail: 'all', status: 'сайт недоступен', statusClass: 'fail',
+          text: FAIL + 'Даже целый мощный сервер — это один сервер. Канал забит, процессор захлёбывается, настоящие посетители не могут пробиться. Это физика: потолок есть у любого железа.' }
+      },
+      cloud: {
+        calm: { peak: 16, status: 'всё работает', statusClass: 'ok',
+          text: OK + 'Одна маленькая виртуалка справляется не напрягаясь. Счёт в конце месяца — копейки: заплатите ровно за то, что использовали.' },
+        surge: { peak: 92, settle: 42, spawn: true, status: 'всё работает', statusClass: 'ok', billFinal: '≈600 ₽ (на время наплыва)',
+          text: OK + 'Автоматика заметила рост, подняла ещё три виртуалки и распределила трафик между ними. Посетители ничего не заметили. Счёт подрос — но только на время наплыва, потом лишние машины погасятся.' },
+        ddos: { peak: 100, settle: 68, spawn: true, meterClass: 'warn', status: 'работает, но счёт растёт', statusClass: 'warn', billCount: 43000,
+          text: MONEY + 'Облако держится: автоматика поднимает всё новые виртуалки. Но взгляните на счётчик — атака разорит вас раньше, чем уронит сайт. Против DDoS нужно не больше железа, а фильтр перед сервером: Cloudflare, Qrator и подобные.' }
+      }
+    };
+
+    var hosting = 'shared';
+    var running = false;
+    var animToken = 0;
+    var ranCloud = { surge: false, ddos: false };
+
+    function setCaption(text, isResult) {
+      caption.textContent = text;
+      caption.classList.toggle('hosting-sim-caption--result', !!isResult);
+    }
+
+    function setBusy(busy) {
+      running = busy;
+      var b;
+      for (b = 0; b < hostingBtns.length; b++) { hostingBtns[b].disabled = busy; }
+      for (b = 0; b < scenarioBtns.length; b++) { scenarioBtns[b].disabled = busy; }
+    }
+
+    function setStatus(text, cls) {
+      status.textContent = text;
+      status.setAttribute('class', 'hosting-sim-status' + (cls ? ' hosting-sim-status--' + cls : ''));
+    }
+
+    function setMeter(pct, cls) {
+      meter.setAttribute('width', Math.round(230 * pct) / 100);
+      meter.setAttribute('class', 'hosting-sim-meter-fill' + (cls ? ' is-' + cls : ''));
+    }
+
+    function animateMeter(from, to, dur, token) {
+      if (!dur) { setMeter(to); return; }
+      var start = null;
+      function frame(ts) {
+        if (token !== animToken) { return; }
+        if (start === null) { start = ts; }
+        var t = Math.min((ts - start) / dur, 1);
+        setMeter(from + (to - from) * t);
+        if (t < 1) { requestAnimationFrame(frame); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function formatRub(n) {
+      var s = String(Math.round(n));
+      return s.length > 3 ? s.slice(0, s.length - 3) + ' ' + s.slice(s.length - 3) : s;
+    }
+
+    function animateBill(to, dur, token) {
+      var start = null;
+      function frame(ts) {
+        if (token !== animToken) { return; }
+        if (start === null) { start = ts; }
+        var t = Math.min((ts - start) / dur, 1);
+        bill.textContent = '≈' + formatRub(150 + (to - 150) * t * t) + ' ₽ и растёт';
+        if (t < 1) { requestAnimationFrame(frame); }
+      }
+      if (!dur) { bill.textContent = '≈' + formatRub(to) + ' ₽ и растёт'; return; }
+      requestAnimationFrame(frame);
+    }
+
+    function launchDot(el, cfg, token, delay) {
+      setTimeout(function () {
+        if (token !== animToken) { return; }
+        var y0 = 150 + (Math.random() * 70 - 35);
+        var y1 = 150 + (Math.random() * 50 - 25);
+        el.classList.toggle('is-bad', !!cfg.bad);
+        el.classList.add('is-shown');
+        var start = null;
+        function frame(ts) {
+          if (token !== animToken) { el.classList.remove('is-shown'); return; }
+          if (start === null) { start = ts; }
+          var t = Math.min((ts - start) / cfg.dur, 1);
+          el.setAttribute('cx', 115 + 257 * t);
+          el.setAttribute('cy', y0 + (y1 - y0) * t);
+          if (t < 1) { requestAnimationFrame(frame); } else { launchDot(el, cfg, token, Math.random() * 300); }
+        }
+        requestAnimationFrame(frame);
+      }, delay);
+    }
+
+    function startDots(cfg, token) {
+      if (reduceMotion) { return; }
+      for (var d = 0; d < cfg.n; d++) { launchDot(dots[d], cfg, token, Math.random() * cfg.dur); }
+    }
+
+    function hideDots() {
+      for (var d = 0; d < dots.length; d++) { dots[d].classList.remove('is-shown'); }
+    }
+
+    function resetScene() {
+      animToken++;
+      hideDots();
+      for (var key in scenes) {
+        scenes[key].classList.remove('is-fail', 'is-fail-mine');
+        scenes[key].classList.toggle('is-hidden', key !== hosting);
+      }
+      for (var g = 0; g < ghosts.length; g++) { ghosts[g].classList.remove('is-on'); }
+      crowd.classList.remove('is-bots');
+      crowdLabel.textContent = 'посетители';
+      setStatus('', '');
+      setMeter(HOSTING[hosting].base);
+      bill.textContent = HOSTING[hosting].bill;
+    }
+
+    function run(key) {
+      var sc = SCENARIOS[key];
+      var o = OUTCOMES[hosting][key];
+      var base = HOSTING[hosting].base;
+      resetScene();
+      var token = animToken;
+      setBusy(true);
+      setCaption(sc.mid, false);
+      if (sc.bad) {
+        crowd.classList.add('is-bots');
+        crowdLabel.textContent = 'ботнет';
+      }
+      startDots(sc, token);
+      animateMeter(base, o.peak, RISE_MS, token);
+      if (o.spawn) {
+        setTimeout(function () {
+          if (token !== animToken) { return; }
+          for (var g = 0; g < ghosts.length; g++) { ghosts[g].classList.add('is-on'); }
+          animateMeter(o.peak, o.settle, DROP_MS, token);
+        }, reduceMotion ? 0 : RISE_MS + 300);
+      }
+      if (o.billCount) { animateBill(o.billCount, TOTAL_MS, token); }
+      setTimeout(function () {
+        if (token !== animToken) { return; }
+        animToken++;
+        hideDots();
+        setMeter(o.spawn ? o.settle : o.peak, o.meterClass);
+        if (o.fail === 'all') { scenes[hosting].classList.add('is-fail'); }
+        if (o.fail === 'mine') { scenes[hosting].classList.add('is-fail-mine'); }
+        setStatus(o.status, o.statusClass);
+        if (o.billFinal) { bill.textContent = o.billFinal; }
+        if (o.billCount) { bill.textContent = '≈' + formatRub(o.billCount) + ' ₽ и растёт'; }
+        var text = o.text;
+        if (hosting === 'cloud') { ranCloud[key] = true; }
+        else if ((key === 'surge' || key === 'ddos') && !ranCloud[key]) { text += ' Попробуйте тот же сценарий на облаке.'; }
+        setCaption(text, true);
+        setBusy(false);
+      }, TOTAL_MS);
+    }
+
+    function activate(btns, target) {
+      for (var b = 0; b < btns.length; b++) { btns[b].classList.toggle('is-active', btns[b] === target); }
+    }
+
+    for (i = 0; i < hostingBtns.length; i++) {
+      hostingBtns[i].addEventListener('click', function () {
+        if (running) { return; }
+        activate(hostingBtns, this);
+        activate(scenarioBtns, null);
+        hosting = this.getAttribute('data-hs-hosting');
+        resetScene();
+        setCaption(HOSTING[hosting].idle, false);
+      });
+    }
+
+    for (i = 0; i < scenarioBtns.length; i++) {
+      scenarioBtns[i].addEventListener('click', function () {
+        if (running) { return; }
+        activate(scenarioBtns, this);
+        run(this.getAttribute('data-hs-scenario'));
+      });
+    }
+  })();
+  </script>
+</div>

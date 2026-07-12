@@ -2267,3 +2267,418 @@
     border-color: rgba(100,178,255,0.45);
   }
 }
+
+/* Стресс-тест хостинга (hosting-sim) */
+
+.hosting-sim {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+.hosting-sim-window {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f8f8;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.hosting-sim-head {
+  background: #ececec;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.hosting-sim-title {
+  display: block;
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 0.8em 1.5em;
+  color: #666;
+}
+
+.hosting-sim-actions-label {
+  padding: 1em 1em 0;
+  font-size: 0.75em;
+  color: #999;
+}
+
+.hosting-sim-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  padding: 0.5em 1em 0;
+}
+
+.hosting-sim-btn {
+  font-family: inherit;
+  font-size: 0.75em;
+  padding: 0.45em 0.9em;
+  border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
+}
+
+.hosting-sim-btn:hover {
+  border-color: #0089ff;
+  color: #0089ff;
+}
+
+.hosting-sim-btn.is-active {
+  background: #0089ff;
+  border-color: #0089ff;
+  color: #fff;
+}
+
+.hosting-sim-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.hosting-sim-scroll {
+  overflow-x: auto;
+  padding: 1em 1em 0;
+}
+
+.hosting-sim-svg {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+}
+
+.hosting-sim-scene.is-hidden {
+  display: none;
+}
+
+.hosting-sim-crowd-dot {
+  fill: #c0c0c0;
+  transition: fill 0.3s;
+}
+
+.hosting-sim-crowd.is-bots .hosting-sim-crowd-dot {
+  fill: #f41224;
+}
+
+.hosting-sim-crowd-label,
+.hosting-sim-bill-label,
+.hosting-sim-sub,
+.hosting-sim-meter-label {
+  fill: #999;
+  font-size: 9px;
+}
+
+.hosting-sim-bill {
+  fill: #333;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.hosting-sim-server-body {
+  fill: #fff;
+  stroke: rgba(0,0,0,0.15);
+  stroke-width: 1.5;
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+.hosting-sim-cell {
+  fill: rgba(0,0,0,0.1);
+  transition: fill 0.3s;
+}
+
+.hosting-sim-vm {
+  fill: rgba(0,0,0,0.06);
+  stroke: rgba(0,0,0,0.12);
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+.hosting-sim-slat {
+  fill: rgba(0,137,255,0.12);
+}
+
+.hosting-sim-node {
+  fill: #e6f2ff;
+  stroke: rgba(0,0,0,0.15);
+  transition: fill 0.3s, stroke 0.3s, opacity 0.3s;
+}
+
+.hosting-sim-mine {
+  fill: rgba(0,137,255,0.35);
+  stroke: #0089ff;
+}
+
+.hosting-sim-server-body.hosting-sim-mine {
+  fill: rgba(0,137,255,0.08);
+}
+
+.hosting-sim-ghost {
+  fill: none;
+  stroke: rgba(0,0,0,0.25);
+  stroke-dasharray: 5 4;
+  opacity: 0.6;
+}
+
+.hosting-sim-ghost.is-on {
+  fill: rgba(0,137,255,0.35);
+  stroke: #0089ff;
+  stroke-dasharray: none;
+  opacity: 1;
+}
+
+.hosting-sim-scene.is-fail .hosting-sim-server-body {
+  stroke: #f41224;
+  fill: rgba(244,18,36,0.05);
+}
+
+.hosting-sim-scene.is-fail .hosting-sim-cell,
+.hosting-sim-scene.is-fail .hosting-sim-vm,
+.hosting-sim-scene.is-fail .hosting-sim-slat {
+  fill: rgba(244,18,36,0.25);
+}
+
+.hosting-sim-scene.is-fail .hosting-sim-mine,
+.hosting-sim-scene.is-fail-mine .hosting-sim-mine {
+  fill: rgba(244,18,36,0.6);
+  stroke: #f41224;
+}
+
+.hosting-sim-meter-track {
+  fill: rgba(0,0,0,0.08);
+}
+
+.hosting-sim-meter-fill {
+  fill: #0089ff;
+  transition: fill 0.3s;
+}
+
+.hosting-sim-meter-fill.is-warn {
+  fill: #e08a00;
+}
+
+.hosting-sim-meter-fill.is-fail {
+  fill: #f41224;
+}
+
+.hosting-sim-status {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.hosting-sim-status--ok {
+  fill: #2da44e;
+}
+
+.hosting-sim-status--warn {
+  fill: #e08a00;
+}
+
+.hosting-sim-status--fail {
+  fill: #f41224;
+}
+
+.hosting-sim-dot {
+  fill: #0089ff;
+  stroke: #f8f8f8;
+  stroke-width: 1.5;
+  opacity: 0;
+}
+
+.hosting-sim-dot.is-shown {
+  opacity: 1;
+}
+
+.hosting-sim-dot.is-bad {
+  fill: #f41224;
+}
+
+.hosting-sim-caption {
+  box-sizing: border-box;
+  margin: 1em;
+  padding: 0.7em 0.9em;
+  min-height: 4.4em;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  font-size: 0.85em;
+  line-height: 1.45;
+  transition: border-color 0.3s;
+}
+
+.hosting-sim-caption--result {
+  border-color: rgba(0,137,255,0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hosting-sim-crowd-dot,
+  .hosting-sim-server-body,
+  .hosting-sim-cell,
+  .hosting-sim-vm,
+  .hosting-sim-node,
+  .hosting-sim-meter-fill,
+  .hosting-sim-dot {
+    transition: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .hosting-sim-window {
+    background: #1a1a1a;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+
+  .hosting-sim-head {
+    background: #111;
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+
+  .hosting-sim-title {
+    color: #999;
+  }
+
+  .hosting-sim-actions-label {
+    color: #777;
+  }
+
+  .hosting-sim-btn {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #999;
+  }
+
+  .hosting-sim-btn:hover {
+    border-color: #64b2ff;
+    color: #64b2ff;
+  }
+
+  .hosting-sim-btn.is-active {
+    background: #64b2ff;
+    border-color: #64b2ff;
+    color: #111;
+  }
+
+  .hosting-sim-crowd-dot {
+    fill: #555;
+  }
+
+  .hosting-sim-crowd.is-bots .hosting-sim-crowd-dot {
+    fill: #ff453a;
+  }
+
+  .hosting-sim-crowd-label,
+  .hosting-sim-bill-label,
+  .hosting-sim-sub,
+  .hosting-sim-meter-label {
+    fill: #777;
+  }
+
+  .hosting-sim-bill {
+    fill: #e0e0e0;
+  }
+
+  .hosting-sim-server-body {
+    fill: #242424;
+    stroke: rgba(255,255,255,0.18);
+  }
+
+  .hosting-sim-cell {
+    fill: rgba(255,255,255,0.12);
+  }
+
+  .hosting-sim-vm {
+    fill: rgba(255,255,255,0.06);
+    stroke: rgba(255,255,255,0.15);
+  }
+
+  .hosting-sim-slat {
+    fill: rgba(100,178,255,0.15);
+  }
+
+  .hosting-sim-node {
+    fill: #17293d;
+    stroke: rgba(255,255,255,0.18);
+  }
+
+  .hosting-sim-mine {
+    fill: rgba(100,178,255,0.4);
+    stroke: #64b2ff;
+  }
+
+  .hosting-sim-server-body.hosting-sim-mine {
+    fill: rgba(100,178,255,0.1);
+  }
+
+  .hosting-sim-ghost {
+    fill: none;
+    stroke: rgba(255,255,255,0.3);
+  }
+
+  .hosting-sim-ghost.is-on {
+    fill: rgba(100,178,255,0.4);
+    stroke: #64b2ff;
+  }
+
+  .hosting-sim-scene.is-fail .hosting-sim-server-body {
+    stroke: #ff453a;
+    fill: rgba(255,69,58,0.07);
+  }
+
+  .hosting-sim-scene.is-fail .hosting-sim-cell,
+  .hosting-sim-scene.is-fail .hosting-sim-vm,
+  .hosting-sim-scene.is-fail .hosting-sim-slat {
+    fill: rgba(255,69,58,0.3);
+  }
+
+  .hosting-sim-scene.is-fail .hosting-sim-mine,
+  .hosting-sim-scene.is-fail-mine .hosting-sim-mine {
+    fill: rgba(255,69,58,0.65);
+    stroke: #ff453a;
+  }
+
+  .hosting-sim-meter-track {
+    fill: rgba(255,255,255,0.1);
+  }
+
+  .hosting-sim-meter-fill {
+    fill: #64b2ff;
+  }
+
+  .hosting-sim-meter-fill.is-warn {
+    fill: #e8a33d;
+  }
+
+  .hosting-sim-meter-fill.is-fail {
+    fill: #ff453a;
+  }
+
+  .hosting-sim-status--ok {
+    fill: #4cc38a;
+  }
+
+  .hosting-sim-status--warn {
+    fill: #e8a33d;
+  }
+
+  .hosting-sim-status--fail {
+    fill: #ff453a;
+  }
+
+  .hosting-sim-dot {
+    fill: #64b2ff;
+    stroke: #1a1a1a;
+  }
+
+  .hosting-sim-dot.is-bad {
+    fill: #ff453a;
+  }
+
+  .hosting-sim-caption {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .hosting-sim-caption--result {
+    border-color: rgba(100,178,255,0.45);
+  }
+}
