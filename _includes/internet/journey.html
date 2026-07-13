@@ -1,0 +1,143 @@
+<div class="journey-sim" id="journey-sim">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
+  <div class="journey-sim-window">
+    <div class="journey-sim-head">
+      <span class="journey-sim-title">Путь одного Enter: courier до lenta.ru и обратно</span>
+    </div>
+    <div class="journey-sim-steps" data-journey-steps>
+      <button type="button" class="journey-sim-step" data-journey-step="0"><span class="journey-sim-step-marker" data-journey-marker>1</span><span class="journey-sim-step-label">URL</span></button>
+      <button type="button" class="journey-sim-step" data-journey-step="1"><span class="journey-sim-step-marker" data-journey-marker>2</span><span class="journey-sim-step-label">DNS</span></button>
+      <button type="button" class="journey-sim-step" data-journey-step="2"><span class="journey-sim-step-marker" data-journey-marker>3</span><span class="journey-sim-step-label">TCP</span></button>
+      <button type="button" class="journey-sim-step" data-journey-step="3"><span class="journey-sim-step-marker" data-journey-marker>4</span><span class="journey-sim-step-label">TLS</span></button>
+      <button type="button" class="journey-sim-step" data-journey-step="4"><span class="journey-sim-step-marker" data-journey-marker>5</span><span class="journey-sim-step-label">HTTP</span></button>
+      <button type="button" class="journey-sim-step" data-journey-step="5"><span class="journey-sim-step-marker" data-journey-marker>6</span><span class="journey-sim-step-label">Маршрут</span></button>
+      <button type="button" class="journey-sim-step" data-journey-step="6"><span class="journey-sim-step-marker" data-journey-marker>7</span><span class="journey-sim-step-label">CDN</span></button>
+      <button type="button" class="journey-sim-step" data-journey-step="7"><span class="journey-sim-step-marker" data-journey-marker>8</span><span class="journey-sim-step-label">Сервер</span></button>
+      <button type="button" class="journey-sim-step" data-journey-step="8"><span class="journey-sim-step-marker" data-journey-marker>9</span><span class="journey-sim-step-label">Ответ</span></button>
+      <button type="button" class="journey-sim-step" data-journey-step="9"><span class="journey-sim-step-marker" data-journey-marker>10</span><span class="journey-sim-step-label">Рендер</span></button>
+    </div>
+    <div class="journey-sim-detail">
+      <div class="journey-sim-detail-head">
+        <span class="journey-sim-detail-icon" data-journey-icon>&#128269;</span>
+        <span class="journey-sim-detail-title" data-journey-title>Разбор адреса</span>
+        <span class="journey-sim-detail-time" data-journey-time>0 мс</span>
+      </div>
+      <p data-journey-text>Браузер смотрит на «lenta.ru» и понимает: протокол не указан — значит, по умолчанию HTTPS, путь — «/», то есть главная страница. Курьер прочитал бумажку с названием города, но пока не знает, как туда доехать.</p>
+    </div>
+    <div class="journey-sim-controls">
+      <button type="button" class="journey-sim-btn journey-sim-btn--ghost" data-journey-prev>&#8592; Назад</button>
+      <button type="button" class="journey-sim-btn journey-sim-btn--play" data-journey-play>&#9654; Прогнать всё путешествие</button>
+      <button type="button" class="journey-sim-btn journey-sim-btn--ghost" data-journey-next>Вперёд &#8594;</button>
+    </div>
+    <div class="journey-sim-total" data-journey-total aria-live="polite">Набежавшее время: <b data-journey-total-ms>0</b> мс из ~500</div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('journey-sim');
+    if (!root) { return; }
+
+    var STEPS = [
+      { icon: '&#128269;', title: 'Разбор адреса', ms: 0,
+        text: 'Браузер смотрит на «lenta.ru» и понимает: протокол не указан — значит, по умолчанию HTTPS, путь — «/», то есть главная страница. Курьер прочитал бумажку с названием города, но пока не знает, как туда доехать.' },
+      { icon: '&#128209;', title: 'Спросить дорогу — DNS', ms: 25,
+        text: 'Имя lenta.ru само по себе сети ничего не скажет — нужен IP-адрес. Браузер проверяет свой кэш, затем ОС, затем DNS-сервер, который при необходимости поднимается по иерархии до авторитативного сервера домена. Курьер зашёл в справочную и получил точный адрес.' },
+      { icon: '&#129309;', title: 'Рукопожатие — TCP', ms: 40,
+        text: 'Прежде чем везти данные, нужно установить канал. Три пакета — «привет», «привет, давай», «поехали» — и соединение между браузером и сервером установлено. Курьер вызвал такси, водитель кивнул: готов ехать.' },
+      { icon: '&#128274;', title: 'Печать конверта — TLS', ms: 90,
+        text: 'Поверх TCP браузер и сервер обмениваются сертификатами и договариваются о ключе шифрования. С этого момента все данные едут в запечатанных конвертах, которые сможет вскрыть только адресат. Курьер надел бронежилет и опломбировал сумку.' },
+      { icon: '&#9993;', title: 'Сформулировать запрос — HTTP', ms: 5,
+        text: 'Теперь можно сказать серверу, чего вы хотите: метод GET, путь «/», заголовки с версией браузера и куки, которые узнают вас на этом сайте. Курьер отдал водителю точный заказ.' },
+      { icon: '&#128678;', title: 'Маршрутизация', ms: 35,
+        text: 'Запрос идёт через домашний роутер, сеть провайдера, магистральных операторов — возможно, по кабелю на дне океана. Каждый узел знает только следующий шаг, а вместе они довозят пакет до цели. Такси едет через города, и на каждом перекрёстке — свой регулировщик.' },
+      { icon: '&#127760;', title: 'Может быть, не до конца — CDN', ms: 0,
+        text: 'Скорее всего запрос вообще не доедет до главного сервера lenta.ru. DNS с самого начала мог отдать IP ближайшего узла CDN — филиала с копией популярных страниц. Так короче, а значит быстрее: курьеру не пришлось ехать через полстраны, нужный склад оказался в соседнем квартале.' },
+      { icon: '&#128421;', title: 'Прибытие на склад — сервер', ms: 80,
+        text: 'Сервер (или узел CDN) получает запрос, смотрит на путь и куки, достаёт нужные данные, собирает HTML и упаковывает всё в ответ с кодом 200 OK. Курьер добрался до склада и забрал заказ.' },
+      { icon: '&#128230;', title: 'Дорога домой', ms: 65,
+        text: 'Ответ едет обратно тем же путём — через те же узлы, но в другую сторону. Скорость света в оптоволокне конечна: до Лондона — около 30 мс, до Калифорнии — около 200 мс. Свет, увы, не телепортируется. Курьер везёт посылку назад, через те же перекрёстки.' },
+      { icon: '&#127912;', title: 'Сборка страницы', ms: 160,
+        text: 'HTML — это только чертёж. Браузер видит в нём ссылки на CSS, шрифты, скрипты и картинки, разбирает HTML в дерево элементов, применяет стили, запускает JavaScript — и постепенно на экране собирается страница. Курьер положил бумаги на стол, а дальше прораб расставил мебель и включил свет.' }
+    ];
+
+    var stepEls = root.querySelectorAll('[data-journey-step]');
+    var icon = root.querySelector('[data-journey-icon]');
+    var title = root.querySelector('[data-journey-title]');
+    var time = root.querySelector('[data-journey-time]');
+    var text = root.querySelector('[data-journey-text]');
+    var totalMs = root.querySelector('[data-journey-total-ms]');
+    var prevBtn = root.querySelector('[data-journey-prev]');
+    var nextBtn = root.querySelector('[data-journey-next]');
+    var playBtn = root.querySelector('[data-journey-play]');
+
+    var current = 0;
+    var playing = false;
+    var playTimer = null;
+
+    function cumulativeMs(upTo) {
+      var sum = 0;
+      for (var i = 0; i <= upTo; i++) { sum += STEPS[i].ms; }
+      return sum;
+    }
+
+    function render() {
+      var s = STEPS[current];
+      icon.innerHTML = s.icon;
+      title.textContent = s.title;
+      time.textContent = (s.ms ? '+' + s.ms + ' мс' : 'мгновенно');
+      text.textContent = s.text;
+      totalMs.textContent = cumulativeMs(current);
+
+      for (var i = 0; i < stepEls.length; i++) {
+        var marker = stepEls[i].querySelector('[data-journey-marker]');
+        stepEls[i].classList.toggle('is-active', i === current);
+        stepEls[i].classList.toggle('is-done', i < current);
+        if (i === current) { marker.innerHTML = '&#127939;'; }
+        else if (i < current) { marker.innerHTML = '&#10003;'; }
+        else { marker.textContent = i + 1; }
+      }
+
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === STEPS.length - 1;
+    }
+
+    function goTo(index) {
+      current = Math.max(0, Math.min(STEPS.length - 1, index));
+      render();
+    }
+
+    function stopPlay() {
+      playing = false;
+      if (playTimer) { clearTimeout(playTimer); playTimer = null; }
+      playBtn.innerHTML = '&#9654; Прогнать всё путешествие';
+    }
+
+    function play() {
+      if (playing) { stopPlay(); return; }
+      playing = true;
+      playBtn.innerHTML = '&#9632; Остановить';
+      goTo(0);
+      function step() {
+        if (!playing) { return; }
+        if (current >= STEPS.length - 1) { stopPlay(); return; }
+        playTimer = setTimeout(function () {
+          goTo(current + 1);
+          step();
+        }, 1100);
+      }
+      step();
+    }
+
+    for (var i = 0; i < stepEls.length; i++) {
+      stepEls[i].addEventListener('click', function () {
+        stopPlay();
+        goTo(+this.getAttribute('data-journey-step'));
+      });
+    }
+    prevBtn.addEventListener('click', function () { stopPlay(); goTo(current - 1); });
+    nextBtn.addEventListener('click', function () { stopPlay(); goTo(current + 1); });
+    playBtn.addEventListener('click', play);
+
+    render();
+  })();
+  </script>
+</div>
