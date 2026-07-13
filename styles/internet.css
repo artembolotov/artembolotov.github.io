@@ -719,14 +719,7 @@
   display: none;
 }
 
-.dt-sim-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.dt-sim-window + .dt-sim-window {
+.dt-sim .sim-window + .sim-window {
   margin-top: 0.8em;
 }
 
@@ -906,11 +899,9 @@
 }
 
 /* DevTools panel */
+/* Шапка — общий sim-head; табы центрируем по вертикали */
 .dt-sim-head {
-  display: flex;
   align-items: center;
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
 }
 
 .dt-sim-devtools-label {
@@ -1292,10 +1283,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .dt-sim-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
 
   .dt-sim-tabstrip {
     background: #000;
@@ -1317,11 +1304,6 @@
   .dt-sim-addr {
     background: #2e2e2e;
     color: #e0e0e0;
-  }
-
-  .dt-sim-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
   }
 
   .dt-sim-devtools-label {
@@ -1580,67 +1562,6 @@
   margin-bottom: 2em;
 }
 
-.tier-map-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.tier-map-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.tier-map-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
-}
-
-.tier-map-actions-label {
-  padding: 1em 1em 0;
-  font-size: 0.75em;
-  color: #999;
-}
-
-.tier-map-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  padding: 0.5em 1em 0;
-}
-
-.tier-map-btn {
-  font-family: inherit;
-  font-size: 0.75em;
-  padding: 0.45em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
-}
-
-.tier-map-btn:hover {
-  border-color: #0089ff;
-  color: #0089ff;
-}
-
-.tier-map-btn.is-active {
-  background: #0089ff;
-  border-color: #0089ff;
-  color: #fff;
-}
-
-.tier-map-btn:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-
 .tier-map-scroll {
   overflow-x: auto;
   padding: 1em 1em 0;
@@ -1797,40 +1718,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .tier-map-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .tier-map-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .tier-map-title {
-    color: #999;
-  }
-
-  .tier-map-actions-label {
-    color: #777;
-  }
-
-  .tier-map-btn {
-    background: #242424;
-    border-color: rgba(255,255,255,0.15);
-    color: #999;
-  }
-
-  .tier-map-btn:hover {
-    border-color: #64b2ff;
-    color: #64b2ff;
-  }
-
-  .tier-map-btn.is-active {
-    background: #64b2ff;
-    border-color: #64b2ff;
-    color: #111;
-  }
 
   .tier-map-band {
     fill: rgba(255,255,255,0.03);
@@ -1935,67 +1822,6 @@
 .hosting-sim {
   margin-top: 1.5em;
   margin-bottom: 2em;
-}
-
-.hosting-sim-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.hosting-sim-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.hosting-sim-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
-}
-
-.hosting-sim-actions-label {
-  padding: 1em 1em 0;
-  font-size: 0.75em;
-  color: #999;
-}
-
-.hosting-sim-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  padding: 0.5em 1em 0;
-}
-
-.hosting-sim-btn {
-  font-family: inherit;
-  font-size: 0.75em;
-  padding: 0.45em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
-}
-
-.hosting-sim-btn:hover {
-  border-color: #0089ff;
-  color: #0089ff;
-}
-
-.hosting-sim-btn.is-active {
-  background: #0089ff;
-  border-color: #0089ff;
-  color: #fff;
-}
-
-.hosting-sim-btn:disabled {
-  opacity: 0.55;
-  cursor: default;
 }
 
 .hosting-sim-scroll {
@@ -2185,40 +2011,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .hosting-sim-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .hosting-sim-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .hosting-sim-title {
-    color: #999;
-  }
-
-  .hosting-sim-actions-label {
-    color: #777;
-  }
-
-  .hosting-sim-btn {
-    background: #242424;
-    border-color: rgba(255,255,255,0.15);
-    color: #999;
-  }
-
-  .hosting-sim-btn:hover {
-    border-color: #64b2ff;
-    color: #64b2ff;
-  }
-
-  .hosting-sim-btn.is-active {
-    background: #64b2ff;
-    border-color: #64b2ff;
-    color: #111;
-  }
 
   .hosting-sim-crowd-dot {
     fill: #555;
@@ -2350,67 +2142,6 @@
 .cdn-map {
   margin-top: 1.5em;
   margin-bottom: 2em;
-}
-
-.cdn-map-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.cdn-map-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.cdn-map-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
-}
-
-.cdn-map-actions-label {
-  padding: 1em 1em 0;
-  font-size: 0.75em;
-  color: #999;
-}
-
-.cdn-map-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  padding: 0.5em 1em 0;
-}
-
-.cdn-map-btn {
-  font-family: inherit;
-  font-size: 0.75em;
-  padding: 0.45em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
-}
-
-.cdn-map-btn:hover {
-  border-color: #0089ff;
-  color: #0089ff;
-}
-
-.cdn-map-btn.is-active {
-  background: #0089ff;
-  border-color: #0089ff;
-  color: #fff;
-}
-
-.cdn-map-btn:disabled {
-  opacity: 0.55;
-  cursor: default;
 }
 
 .cdn-map-stage {
@@ -2576,40 +2307,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .cdn-map-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .cdn-map-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .cdn-map-title {
-    color: #999;
-  }
-
-  .cdn-map-actions-label {
-    color: #777;
-  }
-
-  .cdn-map-btn {
-    background: #242424;
-    border-color: rgba(255,255,255,0.15);
-    color: #999;
-  }
-
-  .cdn-map-btn:hover {
-    border-color: #64b2ff;
-    color: #64b2ff;
-  }
-
-  .cdn-map-btn.is-active {
-    background: #64b2ff;
-    border-color: #64b2ff;
-    color: #111;
-  }
 
   .cdn-map-land {
     fill: rgba(255,255,255,0.07);
@@ -2693,67 +2390,6 @@
 .email-path {
   margin-top: 1.5em;
   margin-bottom: 2em;
-}
-
-.email-path-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.email-path-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.email-path-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
-}
-
-.email-path-actions-label {
-  padding: 1em 1em 0;
-  font-size: 0.75em;
-  color: #999;
-}
-
-.email-path-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  padding: 0.5em 1em 0;
-}
-
-.email-path-btn {
-  font-family: inherit;
-  font-size: 0.75em;
-  padding: 0.45em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
-}
-
-.email-path-btn:hover {
-  border-color: #0089ff;
-  color: #0089ff;
-}
-
-.email-path-btn.is-active {
-  background: #0089ff;
-  border-color: #0089ff;
-  color: #fff;
-}
-
-.email-path-btn:disabled {
-  opacity: 0.55;
-  cursor: default;
 }
 
 .email-path-letter {
@@ -2968,40 +2604,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .email-path-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .email-path-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .email-path-title {
-    color: #999;
-  }
-
-  .email-path-actions-label {
-    color: #777;
-  }
-
-  .email-path-btn {
-    background: #242424;
-    border-color: rgba(255,255,255,0.15);
-    color: #999;
-  }
-
-  .email-path-btn:hover {
-    border-color: #64b2ff;
-    color: #64b2ff;
-  }
-
-  .email-path-btn.is-active {
-    background: #64b2ff;
-    border-color: #64b2ff;
-    color: #111;
-  }
 
   .email-path-letter {
     background: #242424;
@@ -3108,26 +2710,6 @@
 .handover-sim {
   margin-top: 1.5em;
   margin-bottom: 2em;
-}
-
-.handover-sim-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.handover-sim-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.handover-sim-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
 }
 
 .handover-sim-stage {
@@ -3380,28 +2962,6 @@
   background: #0089ff;
 }
 
-.handover-sim-btn {
-  font-family: inherit;
-  font-size: 0.75em;
-  padding: 0.45em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
-}
-
-.handover-sim-btn:hover {
-  border-color: #0089ff;
-  color: #0089ff;
-}
-
-.handover-sim-btn:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-
 .handover-sim-caption {
   box-sizing: border-box;
   margin: 1em;
@@ -3437,19 +2997,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .handover-sim-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .handover-sim-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .handover-sim-title {
-    color: #999;
-  }
 
   .handover-sim-cell {
     fill: rgba(100,178,255,0.05);
@@ -3567,17 +3114,6 @@
     background: #64b2ff;
   }
 
-  .handover-sim-btn {
-    background: #242424;
-    border-color: rgba(255,255,255,0.15);
-    color: #999;
-  }
-
-  .handover-sim-btn:hover {
-    border-color: #64b2ff;
-    color: #64b2ff;
-  }
-
   .handover-sim-caption {
     background: #242424;
     box-shadow: 0 1px 3px rgba(0,0,0,0.25);
@@ -3600,52 +3136,7 @@
   display: none;
 }
 
-.api-sim-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.api-sim-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.api-sim-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
-}
-
-.api-sim-actions-label {
-  padding: 1em 1em 0;
-  font-size: 0.75em;
-  color: #999;
-}
-
-.api-sim-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  padding: 0.5em 1em 0;
-}
-
-.api-sim-action {
-  font-family: inherit;
-  font-size: 0.75em;
-  padding: 0.45em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
-}
-
-.api-sim-action b {
+.api-sim .sim-choice b {
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 0.85em;
   font-weight: 600;
@@ -3653,24 +3144,8 @@
   color: #0089ff;
 }
 
-.api-sim-action:hover {
-  border-color: #0089ff;
-  color: #0089ff;
-}
-
-.api-sim-action.is-active {
-  background: #0089ff;
-  border-color: #0089ff;
+.api-sim .sim-choice.is-active b {
   color: #fff;
-}
-
-.api-sim-action.is-active b {
-  color: #fff;
-}
-
-.api-sim-action:disabled {
-  opacity: 0.55;
-  cursor: default;
 }
 
 .api-sim-stage {
@@ -4003,46 +3478,12 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .api-sim-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
 
-  .api-sim-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .api-sim-title {
-    color: #999;
-  }
-
-  .api-sim-actions-label {
-    color: #777;
-  }
-
-  .api-sim-action {
-    background: #242424;
-    border-color: rgba(255,255,255,0.15);
-    color: #999;
-  }
-
-  .api-sim-action b {
+  .api-sim .sim-choice b {
     color: #64b2ff;
   }
 
-  .api-sim-action:hover {
-    border-color: #64b2ff;
-    color: #64b2ff;
-  }
-
-  .api-sim-action.is-active {
-    background: #64b2ff;
-    border-color: #64b2ff;
-    color: #111;
-  }
-
-  .api-sim-action.is-active b {
+  .api-sim .sim-choice.is-active b {
     color: #111;
   }
 
@@ -4182,26 +3623,6 @@
    the hidden attribute — this wins by specificity. */
 .rfc-nav [hidden] {
   display: none;
-}
-
-.rfc-nav-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.rfc-nav-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.rfc-nav-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
 }
 
 .rfc-nav-filters {
@@ -4404,19 +3825,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .rfc-nav-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .rfc-nav-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .rfc-nav-title {
-    color: #999;
-  }
 
   .rfc-nav-filter {
     background: #242424;
