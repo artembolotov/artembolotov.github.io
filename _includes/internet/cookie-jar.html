@@ -1,0 +1,275 @@
+<div class="cookie-jar" id="cookie-jar">
+  <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
+  <div class="cookie-jar-window">
+    <div class="cookie-jar-head">
+      <span class="cookie-jar-title">Карман браузера: как куки путешествуют с вами</span>
+    </div>
+    <div class="cookie-jar-pocket-label">Карман браузера прямо сейчас:</div>
+    <div class="cookie-jar-pocket" data-cj-pocket>
+      <div class="cookie-jar-pocket-empty">пока пусто</div>
+    </div>
+    <div class="cookie-jar-log" data-cj-log aria-live="polite"></div>
+    <div class="cookie-jar-controls">
+      <button type="button" class="cookie-jar-btn" data-cj-next>Открыть shop.example впервые &#8594;</button>
+      <button type="button" class="cookie-jar-btn cookie-jar-btn--ghost" data-cj-restart hidden>&#8634; Сначала</button>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('cookie-jar');
+    if (!root) { return; }
+
+    var pocketBox = root.querySelector('[data-cj-pocket]');
+    var log = root.querySelector('[data-cj-log]');
+    var nextBtn = root.querySelector('[data-cj-next]');
+    var restartBtn = root.querySelector('[data-cj-restart]');
+
+    var pocket = {};
+    var stepIndex = 0;
+    var busy = false;
+
+    var STEPS = [
+      { button: 'Открыть shop.example впервые &#8594;', action: openShop },
+      { button: 'Положить товар в корзину &#8594;', action: addToCart },
+      { button: 'Открыть news.example &#8594;', action: openNews },
+      { button: 'Закрыть браузер &#8594;', action: closeBrowser },
+      { button: 'Снова открыть shop.example &#8594;', action: reopenShop }
+    ];
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function setBusy(v) {
+      busy = v;
+      nextBtn.disabled = v;
+    }
+
+    function addBubble(mod, name, text, pre) {
+      var el = document.createElement('div');
+      el.className = 'cookie-jar-step cookie-jar-step--' + mod;
+      var html = '';
+      if (name) { html += '<span class="cookie-jar-step-name">' + name + '</span>'; }
+      if (text) { html += '<p>' + text + '</p>'; }
+      if (pre) { html += '<pre>' + pre + '</pre>'; }
+      el.innerHTML = html;
+      log.appendChild(el);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { el.classList.add('is-shown'); });
+      });
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function run(bubbles, done) {
+      var i = 0;
+      function next() {
+        if (i >= bubbles.length) { done(); return; }
+        bubbles[i++]();
+        setTimeout(next, 900);
+      }
+      next();
+    }
+
+    // --- Состояние кармана ---
+
+    function domainState(d, third) {
+      if (!pocket[d]) { pocket[d] = { third: !!third, cookies: {} }; }
+      return pocket[d];
+    }
+
+    function setCookie(d, name, value, persistent, days) {
+      var st = domainState(d);
+      st.cookies[name] = { value: value, persistent: !!persistent, days: days, fresh: true };
+    }
+
+    function cookieHeader(d) {
+      var st = pocket[d];
+      if (!st) { return null; }
+      var parts = [];
+      for (var k in st.cookies) { parts.push(k + '=' + st.cookies[k].value); }
+      return parts.length ? parts.join('; ') : null;
+    }
+
+    function renderPocket() {
+      var domains = Object.keys(pocket);
+      var any = false;
+      var html = '';
+      for (var i = 0; i < domains.length; i++) {
+        var d = domains[i];
+        var st = pocket[d];
+        var keys = Object.keys(st.cookies);
+        if (!keys.length) { continue; }
+        any = true;
+        html += '<div class="cookie-jar-domain' + (st.third ? ' cookie-jar-domain--third' : '') + '">';
+        html += '<div class="cookie-jar-domain-head"><span class="cookie-jar-domain-name">' + d + '</span>' +
+          (st.third ? '<span class="cookie-jar-domain-note">сторонний домен — сидит в баннере на чужих страницах</span>' : '') +
+          '</div>';
+        for (var j = 0; j < keys.length; j++) {
+          var name = keys[j], c = st.cookies[name];
+          html += '<div class="cookie-jar-chip' + (c.fresh ? ' is-new' : '') + '" data-cj-chip="' + d + '|' + name + '">';
+          html += '<span class="cookie-jar-chip-kv"><b>' + name + '</b> = ' + c.value + '</span>';
+          html += '<span class="cookie-jar-chip-tag ' + (c.persistent ? 'cookie-jar-chip-tag--persist' : 'cookie-jar-chip-tag--session') + '">' +
+            (c.persistent ? 'постоянная · ' + c.days + ' дн.' : 'сессионная') + '</span>';
+          html += '</div>';
+          c.fresh = false;
+        }
+        html += '</div>';
+      }
+      pocketBox.innerHTML = any ? html : '<div class="cookie-jar-pocket-empty">пока пусто</div>';
+    }
+
+    function fadeAndForget(pairs, cb) {
+      var found = false;
+      for (var i = 0; i < pairs.length; i++) {
+        var el = pocketBox.querySelector('[data-cj-chip="' + pairs[i][0] + '|' + pairs[i][1] + '"]');
+        if (el) { el.classList.add('is-removing'); found = true; }
+      }
+      setTimeout(function () {
+        for (var i = 0; i < pairs.length; i++) {
+          var st = pocket[pairs[i][0]];
+          if (st) { delete st.cookies[pairs[i][1]]; }
+        }
+        renderPocket();
+        cb();
+      }, found ? 420 : 0);
+    }
+
+    // --- Сценарий ---
+
+    function openShop(cb) {
+      run([
+        function () {
+          addBubble('browser', 'Браузер', 'Открываю shop.example в первый раз. Кука для этого домена? В кармане для него пока пусто, приложить нечего.',
+            escapeHtml('GET / HTTP/1.1\nHost: shop.example'));
+        },
+        function () {
+          setCookie('shop.example', 'session_id', '8f3a91d4', false);
+          renderPocket();
+          addBubble('server', 'Сервер shop.example', 'Вижу вас впервые. Выдаю пропуск.',
+            escapeHtml('HTTP/1.1 200 OK\nSet-Cookie: session_id=8f3a91d4') + '\n<i>(без Expires — умрёт вместе с браузером)</i>');
+        },
+        function () {
+          addBubble('browser', 'Браузер', 'На странице есть рекламный баннер, а его код подгружается с adnet.example. Для этого домена в кармане тоже пусто — вижу его впервые.',
+            escapeHtml('GET /pixel.gif HTTP/1.1\nHost: adnet.example'));
+        },
+        function () {
+          setCookie('adnet.example', 'uid', 'x91c7d3a', true, 365);
+          renderPocket();
+          addBubble('tracker', 'adnet.example (реклама)', 'Тоже вижу вас впервые. Вот вам бирка — и надолго.',
+            escapeHtml('HTTP/1.1 200 OK\nSet-Cookie: uid=x91c7d3a; Max-Age=31536000'));
+        },
+        function () {
+          addBubble('explain', null, 'В кармане теперь два бейджа от двух разных доменов. Один — сессионный, от shop.example. Другой — постоянный, от adnet.example, а это не сайт-хозяин, а просто чужой код, встроенный в его страницу.');
+        }
+      ], cb);
+    }
+
+    function addToCart(cb) {
+      run([
+        function () {
+          var ck = cookieHeader('shop.example');
+          addBubble('browser', 'Браузер', 'Кладу товар в корзину. Прикладываю бейдж shop.example, как положено.',
+            escapeHtml('GET /cart/add HTTP/1.1\nHost: shop.example\nCookie: ' + ck));
+        },
+        function () {
+          addBubble('server', 'Сервер shop.example', 'Узнал: 8f3a91d4 — это тот же посетитель, что заходил только что. Добавил товар в его корзину.',
+            escapeHtml('HTTP/1.1 200 OK') + '\n<i>(корзина: 1 товар)</i>');
+        },
+        function () {
+          addBubble('explain', null, 'Вот и весь механизм «сайт помнит корзину»: не магия, а обычное узнавание по бейджу, который браузер прикладывает к каждому запросу сам.');
+        }
+      ], cb);
+    }
+
+    function openNews(cb) {
+      run([
+        function () {
+          addBubble('browser', 'Браузер', 'Открываю news.example. Для этого домена в кармане пусто — сайт вижу впервые.',
+            escapeHtml('GET / HTTP/1.1\nHost: news.example'));
+        },
+        function () {
+          setCookie('news.example', 'news_pref', 'ru', false);
+          renderPocket();
+          addBubble('server', 'Сервер news.example', 'Запоминаю язык интерфейса.',
+            escapeHtml('HTTP/1.1 200 OK\nSet-Cookie: news_pref=ru'));
+        },
+        function () {
+          addBubble('browser', 'Браузер', 'На этой странице тоже есть баннер с adnet.example. А для него в кармане кое-что уже есть!',
+            escapeHtml('GET /pixel.gif HTTP/1.1\nHost: adnet.example\nCookie: uid=x91c7d3a'));
+        },
+        function () {
+          addBubble('alert', 'adnet.example (реклама)', 'О, снова x91c7d3a! Этого посетителя я недавно видел на shop.example — интересовался покупками. А сейчас он читает новости. Записываю в профиль.', null);
+        },
+        function () {
+          addBubble('explain', null, 'Вот и вся хитрость трекинга. shop.example и news.example друг о друге ничего не знают — а adnet.example встроен на оба и видит вас на обоих по одному и тому же бейджу.');
+        }
+      ], cb);
+    }
+
+    function closeBrowser(cb) {
+      run([
+        function () {
+          addBubble('system', 'Браузер', 'Закрывается. Все сессионные куки стираются — они умеют жить только пока открыт браузер.', null);
+        },
+        function () {
+          fadeAndForget([['shop.example', 'session_id'], ['news.example', 'news_pref']], function () {
+            addBubble('explain', null, 'В кармане осталась только постоянная кука adnet.example — закрытие браузера ей не указ, она проживёт ещё почти год.');
+          });
+        }
+      ], cb);
+    }
+
+    function reopenShop(cb) {
+      run([
+        function () {
+          addBubble('browser', 'Браузер', 'Открываю shop.example снова. Кука? В кармане для этого домена опять пусто — прошлый бейдж стёрт.',
+            escapeHtml('GET / HTTP/1.1\nHost: shop.example'));
+        },
+        function () {
+          setCookie('shop.example', 'session_id', 'c02f77e1', false);
+          renderPocket();
+          addBubble('server', 'Сервер shop.example', 'Не узнаю вас. Здравствуйте, будем знакомиться заново — корзина, конечно, пустая.',
+            escapeHtml('HTTP/1.1 200 OK\nSet-Cookie: session_id=c02f77e1') + '\n<i>(это уже другой номер, не 8f3a91d4)</i>');
+        },
+        function () {
+          addBubble('browser', 'Браузер', 'А вот бейдж adnet.example всё тот же — прикладываю его как ни в чём не бывало.',
+            escapeHtml('GET /pixel.gif HTTP/1.1\nHost: adnet.example\nCookie: uid=x91c7d3a'));
+        },
+        function () {
+          addBubble('tracker', 'adnet.example (реклама)', 'А я как раз узнал — всё тот же x91c7d3a, что и раньше.', null);
+        },
+        function () {
+          addBubble('explain', null, 'Итог: сессионная кука забыта, будто вы новый человек. А постоянная кука сторонней рекламной сети как ходила с вами, так и ходит — именно такие куки стоят за большинством баннеров, которые «преследуют» вас по всему интернету.');
+        }
+      ], cb);
+    }
+
+    nextBtn.addEventListener('click', function () {
+      if (busy) { return; }
+      setBusy(true);
+      var step = STEPS[stepIndex];
+      step.action(function () {
+        stepIndex++;
+        if (stepIndex < STEPS.length) {
+          nextBtn.innerHTML = STEPS[stepIndex].button;
+          setBusy(false);
+        } else {
+          nextBtn.hidden = true;
+          restartBtn.hidden = false;
+        }
+      });
+    });
+
+    restartBtn.addEventListener('click', function () {
+      pocket = {};
+      stepIndex = 0;
+      log.innerHTML = '';
+      renderPocket();
+      nextBtn.innerHTML = STEPS[0].button;
+      nextBtn.hidden = false;
+      restartBtn.hidden = true;
+      setBusy(false);
+    });
+  })();
+  </script>
+</div>
