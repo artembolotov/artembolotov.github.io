@@ -4509,3 +4509,321 @@
     color: #777;
   }
 }
+
+/* Картотека RFC (rfc-nav) */
+.rfc-nav {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+/* Component classes below set their own display, which would defeat
+   the hidden attribute — this wins by specificity. */
+.rfc-nav [hidden] {
+  display: none;
+}
+
+.rfc-nav-window {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f8f8;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.rfc-nav-head {
+  background: #ececec;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.rfc-nav-title {
+  display: block;
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 0.8em 1.5em;
+  color: #666;
+}
+
+.rfc-nav-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  padding: 1em 1em 0;
+}
+
+.rfc-nav-filter {
+  font-family: inherit;
+  font-size: 0.75em;
+  padding: 0.45em 0.9em;
+  border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.rfc-nav-filter:hover {
+  border-color: #0089ff;
+  color: #0089ff;
+}
+
+.rfc-nav-filter.is-active {
+  background: #0089ff;
+  border-color: #0089ff;
+  color: #fff;
+}
+
+.rfc-nav-stage {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  padding: 1em;
+}
+
+.rfc-nav-list {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.rfc-nav-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  padding: 0.55em 0.7em;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 0.8em;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.rfc-nav-item:hover {
+  border-color: #0089ff;
+}
+
+.rfc-nav-item.is-active {
+  border-color: #0089ff;
+  background: rgba(0,137,255,0.08);
+}
+
+.rfc-nav-item.is-joke {
+  border-style: dashed;
+}
+
+.rfc-nav-item-num {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85em;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #0089ff;
+}
+
+.rfc-nav-item-label {
+  flex: 1;
+  min-width: 0;
+  color: #333;
+}
+
+.rfc-nav-item-year {
+  font-size: 0.85em;
+  white-space: nowrap;
+  color: #999;
+}
+
+.rfc-nav-doc {
+  flex: 1;
+  min-width: 0;
+}
+
+.rfc-nav-placeholder {
+  padding: 2em 1em;
+  border: 1px dashed rgba(0,0,0,0.25);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.8em;
+  color: #999;
+}
+
+.rfc-nav-card {
+  padding: 0.9em 1em;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.rfc-nav-card.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.rfc-nav-dochead {
+  margin-bottom: 0.8em;
+  padding-bottom: 0.6em;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.68em;
+  color: #666;
+}
+
+.rfc-nav-docline {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+.rfc-nav-docline span:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.rfc-nav-doctitle {
+  margin-bottom: 0.8em;
+  text-align: center;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #333;
+}
+
+.rfc-nav-docbadge {
+  display: inline-block;
+  margin-bottom: 0.8em;
+  padding: 0.3em 0.7em;
+  border-radius: 8px;
+  background: rgba(201,106,0,0.12);
+  font-size: 0.72em;
+  color: #c96a00;
+}
+
+.rfc-nav-docbody {
+  font-size: 0.85em;
+  line-height: 1.5;
+  color: #333;
+}
+
+.rfc-nav-docbody p {
+  margin: 0 0 0.6em;
+}
+
+.rfc-nav-doclink {
+  display: inline-block;
+  margin-top: 0.2em;
+  font-size: 0.8em;
+}
+
+@media screen and (max-width: 767px) {
+  .rfc-nav-stage {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rfc-nav-list {
+    width: auto;
+    max-height: 280px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rfc-nav-card {
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .rfc-nav-window {
+    background: #1a1a1a;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+
+  .rfc-nav-head {
+    background: #111;
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+
+  .rfc-nav-title {
+    color: #999;
+  }
+
+  .rfc-nav-filter {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #999;
+  }
+
+  .rfc-nav-filter:hover {
+    border-color: #64b2ff;
+    color: #64b2ff;
+  }
+
+  .rfc-nav-filter.is-active {
+    background: #64b2ff;
+    border-color: #64b2ff;
+    color: #111;
+  }
+
+  .rfc-nav-item {
+    background: #242424;
+    border-color: rgba(255,255,255,0.12);
+  }
+
+  .rfc-nav-item:hover {
+    border-color: #64b2ff;
+  }
+
+  .rfc-nav-item.is-active {
+    border-color: #64b2ff;
+    background: rgba(100,178,255,0.12);
+  }
+
+  .rfc-nav-item-num {
+    color: #64b2ff;
+  }
+
+  .rfc-nav-item-label {
+    color: #e0e0e0;
+  }
+
+  .rfc-nav-item-year {
+    color: #777;
+  }
+
+  .rfc-nav-placeholder {
+    border-color: rgba(255,255,255,0.25);
+    color: #777;
+  }
+
+  .rfc-nav-card {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .rfc-nav-dochead {
+    border-bottom-color: rgba(255,255,255,0.1);
+    color: #999;
+  }
+
+  .rfc-nav-doctitle {
+    color: #e0e0e0;
+  }
+
+  .rfc-nav-docbadge {
+    background: rgba(255,165,61,0.15);
+    color: #ffa53d;
+  }
+
+  .rfc-nav-docbody {
+    color: #e0e0e0;
+  }
+}
