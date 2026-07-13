@@ -2,7 +2,7 @@
 title: "Загляни под капот прямо сейчас: DevTools в браузере"
 description: "Как открыть встроенный в каждый браузер рентгеновский аппарат — DevTools — и что с его помощью можно увидеть и поменять."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-devtools-sim]
 draft: true
 ---
 

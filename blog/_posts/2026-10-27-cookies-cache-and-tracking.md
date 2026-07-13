@@ -2,7 +2,7 @@
 title: "Куки, кэш и как веб вас запоминает"
 description: "Зачем сайту что-то про вас помнить, чем куки отличаются от кэша, откуда взялись бесконечные баннеры «Accept cookies» и кого на самом деле скрывает режим инкогнито."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-cookie-jar]
 draft: true
 ---
 

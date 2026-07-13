@@ -1,0 +1,250 @@
+/* Стили компонента _includes/internet/cdn-map.html.
+   Требует общий каркас /styles/internet.css: пост подключает
+   styles: [internet, internet-cdn-map] в front matter. */
+/* CDN: карта мира с edge-серверами */
+
+.cdn-map {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+.cdn-map-stage {
+  padding: 1em 1em 0;
+}
+
+.cdn-map-svg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  height: auto;
+}
+
+.cdn-map-land {
+  fill: rgba(0,0,0,0.06);
+}
+
+.cdn-map-route {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 1.2;
+  transition: stroke 0.3s;
+}
+
+.cdn-map-route.is-done {
+  stroke: rgba(0,137,255,0.45);
+}
+
+.cdn-map-origin {
+  fill: #e08a00;
+  stroke: #f8f8f8;
+  stroke-width: 1;
+}
+
+.cdn-map-edge-dot {
+  fill: #2da44e;
+  stroke: #f8f8f8;
+  stroke-width: 1;
+}
+
+.cdn-map-user {
+  fill: #0089ff;
+  stroke: #f8f8f8;
+  stroke-width: 1;
+}
+
+.cdn-map-label {
+  fill: #555;
+  font-size: 8px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: #f8f8f8;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+.cdn-map-sub {
+  fill: #999;
+  font-size: 7px;
+  paint-order: stroke;
+  stroke: #f8f8f8;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+.cdn-map-cache {
+  font-size: 7px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.3s;
+  paint-order: stroke;
+  stroke: #f8f8f8;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+.cdn-map-cache.is-miss {
+  fill: #c9302c;
+  opacity: 1;
+}
+
+.cdn-map-cache.is-hit {
+  fill: #2da44e;
+  opacity: 1;
+}
+
+.cdn-map-packet {
+  fill: #0089ff;
+  stroke: #f8f8f8;
+  stroke-width: 1.5;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.cdn-map-packet.is-shown {
+  opacity: 1;
+}
+
+.cdn-map-results {
+  display: flex;
+  gap: 0.5em;
+  padding: 0.8em 1em 0;
+}
+
+.cdn-map-chip {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.5em 0.3em;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.cdn-map-chip-city {
+  display: block;
+  font-size: 0.7em;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cdn-map-chip-ms {
+  display: block;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #333;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s;
+}
+
+.cdn-map-chip-ms.is-final {
+  color: #0089ff;
+}
+
+.cdn-map-caption {
+  box-sizing: border-box;
+  margin: 1em;
+  padding: 0.7em 0.9em;
+  min-height: 4.4em;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  font-size: 0.85em;
+  line-height: 1.45;
+  transition: border-color 0.3s;
+}
+
+.cdn-map-caption--result {
+  border-color: rgba(0,137,255,0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cdn-map-route,
+  .cdn-map-cache,
+  .cdn-map-packet,
+  .cdn-map-chip-ms {
+    transition: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+
+  .cdn-map-land {
+    fill: rgba(255,255,255,0.07);
+  }
+
+  .cdn-map-route.is-done {
+    stroke: rgba(100,178,255,0.5);
+  }
+
+  .cdn-map-origin {
+    fill: #e8a33d;
+    stroke: #1a1a1a;
+  }
+
+  .cdn-map-edge-dot {
+    fill: #4cc38a;
+    stroke: #1a1a1a;
+  }
+
+  .cdn-map-user {
+    fill: #64b2ff;
+    stroke: #1a1a1a;
+  }
+
+  .cdn-map-label {
+    fill: #ccc;
+    stroke: #1a1a1a;
+  }
+
+  .cdn-map-sub {
+    fill: #777;
+    stroke: #1a1a1a;
+  }
+
+  .cdn-map-cache {
+    stroke: #1a1a1a;
+  }
+
+  .cdn-map-cache.is-miss {
+    fill: #ff453a;
+  }
+
+  .cdn-map-cache.is-hit {
+    fill: #4cc38a;
+  }
+
+  .cdn-map-packet {
+    fill: #64b2ff;
+    stroke: #1a1a1a;
+  }
+
+  .cdn-map-chip {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .cdn-map-chip-city {
+    color: #777;
+  }
+
+  .cdn-map-chip-ms {
+    color: #e0e0e0;
+  }
+
+  .cdn-map-chip-ms.is-final {
+    color: #64b2ff;
+  }
+
+  .cdn-map-caption {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .cdn-map-caption--result {
+    border-color: rgba(100,178,255,0.45);
+  }
+}

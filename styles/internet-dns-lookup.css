@@ -1,0 +1,83 @@
+/* Стили компонента _includes/internet/dns-lookup.html.
+   Требует общий каркас /styles/internet.css: пост подключает
+   styles: [internet, internet-dns-lookup] в front matter. */
+/* DNS lookup simulator (общий каркас — sim-* выше) */
+.dns-sim {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+.dns-sim-form {
+  display: flex;
+  gap: 0.6em;
+  padding: 1em 1em 0;
+}
+
+.dns-sim-input {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 0.55em 0.9em;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85em;
+}
+
+.dns-sim-input:focus {
+  outline: none;
+  border-color: #0089ff;
+}
+
+.dns-sim-go {
+  flex-shrink: 0;
+  padding: 0.55em 1.2em;
+  border: none;
+  border-radius: 6px;
+  background: #0089ff;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.dns-sim-go:hover {
+  opacity: 0.85;
+}
+
+.dns-sim-go:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.dns-sim .sim-step--result b {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+@media screen and (max-width: 767px) {
+  /* Font smaller than 16px triggers auto-zoom on focus in iOS Safari */
+  .dns-sim-input {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .dns-sim-input {
+    background: #242424;
+    border-color: rgba(255,255,255,0.12);
+    color: #e0e0e0;
+  }
+
+  .dns-sim-input:focus {
+    border-color: #64b2ff;
+  }
+
+  .dns-sim-go {
+    background: #64b2ff;
+    color: #111;
+  }
+}

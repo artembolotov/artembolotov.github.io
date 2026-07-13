@@ -2,7 +2,7 @@
 title: "Провайдеры, роутеры и подводные кабели"
 description: "Из чего физически состоит сеть — модем, роутер, свитч, иерархия провайдеров, точки обмена трафиком и кабели на дне океана."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-tier-map]
 draft: true
 ---
 

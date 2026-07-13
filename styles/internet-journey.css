@@ -1,0 +1,201 @@
+/* Стили компонента _includes/internet/journey.html.
+   Требует общий каркас /styles/internet.css: пост подключает
+   styles: [internet, internet-journey] в front matter. */
+/* Путешествие запроса: пошаговый разбор пути от Enter до страницы (journey-sim) */
+.journey-sim {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+.journey-sim-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  padding: 1em 1em 0;
+}
+
+.journey-sim-step {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: inherit;
+  font-size: 0.72em;
+  font-weight: 600;
+  padding: 0.3em 0.7em 0.3em 0.3em;
+  border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.journey-sim-step:hover {
+  border-color: #0089ff;
+  color: #0089ff;
+}
+
+.journey-sim-step-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.06);
+  font-size: 0.9em;
+}
+
+.journey-sim-step.is-done {
+  color: #0089ff;
+  border-color: rgba(0,137,255,0.4);
+}
+
+.journey-sim-step.is-done .journey-sim-step-marker {
+  background: rgba(0,137,255,0.14);
+}
+
+.journey-sim-step.is-active {
+  color: #fff;
+  background: #0089ff;
+  border-color: #0089ff;
+}
+
+.journey-sim-step.is-active .journey-sim-step-marker {
+  background: rgba(255,255,255,0.25);
+}
+
+.journey-sim-detail {
+  margin: 1em 1em 0;
+  padding: 0.8em 1em;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.journey-sim-detail-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5em;
+  margin-bottom: 0.4em;
+}
+
+.journey-sim-detail-icon {
+  font-size: 1.1em;
+}
+
+.journey-sim-detail-title {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: #0089ff;
+}
+
+.journey-sim-detail-time {
+  margin-left: auto;
+  font-size: 0.75em;
+  color: #999;
+}
+
+.journey-sim-detail p {
+  margin: 0;
+  font-size: 0.85em;
+  line-height: 1.5;
+  background: none;
+  padding: 0;
+  color: #333;
+}
+
+.journey-sim-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.8em 1em 0.4em;
+}
+
+/* Кнопки — общие sim-btn; своя только раскладка кнопки «Прогнать всё» */
+.journey-sim-btn--play {
+  order: -1;
+  flex-basis: 100%;
+}
+
+@media screen and (min-width: 480px) {
+  .journey-sim-btn--play {
+    order: 0;
+    flex-basis: auto;
+    margin-right: auto;
+  }
+}
+
+.journey-sim-total {
+  padding: 0 1em 1em;
+  font-size: 0.75em;
+  color: #999;
+}
+
+.journey-sim-total b {
+  color: #0089ff;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  .journey-sim-step {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #777;
+  }
+
+  .journey-sim-step:hover {
+    border-color: #64b2ff;
+    color: #64b2ff;
+  }
+
+  .journey-sim-step-marker {
+    background: rgba(255,255,255,0.08);
+  }
+
+  .journey-sim-step.is-done {
+    color: #64b2ff;
+    border-color: rgba(100,178,255,0.45);
+  }
+
+  .journey-sim-step.is-done .journey-sim-step-marker {
+    background: rgba(100,178,255,0.16);
+  }
+
+  .journey-sim-step.is-active {
+    color: #111;
+    background: #64b2ff;
+    border-color: #64b2ff;
+  }
+
+  .journey-sim-step.is-active .journey-sim-step-marker {
+    background: rgba(0,0,0,0.15);
+  }
+
+  .journey-sim-detail {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .journey-sim-detail-title {
+    color: #64b2ff;
+  }
+
+  .journey-sim-detail-time {
+    color: #777;
+  }
+
+  .journey-sim-detail p {
+    color: #e0e0e0;
+  }
+
+  .journey-sim-total {
+    color: #777;
+  }
+
+  .journey-sim-total b {
+    color: #64b2ff;
+  }
+}

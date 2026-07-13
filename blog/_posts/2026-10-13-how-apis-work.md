@@ -2,7 +2,7 @@
 title: "Как приложения общаются с сервером: API"
 description: "Что такое API, чем приложение принципиально отличается от сайта и почему один и тот же сервер одинаково удобно отдаёт данные на сайт, в iOS-приложение и на умные часы."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-api-sim]
 draft: true
 ---
 

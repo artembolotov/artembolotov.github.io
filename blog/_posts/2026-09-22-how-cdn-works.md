@@ -2,7 +2,7 @@
 title: "Почему видео грузится за секунду: CDN и сети доставки контента"
 description: "Почему контент летит к вам мгновенно, даже если сервер на другом континенте. Edge-серверы, anycast и кэширование на пальцах."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-cdn-map]
 draft: true
 ---
 

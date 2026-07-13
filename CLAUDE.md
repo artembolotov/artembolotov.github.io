@@ -25,7 +25,7 @@ Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with
 
 - Layout chain: `compress` ← `default` ← `post` / `tag-page`. `default.html` contains the whole page shell (nav, logo) and loads all CSS/JS.
 - CSS is plain, no preprocessor: `styles/all.css` (base + nav, loaded everywhere), `styles/main.css` (homepage only), `styles/blog.css` (shared blog components: galleries, code highlighting, author footer...). New shared component styles go into `blog.css` by convention.
-- Page-specific stylesheets are opt-in via front matter: `styles: [internet]` loads `/styles/internet.css` (see the `page.styles` loop in `default.html`). Interactive-element styles for a series live in `styles/<tag>.css`; posts that use those includes must list the stylesheet in `styles:`.
+- Page-specific stylesheets are opt-in via front matter (see the `page.styles` loop in `default.html`): each name in `styles:` loads `/styles/<name>.css`. Interactive elements of the `internet` series are split into a shared framework (`styles/internet.css`) plus one file per component (`styles/internet-<include-name>.css`); a post using a component lists both, e.g. `styles: [internet, internet-dns-lookup]`.
 - Dark theme is handled via `@media (prefers-color-scheme: dark)` blocks in each stylesheet — every new component needs one. Accent colors: `#0089ff` (dark: `#64b2ff`), hover red `#f41224` (dark: `#ff453a`).
 - `html.no-js` class is removed by an inline script in `default.html`; use it for no-JavaScript fallbacks (see galleries).
 
@@ -33,8 +33,8 @@ Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with
 
 - `img.html` — single image; bare filenames auto-resolve to `/blog/img/<post-slug>/<file>`.
 - `gallery.html` + `scripts/gallery.js` (loaded globally), `youtube.html`, `code-block.html`, `reading-time.html`, `author-footer.html`.
-- Series-specific interactive components live in subfolders named after the series tag, e.g. `_includes/internet/live-editor.html` (self-contained markup + inline JS; styles are in `styles/internet.css`, loaded via `styles: [internet]` front matter).
-- All `internet` simulators share the `sim-*` framework classes defined at the top of `styles/internet.css`: `sim-window`/`sim-head`/`sim-title` shell, `sim-label`, `sim-actors`/`sim-actor` status pills, `sim-choices`/`sim-choice` action buttons, `sim-btn`/`sim-btn--ghost`, and the chat log `sim-log`/`sim-step` with `--right`/`--result`/`--explain`/`--hint` modifiers (dark theme included). New components should reuse these and keep only unique styles under their own prefix.
+- Series-specific interactive components live in subfolders named after the series tag, e.g. `_includes/internet/live-editor.html` (self-contained markup + inline JS; styles are in `styles/internet-<include-name>.css` on top of the `styles/internet.css` framework, loaded via `styles:` front matter).
+- All `internet` simulators share the `sim-*` framework classes defined in `styles/internet.css`: `sim-window`/`sim-head`/`sim-title` shell, `sim-label`, `sim-actors`/`sim-actor` status pills, `sim-choices`/`sim-choice` action buttons, `sim-btn`/`sim-btn--ghost`, and the chat log `sim-log`/`sim-step` with `--right`/`--result`/`--explain`/`--hint` modifiers (dark theme included). New components should reuse these and keep only unique styles under their own prefix.
 
 ## HTML compression caveats
 
