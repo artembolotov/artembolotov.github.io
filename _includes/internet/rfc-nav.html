@@ -1,0 +1,173 @@
+<div class="rfc-nav" id="rfc-nav">
+  <noscript><p>Для работы картотеки нужен JavaScript — сейчас он выключен в браузере. Все документы можно найти вручную на <a href="https://www.rfc-editor.org" target="_blank" rel="noopener">rfc-editor.org</a>.</p></noscript>
+  <div class="rfc-nav-window">
+    <div class="rfc-nav-head">
+      <span class="rfc-nav-title">Картотека RFC: двенадцать документов, на которых держится интернет</span>
+    </div>
+    <div class="rfc-nav-filters">
+      <button type="button" class="rfc-nav-filter is-active" data-rfc-filter="all">Все</button>
+      <button type="button" class="rfc-nav-filter" data-rfc-filter="std">Серьёзные</button>
+      <button type="button" class="rfc-nav-filter" data-rfc-filter="joke">Первоапрельские</button>
+    </div>
+    <div class="rfc-nav-stage">
+      <div class="rfc-nav-list" data-rfc-list></div>
+      <div class="rfc-nav-doc" data-rfc-doc aria-live="polite">
+        <div class="rfc-nav-placeholder">Выберите документ из картотеки — откроется его карточка: кто написал, когда и почему это важно.</div>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var root = document.getElementById('rfc-nav');
+    if (!root) { return; }
+    var listBox = root.querySelector('[data-rfc-list]');
+    var docBox = root.querySelector('[data-rfc-doc]');
+    var filters = root.querySelectorAll('[data-rfc-filter]');
+    var RFCS = [
+      {
+        num: 791, year: 1981, cat: 'std', label: 'Протокол IP',
+        head: [['Network Working Group', 'J. Postel (ed.)'], ['Request for Comments: 791', 'ISI'], ['', 'September 1981']],
+        title: 'Internet Protocol',
+        body: '<p>Протокол IP версии 4 — тот самый, чьи адреса вида 93.184.216.34 мы разбирали в шестой статье. Документу больше сорока лет, а подавляющая часть интернета до сих пор работает именно по нему.</p><p>Автор — Джон Постел, редактор доброй половины ранних RFC. Сорок пять страниц, определивших, как выглядит пакет и по каким правилам его доставлять.</p>'
+      },
+      {
+        num: 793, year: 1981, cat: 'std', label: 'Протокол TCP',
+        head: [['Network Working Group', 'J. Postel (ed.)'], ['Request for Comments: 793', 'ISI'], ['', 'September 1981']],
+        title: 'Transmission Control Protocol',
+        body: '<p>TCP — протокол, который следит, чтобы пакеты дошли все, без потерь и в правильном порядке. Вышел одновременно с RFC 791: вместе они образуют ту самую связку TCP/IP — фундамент, на котором стоит почти всё остальное.</p>'
+      },
+      {
+        num: 821, year: 1982, cat: 'std', label: 'Почтовый протокол SMTP',
+        head: [['Network Working Group', 'J. Postel'], ['Request for Comments: 821', 'ISI'], ['', 'August 1982']],
+        title: 'Simple Mail Transfer Protocol',
+        body: '<p>Первое подробное описание SMTP — протокола, по которому почтовые серверы передают друг другу письма. Мы разбирали его в десятой статье серии.</p><p>Команды HELO, MAIL FROM и RCPT TO из этого документа живы до сих пор — почте больше сорока лет, а разговор серверов почти не изменился.</p>'
+      },
+      {
+        num: 1034, year: 1987, cat: 'std', label: 'Доменные имена (DNS)',
+        head: [['Network Working Group', 'P. Mockapetris'], ['Request for Comments: 1034', 'ISI'], ['', 'November 1987']],
+        title: 'Domain Names — Concepts and Facilities',
+        body: '<p>Основы DNS: иерархия доменов, зоны, рекурсивные и авторитетные серверы — всё, что мы разбирали в пятой статье, описано именно здесь.</p><p>Вместе с соседним RFC 1035 определяет справочную службу интернета, которой вы пользуетесь при каждом открытии сайта.</p>'
+      },
+      {
+        num: 1149, year: 1990, cat: 'joke', label: 'IP по почтовым голубям', ico: '&#128330;',
+        head: [['Network Working Group', 'D. Waitzman'], ['Request for Comments: 1149', 'BBN STC'], ['', '1 April 1990']],
+        title: 'A Standard for the Transmission of IP Datagrams on Avian Carriers',
+        body: '<p>Тот самый стандарт передачи IP-пакетов почтовыми голубями. Написан по всем правилам: обсуждается пропускная способность (зависит от голубя), задержки (большие) и потеря пакетов при встрече с кошкой.</p><p>В 2001 году норвежские энтузиасты реализовали его вживую: из девяти отправленных пакетов дошли четыре, пинг — около часа.</p>'
+      },
+      {
+        num: 1945, year: 1996, cat: 'std', label: 'HTTP/1.0',
+        head: [['Network Working Group', 'T. Berners-Lee'], ['Request for Comments: 1945', 'R. Fielding'], ['Category: Informational', 'H. Frystyk'], ['', 'May 1996']],
+        title: 'Hypertext Transfer Protocol — HTTP/1.0',
+        body: '<p>Первое официальное описание HTTP. Среди авторов — Тим Бернерс-Ли, человек, который придумал веб.</p><p>Именно здесь зафиксированы заголовки, методы и статус-коды, которые мы разбирали в четвёртой статье. С тех пор HTTP оброс версиями, но узнаваем до сих пор.</p>'
+      },
+      {
+        num: 2324, year: 1998, cat: 'joke', label: 'Протокол кофейника', ico: '&#9749;',
+        head: [['Network Working Group', 'L. Masinter'], ['Request for Comments: 2324', ''], ['Category: Informational', '1 April 1998']],
+        title: 'Hyper Text Coffee Pot Control Protocol (HTCPCP/1.0)',
+        body: '<p>Протокол управления кофейником поверх HTTP: какие методы кофейник обязан поддерживать и как сообщать клиенту, что кофе ещё варится.</p><p>Именно отсюда родом статус-код <b>418 I&rsquo;m a teapot</b>: чайник, к которому обратились как к кофейнику, обязан честно сообщить, что он чайник.</p>'
+      },
+      {
+        num: 3514, year: 2003, cat: 'joke', label: 'Бит зла', ico: '&#128520;',
+        head: [['Network Working Group', 'S. Bellovin'], ['Request for Comments: 3514', 'AT&amp;T Labs Research'], ['Category: Informational', '1 April 2003']],
+        title: 'The Security Flag in the IPv4 Header',
+        body: '<p>Предлагает добавить в заголовок IP-пакета «бит зла»: каждый вредоносный пакет обязан честно выставить его в единицу, а межсетевым экранам останется просто отбрасывать такие пакеты.</p><p>Идеальное решение всех проблем безопасности разом. Жаль, что опубликовано первого апреля.</p>'
+      },
+      {
+        num: 6265, year: 2011, cat: 'std', label: 'Куки',
+        head: [['Internet Engineering Task Force (IETF)', 'A. Barth'], ['Request for Comments: 6265', 'U.C. Berkeley'], ['Category: Standards Track', 'April 2011']],
+        title: 'HTTP State Management Mechanism',
+        body: '<p>Официальное описание куки: как сервер выдаёт браузеру «печеньку» через заголовок Set-Cookie и как браузер возвращает её с каждым следующим запросом.</p><p>К чему это привело — включая баннеры «Accept cookies» — разберём в следующей, четырнадцатой статье серии.</p>'
+      },
+      {
+        num: 7168, year: 2014, cat: 'joke', label: 'Протокол чайника', ico: '&#127861;',
+        head: [['Independent Submission', 'I. Nazar'], ['Request for Comments: 7168', ''], ['Category: Informational', '1 April 2014']],
+        title: 'The Hyper Text Coffee Pot Control Protocol for Tea Efflux Appliances (HTCPCP-TEA)',
+        body: '<p>Расширение кофейного протокола для чайников: добавляет заваривание чая, а код 418 применяет наконец по прямому назначению.</p><p>Опубликовано через шестнадцать лет после RFC 2324 — у первоапрельских шуток IETF бывают продолжения, оформленные по всем стандартам.</p>'
+      },
+      {
+        num: 9110, year: 2022, cat: 'std', label: 'Семантика HTTP',
+        head: [['Internet Engineering Task Force (IETF)', 'R. Fielding (ed.)'], ['Request for Comments: 9110', 'M. Nottingham (ed.)'], ['STD: 97', 'J. Reschke (ed.)'], ['Category: Standards Track', 'June 2022']],
+        title: 'HTTP Semantics',
+        body: '<p>Современное описание HTTP: методы, статус-коды, заголовки — всё сведено воедино и расписано до последнего пробела.</p><p>Полтораста страниц без единой шутки. Так выглядит рабочий стандарт, по которому прямо сейчас живёт веб.</p>'
+      },
+      {
+        num: 9114, year: 2022, cat: 'std', label: 'HTTP/3',
+        head: [['Internet Engineering Task Force (IETF)', 'M. Bishop (ed.)'], ['Request for Comments: 9114', 'Akamai'], ['Category: Standards Track', 'June 2022']],
+        title: 'HTTP/3',
+        body: '<p>Свежая версия HTTP, работающая поверх QUIC вместо TCP. Та самая, что переживает переход телефона с Wi-Fi на мобильную сеть, не теряя нити разговора.</p><p>Хорошо видно, как далеко ушёл протокол от одной строчки HTTP/0.9 — и что старые версии при этом никто не отменял.</p>'
+      }
+    ];
+
+    function renderList() {
+      var html = '';
+      for (var i = 0; i < RFCS.length; i++) {
+        var r = RFCS[i];
+        html += '<button type="button" class="rfc-nav-item' + (r.cat === 'joke' ? ' is-joke' : '') + '" data-rfc-idx="' + i + '">' +
+          '<span class="rfc-nav-item-num">RFC ' + r.num + '</span>' +
+          '<span class="rfc-nav-item-label">' + r.label + ' <span class="rfc-nav-item-year">' + r.year + '</span></span>' +
+          (r.ico ? '<span class="rfc-nav-item-ico">' + r.ico + '</span>' : '') +
+          '</button>';
+      }
+      listBox.innerHTML = html;
+    }
+
+    function renderDoc(r) {
+      var html = '<div class="rfc-nav-card">';
+      html += '<div class="rfc-nav-dochead">';
+      for (var i = 0; i < r.head.length; i++) {
+        html += '<div class="rfc-nav-docline"><span>' + r.head[i][0] + '</span><span>' + r.head[i][1] + '</span></div>';
+      }
+      html += '</div>';
+      html += '<div class="rfc-nav-doctitle">' + r.title + '</div>';
+      if (r.cat === 'joke') {
+        html += '<div class="rfc-nav-docbadge">' + (r.ico || '') + ' Первоапрельский RFC — оформлен по всем правилам</div>';
+      }
+      html += '<div class="rfc-nav-docbody">' + r.body + '</div>';
+      html += '<a class="rfc-nav-doclink" href="https://www.rfc-editor.org/rfc/rfc' + r.num + '" target="_blank" rel="noopener">Читать оригинал на rfc-editor.org &#8594;</a>';
+      html += '</div>';
+      docBox.innerHTML = html;
+      // Class is added a frame later so the fade-in transition fires
+      var card = docBox.querySelector('.rfc-nav-card');
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { card.classList.add('is-shown'); });
+      });
+    }
+
+    function applyFilter(cat) {
+      var items = listBox.querySelectorAll('[data-rfc-idx]');
+      for (var i = 0; i < items.length; i++) {
+        var r = RFCS[parseInt(items[i].getAttribute('data-rfc-idx'), 10)];
+        items[i].hidden = (cat !== 'all' && r.cat !== cat);
+      }
+    }
+
+    renderList();
+
+    listBox.addEventListener('click', function (e) {
+      var btn = e.target;
+      while (btn && btn !== listBox && !btn.getAttribute('data-rfc-idx')) {
+        btn = btn.parentNode;
+      }
+      if (!btn || btn === listBox) { return; }
+      var items = listBox.querySelectorAll('[data-rfc-idx]');
+      for (var i = 0; i < items.length; i++) {
+        items[i].classList.toggle('is-active', items[i] === btn);
+      }
+      renderDoc(RFCS[parseInt(btn.getAttribute('data-rfc-idx'), 10)]);
+      // When the stage is stacked in a column, the doc panel is below the
+      // fold — scroll it into view; block:'nearest' keeps desktop scroll-free
+      var motion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+      docBox.scrollIntoView({ block: 'nearest', behavior: motion });
+    });
+
+    for (var f = 0; f < filters.length; f++) {
+      filters[f].addEventListener('click', function () {
+        for (var j = 0; j < filters.length; j++) {
+          filters[j].classList.toggle('is-active', filters[j] === this);
+        }
+        applyFilter(this.getAttribute('data-rfc-filter'));
+      });
+    }
+  })();
+  </script>
+</div>
