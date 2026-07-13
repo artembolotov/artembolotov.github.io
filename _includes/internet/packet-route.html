@@ -1,20 +1,20 @@
 <div class="route-sim" id="route-sim">
   <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
-  <div class="route-sim-window">
-    <div class="route-sim-head">
-      <span class="route-sim-title">Путь пакета: из квартиры в Амстердам</span>
+  <div class="sim-window">
+    <div class="sim-head">
+      <span class="sim-title">Путь пакета: из квартиры в Амстердам</span>
     </div>
-    <div class="route-sim-devices-label">Открыть example.com (сервер в Амстердаме, IP 93.184.216.34):</div>
-    <div class="route-sim-devices">
-      <button type="button" class="route-sim-device" data-route-device="laptop">&#128187; с ноутбука &middot; 192.168.1.5</button>
-      <button type="button" class="route-sim-device" data-route-device="phone">&#128241; с телефона &middot; 192.168.1.7</button>
+    <div class="sim-label">Открыть example.com (сервер в Амстердаме, IP 93.184.216.34):</div>
+    <div class="sim-choices">
+      <button type="button" class="sim-choice" data-route-device="laptop">&#128187; с ноутбука &middot; 192.168.1.5</button>
+      <button type="button" class="sim-choice" data-route-device="phone">&#128241; с телефона &middot; 192.168.1.7</button>
     </div>
-    <div class="route-sim-hops">
-      <span class="route-sim-hop" data-route-hop="device">Устройство</span>
-      <span class="route-sim-hop" data-route-hop="router">Роутер &middot; NAT</span>
-      <span class="route-sim-hop" data-route-hop="isp">Провайдер</span>
-      <span class="route-sim-hop" data-route-hop="backbone">Магистраль</span>
-      <span class="route-sim-hop" data-route-hop="server">Сервер</span>
+    <div class="sim-actors">
+      <span class="sim-actor" data-route-hop="device">Устройство</span>
+      <span class="sim-actor" data-route-hop="router">Роутер &middot; NAT</span>
+      <span class="sim-actor" data-route-hop="isp">Провайдер</span>
+      <span class="sim-actor" data-route-hop="backbone">Магистраль</span>
+      <span class="sim-actor" data-route-hop="server">Сервер</span>
     </div>
     <div class="route-sim-nat" data-route-nat hidden>
       <span class="route-sim-nat-title">Таблица NAT на роутере</span>
@@ -23,7 +23,7 @@
         <tbody data-route-nat-rows></tbody>
       </table>
     </div>
-    <div class="route-sim-log" data-route-log aria-live="polite"></div>
+    <div class="sim-log" data-route-log aria-live="polite"></div>
   </div>
   <script>
   (function () {
@@ -69,7 +69,7 @@
 
     function addBubble(cls, html) {
       var el = document.createElement('div');
-      el.className = 'route-sim-step ' + cls;
+      el.className = 'sim-step ' + cls;
       el.innerHTML = html;
       log.appendChild(el);
       // Class is added a frame later so the fade-in transition fires
@@ -80,10 +80,10 @@
 
     function bubble(hop, side, name, text, pre, ms) {
       setHop(hop);
-      var html = '<span class="route-sim-step-name">' + name + '</span><p>' + text + '</p>';
+      var html = '<span class="sim-step-name">' + name + '</span><p>' + text + '</p>';
       if (pre) { html += '<pre>' + pre + '</pre>'; }
-      if (ms) { html += '<span class="route-sim-step-ms">+' + ms + ' мс</span>'; }
-      addBubble('route-sim-step--' + side, html);
+      if (ms) { html += '<span class="sim-step-ms">+' + ms + ' мс</span>'; }
+      addBubble('sim-step--' + side, html);
     }
 
     // Two aligned lines of the packet "envelope"
@@ -184,13 +184,13 @@
         },
         function () {
           setHop('device');
-          addBubble('route-sim-step--result',
+          addBubble('sim-step--result',
             'Ответ получен за ~<b>' + total + ' мс</b>. Сервер всё это время видел только адрес дома — <code>' + PUBLIC_IP + '</code>. Кто именно спрашивал, знает один роутер.');
           if (bothUsed) {
-            addBubble('route-sim-step--hint',
+            addBubble('sim-step--hint',
               '<p>Оба устройства вышли в интернет под одним публичным адресом — в таблице NAT они различаются только портами. Так один IP обслуживает целый дом.</p>');
           } else if (firstRun) {
-            addBubble('route-sim-step--hint',
+            addBubble('sim-step--hint',
               '<p>Теперь отправьте пакет со второго устройства: частный адрес будет другой, а публичный — тот же. Следите за таблицей NAT.</p>');
           }
         }

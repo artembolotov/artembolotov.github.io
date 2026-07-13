@@ -34,6 +34,7 @@ Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with
 - `img.html` — single image; bare filenames auto-resolve to `/blog/img/<post-slug>/<file>`.
 - `gallery.html` + `scripts/gallery.js` (loaded globally), `youtube.html`, `code-block.html`, `reading-time.html`, `author-footer.html`.
 - Series-specific interactive components live in subfolders named after the series tag, e.g. `_includes/internet/live-editor.html` (self-contained markup + inline JS; styles are in `styles/internet.css`, loaded via `styles: [internet]` front matter).
+- Chat-style simulators (dns-lookup, http-sim, packet-route, cookie-jar) share the `sim-*` framework classes defined at the top of `styles/internet.css`: window/head/title shell, `sim-label`, `sim-actors`/`sim-actor` pills, `sim-choices`/`sim-choice` buttons, `sim-btn`/`sim-btn--ghost` (also used by journey), and the `sim-log`/`sim-step` bubble log with `--right`/`--result`/`--explain`/`--hint` modifiers (dark theme included). New chat-like components should reuse these and keep only unique styles under their own prefix.
 
 ## HTML compression caveats
 

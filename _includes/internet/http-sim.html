@@ -1,8 +1,8 @@
 <div class="http-sim" id="http-sim">
   <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
-  <div class="http-sim-window">
-    <div class="http-sim-head">
-      <span class="http-sim-title">Симулятор HTTP-запросов</span>
+  <div class="sim-window">
+    <div class="sim-head">
+      <span class="sim-title">Симулятор HTTP-запросов</span>
     </div>
     <div class="http-sim-bar">
       <div class="http-sim-proto" role="group" aria-label="Протокол">
@@ -11,16 +11,16 @@
       </div>
       <span class="http-sim-url"><span class="http-sim-lock" data-http-lock hidden>&#128274;</span><span data-http-url>http://cafe.example</span></span>
     </div>
-    <div class="http-sim-paths-label">Какую страницу запросить:</div>
-    <div class="http-sim-paths">
-      <button type="button" class="http-sim-path" data-http-path="/menu">/menu</button>
-      <button type="button" class="http-sim-path" data-http-path="/old-menu">/old-menu</button>
-      <button type="button" class="http-sim-path" data-http-path="/kitchen">/kitchen</button>
-      <button type="button" class="http-sim-path" data-http-path="/pizza">/pizza</button>
-      <button type="button" class="http-sim-path" data-http-path="/coffee">/coffee</button>
-      <button type="button" class="http-sim-path" data-http-path="/broken">/broken</button>
+    <div class="sim-label">Какую страницу запросить:</div>
+    <div class="sim-choices">
+      <button type="button" class="sim-choice" data-http-path="/menu">/menu</button>
+      <button type="button" class="sim-choice" data-http-path="/old-menu">/old-menu</button>
+      <button type="button" class="sim-choice" data-http-path="/kitchen">/kitchen</button>
+      <button type="button" class="sim-choice" data-http-path="/pizza">/pizza</button>
+      <button type="button" class="sim-choice" data-http-path="/coffee">/coffee</button>
+      <button type="button" class="sim-choice" data-http-path="/broken">/broken</button>
     </div>
-    <div class="http-sim-log" data-http-log aria-live="polite"></div>
+    <div class="sim-log" data-http-log aria-live="polite"></div>
   </div>
   <script>
   (function () {
@@ -108,7 +108,7 @@
 
     function addBubble(cls, html) {
       var el = document.createElement('div');
-      el.className = 'http-sim-step ' + cls;
+      el.className = 'sim-step ' + cls;
       el.innerHTML = html;
       log.appendChild(el);
       // Class is added a frame later so the fade-in transition fires
@@ -118,10 +118,10 @@
     }
 
     function bubble(side, name, text, pre) {
-      var html = '<span class="http-sim-step-name">' + name + '</span>';
+      var html = '<span class="sim-step-name">' + name + '</span>';
       if (text) { html += '<p>' + text + '</p>'; }
       if (pre) { html += '<pre>' + pre + '</pre>'; }
-      addBubble('http-sim-step--' + side, html);
+      addBubble('sim-step--' + side, html);
     }
 
     function requestPre(path) {
@@ -173,7 +173,7 @@
     }
 
     function explainStep(scn) {
-      addBubble('http-sim-step--explain', '<p>' + scn.explain + '</p>');
+      addBubble('sim-step--explain', '<p>' + scn.explain + '</p>');
     }
 
     function lookup(path) {
@@ -194,7 +194,7 @@
       steps.push(function () { explainStep(scn); });
       if (proto === 'http') {
         steps.push(function () {
-          addBubble('http-sim-step--hint',
+          addBubble('sim-step--hint',
             '<p>Переключите на <b>https</b> — и посмотрите, что останется от улова наблюдателя.</p>');
         });
       }

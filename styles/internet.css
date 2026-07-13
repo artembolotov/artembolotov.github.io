@@ -2,6 +2,379 @@
    (_includes/internet/*). Loaded only on pages with `styles: [internet]`
    in front matter (see _layouts/default.html). */
 
+/* Общий каркас симуляторов-«чатов» (dns-lookup, http-sim, packet-route,
+   cookie-jar; кнопки sim-btn использует и journey): окно с шапкой,
+   пилюли-участники, кнопки-варианты и лог с пузырями сообщений.
+   Уникальные детали каждого компонента — в его секции ниже. */
+.sim-window {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f8f8;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.sim-head {
+  display: flex;
+  align-items: stretch;
+  background: #ececec;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.sim-title,
+.sim-clear {
+  font-family: inherit;
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 0.8em 1.5em;
+  border: none;
+  background: transparent;
+  color: #666;
+}
+
+.sim-clear {
+  margin-left: auto;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.sim-clear:hover {
+  color: #f41224;
+}
+
+/* Подпись над группой кнопок */
+.sim-label {
+  padding: 1em 1em 0;
+  font-size: 0.75em;
+  color: #999;
+}
+
+/* Пилюли-участники: подсвечиваются по ходу сценария */
+.sim-actors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  padding: 1em 1em 0;
+}
+
+.sim-actor {
+  font-size: 0.7em;
+  font-weight: 600;
+  padding: 0.35em 0.9em;
+  border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.12);
+  color: #999;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+
+.sim-actor.is-done {
+  color: #0089ff;
+  border-color: rgba(0,137,255,0.4);
+}
+
+.sim-actor.is-active {
+  color: #fff;
+  background: #0089ff;
+  border-color: #0089ff;
+}
+
+/* Кнопки-варианты: что именно запросить/откуда отправить */
+.sim-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  padding: 0.5em 1em 0;
+}
+
+.sim-choice {
+  font-family: inherit;
+  font-size: 0.75em;
+  padding: 0.45em 0.9em;
+  border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
+}
+
+.sim-choice:hover {
+  border-color: #0089ff;
+  color: #0089ff;
+}
+
+.sim-choice.is-active {
+  background: #0089ff;
+  border-color: #0089ff;
+  color: #fff;
+}
+
+.sim-choice:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* Основные кнопки сценария */
+.sim-btn {
+  font-size: 0.85em;
+  font-weight: 600;
+  padding: 0.6em 1.1em;
+  border-radius: 100px;
+  border: none;
+  background: #0089ff;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.sim-btn:hover:not(:disabled) {
+  background: #0072d6;
+}
+
+.sim-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.sim-btn--ghost {
+  background: none;
+  border: 1px solid rgba(0,0,0,0.15);
+  color: #666;
+}
+
+.sim-btn--ghost:hover:not(:disabled) {
+  border-color: #0089ff;
+  color: #0089ff;
+  background: none;
+}
+
+/* Лог-«чат»: пузыри сообщений участников */
+.sim-log {
+  padding: 0.5em 1em 1em;
+}
+
+.sim-log:empty {
+  padding: 0.5em 0 0;
+}
+
+.sim-step {
+  position: relative;
+  box-sizing: border-box;
+  max-width: 88%;
+  margin-top: 0.7em;
+  padding: 0.7em 0.9em;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  font-size: 0.85em;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.sim-step.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.sim-step p {
+  margin: 0;
+  background: none;
+  padding: 0;
+}
+
+.sim-step pre {
+  margin: 0.5em 0 0;
+  padding: 0.6em 0.8em;
+  border-radius: 6px;
+  background: #f4f4f4;
+  overflow-x: auto;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+.sim-step--right {
+  margin-left: auto;
+  background: #e6f2ff;
+}
+
+.sim-step--right pre {
+  background: rgba(255,255,255,0.75);
+}
+
+.sim-step-name {
+  display: block;
+  margin-bottom: 0.25em;
+  font-size: 0.8em;
+  font-weight: 700;
+  color: #0089ff;
+}
+
+.sim-step-ms {
+  display: block;
+  margin-top: 0.35em;
+  font-size: 0.75em;
+  color: #999;
+}
+
+/* Итог сценария (по центру) и пояснение — на всю ширину, с акцентной рамкой */
+.sim-step--result,
+.sim-step--explain {
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0,137,255,0.4);
+  font-size: 0.9em;
+}
+
+.sim-step--result {
+  text-align: center;
+}
+
+.sim-step--result b {
+  color: #0089ff;
+}
+
+.sim-step--hint {
+  max-width: 100%;
+  background: none;
+  box-shadow: none;
+  text-align: center;
+  color: #999;
+  font-size: 0.8em;
+}
+
+@media screen and (max-width: 767px) {
+  .sim-step {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sim-step {
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .sim-window {
+    background: #1a1a1a;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+
+  .sim-head {
+    background: #111;
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+
+  .sim-title,
+  .sim-clear {
+    color: #999;
+  }
+
+  .sim-clear:hover {
+    color: #ff453a;
+  }
+
+  .sim-label {
+    color: #777;
+  }
+
+  .sim-actor {
+    border-color: rgba(255,255,255,0.15);
+    color: #777;
+  }
+
+  .sim-actor.is-done {
+    color: #64b2ff;
+    border-color: rgba(100,178,255,0.45);
+  }
+
+  .sim-actor.is-active {
+    color: #111;
+    background: #64b2ff;
+    border-color: #64b2ff;
+  }
+
+  .sim-choice {
+    background: #242424;
+    border-color: rgba(255,255,255,0.15);
+    color: #999;
+  }
+
+  .sim-choice:hover {
+    border-color: #64b2ff;
+    color: #64b2ff;
+  }
+
+  .sim-choice.is-active {
+    background: #64b2ff;
+    border-color: #64b2ff;
+    color: #111;
+  }
+
+  .sim-btn {
+    background: #64b2ff;
+    color: #111;
+  }
+
+  .sim-btn:hover:not(:disabled) {
+    background: #82c0ff;
+  }
+
+  .sim-btn--ghost {
+    border-color: rgba(255,255,255,0.18);
+    color: #999;
+  }
+
+  .sim-btn--ghost:hover:not(:disabled) {
+    border-color: #64b2ff;
+    color: #64b2ff;
+  }
+
+  .sim-step {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .sim-step pre {
+    background: #1a1a1a;
+  }
+
+  .sim-step--right {
+    background: #17293d;
+  }
+
+  .sim-step--right pre {
+    background: rgba(0,0,0,0.35);
+  }
+
+  .sim-step-name {
+    color: #64b2ff;
+  }
+
+  .sim-step-ms {
+    color: #777;
+  }
+
+  .sim-step--result,
+  .sim-step--explain {
+    background: #242424;
+    border-color: rgba(100,178,255,0.45);
+  }
+
+  .sim-step--result b {
+    color: #64b2ff;
+  }
+
+  .sim-step--hint {
+    background: none;
+    color: #777;
+  }
+}
+
 /* Live HTML/CSS editor */
 .live-editor {
   display: grid;
@@ -140,46 +513,10 @@
   }
 }
 
-/* DNS lookup simulator */
+/* DNS lookup simulator (общий каркас — sim-* выше) */
 .dns-sim {
   margin-top: 1.5em;
   margin-bottom: 2em;
-}
-
-.dns-sim-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.dns-sim-head {
-  display: flex;
-  align-items: stretch;
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.dns-sim-title,
-.dns-sim-clear {
-  font-family: inherit;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  border: none;
-  background: transparent;
-  color: #666;
-}
-
-.dns-sim-clear {
-  margin-left: auto;
-  font-weight: 400;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.dns-sim-clear:hover {
-  color: #f41224;
 }
 
 .dns-sim-form {
@@ -229,109 +566,8 @@
   cursor: default;
 }
 
-.dns-sim-actors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  padding: 1em 1em 0;
-}
-
-.dns-sim-actor {
-  font-size: 0.7em;
-  font-weight: 600;
-  padding: 0.35em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  color: #999;
-  transition: color 0.3s, border-color 0.3s, background 0.3s;
-}
-
-.dns-sim-actor.is-done {
-  color: #0089ff;
-  border-color: rgba(0,137,255,0.4);
-}
-
-.dns-sim-actor.is-active {
-  color: #fff;
-  background: #0089ff;
-  border-color: #0089ff;
-}
-
-.dns-sim-log {
-  padding: 0.5em 1em 1em;
-}
-
-.dns-sim-log:empty {
-  padding: 0.5em 0 0;
-}
-
-.dns-sim-step {
-  position: relative;
-  box-sizing: border-box;
-  max-width: 88%;
-  margin-top: 0.7em;
-  padding: 0.7em 0.9em;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  font-size: 0.85em;
-  line-height: 1.45;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s, transform 0.35s;
-}
-
-.dns-sim-step.is-shown {
-  opacity: 1;
-  transform: none;
-}
-
-.dns-sim-step p {
-  margin: 0;
-  background: none;
-  padding: 0;
-}
-
-.dns-sim-step--right {
-  margin-left: auto;
-  background: #e6f2ff;
-}
-
-.dns-sim-step-name {
-  display: block;
-  margin-bottom: 0.25em;
-  font-size: 0.8em;
-  font-weight: 700;
-  color: #0089ff;
-}
-
-.dns-sim-step-ms {
-  display: block;
-  margin-top: 0.35em;
-  font-size: 0.75em;
-  color: #999;
-}
-
-.dns-sim-step--result {
-  max-width: 100%;
-  text-align: center;
-  background: #fff;
-  border: 1px solid rgba(0,137,255,0.4);
-  font-size: 0.95em;
-}
-
-.dns-sim-step--result b {
-  color: #0089ff;
+.dns-sim .sim-step--result b {
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-}
-
-.dns-sim-step--hint {
-  max-width: 100%;
-  background: none;
-  box-shadow: none;
-  text-align: center;
-  color: #999;
-  font-size: 0.8em;
 }
 
 @media screen and (max-width: 767px) {
@@ -339,39 +575,9 @@
   .dns-sim-input {
     font-size: 16px;
   }
-
-  .dns-sim-step {
-    max-width: 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dns-sim-step {
-    transition: none;
-    transform: none;
-  }
 }
 
 @media (prefers-color-scheme: dark) {
-  .dns-sim-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .dns-sim-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .dns-sim-title,
-  .dns-sim-clear {
-    color: #999;
-  }
-
-  .dns-sim-clear:hover {
-    color: #ff453a;
-  }
-
   .dns-sim-input {
     background: #242424;
     border-color: rgba(255,255,255,0.12);
@@ -386,79 +592,12 @@
     background: #64b2ff;
     color: #111;
   }
-
-  .dns-sim-actor {
-    border-color: rgba(255,255,255,0.15);
-    color: #777;
-  }
-
-  .dns-sim-actor.is-done {
-    color: #64b2ff;
-    border-color: rgba(100,178,255,0.45);
-  }
-
-  .dns-sim-actor.is-active {
-    color: #111;
-    background: #64b2ff;
-    border-color: #64b2ff;
-  }
-
-  .dns-sim-step {
-    background: #242424;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-  }
-
-  .dns-sim-step--right {
-    background: #17293d;
-  }
-
-  .dns-sim-step-name {
-    color: #64b2ff;
-  }
-
-  .dns-sim-step-ms {
-    color: #777;
-  }
-
-  .dns-sim-step--result {
-    background: #242424;
-    border-color: rgba(100,178,255,0.45);
-  }
-
-  .dns-sim-step--result b {
-    color: #64b2ff;
-  }
-
-  .dns-sim-step--hint {
-    background: none;
-    color: #777;
-  }
 }
 
-/* HTTP request simulator */
+/* HTTP request simulator (общий каркас — sim-* выше) */
 .http-sim {
   margin-top: 1.5em;
   margin-bottom: 2em;
-}
-
-.http-sim-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.http-sim-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.http-sim-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
 }
 
 .http-sim-bar {
@@ -512,135 +651,20 @@
   font-size: 0.9em;
 }
 
-.http-sim-paths-label {
-  padding: 1em 1em 0;
-  font-size: 0.75em;
-  color: #999;
-}
-
-.http-sim-paths {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  padding: 0.5em 1em 0;
-}
-
-.http-sim-path {
+/* Кнопки-пути — в моноширинном начертании */
+.http-sim .sim-choice {
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-  font-size: 0.75em;
-  padding: 0.45em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
 }
 
-.http-sim-path:hover {
-  border-color: #0089ff;
-  color: #0089ff;
-}
-
-.http-sim-path.is-active {
-  background: #0089ff;
-  border-color: #0089ff;
-  color: #fff;
-}
-
-.http-sim-path:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-
-.http-sim-log {
-  padding: 0.5em 1em 1em;
-}
-
-.http-sim-log:empty {
-  padding: 0.5em 0 0;
-}
-
-.http-sim-step {
-  position: relative;
-  box-sizing: border-box;
-  max-width: 88%;
-  margin-top: 0.7em;
-  padding: 0.7em 0.9em;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  font-size: 0.85em;
-  line-height: 1.45;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s, transform 0.35s;
-}
-
-.http-sim-step.is-shown {
-  opacity: 1;
-  transform: none;
-}
-
-.http-sim-step p {
-  margin: 0;
-  background: none;
-  padding: 0;
-}
-
-.http-sim-step pre {
-  margin: 0.5em 0 0;
-  padding: 0.6em 0.8em;
-  border-radius: 6px;
-  background: #f4f4f4;
-  overflow-x: auto;
-  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-  font-size: 0.85em;
-  line-height: 1.5;
-}
-
-.http-sim-step--right {
-  margin-left: auto;
-  background: #e6f2ff;
-}
-
-.http-sim-step--right pre {
-  background: rgba(255,255,255,0.75);
-}
-
-.http-sim-step--spy {
+.http-sim .sim-step--spy {
   max-width: 100%;
   background: none;
   box-shadow: none;
   border: 1px dashed rgba(0,0,0,0.25);
 }
 
-.http-sim-step-name {
-  display: block;
-  margin-bottom: 0.25em;
-  font-size: 0.8em;
-  font-weight: 700;
-  color: #0089ff;
-}
-
-.http-sim-step--spy .http-sim-step-name {
+.http-sim .sim-step--spy .sim-step-name {
   color: #999;
-}
-
-.http-sim-step--explain {
-  max-width: 100%;
-  background: #fff;
-  border: 1px solid rgba(0,137,255,0.4);
-  font-size: 0.9em;
-}
-
-.http-sim-step--hint {
-  max-width: 100%;
-  background: none;
-  box-shadow: none;
-  text-align: center;
-  color: #999;
-  font-size: 0.8em;
 }
 
 .http-sim-code--ok { color: #178a3d; }
@@ -648,34 +672,7 @@
 .http-sim-code--client { color: #c96a00; }
 .http-sim-code--server { color: #f41224; }
 
-@media screen and (max-width: 767px) {
-  .http-sim-step {
-    max-width: 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .http-sim-step {
-    transition: none;
-    transform: none;
-  }
-}
-
 @media (prefers-color-scheme: dark) {
-  .http-sim-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .http-sim-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .http-sim-title {
-    color: #999;
-  }
-
   .http-sim-proto {
     border-color: rgba(255,255,255,0.15);
   }
@@ -695,64 +692,12 @@
     color: #e0e0e0;
   }
 
-  .http-sim-paths-label {
-    color: #777;
-  }
-
-  .http-sim-path {
-    background: #242424;
-    border-color: rgba(255,255,255,0.15);
-    color: #999;
-  }
-
-  .http-sim-path:hover {
-    border-color: #64b2ff;
-    color: #64b2ff;
-  }
-
-  .http-sim-path.is-active {
-    background: #64b2ff;
-    border-color: #64b2ff;
-    color: #111;
-  }
-
-  .http-sim-step {
-    background: #242424;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-  }
-
-  .http-sim-step pre {
-    background: #1a1a1a;
-  }
-
-  .http-sim-step--right {
-    background: #17293d;
-  }
-
-  .http-sim-step--right pre {
-    background: rgba(0,0,0,0.35);
-  }
-
-  .http-sim-step--spy {
+  .http-sim .sim-step--spy {
     background: none;
     border-color: rgba(255,255,255,0.25);
   }
 
-  .http-sim-step-name {
-    color: #64b2ff;
-  }
-
-  .http-sim-step--spy .http-sim-step-name {
-    color: #777;
-  }
-
-  .http-sim-step--explain {
-    background: #242424;
-    border-color: rgba(100,178,255,0.45);
-  }
-
-  .http-sim-step--hint {
-    background: none;
+  .http-sim .sim-step--spy .sim-step-name {
     color: #777;
   }
 
@@ -1526,7 +1471,7 @@
   }
 }
 
-/* Packet route simulator */
+/* Packet route simulator (общий каркас — sim-* выше) */
 .route-sim {
   margin-top: 1.5em;
   margin-bottom: 2em;
@@ -1535,95 +1480,6 @@
 /* Guard against component classes that set their own display */
 .route-sim [hidden] {
   display: none;
-}
-
-.route-sim-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.route-sim-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.route-sim-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
-}
-
-.route-sim-devices-label {
-  padding: 1em 1em 0;
-  font-size: 0.75em;
-  color: #999;
-}
-
-.route-sim-devices {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  padding: 0.5em 1em 0;
-}
-
-.route-sim-device {
-  font-family: inherit;
-  font-size: 0.75em;
-  padding: 0.45em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.2s;
-}
-
-.route-sim-device:hover {
-  border-color: #0089ff;
-  color: #0089ff;
-}
-
-.route-sim-device.is-active {
-  background: #0089ff;
-  border-color: #0089ff;
-  color: #fff;
-}
-
-.route-sim-device:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-
-.route-sim-hops {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  padding: 1em 1em 0;
-}
-
-.route-sim-hop {
-  font-size: 0.7em;
-  font-weight: 600;
-  padding: 0.35em 0.9em;
-  border-radius: 100px;
-  border: 1px solid rgba(0,0,0,0.12);
-  color: #999;
-  transition: color 0.3s, border-color 0.3s, background 0.3s;
-}
-
-.route-sim-hop.is-done {
-  color: #0089ff;
-  border-color: rgba(0,137,255,0.4);
-}
-
-.route-sim-hop.is-active {
-  color: #fff;
-  background: #0089ff;
-  border-color: #0089ff;
 }
 
 .route-sim-nat {
@@ -1676,170 +1532,15 @@
   color: #0089ff;
 }
 
-.route-sim-log {
-  padding: 0.5em 1em 1em;
-}
-
-.route-sim-log:empty {
-  padding: 0.5em 0 0;
-}
-
-.route-sim-step {
-  position: relative;
-  box-sizing: border-box;
-  max-width: 88%;
-  margin-top: 0.7em;
-  padding: 0.7em 0.9em;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  font-size: 0.85em;
-  line-height: 1.45;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s, transform 0.35s;
-}
-
-.route-sim-step.is-shown {
-  opacity: 1;
-  transform: none;
-}
-
-.route-sim-step p {
-  margin: 0;
-  background: none;
-  padding: 0;
-}
-
-.route-sim-step pre {
-  margin: 0.5em 0 0;
-  padding: 0.6em 0.8em;
-  border-radius: 6px;
-  background: #f4f4f4;
-  overflow-x: auto;
-  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-  font-size: 0.85em;
-  line-height: 1.5;
-}
-
-.route-sim-step pre s {
+.route-sim .sim-step pre s {
   color: #999;
 }
 
-.route-sim-step pre b {
+.route-sim .sim-step pre b {
   color: #0089ff;
-}
-
-.route-sim-step--right {
-  margin-left: auto;
-  background: #e6f2ff;
-}
-
-.route-sim-step--right pre {
-  background: rgba(255,255,255,0.75);
-}
-
-.route-sim-step-name {
-  display: block;
-  margin-bottom: 0.25em;
-  font-size: 0.8em;
-  font-weight: 700;
-  color: #0089ff;
-}
-
-.route-sim-step-ms {
-  display: block;
-  margin-top: 0.35em;
-  font-size: 0.75em;
-  color: #999;
-}
-
-.route-sim-step--result {
-  max-width: 100%;
-  text-align: center;
-  background: #fff;
-  border: 1px solid rgba(0,137,255,0.4);
-  font-size: 0.9em;
-}
-
-.route-sim-step--result b {
-  color: #0089ff;
-}
-
-.route-sim-step--hint {
-  max-width: 100%;
-  background: none;
-  box-shadow: none;
-  text-align: center;
-  color: #999;
-  font-size: 0.8em;
-}
-
-@media screen and (max-width: 767px) {
-  .route-sim-step {
-    max-width: 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .route-sim-step {
-    transition: none;
-    transform: none;
-  }
 }
 
 @media (prefers-color-scheme: dark) {
-  .route-sim-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .route-sim-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .route-sim-title {
-    color: #999;
-  }
-
-  .route-sim-devices-label {
-    color: #777;
-  }
-
-  .route-sim-device {
-    background: #242424;
-    border-color: rgba(255,255,255,0.15);
-    color: #999;
-  }
-
-  .route-sim-device:hover {
-    border-color: #64b2ff;
-    color: #64b2ff;
-  }
-
-  .route-sim-device.is-active {
-    background: #64b2ff;
-    border-color: #64b2ff;
-    color: #111;
-  }
-
-  .route-sim-hop {
-    border-color: rgba(255,255,255,0.15);
-    color: #777;
-  }
-
-  .route-sim-hop.is-done {
-    color: #64b2ff;
-    border-color: rgba(100,178,255,0.45);
-  }
-
-  .route-sim-hop.is-active {
-    color: #111;
-    background: #64b2ff;
-    border-color: #64b2ff;
-  }
-
   .route-sim-nat {
     background: #242424;
     border-color: rgba(255,255,255,0.12);
@@ -1864,51 +1565,12 @@
     color: #64b2ff;
   }
 
-  .route-sim-step {
-    background: #242424;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-  }
-
-  .route-sim-step pre {
-    background: #1a1a1a;
-  }
-
-  .route-sim-step pre s {
+  .route-sim .sim-step pre s {
     color: #777;
   }
 
-  .route-sim-step pre b {
+  .route-sim .sim-step pre b {
     color: #64b2ff;
-  }
-
-  .route-sim-step--right {
-    background: #17293d;
-  }
-
-  .route-sim-step--right pre {
-    background: rgba(0,0,0,0.3);
-  }
-
-  .route-sim-step-name {
-    color: #64b2ff;
-  }
-
-  .route-sim-step-ms {
-    color: #777;
-  }
-
-  .route-sim-step--result {
-    background: #242424;
-    border-color: rgba(100,178,255,0.45);
-  }
-
-  .route-sim-step--result b {
-    color: #64b2ff;
-  }
-
-  .route-sim-step--hint {
-    background: none;
-    color: #777;
   }
 }
 
@@ -4828,36 +4490,10 @@
   }
 }
 
-/* Cookie jar: браузерный карман с куками */
+/* Cookie jar: браузерный карман с куками (общий каркас — sim-* выше) */
 .cookie-jar {
   margin-top: 1.5em;
   margin-bottom: 2em;
-}
-
-.cookie-jar-window {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f8f8f8;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-.cookie-jar-head {
-  background: #ececec;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-
-.cookie-jar-title {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 0.8em 1.5em;
-  color: #666;
-}
-
-.cookie-jar-pocket-label {
-  padding: 1em 1em 0;
-  font-size: 0.75em;
-  color: #999;
 }
 
 .cookie-jar-pocket {
@@ -4956,63 +4592,9 @@
   color: #c96a00;
 }
 
-.cookie-jar-log {
-  padding: 0.5em 1em 0.2em;
-}
-
-.cookie-jar-step {
-  position: relative;
-  box-sizing: border-box;
-  max-width: 88%;
-  margin-top: 0.7em;
-  padding: 0.7em 0.9em;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  font-size: 0.85em;
-  line-height: 1.45;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s, transform 0.35s;
-}
-
-.cookie-jar-step.is-shown {
-  opacity: 1;
-  transform: none;
-}
-
-.cookie-jar-step p {
-  margin: 0;
-  background: none;
-  padding: 0;
-}
-
-.cookie-jar-step pre {
-  margin: 0.5em 0 0;
-  padding: 0.6em 0.8em;
-  border-radius: 6px;
-  background: #f4f4f4;
-  overflow-x: auto;
-  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-  font-size: 0.85em;
-  line-height: 1.5;
-}
-
-.cookie-jar-step-name {
-  display: block;
-  margin-bottom: 0.25em;
-  font-size: 0.8em;
-  font-weight: 700;
-  color: #0089ff;
-}
-
-.cookie-jar-step--server {
-  margin-left: auto;
-  background: #e6f2ff;
-}
-
-.cookie-jar-step--server pre {
-  background: rgba(255,255,255,0.75);
+/* Под логом идут кнопки управления — нижний отступ меньше обычного */
+.cookie-jar .sim-log {
+  padding-bottom: 0.2em;
 }
 
 .cookie-jar-step--tracker {
@@ -5024,7 +4606,7 @@
   background: rgba(255,255,255,0.6);
 }
 
-.cookie-jar-step--tracker .cookie-jar-step-name {
+.cookie-jar-step--tracker .sim-step-name {
   color: #c96a00;
 }
 
@@ -5034,7 +4616,7 @@
   border: 1px solid rgba(244,18,36,0.35);
 }
 
-.cookie-jar-step--alert .cookie-jar-step-name {
+.cookie-jar-step--alert .sim-step-name {
   color: #f41224;
 }
 
@@ -5047,13 +4629,6 @@
   font-style: italic;
 }
 
-.cookie-jar-step--explain {
-  max-width: 100%;
-  background: #fff;
-  border: 1px solid rgba(0,137,255,0.4);
-  font-size: 0.9em;
-}
-
 .cookie-jar-controls {
   display: flex;
   flex-wrap: wrap;
@@ -5062,47 +4637,7 @@
   padding: 0.6em 1em 1em;
 }
 
-.cookie-jar-btn {
-  font-size: 0.85em;
-  font-weight: 600;
-  padding: 0.6em 1.1em;
-  border-radius: 100px;
-  border: none;
-  background: #0089ff;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s, opacity 0.2s;
-}
-
-.cookie-jar-btn:hover {
-  background: #0072d6;
-}
-
-.cookie-jar-btn:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-
-.cookie-jar-btn--ghost {
-  background: none;
-  border: 1px solid rgba(0,0,0,0.15);
-  color: #666;
-}
-
-.cookie-jar-btn--ghost:hover {
-  border-color: #0089ff;
-  color: #0089ff;
-  background: none;
-}
-
-@media screen and (max-width: 767px) {
-  .cookie-jar-step {
-    max-width: 100%;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .cookie-jar-step,
   .cookie-jar-chip {
     transition: none;
   }
@@ -5113,24 +4648,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .cookie-jar-window {
-    background: #1a1a1a;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
-  }
-
-  .cookie-jar-head {
-    background: #111;
-    border-bottom-color: rgba(255,255,255,0.07);
-  }
-
-  .cookie-jar-title {
-    color: #999;
-  }
-
-  .cookie-jar-pocket-label {
-    color: #777;
-  }
-
   .cookie-jar-pocket-empty {
     color: #777;
   }
@@ -5176,27 +4693,6 @@
     100% { background: transparent; }
   }
 
-  .cookie-jar-step {
-    background: #242424;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-  }
-
-  .cookie-jar-step pre {
-    background: #1a1a1a;
-  }
-
-  .cookie-jar-step-name {
-    color: #64b2ff;
-  }
-
-  .cookie-jar-step--server {
-    background: #17293d;
-  }
-
-  .cookie-jar-step--server pre {
-    background: rgba(0,0,0,0.35);
-  }
-
   .cookie-jar-step--tracker {
     background: rgba(255,165,61,0.1);
   }
@@ -5205,7 +4701,7 @@
     background: rgba(0,0,0,0.3);
   }
 
-  .cookie-jar-step--tracker .cookie-jar-step-name {
+  .cookie-jar-step--tracker .sim-step-name {
     color: #ffa53d;
   }
 
@@ -5214,36 +4710,12 @@
     border-color: rgba(255,69,58,0.4);
   }
 
-  .cookie-jar-step--alert .cookie-jar-step-name {
+  .cookie-jar-step--alert .sim-step-name {
     color: #ff453a;
   }
 
   .cookie-jar-step--system {
     color: #777;
-  }
-
-  .cookie-jar-step--explain {
-    background: #242424;
-    border-color: rgba(100,178,255,0.45);
-  }
-
-  .cookie-jar-btn {
-    background: #64b2ff;
-    color: #111;
-  }
-
-  .cookie-jar-btn:hover {
-    background: #82c0ff;
-  }
-
-  .cookie-jar-btn--ghost {
-    border-color: rgba(255,255,255,0.18);
-    color: #999;
-  }
-
-  .cookie-jar-btn--ghost:hover {
-    border-color: #64b2ff;
-    color: #64b2ff;
   }
 }
 
@@ -5380,39 +4852,7 @@
   padding: 0.8em 1em 0.4em;
 }
 
-.journey-sim-btn {
-  font-size: 0.85em;
-  font-weight: 600;
-  padding: 0.6em 1.1em;
-  border-radius: 100px;
-  border: none;
-  background: #0089ff;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s, opacity 0.2s;
-}
-
-.journey-sim-btn:hover {
-  background: #0072d6;
-}
-
-.journey-sim-btn:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.journey-sim-btn--ghost {
-  background: none;
-  border: 1px solid rgba(0,0,0,0.15);
-  color: #666;
-}
-
-.journey-sim-btn--ghost:hover:not(:disabled) {
-  border-color: #0089ff;
-  color: #0089ff;
-  background: none;
-}
-
+/* Кнопки — общие sim-btn; своя только раскладка кнопки «Прогнать всё» */
 .journey-sim-btn--play {
   order: -1;
   flex-basis: 100%;
@@ -5500,25 +4940,6 @@
 
   .journey-sim-detail p {
     color: #e0e0e0;
-  }
-
-  .journey-sim-btn {
-    background: #64b2ff;
-    color: #111;
-  }
-
-  .journey-sim-btn:hover {
-    background: #82c0ff;
-  }
-
-  .journey-sim-btn--ghost {
-    border-color: rgba(255,255,255,0.18);
-    color: #999;
-  }
-
-  .journey-sim-btn--ghost:hover:not(:disabled) {
-    border-color: #64b2ff;
-    color: #64b2ff;
   }
 
   .journey-sim-total {

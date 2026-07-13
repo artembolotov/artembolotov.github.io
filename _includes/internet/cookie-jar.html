@@ -1,17 +1,17 @@
 <div class="cookie-jar" id="cookie-jar">
   <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
-  <div class="cookie-jar-window">
-    <div class="cookie-jar-head">
-      <span class="cookie-jar-title">Карман браузера: как куки путешествуют с вами</span>
+  <div class="sim-window">
+    <div class="sim-head">
+      <span class="sim-title">Карман браузера: как куки путешествуют с вами</span>
     </div>
-    <div class="cookie-jar-pocket-label">Карман браузера прямо сейчас:</div>
+    <div class="sim-label">Карман браузера прямо сейчас:</div>
     <div class="cookie-jar-pocket" data-cj-pocket>
       <div class="cookie-jar-pocket-empty">пока пусто</div>
     </div>
-    <div class="cookie-jar-log" data-cj-log aria-live="polite"></div>
+    <div class="sim-log" data-cj-log aria-live="polite"></div>
     <div class="cookie-jar-controls">
-      <button type="button" class="cookie-jar-btn" data-cj-next>Открыть shop.example впервые &#8594;</button>
-      <button type="button" class="cookie-jar-btn cookie-jar-btn--ghost" data-cj-restart hidden>&#8634; Сначала</button>
+      <button type="button" class="sim-btn" data-cj-next>Открыть shop.example впервые &#8594;</button>
+      <button type="button" class="sim-btn sim-btn--ghost" data-cj-restart hidden>&#8634; Сначала</button>
     </div>
   </div>
   <script>
@@ -45,11 +45,22 @@
       nextBtn.disabled = v;
     }
 
+    // Реплики браузера и сервера — общие пузыри sim-step,
+    // у трекера/предупреждений — свои модификаторы
+    var MOD_CLASS = {
+      browser: '',
+      server: 'sim-step--right',
+      tracker: 'cookie-jar-step--tracker',
+      alert: 'cookie-jar-step--alert',
+      system: 'cookie-jar-step--system',
+      explain: 'sim-step--explain'
+    };
+
     function addBubble(mod, name, text, pre) {
       var el = document.createElement('div');
-      el.className = 'cookie-jar-step cookie-jar-step--' + mod;
+      el.className = 'sim-step' + (MOD_CLASS[mod] ? ' ' + MOD_CLASS[mod] : '');
       var html = '';
-      if (name) { html += '<span class="cookie-jar-step-name">' + name + '</span>'; }
+      if (name) { html += '<span class="sim-step-name">' + name + '</span>'; }
       if (text) { html += '<p>' + text + '</p>'; }
       if (pre) { html += '<pre>' + pre + '</pre>'; }
       el.innerHTML = html;
