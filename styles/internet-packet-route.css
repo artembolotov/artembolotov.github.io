@@ -1,0 +1,105 @@
+/* Стили компонента _includes/internet/packet-route.html.
+   Требует общий каркас /styles/internet.css: пост подключает
+   styles: [internet, internet-packet-route] в front matter. */
+/* Packet route simulator (общий каркас — sim-* выше) */
+.route-sim {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+/* Guard against component classes that set their own display */
+.route-sim [hidden] {
+  display: none;
+}
+
+.route-sim-nat {
+  margin: 1em 1em 0;
+  padding: 0.7em 0.9em;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.route-sim-nat-title {
+  display: block;
+  margin-bottom: 0.4em;
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.route-sim-nat table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.7em;
+  line-height: 1.4;
+}
+
+.route-sim-nat th {
+  text-align: left;
+  font-weight: 600;
+  color: #999;
+  padding: 0.25em 0.5em;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.route-sim-nat td {
+  padding: 0.3em 0.5em;
+  color: #333;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: background 0.3s;
+}
+
+.route-sim-nat tr:last-child td {
+  border-bottom: none;
+}
+
+.route-sim-nat tr.is-active td {
+  background: rgba(0,137,255,0.1);
+  color: #0089ff;
+}
+
+.route-sim .sim-step pre s {
+  color: #999;
+}
+
+.route-sim .sim-step pre b {
+  color: #0089ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .route-sim-nat {
+    background: #242424;
+    border-color: rgba(255,255,255,0.12);
+  }
+
+  .route-sim-nat-title {
+    color: #777;
+  }
+
+  .route-sim-nat th {
+    color: #777;
+    border-bottom-color: rgba(255,255,255,0.12);
+  }
+
+  .route-sim-nat td {
+    color: #e0e0e0;
+    border-bottom-color: rgba(255,255,255,0.06);
+  }
+
+  .route-sim-nat tr.is-active td {
+    background: rgba(100,178,255,0.12);
+    color: #64b2ff;
+  }
+
+  .route-sim .sim-step pre s {
+    color: #777;
+  }
+
+  .route-sim .sim-step pre b {
+    color: #64b2ff;
+  }
+}

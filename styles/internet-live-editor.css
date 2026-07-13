@@ -1,0 +1,140 @@
+/* Стили компонента _includes/internet/live-editor.html.
+   Требует общий каркас /styles/internet.css: пост подключает
+   styles: [internet, internet-live-editor] в front matter. */
+/* Live HTML/CSS editor */
+.live-editor {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em;
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+@media screen and (min-width: 768px) {
+  .live-editor {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.live-editor-window {
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f8f8;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.live-editor-head {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  background: #ececec;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.live-editor-tab,
+.live-editor-reset,
+.live-editor-title {
+  font-family: inherit;
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 0.8em 1.5em;
+  border: none;
+  background: transparent;
+  color: #666;
+}
+
+.live-editor-tab,
+.live-editor-reset {
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+
+.live-editor-tab.is-active {
+  background: #f8f8f8;
+  color: #0089ff;
+}
+
+.live-editor-reset {
+  margin-left: auto;
+  font-weight: 400;
+}
+
+.live-editor-reset:hover {
+  color: #f41224;
+}
+
+.live-editor-input {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.8em 1em;
+  border: none;
+  resize: none;
+  background: #f8f8f8;
+  color: #333;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85em;
+  line-height: 1.5;
+  tab-size: 2;
+  caret-color: #0089ff;
+}
+
+.live-editor-input:focus {
+  outline: none;
+}
+
+.live-editor-preview {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: #fff;
+}
+
+@media screen and (max-width: 767px) {
+  .live-editor-window {
+    height: 260px;
+  }
+
+  /* Font smaller than 16px triggers auto-zoom on focus in iOS Safari */
+  .live-editor-input {
+    font-size: 16px;
+  }
+}
+
+/* The preview stays white in dark mode on purpose: the user's
+   HTML/CSS renders on a default white page, like in a real browser. */
+@media (prefers-color-scheme: dark) {
+  .live-editor-window {
+    background: #1a1a1a;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  }
+
+  .live-editor-head {
+    background: #111;
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+
+  .live-editor-tab,
+  .live-editor-reset,
+  .live-editor-title {
+    color: #999;
+  }
+
+  .live-editor-tab.is-active {
+    background: #1a1a1a;
+    color: #64b2ff;
+  }
+
+  .live-editor-reset:hover {
+    color: #ff453a;
+  }
+
+  .live-editor-input {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    caret-color: #64b2ff;
+  }
+}

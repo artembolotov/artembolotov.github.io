@@ -1,21 +1,21 @@
 <div class="hosting-sim" id="hosting-sim">
   <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере. Ниже видна сама схема, но нагрузка по ней не побежит.</p></noscript>
-  <div class="hosting-sim-window">
-    <div class="hosting-sim-head">
-      <span class="hosting-sim-title">Стресс-тест хостинга: кто переживёт наплыв?</span>
+  <div class="sim-window">
+    <div class="sim-head">
+      <span class="sim-title">Стресс-тест хостинга: кто переживёт наплыв?</span>
     </div>
-    <div class="hosting-sim-actions-label">Вид хостинга:</div>
-    <div class="hosting-sim-actions">
-      <button type="button" class="hosting-sim-btn is-active" data-hs-hosting="shared">&#127970; Shared — коммуналка</button>
-      <button type="button" class="hosting-sim-btn" data-hs-hosting="vps">&#127968; VPS — квартира</button>
-      <button type="button" class="hosting-sim-btn" data-hs-hosting="dedicated">&#127969; Dedicated — дом</button>
-      <button type="button" class="hosting-sim-btn" data-hs-hosting="cloud">&#127976; Облако — гостиница</button>
+    <div class="sim-label">Вид хостинга:</div>
+    <div class="sim-choices">
+      <button type="button" class="sim-choice is-active" data-hs-hosting="shared">&#127970; Shared — коммуналка</button>
+      <button type="button" class="sim-choice" data-hs-hosting="vps">&#127968; VPS — квартира</button>
+      <button type="button" class="sim-choice" data-hs-hosting="dedicated">&#127969; Dedicated — дом</button>
+      <button type="button" class="sim-choice" data-hs-hosting="cloud">&#127976; Облако — гостиница</button>
     </div>
-    <div class="hosting-sim-actions-label">Что происходит:</div>
-    <div class="hosting-sim-actions">
-      <button type="button" class="hosting-sim-btn" data-hs-scenario="calm">&#9728;&#65039; обычный день</button>
-      <button type="button" class="hosting-sim-btn" data-hs-scenario="surge">&#128293; наплыв посетителей</button>
-      <button type="button" class="hosting-sim-btn" data-hs-scenario="ddos">&#128163; DDoS-атака</button>
+    <div class="sim-label">Что происходит:</div>
+    <div class="sim-choices">
+      <button type="button" class="sim-choice" data-hs-scenario="calm">&#9728;&#65039; обычный день</button>
+      <button type="button" class="sim-choice" data-hs-scenario="surge">&#128293; наплыв посетителей</button>
+      <button type="button" class="sim-choice" data-hs-scenario="ddos">&#128163; DDoS-атака</button>
     </div>
     <div class="hosting-sim-scroll">
       <svg class="hosting-sim-svg" viewBox="0 0 700 300" role="img" aria-label="Схема: слева посетители и счёт за хостинг, справа сервер выбранного вида хостинга с индикатором нагрузки">

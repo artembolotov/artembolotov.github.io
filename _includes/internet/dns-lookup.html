@@ -1,22 +1,22 @@
 <div class="dns-sim" id="dns-sim">
   <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере.</p></noscript>
-  <div class="dns-sim-window">
-    <div class="dns-sim-head">
-      <span class="dns-sim-title">Симулятор DNS-запроса</span>
-      <button type="button" class="dns-sim-clear" data-dns-clear hidden>Очистить кэш</button>
+  <div class="sim-window">
+    <div class="sim-head">
+      <span class="sim-title">Симулятор DNS-запроса</span>
+      <button type="button" class="sim-clear" data-dns-clear hidden>Очистить кэш</button>
     </div>
     <form class="dns-sim-form" data-dns-form>
       <input class="dns-sim-input" data-dns-input type="text" value="example.com" inputmode="url" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" aria-label="Доменное имя">
       <button type="submit" class="dns-sim-go" data-dns-go>Узнать IP</button>
     </form>
-    <div class="dns-sim-actors">
-      <span class="dns-sim-actor" data-dns-actor="browser">Браузер</span>
-      <span class="dns-sim-actor" data-dns-actor="resolver">Резолвер</span>
-      <span class="dns-sim-actor" data-dns-actor="root">Корневой</span>
-      <span class="dns-sim-actor" data-dns-actor="tld">Зона TLD</span>
-      <span class="dns-sim-actor" data-dns-actor="auth">Авторитативный</span>
+    <div class="sim-actors">
+      <span class="sim-actor" data-dns-actor="browser">Браузер</span>
+      <span class="sim-actor" data-dns-actor="resolver">Резолвер</span>
+      <span class="sim-actor" data-dns-actor="root">Корневой</span>
+      <span class="sim-actor" data-dns-actor="tld">Зона TLD</span>
+      <span class="sim-actor" data-dns-actor="auth">Авторитативный</span>
     </div>
-    <div class="dns-sim-log" data-dns-log aria-live="polite"></div>
+    <div class="sim-log" data-dns-log aria-live="polite"></div>
   </div>
   <script>
   (function () {
@@ -81,7 +81,7 @@
 
     function addBubble(cls, html) {
       var el = document.createElement('div');
-      el.className = 'dns-sim-step ' + cls;
+      el.className = 'sim-step ' + cls;
       el.innerHTML = html;
       log.appendChild(el);
       // Class is added a frame later so the fade-in transition fires
@@ -93,18 +93,18 @@
 
     function bubble(actor, side, name, text, ms) {
       setActor(actor);
-      var html = '<span class="dns-sim-step-name">' + name + '</span><p>' + text + '</p>';
-      if (ms) { html += '<span class="dns-sim-step-ms">+' + ms + ' мс</span>'; }
-      addBubble('dns-sim-step--' + side, html);
+      var html = '<span class="sim-step-name">' + name + '</span><p>' + text + '</p>';
+      if (ms) { html += '<span class="sim-step-ms">+' + ms + ' мс</span>'; }
+      addBubble('sim-step--' + side, html);
     }
 
     function finish(domain, ip, totalMs, fromCache) {
       var note = fromCache ? 'из кэша, ~0 мс' : 'за ' + totalMs + ' мс';
-      addBubble('dns-sim-step--result',
+      addBubble('sim-step--result',
         '<code>' + escapeHtml(domain) + '</code> → <b>' + ip + '</b>' +
-        '<span class="dns-sim-step-ms">' + note + '</span>');
+        '<span class="sim-step-ms">' + note + '</span>');
       if (!fromCache) {
-        addBubble('dns-sim-step--hint',
+        addBubble('sim-step--hint',
           '<p>Спросите тот же домен ещё раз — увидите, как срабатывает кэш.</p>');
       }
       setActor(null);
@@ -191,7 +191,7 @@
       if (!domain) {
         log.innerHTML = '';
         resetActors();
-        addBubble('dns-sim-step--hint',
+        addBubble('sim-step--hint',
           '<p>Это не похоже на доменное имя. Нужно что-то вроде <code>example.com</code>.</p>');
         return;
       }
@@ -205,7 +205,7 @@
       clearButton.hidden = true;
       log.innerHTML = '';
       resetActors();
-      addBubble('dns-sim-step--hint',
+      addBubble('sim-step--hint',
         '<p>Кэш очищен — следующий запрос снова пойдёт по всей цепочке.</p>');
     });
   })();

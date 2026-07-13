@@ -2,7 +2,7 @@
 title: "Кто устанавливает правила интернета: стандарты и RFC"
 description: "Кто пишет правила, по которым общаются браузеры и серверы. IETF и W3C, документы RFC, стандарт передачи IP-пакетов почтовыми голубями и официальный код 418 для чайника."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-rfc-nav]
 draft: true
 ---
 

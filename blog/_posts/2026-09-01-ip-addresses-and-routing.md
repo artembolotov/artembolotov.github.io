@@ -2,7 +2,7 @@
 title: "Адреса в интернете: IP, подсети и маршрутизация"
 description: "Как устроены IP-адреса, зачем нужен NAT, как пакет находит путь через интернет, и что VPN делает на самом деле."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-packet-route]
 draft: true
 ---
 

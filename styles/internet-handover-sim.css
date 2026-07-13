@@ -1,0 +1,421 @@
+/* Стили компонента _includes/internet/handover-sim.html.
+   Требует общий каркас /styles/internet.css: пост подключает
+   styles: [internet, internet-handover-sim] в front matter. */
+/* Хэндовер между вышками (handover-sim) */
+
+.handover-sim {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+.handover-sim-stage {
+  padding: 1em 1em 0;
+}
+
+.handover-sim-svg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  height: auto;
+}
+
+.handover-sim-cell {
+  fill: rgba(0,137,255,0.04);
+  stroke: rgba(0,137,255,0.22);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  transition: fill 0.3s;
+}
+
+.handover-sim-cell.is-active {
+  fill: rgba(0,137,255,0.1);
+}
+
+.handover-sim-ground {
+  stroke: #c8c8c8;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.handover-sim-fiber {
+  fill: none;
+  stroke: #c8c8c8;
+  stroke-width: 2;
+  transition: stroke 0.3s;
+}
+
+.handover-sim-fiber.is-active {
+  stroke: #0089ff;
+}
+
+.handover-sim-node rect {
+  fill: #fff;
+  stroke: rgba(0,0,0,0.15);
+}
+
+.handover-sim-node-name {
+  fill: #333;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.handover-sim-node-sub {
+  fill: #999;
+  font-size: 8px;
+}
+
+.handover-sim-tower path {
+  fill: none;
+  stroke: #999;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  transition: stroke 0.3s;
+}
+
+.handover-sim-tower .handover-sim-ant {
+  fill: #999;
+  transition: fill 0.3s;
+}
+
+.handover-sim-tower.is-serving path {
+  stroke: #0089ff;
+}
+
+.handover-sim-tower.is-serving .handover-sim-ant {
+  fill: #0089ff;
+}
+
+.handover-sim-label {
+  fill: #999;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.handover-sim-radio {
+  stroke: transparent;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.handover-sim-radio.is-serving {
+  stroke: #0089ff;
+  stroke-dasharray: 5 4;
+  animation: handover-sim-dash 0.5s linear infinite;
+}
+
+.handover-sim-radio.is-measuring {
+  stroke: rgba(0,137,255,0.35);
+  stroke-dasharray: 2 5;
+}
+
+@keyframes handover-sim-dash {
+  to { stroke-dashoffset: -9; }
+}
+
+.handover-sim-flash {
+  fill: #f41224;
+  font-size: 13px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: #f8f8f8;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.handover-sim-flash.is-shown {
+  opacity: 1;
+}
+
+.handover-sim-phone {
+  font-size: 16px;
+}
+
+.handover-sim-chips {
+  display: flex;
+  gap: 0.5em;
+  padding: 0.8em 1em 0;
+}
+
+.handover-sim-chip {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.5em 0.3em;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: border-color 0.3s;
+}
+
+.handover-sim-chip.is-serving {
+  border-color: rgba(0,137,255,0.4);
+}
+
+.handover-sim-chip-name {
+  display: block;
+  font-size: 0.7em;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.handover-sim-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  margin-top: 0.3em;
+}
+
+.handover-sim-bars i {
+  display: block;
+  width: 4px;
+  border-radius: 1px;
+  background: rgba(0,0,0,0.12);
+  transition: background 0.2s;
+}
+
+.handover-sim-bars i:nth-child(1) { height: 5px; }
+.handover-sim-bars i:nth-child(2) { height: 8px; }
+.handover-sim-bars i:nth-child(3) { height: 11px; }
+.handover-sim-bars i:nth-child(4) { height: 14px; }
+
+.handover-sim-bars i.is-on {
+  background: #0089ff;
+}
+
+.handover-sim-chip-state {
+  display: block;
+  margin-top: 0.15em;
+  font-size: 0.7em;
+  color: #666;
+}
+
+.handover-sim-count {
+  display: block;
+  margin-top: 0.25em;
+  font-size: 1.05em;
+  color: #333;
+}
+
+.handover-sim-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em 0.8em;
+  padding: 0.9em 1em 0;
+}
+
+.handover-sim-slider-label {
+  font-size: 0.75em;
+  color: #999;
+}
+
+.handover-sim-slider {
+  flex: 1;
+  min-width: 160px;
+  height: 22px;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.handover-sim-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(0,0,0,0.12);
+}
+
+.handover-sim-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -7px;
+  border-radius: 50%;
+  border: none;
+  background: #0089ff;
+}
+
+.handover-sim-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(0,0,0,0.12);
+}
+
+.handover-sim-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: #0089ff;
+}
+
+.handover-sim-caption {
+  box-sizing: border-box;
+  margin: 1em;
+  padding: 0.7em 0.9em;
+  min-height: 5.2em;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  font-size: 0.85em;
+  line-height: 1.45;
+  transition: border-color 0.3s;
+}
+
+.handover-sim-caption--result {
+  border-color: rgba(0,137,255,0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .handover-sim-cell,
+  .handover-sim-fiber,
+  .handover-sim-tower path,
+  .handover-sim-tower .handover-sim-ant,
+  .handover-sim-flash,
+  .handover-sim-chip,
+  .handover-sim-bars i {
+    transition: none;
+  }
+
+  .handover-sim-radio.is-serving {
+    animation: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+
+  .handover-sim-cell {
+    fill: rgba(100,178,255,0.05);
+    stroke: rgba(100,178,255,0.25);
+  }
+
+  .handover-sim-cell.is-active {
+    fill: rgba(100,178,255,0.12);
+  }
+
+  .handover-sim-ground {
+    stroke: #4a4a4a;
+  }
+
+  .handover-sim-fiber {
+    stroke: #4a4a4a;
+  }
+
+  .handover-sim-fiber.is-active {
+    stroke: #64b2ff;
+  }
+
+  .handover-sim-node rect {
+    fill: #242424;
+    stroke: rgba(255,255,255,0.18);
+  }
+
+  .handover-sim-node-name {
+    fill: #e0e0e0;
+  }
+
+  .handover-sim-node-sub {
+    fill: #777;
+  }
+
+  .handover-sim-tower path {
+    stroke: #777;
+  }
+
+  .handover-sim-tower .handover-sim-ant {
+    fill: #777;
+  }
+
+  .handover-sim-tower.is-serving path {
+    stroke: #64b2ff;
+  }
+
+  .handover-sim-tower.is-serving .handover-sim-ant {
+    fill: #64b2ff;
+  }
+
+  .handover-sim-label {
+    fill: #777;
+  }
+
+  .handover-sim-radio.is-serving {
+    stroke: #64b2ff;
+  }
+
+  .handover-sim-radio.is-measuring {
+    stroke: rgba(100,178,255,0.4);
+  }
+
+  .handover-sim-flash {
+    fill: #ff453a;
+    stroke: #1a1a1a;
+  }
+
+  .handover-sim-chip {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .handover-sim-chip.is-serving {
+    border-color: rgba(100,178,255,0.45);
+  }
+
+  .handover-sim-chip-name {
+    color: #777;
+  }
+
+  .handover-sim-bars i {
+    background: rgba(255,255,255,0.14);
+  }
+
+  .handover-sim-bars i.is-on {
+    background: #64b2ff;
+  }
+
+  .handover-sim-chip-state {
+    color: #999;
+  }
+
+  .handover-sim-count {
+    color: #e0e0e0;
+  }
+
+  .handover-sim-slider-label {
+    color: #777;
+  }
+
+  .handover-sim-slider::-webkit-slider-runnable-track {
+    background: rgba(255,255,255,0.16);
+  }
+
+  .handover-sim-slider::-webkit-slider-thumb {
+    background: #64b2ff;
+  }
+
+  .handover-sim-slider::-moz-range-track {
+    background: rgba(255,255,255,0.16);
+  }
+
+  .handover-sim-slider::-moz-range-thumb {
+    background: #64b2ff;
+  }
+
+  .handover-sim-caption {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .handover-sim-caption--result {
+    border-color: rgba(100,178,255,0.45);
+  }
+}

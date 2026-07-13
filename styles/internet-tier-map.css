@@ -1,0 +1,263 @@
+/* Стили компонента _includes/internet/tier-map.html.
+   Требует общий каркас /styles/internet.css: пост подключает
+   styles: [internet, internet-tier-map] в front matter. */
+/* Provider tier map */
+.tier-map {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+.tier-map-scroll {
+  overflow-x: auto;
+  padding: 1em 1em 0;
+}
+
+.tier-map-svg {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+}
+
+.tier-map-band {
+  fill: rgba(0,0,0,0.025);
+}
+
+.tier-map-band-label,
+.tier-map-city {
+  fill: #aaa;
+  font-size: 9px;
+}
+
+.tier-map-ocean {
+  fill: rgba(0,137,255,0.05);
+}
+
+.tier-map-ocean-label {
+  fill: rgba(0,137,255,0.45);
+  font-size: 9px;
+}
+
+.tier-map-edge {
+  fill: none;
+  stroke: #c8c8c8;
+  stroke-width: 2;
+  transition: stroke 0.3s;
+}
+
+.tier-map-edge.is-done {
+  stroke: #0089ff;
+}
+
+.tier-map-edge.is-paid {
+  stroke: #e08a00;
+  marker-end: url(#tierMapArrow);
+}
+
+.tier-map-edge.is-free {
+  stroke: #2da44e;
+}
+
+.tier-map-arrow-head {
+  fill: #e08a00;
+}
+
+.tier-map-node rect {
+  fill: #fff;
+  stroke: rgba(0,0,0,0.15);
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+.tier-map-node--ixp rect {
+  fill: #e6f2ff;
+}
+
+.tier-map-node-name {
+  fill: #333;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.tier-map-node-sub {
+  fill: #999;
+  font-size: 9px;
+}
+
+.tier-map-node.is-done rect {
+  stroke: #0089ff;
+}
+
+.tier-map-node.is-active rect {
+  fill: #0089ff;
+  stroke: #0089ff;
+}
+
+.tier-map-node.is-active .tier-map-node-name {
+  fill: #fff;
+}
+
+.tier-map-node.is-active .tier-map-node-sub {
+  fill: rgba(255,255,255,0.8);
+}
+
+.tier-map-tag {
+  font-size: 9px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: #f8f8f8;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tier-map-tag.is-shown {
+  opacity: 1;
+}
+
+.tier-map-tag--paid {
+  fill: #e08a00;
+}
+
+.tier-map-tag--free {
+  fill: #2da44e;
+}
+
+.tier-map-packet {
+  fill: #0089ff;
+  stroke: #f8f8f8;
+  stroke-width: 2;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tier-map-packet.is-shown {
+  opacity: 1;
+}
+
+.tier-map-caption {
+  box-sizing: border-box;
+  margin: 1em;
+  padding: 0.7em 0.9em;
+  min-height: 4.4em;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  font-size: 0.85em;
+  line-height: 1.45;
+  transition: border-color 0.3s;
+}
+
+.tier-map-caption--result {
+  border-color: rgba(0,137,255,0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier-map-edge,
+  .tier-map-node rect,
+  .tier-map-tag,
+  .tier-map-packet {
+    transition: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+
+  .tier-map-band {
+    fill: rgba(255,255,255,0.03);
+  }
+
+  .tier-map-band-label,
+  .tier-map-city {
+    fill: #777;
+  }
+
+  .tier-map-ocean {
+    fill: rgba(100,178,255,0.07);
+  }
+
+  .tier-map-ocean-label {
+    fill: rgba(100,178,255,0.5);
+  }
+
+  .tier-map-edge {
+    stroke: #4a4a4a;
+  }
+
+  .tier-map-edge.is-done {
+    stroke: #64b2ff;
+  }
+
+  .tier-map-edge.is-paid {
+    stroke: #e8a33d;
+  }
+
+  .tier-map-edge.is-free {
+    stroke: #4cc38a;
+  }
+
+  .tier-map-arrow-head {
+    fill: #e8a33d;
+  }
+
+  .tier-map-node rect {
+    fill: #242424;
+    stroke: rgba(255,255,255,0.18);
+  }
+
+  .tier-map-node--ixp rect {
+    fill: #17293d;
+  }
+
+  .tier-map-node-name {
+    fill: #e0e0e0;
+  }
+
+  .tier-map-node-sub {
+    fill: #777;
+  }
+
+  .tier-map-node.is-done rect {
+    stroke: #64b2ff;
+  }
+
+  .tier-map-node.is-active rect {
+    fill: #64b2ff;
+    stroke: #64b2ff;
+  }
+
+  .tier-map-node.is-active .tier-map-node-name {
+    fill: #111;
+  }
+
+  .tier-map-node.is-active .tier-map-node-sub {
+    fill: rgba(17,17,17,0.7);
+  }
+
+  .tier-map-tag {
+    stroke: #1a1a1a;
+  }
+
+  .tier-map-tag--paid {
+    fill: #e8a33d;
+  }
+
+  .tier-map-tag--free {
+    fill: #4cc38a;
+  }
+
+  .tier-map-packet {
+    fill: #64b2ff;
+    stroke: #1a1a1a;
+  }
+
+  .tier-map-caption {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .tier-map-caption--result {
+    border-color: rgba(100,178,255,0.45);
+  }
+}

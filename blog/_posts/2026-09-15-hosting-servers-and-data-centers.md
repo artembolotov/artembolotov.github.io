@@ -2,7 +2,7 @@
 title: "Где живут сайты: хостинг, серверы и дата-центры"
 description: "Что такое сервер, как устроены дата-центры, чем отличаются shared, VPS и облачный хостинг, и что такое DDoS."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-hosting-sim]
 draft: true
 ---
 

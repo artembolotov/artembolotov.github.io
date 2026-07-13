@@ -1,0 +1,491 @@
+/* Стили компонента _includes/internet/api-sim.html.
+   Требует общий каркас /styles/internet.css: пост подключает
+   styles: [internet, internet-api-sim] в front matter. */
+/* API simulator */
+.api-sim {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+/* Component classes below set their own display, which would defeat
+   the hidden attribute — this wins by specificity. */
+.api-sim [hidden] {
+  display: none;
+}
+
+.api-sim .sim-choice b {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85em;
+  font-weight: 600;
+  margin-left: 0.3em;
+  color: #0089ff;
+}
+
+.api-sim .sim-choice.is-active b {
+  color: #fff;
+}
+
+.api-sim-stage {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  padding: 1em;
+}
+
+.api-sim-phone {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 200px;
+  padding: 0.5em 0.6em 0.9em;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.api-sim-statusbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2em 0.5em 0.4em;
+  font-size: 0.65em;
+  color: #999;
+}
+
+.api-sim-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  padding: 0.3em 0.4em;
+}
+
+/* cursor:pointer also makes iOS Safari deliver click events here */
+.api-sim-screen [data-api-bind],
+.api-sim-line[data-api-bind] {
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.api-sim .is-hl {
+  background: rgba(0,137,255,0.16);
+  box-shadow: 0 0 0 2px rgba(0,137,255,0.16);
+}
+
+.api-sim-splash {
+  margin: auto;
+  text-align: center;
+  font-size: 0.8em;
+  color: #999;
+}
+
+.api-sim-splash b {
+  display: block;
+  margin-bottom: 0.3em;
+  color: #333;
+}
+
+.api-sim-splash span {
+  font-size: 0.85em;
+}
+
+.api-sim-loading {
+  margin: auto;
+}
+
+.api-sim-spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid rgba(0,137,255,0.2);
+  border-top-color: #0089ff;
+  border-radius: 50%;
+  animation: api-sim-spin 0.8s linear infinite;
+}
+
+@keyframes api-sim-spin {
+  to { transform: rotate(360deg); }
+}
+
+.api-sim-hello {
+  margin: 0.3em 0 0.8em;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #333;
+}
+
+.api-sim-cardw {
+  padding: 0.7em 0.8em;
+  border: 1px solid rgba(0,137,255,0.25);
+  border-radius: 12px;
+  background: #eef5ff;
+}
+
+.api-sim-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4em;
+  font-size: 0.65em;
+  color: #666;
+}
+
+.api-sim-card-sum {
+  margin-top: 0.5em;
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #333;
+}
+
+.api-sim-fakebtns {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.9em;
+}
+
+.api-sim-fakebtns span {
+  flex: 1;
+  padding: 0.55em 0;
+  border-radius: 8px;
+  background: #0089ff;
+  color: #fff;
+  text-align: center;
+  font-size: 0.7em;
+}
+
+.api-sim-apptitle {
+  margin: 0.3em 0 0.4em;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #333;
+}
+
+.api-sim-op {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.4em;
+  padding: 0.55em 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-size: 0.7em;
+  color: #333;
+}
+
+.api-sim-op-l {
+  min-width: 0;
+}
+
+.api-sim-op-d {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.85em;
+  color: #999;
+}
+
+.api-sim-op-sum {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.api-sim-op-sum.is-plus {
+  color: #178a3d;
+}
+
+.api-sim-center {
+  margin: auto 0;
+  padding: 1em 0;
+  text-align: center;
+}
+
+.api-sim-check {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 0.6em;
+  border-radius: 50%;
+  background: #178a3d;
+  color: #fff;
+  font-size: 24px;
+  line-height: 44px;
+}
+
+.api-sim-lockicon {
+  margin-bottom: 0.4em;
+  font-size: 28px;
+}
+
+.api-sim-big {
+  margin-bottom: 0.3em;
+  font-size: 0.9em;
+  font-weight: 700;
+  color: #333;
+}
+
+.api-sim-sub {
+  font-size: 0.75em;
+  color: #333;
+}
+
+.api-sim-note {
+  margin-top: 0.8em;
+  font-size: 0.7em;
+  color: #999;
+}
+
+.api-sim-fakebtn {
+  display: inline-block;
+  margin-top: 0.9em;
+  padding: 0.55em 1.4em;
+  border-radius: 8px;
+  background: #0089ff;
+  color: #fff;
+  font-size: 0.7em;
+}
+
+.api-sim-net {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.api-sim-placeholder {
+  padding: 2em 1em;
+  border: 1px dashed rgba(0,0,0,0.25);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.8em;
+  color: #999;
+}
+
+.api-sim-panel {
+  padding: 0.7em 0.9em;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.api-sim-panel.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.api-sim-panel-name {
+  margin-bottom: 0.4em;
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #0089ff;
+}
+
+.api-sim-codebox {
+  padding: 0.6em 0.8em;
+  border-radius: 6px;
+  background: #f4f4f4;
+  overflow-x: auto;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.72em;
+  line-height: 1.55;
+  color: #333;
+}
+
+.api-sim-line {
+  white-space: pre;
+}
+
+.api-sim-k { color: #0089ff; }
+.api-sim-s { color: #178a3d; }
+.api-sim-n { color: #c96a00; }
+.api-sim-m-get { color: #0089ff; font-weight: 700; }
+.api-sim-m-post { color: #178a3d; font-weight: 700; }
+.api-sim-code--ok { color: #178a3d; }
+.api-sim-code--client { color: #c96a00; }
+
+.api-sim-explain {
+  margin: 0 1em 1em;
+  padding: 0.7em 0.9em;
+  border: 1px solid rgba(0,137,255,0.4);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 0.85em;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.api-sim-explain.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.api-sim-hint {
+  margin: 0 1em;
+  padding-bottom: 1em;
+  text-align: center;
+  font-size: 0.75em;
+  color: #999;
+}
+
+@media screen and (max-width: 767px) {
+  .api-sim-stage {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .api-sim-phone {
+    width: 220px;
+    align-self: center;
+  }
+
+  .api-sim-screen {
+    min-height: 200px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .api-sim-panel,
+  .api-sim-explain {
+    transition: none;
+    transform: none;
+  }
+
+  .api-sim-spinner {
+    animation: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+
+  .api-sim .sim-choice b {
+    color: #64b2ff;
+  }
+
+  .api-sim .sim-choice.is-active b {
+    color: #111;
+  }
+
+  .api-sim-phone {
+    background: #242424;
+    border-color: rgba(255,255,255,0.18);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .api-sim-statusbar {
+    color: #777;
+  }
+
+  .api-sim .is-hl {
+    background: rgba(100,178,255,0.22);
+    box-shadow: 0 0 0 2px rgba(100,178,255,0.22);
+  }
+
+  .api-sim-splash {
+    color: #777;
+  }
+
+  .api-sim-splash b {
+    color: #e0e0e0;
+  }
+
+  .api-sim-spinner {
+    border-color: rgba(100,178,255,0.25);
+    border-top-color: #64b2ff;
+  }
+
+  .api-sim-hello {
+    color: #e0e0e0;
+  }
+
+  .api-sim-cardw {
+    background: #17293d;
+    border-color: rgba(100,178,255,0.35);
+  }
+
+  .api-sim-card-top {
+    color: #999;
+  }
+
+  .api-sim-card-sum {
+    color: #e0e0e0;
+  }
+
+  .api-sim-fakebtns span {
+    background: #64b2ff;
+    color: #111;
+  }
+
+  .api-sim-apptitle {
+    color: #e0e0e0;
+  }
+
+  .api-sim-op {
+    border-bottom-color: rgba(255,255,255,0.08);
+    color: #e0e0e0;
+  }
+
+  .api-sim-op-d {
+    color: #777;
+  }
+
+  .api-sim-op-sum.is-plus {
+    color: #4cc46e;
+  }
+
+  .api-sim-check {
+    background: #4cc46e;
+    color: #111;
+  }
+
+  .api-sim-big {
+    color: #e0e0e0;
+  }
+
+  .api-sim-sub {
+    color: #e0e0e0;
+  }
+
+  .api-sim-note {
+    color: #777;
+  }
+
+  .api-sim-fakebtn {
+    background: #64b2ff;
+    color: #111;
+  }
+
+  .api-sim-placeholder {
+    border-color: rgba(255,255,255,0.25);
+    color: #777;
+  }
+
+  .api-sim-panel {
+    background: #242424;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .api-sim-panel-name {
+    color: #64b2ff;
+  }
+
+  .api-sim-codebox {
+    background: #1a1a1a;
+    color: #d0d0d0;
+  }
+
+  .api-sim-k { color: #64b2ff; }
+  .api-sim-s { color: #4cc46e; }
+  .api-sim-n { color: #ffa53d; }
+  .api-sim-m-get { color: #64b2ff; }
+  .api-sim-m-post { color: #4cc46e; }
+  .api-sim-code--ok { color: #4cc46e; }
+  .api-sim-code--client { color: #ffa53d; }
+
+  .api-sim-explain {
+    background: #242424;
+    border-color: rgba(100,178,255,0.45);
+  }
+
+  .api-sim-hint {
+    color: #777;
+  }
+}

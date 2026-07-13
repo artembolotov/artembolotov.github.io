@@ -1,0 +1,115 @@
+/* Стили компонента _includes/internet/http-sim.html.
+   Требует общий каркас /styles/internet.css: пост подключает
+   styles: [internet, internet-http-sim] в front matter. */
+/* HTTP request simulator (общий каркас — sim-* выше) */
+.http-sim {
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+}
+
+.http-sim-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 1em 1em 0;
+}
+
+.http-sim-proto {
+  display: flex;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.http-sim-proto-btn {
+  padding: 0.5em 0.9em;
+  border: none;
+  background: transparent;
+  color: #999;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.http-sim-proto-btn.is-on {
+  background: #0089ff;
+  color: #fff;
+}
+
+.http-sim-url {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.5em 0.9em;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  flex: 1;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8em;
+}
+
+.http-sim-lock {
+  margin-right: 0.4em;
+  font-size: 0.9em;
+}
+
+/* Кнопки-пути — в моноширинном начертании */
+.http-sim .sim-choice {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.http-sim .sim-step--spy {
+  max-width: 100%;
+  background: none;
+  box-shadow: none;
+  border: 1px dashed rgba(0,0,0,0.25);
+}
+
+.http-sim .sim-step--spy .sim-step-name {
+  color: #999;
+}
+
+.http-sim-code--ok { color: #178a3d; }
+.http-sim-code--redirect { color: #0089ff; }
+.http-sim-code--client { color: #c96a00; }
+.http-sim-code--server { color: #f41224; }
+
+@media (prefers-color-scheme: dark) {
+  .http-sim-proto {
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .http-sim-proto-btn {
+    color: #777;
+  }
+
+  .http-sim-proto-btn.is-on {
+    background: #64b2ff;
+    color: #111;
+  }
+
+  .http-sim-url {
+    background: #242424;
+    border-color: rgba(255,255,255,0.12);
+    color: #e0e0e0;
+  }
+
+  .http-sim .sim-step--spy {
+    background: none;
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  .http-sim .sim-step--spy .sim-step-name {
+    color: #777;
+  }
+
+  .http-sim-code--ok { color: #4cc46e; }
+  .http-sim-code--redirect { color: #64b2ff; }
+  .http-sim-code--client { color: #ffa53d; }
+  .http-sim-code--server { color: #ff453a; }
+}

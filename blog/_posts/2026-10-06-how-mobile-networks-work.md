@@ -2,7 +2,7 @@
 title: "Интернет в кармане: как работает мобильная связь"
 description: "Соты, вышки, хэндовер и поколения связи. Почему мобильный интернет — это не Wi-Fi, чем 4G отличается от 5G и куда уходит сигнал в туннеле метро."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-handover-sim]
 draft: true
 ---
 

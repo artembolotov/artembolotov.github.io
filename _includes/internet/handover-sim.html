@@ -1,8 +1,8 @@
 <div class="handover-sim" id="handover-sim">
   <noscript><p>Для работы симулятора нужен JavaScript — сейчас он выключен в браузере. Ниже видна сама схема, но телефон по улице не пойдёт.</p></noscript>
-  <div class="handover-sim-window">
-    <div class="handover-sim-head">
-      <span class="handover-sim-title">Эстафета между вышками: проведите телефон через две соты</span>
+  <div class="sim-window">
+    <div class="sim-head">
+      <span class="sim-title">Эстафета между вышками: проведите телефон через две соты</span>
     </div>
     <div class="handover-sim-stage">
       <svg class="handover-sim-svg" viewBox="0 0 420 228" role="img" aria-label="Схема: внизу улица с телефоном и две вышки, каждая со своей сотой, выше — опорная сеть оператора и интернет. Радиосигнал идёт от телефона до вышки, дальше — по проводам.">
@@ -60,7 +60,7 @@
     <div class="handover-sim-controls">
       <label class="handover-sim-slider-label" for="handover-sim-pos">Ведите телефон по улице:</label>
       <input class="handover-sim-slider" id="handover-sim-pos" type="range" min="0" max="1000" value="60" aria-label="Положение телефона на улице между двумя вышками">
-      <button type="button" class="handover-sim-btn" data-hos-bus>&#128652; Проехать из конца в конец</button>
+      <button type="button" class="sim-choice" data-hos-bus>&#128652; Проехать из конца в конец</button>
     </div>
     <div class="handover-sim-caption" data-hos-caption aria-live="polite">Двигайте ползунок — телефон пойдёт по улице из соты вышки А в соту вышки Б. Следите, где радио, а где провода, и что произойдёт на границе сот.</div>
   </div>

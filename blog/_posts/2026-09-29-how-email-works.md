@@ -2,7 +2,7 @@
 title: "Как работает электронная почта"
 description: "Как письмо находит дорогу через два разных почтовых сервера, чем IMAP отличается от POP3 и как почтовые сервисы отличают настоящих отправителей от мошенников."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-email-path]
 draft: true
 ---
 

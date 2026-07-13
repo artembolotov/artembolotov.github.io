@@ -2,7 +2,7 @@
 title: "На каком языке говорят браузер и сервер"
 description: "HTTP и HTTPS простыми словами. Как устроен диалог браузера с сервером, что значат коды 404 и 500, и почему замочек в адресной строке — не украшение."
 tags: [internet]
-styles: [internet]
+styles: [internet, internet-http-sim]
 draft: true
 ---
 
