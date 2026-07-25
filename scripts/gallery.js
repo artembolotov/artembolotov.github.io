@@ -3,15 +3,6 @@
  * Single images should use img.html component
  */
 
-// Disable browser scroll restoration entirely. The gallery uses a nested
-// horizontal scroll container, and Safari's async restoration of nested
-// scrollers is the root cause of horizontal drift after reload. Owning
-// scroll position ourselves removes the fight between the guard and the
-// browser, and eliminates the iOS flicker described in the bug.
-if (typeof history !== 'undefined' && 'scrollRestoration' in history) {
-  try { history.scrollRestoration = 'manual'; } catch (e) {}
-}
-
 class GalleryController {
   constructor() {
     this.galleries = new Map();
@@ -364,8 +355,9 @@ class GalleryController {
       }
     });
 
-    // Single immediate reset; with history.scrollRestoration = 'manual'
-    // the long blind timeout chain is no longer needed.
+    // Single immediate reset; scroll-restore.js switches pages that contain a
+    // gallery to history.scrollRestoration = 'manual', so the long blind
+    // timeout chain is no longer needed.
     pendingTimeouts.push(setTimeout(resetScroll, 0));
   }
 
