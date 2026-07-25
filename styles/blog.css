@@ -595,6 +595,17 @@ time {
   border-color: rgba(244,18,36,.3);
 }
 
+/* Tags inside article cards in listings */
+.post-tags--card {
+  margin-top: 0.4em;
+  margin-bottom: 0;
+}
+
+.post-tags--card .tag {
+  margin-bottom: 0;
+  font-size: 0.8em;
+}
+
 /* YouTube container */
 .youtube-container {
   position: relative;
