@@ -21,6 +21,15 @@ image: /blog/img/avatar.jpg
       {% endif %}
 
       {% include reading-time.html content=post.content %}
+
+      {% if post.tags.size > 0 %}
+      <div class="post-tags post-tags--card">
+        {% for post_tag in post.tags %}
+          {% include tag-translations.html tag=post_tag %}
+          <a href="/blog/{{ post_tag | slugify | downcase }}/" class="tag">#{{ tag_label }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
     </article>
   {% endunless %}
   {% endfor %}
