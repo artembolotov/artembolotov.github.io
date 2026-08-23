@@ -2,6 +2,7 @@
 title: "От git push до сайта"
 description: "Настраиваем автоматическую публикацию сайта на хостинг через GitHub Actions: SSH-ключи, секреты и сам workflow"
 tags: [webdev]
+image: /blog/img/2026-08-24-git-push-deploy/og-image.png
 draft: true
 ---
 
