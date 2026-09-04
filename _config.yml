@@ -33,6 +33,7 @@ exclude:
   - Gemfile.lock
   - node_modules/
   - vendor/
+  - CLAUDE.md
 
 # Коллекции и настройки постов
 defaults:
