@@ -76,7 +76,7 @@ layout: compress
 </script>
     </div>
   </nav>
-  <main{% if page.layout == "post" and page.draft != true %} data-pagefind-body data-pagefind-meta="url:{{ page.url }}"{% endif %}>
+  <main{% if page.layout == "post" and page.draft != true %} data-pagefind-body data-pf-image="{{ page.image }}" data-pagefind-meta="image[data-pf-image], url:{{ page.url }}"{% endif %}>
     {{ content }}
   </main>
   <pagefind-modal>
