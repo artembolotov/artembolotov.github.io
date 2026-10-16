@@ -578,6 +578,18 @@ time {
   --pf-font: system-ui;
   --pf-outline-focus: #0089ff;
   --pf-border-radius: 8px;
+  /* Окно поиска по видимой части экрана: --search-vh и --search-top выставляет
+     scripts/search.js из visualViewport, иначе iOS прячет результаты под клавиатурой */
+  --pf-modal-max-height: min(calc(var(--search-vh, 100dvh) * 0.8), 800px);
+  --pf-modal-top: calc(var(--search-top, 0px) + var(--search-vh, 100dvh) * 0.1);
+}
+
+/* На телефоне Pagefind растягивает окно на 100dvh; селекторы у него сильнее, поэтому !important */
+@media (max-width: 640px) {
+  dialog.pf-modal[open] {
+    top: var(--search-top, 0px) !important;
+    height: var(--search-vh, 100dvh) !important;
+  }
 }
 
 .tag-menu ul {
