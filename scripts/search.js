@@ -16,6 +16,13 @@
  * visible area from window.visualViewport into --search-vh / --search-top,
  * and blog.css sizes the modal from them (falling back to dvh without JS).
  *
+ * 3. Keyboard dismissal. While the keyboard is open, the visual viewport is
+ * smaller than the layout one, and iOS pans it on any drag — so a swipe over
+ * the modal (e.g. its empty area before the first search) moves the page
+ * behind it despite the scroll lock. As in native search, the first drag
+ * anywhere in the modal hides the keyboard; once it's gone there is nothing
+ * left to pan. Drags on the input itself are left alone (caret / selection).
+ *
  * Loaded at the end of <body>, after <pagefind-modal>.
  */
 
@@ -63,6 +70,19 @@
     scheduled = true;
     requestAnimationFrame(fitAll);
   }).observe(modal, { childList: true, subtree: true });
+})();
+
+(function () {
+  var modal = document.querySelector('pagefind-modal');
+  if (!modal) return;
+
+  // touchmove, not touchstart: taps on results and buttons must keep working.
+  modal.addEventListener('touchmove', function (event) {
+    var input = modal.querySelector('input');
+    if (input && document.activeElement === input && event.target !== input) {
+      input.blur();
+    }
+  }, { passive: true });
 })();
 
 (function () {
