@@ -578,31 +578,34 @@ time {
   --pf-font: system-ui;
   --pf-outline-focus: #0089ff;
   --pf-border-radius: 8px;
-  /* Окно поиска по видимой части экрана: --search-vh, --search-top и --search-kb
-     выставляет scripts/search.js из visualViewport, иначе iOS прячет результаты под клавиатурой */
+  /* Окно поиска по видимой части экрана: --search-vh и --search-top выставляет
+     scripts/search.js из visualViewport, иначе iOS прячет результаты под клавиатурой */
   --pf-modal-max-height: min(calc(var(--search-vh, 100dvh) * 0.8), 800px);
   --pf-modal-top: calc(var(--search-top, 0px) + var(--search-vh, 100dvh) * 0.1);
 }
 
-/* На телефоне Pagefind растягивает окно на весь экран; селекторы у него сильнее, поэтому !important.
-   Высоту (100dvh) не трогаем: Safari на iOS 26 не рисует position: fixed под своей нижней панелью,
-   а закрашивает её цветом фиксированного элемента у края. Окно до края (dvh) даёт ровный фон окна,
-   окно выше (100lvh) — просвечивающую страницу */
+/* На телефоне Pagefind растягивает окно на 100dvh; селекторы у него сильнее, поэтому !important */
 @media (max-width: 640px) {
   dialog.pf-modal[open] {
     top: var(--search-top, 0px) !important;
+    height: var(--search-vh, 100dvh) !important;
   }
 
-  /* Окно остаётся на весь экран и закрывает страницу под полупрозрачной клавиатурой,
-     а отступ на её высоту позволяет поднять последний результат над ней */
-  pagefind-modal-body {
-    padding-bottom: calc(max(16px, env(safe-area-inset-bottom)) + var(--search-kb, 0px)) !important;
+  /* Клавиатура iOS полупрозрачная: под ней должен быть фон окна, а не страница */
+  dialog.pf-modal::backdrop {
+    background: #fff !important;
   }
 
   /* overscroll-behavior в WebKit не держит прокрутку внутри окна — блокируем саму страницу */
   html:has(dialog.pf-modal[open]),
   html:has(dialog.pf-modal[open]) body {
     overflow: hidden;
+  }
+}
+
+@media (max-width: 640px) and (prefers-color-scheme: dark) {
+  dialog.pf-modal::backdrop {
+    background: #1c1c1e !important;
   }
 }
 

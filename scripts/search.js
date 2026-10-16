@@ -1,25 +1,20 @@
 /**
  * Search modal helpers (Pagefind Component UI)
  *
- * 1. Excerpt fitting. Pagefind picks a ~30-word excerpt with the matched
- * words in the middle, and its Component UI clips every excerpt to a single
- * line. On anything narrower than a wide desktop the highlighted word lands
- * past the ellipsis, so the card shows text without the word the reader
- * searched for.
+ * 1. Excerpt fitting. Pagefind picks a ~30-word excerpt with the matched words in the middle, and
+ * its Component UI clips every excerpt to a single line. On anything narrower
+ * than a wide desktop the highlighted word lands past the ellipsis, so the
+ * card shows text without the word the reader searched for.
  *
  * We keep the single line and instead drop words from the start of the
  * excerpt until the first <mark> fits, prefixing "…" to show it was cut.
  *
- * 2. On-screen keyboard. iOS Safari doesn't shrink the layout viewport for
- * the keyboard and exposes no CSS for its height (interactive-widget and
- * env(keyboard-inset-*) aren't supported), so results of the full-screen
- * modal end up under the keyboard. We mirror window.visualViewport into
- * --search-vh / --search-top / --search-kb (the part of the open modal the
- * keyboard covers), and blog.css pads the results by it, so the last one can
- * be scrolled above the keyboard while the modal itself still fills the
- * screen behind it. As in native search, the keyboard is dismissed as soon as
- * the reader starts scrolling the results; with it open, iOS pans the whole
- * visual viewport and scrolling feels broken.
+ * 2. Keyboard-aware sizing. iOS Safari doesn't shrink the layout viewport for
+ * the on-screen keyboard and exposes no CSS for its height
+ * (interactive-widget and env(keyboard-inset-*) aren't supported), so the
+ * full-screen modal keeps its results under the keyboard. We mirror the
+ * visible area from window.visualViewport into --search-vh / --search-top,
+ * and blog.css sizes the modal from them (falling back to dvh without JS).
  *
  * Loaded at the end of <body>, after <pagefind-modal>.
  */
@@ -71,39 +66,18 @@
 })();
 
 (function () {
-  var modal = document.querySelector('pagefind-modal');
-  if (!modal) return;
-
-  // A drag in the results (not a tap, so links still work) hides the keyboard.
-  modal.addEventListener('touchmove', function (event) {
-    var input = modal.querySelector('input');
-    if (input && document.activeElement === input &&
-        event.target.closest && event.target.closest('pagefind-modal-body')) {
-      input.blur();
-    }
-  }, { passive: true });
-
   var vv = window.visualViewport;
-  if (!vv) return;
+  if (!vv || !document.querySelector('pagefind-modal')) return;
 
   var style = document.documentElement.style;
-  var current = {};
+  var height, top;
 
   // The visual viewport also fires during pinch-zoom panning; only touch the
-  // style when a number actually changes.
-  function set(name, px) {
-    if (current[name] === px) return;
-    current[name] = px;
-    style.setProperty(name, px + 'px');
-  }
-
+  // style when the numbers actually change.
   function sync() {
-    set('--search-vh', Math.round(vv.height));
-    set('--search-top', Math.round(vv.offsetTop));
-    // Rects and offsetTop are both relative to the layout viewport.
-    var dialog = modal.querySelector('dialog[open]');
-    var covered = dialog ? dialog.getBoundingClientRect().bottom - vv.offsetTop - vv.height : 0;
-    set('--search-kb', Math.max(0, Math.round(covered)));
+    var h = Math.round(vv.height), t = Math.round(vv.offsetTop);
+    if (h !== height) style.setProperty('--search-vh', (height = h) + 'px');
+    if (t !== top) style.setProperty('--search-top', (top = t) + 'px');
   }
 
   vv.addEventListener('resize', sync);
