@@ -586,14 +586,18 @@ time {
 
 /* На телефоне Pagefind растягивает окно на весь экран; селекторы у него сильнее, поэтому !important */
 @media (max-width: 640px) {
+  /* 100lvh, а не 100dvh: окно уходит под полупрозрачную нижнюю панель Safari (iOS 26),
+     и результаты видны сквозь неё */
   dialog.pf-modal[open] {
     top: var(--search-top, 0px) !important;
+    height: 100lvh !important;
   }
 
-  /* Окно остаётся на весь экран и закрывает страницу под полупрозрачной клавиатурой,
-     а отступ на её высоту позволяет поднять последний результат над ней */
+  /* Отступ на то, что перекрывает низ окна: клавиатура (--search-kb) или панель браузера
+     (100lvh - 100dvh); max, потому что при открытой клавиатуре панель спрятана.
+     Так последний результат можно поднять над ними */
   pagefind-modal-body {
-    padding-bottom: calc(max(16px, env(safe-area-inset-bottom)) + var(--search-kb, 0px)) !important;
+    padding-bottom: calc(16px + max(var(--search-kb, 0px), 100lvh - 100dvh, env(safe-area-inset-bottom))) !important;
   }
 
   /* overscroll-behavior в WebKit не держит прокрутку внутри окна — блокируем саму страницу */
