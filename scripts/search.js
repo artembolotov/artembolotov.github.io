@@ -16,12 +16,13 @@
  * visible area from window.visualViewport into --search-vh / --search-top,
  * and blog.css sizes the modal from them (falling back to dvh without JS).
  *
- * 3. Keyboard dismissal. While the keyboard is open, the visual viewport is
- * smaller than the layout one, and iOS pans it on any drag — so a swipe over
- * the modal (e.g. its empty area before the first search) moves the page
- * behind it despite the scroll lock. As in native search, the first drag
- * anywhere in the modal hides the keyboard; once it's gone there is nothing
- * left to pan. Drags on the input itself are left alone (caret / selection).
+ * 3. Touch scroll containment. WebKit ignores the dialog's
+ * overscroll-behavior, and with the keyboard open the visual viewport is
+ * smaller than the layout one, so a drag that the results list can't take
+ * (an empty modal before the first search, the header, the list's ends)
+ * moves the page behind the modal despite the scroll lock in blog.css. We
+ * cancel exactly those drags and let the list scroll natively otherwise.
+ * The input is left alone so caret dragging keeps working.
  *
  * Loaded at the end of <body>, after <pagefind-modal>.
  */
@@ -76,13 +77,28 @@
   var modal = document.querySelector('pagefind-modal');
   if (!modal) return;
 
-  // touchmove, not touchstart: taps on results and buttons must keep working.
-  modal.addEventListener('touchmove', function (event) {
-    var input = modal.querySelector('input');
-    if (input && document.activeElement === input && event.target !== input) {
-      input.blur();
-    }
+  var lastY = 0;
+
+  modal.addEventListener('touchstart', function (event) {
+    if (event.touches.length === 1) lastY = event.touches[0].clientY;
   }, { passive: true });
+
+  modal.addEventListener('touchmove', function (event) {
+    // Pinch-zoom and the input's own gestures stay untouched.
+    if (event.touches.length !== 1 || event.target.tagName === 'INPUT') return;
+
+    var y = event.touches[0].clientY;
+    var dy = y - lastY; // > 0: finger moves down, content would scroll up
+    lastY = y;
+
+    var list = event.target.closest && event.target.closest('pagefind-modal-body');
+    if (list) {
+      var canUp = list.scrollTop > 0;
+      var canDown = list.scrollTop + list.clientHeight < list.scrollHeight - 1;
+      if ((dy > 0 && canUp) || (dy < 0 && canDown) || dy === 0) return;
+    }
+    if (event.cancelable) event.preventDefault();
+  }, { passive: false });
 })();
 
 (function () {
