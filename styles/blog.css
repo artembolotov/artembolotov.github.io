@@ -590,6 +590,23 @@ time {
     top: var(--search-top, 0px) !important;
     height: var(--search-vh, 100dvh) !important;
   }
+
+  /* Клавиатура iOS полупрозрачная: под ней должен быть фон окна, а не страница */
+  dialog.pf-modal::backdrop {
+    background: #fff !important;
+  }
+
+  /* overscroll-behavior в WebKit не держит прокрутку внутри окна — блокируем саму страницу */
+  html:has(dialog.pf-modal[open]),
+  html:has(dialog.pf-modal[open]) body {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 640px) and (prefers-color-scheme: dark) {
+  dialog.pf-modal::backdrop {
+    background: #1c1c1e !important;
+  }
 }
 
 .tag-menu ul {
