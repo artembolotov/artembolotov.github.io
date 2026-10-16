@@ -7,5 +7,6 @@ exclude_selectors:
   - ".read-time"
   - ".post-tags"
   - ".author-footer"
+  - ".gallery-loading"
   - ".sim-window"
   - ".live-editor"
