@@ -34,6 +34,7 @@ exclude:
   - node_modules/
   - vendor/
   - CLAUDE.md
+  - pagefind.yml
 
 # Коллекции и настройки постов
 defaults:

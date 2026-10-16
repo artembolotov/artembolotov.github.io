@@ -573,6 +573,48 @@ time {
   display: inline;
 }
 
+/* Search (Pagefind Component UI: /pagefind/ появляется только после сборки в GitHub Actions) */
+:root {
+  --pf-font: system-ui;
+  --pf-outline-focus: #0089ff;
+  --pf-border-radius: 8px;
+}
+
+.tag-menu ul {
+  align-items: center;
+}
+
+.tag-menu li.tag-menu-search {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.tag-menu-search pagefind-modal-trigger {
+  display: block;
+  width: 200px;
+  height: 32px;
+  --pf-input-height: 32px;
+}
+
+/* Без JS или без индекса (локальный jekyll serve) кнопка не нужна, но место под неё держим */
+.tag-menu-search pagefind-modal-trigger:not(:defined) {
+  visibility: hidden;
+}
+
+@media (max-width: 597px) {
+  .tag-menu li.tag-menu-search {
+    order: -1;
+    flex-basis: 100%;
+    margin-bottom: 0.6em;
+  }
+
+  .tag-menu-search pagefind-modal-trigger {
+    width: 100%;
+    height: 36px;
+    --pf-input-height: 36px;
+  }
+}
+
 /* Post Tags */
 .post-tags {
   margin-top: 2em;
@@ -678,6 +720,29 @@ blockquote p:last-child {
   
   .tag-menu li.active h1 {
     color: #e0e0e0;
+  }
+
+  :root {
+    --pf-text: #e5e5e5;
+    --pf-text-secondary: #a0a0a0;
+    --pf-text-muted: #949494;
+    --pf-background: #1c1c1e;
+    --pf-border: #333;
+    --pf-border-focus: #555;
+    --pf-skeleton: #2a2a2a;
+    --pf-skeleton-shine: #333;
+    --pf-hover: #2a2a2c;
+    --pf-mark: #e5e5e5;
+    --pf-scroll-shadow: rgba(255, 255, 255, 0.1);
+    --pf-outline-focus: #64b2ff;
+    --pf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --pf-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --pf-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+    --pf-error-bg: #2a1a1a;
+    --pf-error-border: #5c2828;
+    --pf-error-text: #f87171;
+    --pf-error-text-secondary: #ef4444;
+    --pf-modal-backdrop: rgba(0, 0, 0, 0.7);
   }
   
   .post-tags .tag {

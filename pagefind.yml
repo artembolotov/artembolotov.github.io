@@ -1,0 +1,11 @@
+# Настройки поискового индекса Pagefind (запускается в GitHub Actions после сборки Jekyll).
+# Индексируются только страницы с data-pagefind-body — это опубликованные посты (см. default.html).
+site: _site
+exclude_selectors:
+  - ".tag-menu"
+  - ".post > time"
+  - ".read-time"
+  - ".post-tags"
+  - ".author-footer"
+  - ".sim-window"
+  - ".live-editor"

@@ -21,6 +21,8 @@ layout: compress
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <script>document.documentElement.classList.remove('no-js');</script>
   <noscript><div><img src="https://mc.yandex.ru/watch/102280899" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <link rel="stylesheet" href="/pagefind/pagefind-component-ui.css">
+  <script src="/pagefind/pagefind-component-ui.js" type="module"></script>
   <link rel="stylesheet" href="/styles/all.css">
   <link rel="stylesheet" href="/styles/blog.css">
   {% for style in page.styles %}<link rel="stylesheet" href="/styles/{{ style }}.css">{% endfor %}
@@ -74,9 +76,13 @@ layout: compress
 </script>
     </div>
   </nav>
-  <main>
+  <main{% if page.layout == "post" and page.draft != true %} data-pagefind-body data-pagefind-meta="url:{{ page.url }}"{% endif %}>
     {{ content }}
   </main>
+  <pagefind-modal>
+    <pagefind-modal-header><pagefind-input></pagefind-input></pagefind-modal-header>
+    <pagefind-modal-body><pagefind-summary></pagefind-summary><pagefind-results></pagefind-results></pagefind-modal-body>
+  </pagefind-modal>
   <script src="/scripts/scroll-restore.js"></script>
   <script src="/scripts/gallery.js"></script>
 </body>

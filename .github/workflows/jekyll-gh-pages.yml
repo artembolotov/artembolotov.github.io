@@ -35,6 +35,12 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      # Поисковый индекс строится по готовому HTML; настройки в pagefind.yml.
+      # jekyll-build-pages работает в Docker и оставляет _site за root.
+      - name: Build search index
+        run: |
+          sudo chown -R "$(id -u):$(id -g)" _site
+          npx -y pagefind@1.5.2
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 
