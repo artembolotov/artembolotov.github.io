@@ -15,6 +15,10 @@
  * full-screen modal keeps its results under the keyboard. We mirror the
  * visible area from window.visualViewport into --search-vh / --search-top,
  * and blog.css sizes the modal from them (falling back to dvh without JS).
+ * iOS fires the resize only after the keyboard animation ends, so the modal
+ * would follow the keyboard late. Instead we resize it as soon as the input
+ * gains or loses focus, using the keyboard height measured last time; the
+ * resize event then corrects it if the keyboard turned out different.
  *
  * 3. Touch scroll containment. WebKit ignores the dialog's
  * overscroll-behavior, and with the keyboard open the visual viewport is
@@ -103,20 +107,47 @@
 
 (function () {
   var vv = window.visualViewport;
-  if (!vv || !document.querySelector('pagefind-modal')) return;
+  var modal = document.querySelector('pagefind-modal');
+  if (!vv || !modal) return;
 
   var style = document.documentElement.style;
   var height, top;
+  // Visible height without the keyboard and the keyboard's own height,
+  // remembered from the last resize.
+  var full, keyboard;
 
   // The visual viewport also fires during pinch-zoom panning; only touch the
   // style when the numbers actually change.
-  function sync() {
-    var h = Math.round(vv.height), t = Math.round(vv.offsetTop);
+  function set(h, t) {
     if (h !== height) style.setProperty('--search-vh', (height = h) + 'px');
     if (t !== top) style.setProperty('--search-top', (top = t) + 'px');
   }
 
-  vv.addEventListener('resize', sync);
-  vv.addEventListener('scroll', sync);
-  sync();
+  function typing() {
+    var el = document.activeElement;
+    return el && el.tagName === 'INPUT' && modal.contains(el);
+  }
+
+  function resize() {
+    var h = Math.round(vv.height);
+    if (typing()) keyboard = full - h; else full = h;
+    set(h, Math.round(vv.offsetTop));
+  }
+
+  // Scrolling only moves the visible area; it must not undo the early resize
+  // below while the keyboard is still sliding.
+  function scroll() {
+    set(height, Math.round(vv.offsetTop));
+  }
+
+  modal.addEventListener('focusin', function (event) {
+    if (event.target.tagName === 'INPUT' && keyboard > 0) set(full - keyboard, top);
+  });
+  modal.addEventListener('focusout', function (event) {
+    if (event.target.tagName === 'INPUT' && keyboard > 0) set(full, 0);
+  });
+
+  vv.addEventListener('resize', resize);
+  vv.addEventListener('scroll', scroll);
+  resize();
 })();
