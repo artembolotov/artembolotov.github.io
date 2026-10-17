@@ -678,16 +678,14 @@ time {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-result-card:hover {
-  background: var(--pf-hover);
   border-color: transparent;
   box-shadow: none;
 }
 
-/* Разделы поста: сдвиг и черта слева вместо вложенных карточек */
+/* Разделы поста: только сдвиг, без вложенных карточек */
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-heading-chips {
   gap: 0;
-  padding-inline-start: 0;
-  border-inline-start: 2px solid var(--pf-border);
+  padding-inline-start: 6px;
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-heading-chip {
@@ -697,8 +695,22 @@ time {
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-heading-chip:hover {
-  background: var(--pf-hover);
   border-color: transparent;
+}
+
+/* Подсветка при наведении только для мыши: на iOS :hover залипает после касания */
+@media (hover: hover) {
+  :is(*, #\#):is(*, #\#):is(*, #\#) .pf-result-card:hover,
+  :is(*, #\#):is(*, #\#):is(*, #\#) .pf-heading-chip:hover {
+    background: var(--pf-hover);
+  }
+}
+
+@media (hover: none) {
+  :is(*, #\#):is(*, #\#):is(*, #\#) .pf-result-link:hover,
+  :is(*, #\#):is(*, #\#):is(*, #\#) .pf-heading-link:hover {
+    text-decoration: none;
+  }
 }
 
 :is(*, #\#):is(*, #\#):is(*, #\#) .pf-heading-link::before {
