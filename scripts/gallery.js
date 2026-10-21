@@ -97,11 +97,30 @@ class GalleryController {
     galleryData.totalImages = images.length;
     galleryData.imagesLoaded = 0;
 
-    // Set loading timeout for emergency fallback
-    const timeoutDuration = 10000; // 10 seconds
-    galleryData.loadingTimeout = setTimeout(() => {
-      this.showGallery(galleryId);
-    }, timeoutDuration);
+    // Images are loading="lazy", and browsers (notably Safari) never fetch the
+    // ones clipped by the horizontal scroller, while the gallery waits for all
+    // of them. So lazy-load the gallery as a whole: once it nears the
+    // viewport, switch every image to eager, which starts the fetch at once.
+    const startLoading = () => {
+      images.forEach(img => { img.loading = 'eager'; });
+
+      // Emergency fallback, counted from the start of loading
+      const timeoutDuration = 10000; // 10 seconds
+      galleryData.loadingTimeout = setTimeout(() => {
+        this.showGallery(galleryId);
+      }, timeoutDuration);
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        observer.disconnect();
+        startLoading();
+      }, { rootMargin: '1000px 0px' });
+      observer.observe(galleryData.element);
+    } else {
+      startLoading();
+    }
 
     // Check each image independently
     images.forEach((img, index) => {
