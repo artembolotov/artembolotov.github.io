@@ -25,7 +25,7 @@ Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with
 ## Layouts and styles
 
 - Layout chain: `compress` ← `default` ← `post` / `tag-page`. `default.html` contains the whole page shell (nav, logo) and loads all CSS/JS.
-- CSS is plain, no preprocessor: `styles/all.css` (base + nav, loaded everywhere), `styles/main.css` (homepage only), `styles/blog.css` (shared blog components: galleries, code highlighting, author footer...). New shared component styles go into `blog.css` by convention.
+- CSS is plain, no preprocessor: `styles/all.css` (base + nav, loaded everywhere), `styles/main.css` (homepage only), `styles/blog.css` (shared blog components: galleries, code highlighting, author footer...). New shared component styles go into `blog.css` by convention, including plain Markdown tables (`main > table`: hairline rows, grey small header, edges flush with the text).
 - Page-specific stylesheets are opt-in via front matter (see the `page.styles` loop in `default.html`): each name in `styles:` loads `/styles/<name>.css`. Interactive elements of the `internet` series are split into a shared framework (`styles/internet.css`) plus one file per component (`styles/internet-<include-name>.css`); a post using a component lists both, e.g. `styles: [internet, internet-dns-lookup]`.
 - Dark theme is handled via `@media (prefers-color-scheme: dark)` blocks in each stylesheet — every new component needs one. Accent colors: `#0089ff` (dark: `#64b2ff`), hover red `#f41224` (dark: `#ff453a`).
 - `html.no-js` class is removed by an inline script in `default.html`; use it for no-JavaScript fallbacks (see galleries).

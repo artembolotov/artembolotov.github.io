@@ -479,6 +479,72 @@ time {
   h1 { color: #fff; }
 }
 
+/* Markdown tables: hairline rows, edges aligned with the text column */
+main > table {
+  width: 100%;
+  border-collapse: separate; /* keeps the container's side padding, which collapse ignores */
+  border-spacing: 0;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  font-size: 0.95em;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+main > table th,
+main > table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.55em 1em 0.55em 0;
+}
+
+main > table th:last-child,
+main > table td:last-child {
+  padding-right: 0;
+}
+
+main > table th {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #666;
+  border-bottom: 1px solid rgba(0,0,0,.15);
+}
+
+main > table td {
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+main > table tr:last-child td {
+  border-bottom: none;
+}
+
+@media screen and (max-width: 640px) {
+  main > table {
+    font-size: 0.9em;
+  }
+
+  main > table th,
+  main > table td {
+    padding-right: 0.75em;
+  }
+
+  main > table th:last-child,
+  main > table td:last-child {
+    padding-right: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  main > table th {
+    color: #aaa;
+    border-bottom-color: rgba(255,255,255,.18);
+  }
+
+  main > table td {
+    border-bottom-color: rgba(255,255,255,.1);
+  }
+}
+
 /* Author footer styles */
 .author-footer {
   margin-top: 4em;
