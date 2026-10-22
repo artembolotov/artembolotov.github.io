@@ -3,7 +3,7 @@ title: "Россификация RedCalendar"
 description: "Как я перевёз RedCalendar с Firebase на свой сервер в России, сделал вход по почте и переписал приложение с нуля на SwiftUI"
 tags: [iosdev]
 image: /blog/img/2026-10-20-redcalendar-russification/og-image.png
-draft: true
+draft: false
 ---
 
 Думал, что просто меняю сервер. Оказалось — пишу новое приложение, спецификацию на 2 500 строк и согласие на обработку персональных данных.
