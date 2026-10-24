@@ -48,6 +48,13 @@ section h2 {
   margin-top: 3.8125em; 
 }
 
+#top h2 {
+  font-size: 1.125em;
+  line-height: 1.4;
+  max-width: 36em;
+  margin: 0.6em auto 0;
+}
+
 /* Section spacing */
 #about { 
   margin-top: 6.25em; 
