@@ -1,5 +1,5 @@
 title: "Блог Артёма Болотова"
-description: "Блог iOS-разработчика о разработке приложений, web, технологиях и жизни"
+description: "Блог инженера-программиста о разработке приложений, web, технологиях и жизни"
 baseurl: "/"
 url: "https://bolotov.dev"
 permalink: /blog/:year/:month/:day/:title
