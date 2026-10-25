@@ -76,7 +76,10 @@ Image paths support:
           .github/scripts/gallery-variants.cjs в CI. Берём только найденные среди файлов
           сайта, поэтому без них (локальный jekyll serve) srcset просто не появляется.
           sizes считаем по размеру: картинка вписана в ряд высотой row_height
-          (--gallery-row-h в blog.css), но не шире 85vw.
+          (--gallery-row-h в blog.css), но не шире 85vw. Ширину округляем вверх:
+          размер картинки с srcset берётся из sizes, и при округлении вниз она
+          выходит ниже ряда (498 вместо 500), а с запасом max-height ужимает её
+          ровно до высоты ряда, как и картинки без srcset.
           {% endcomment %}
           {% assign srcset = "" %}
           {% if image_dims != "" %}
@@ -90,7 +93,8 @@ Image paths support:
             {% endfor %}
             {% if srcset != "" %}
               {% assign srcset = srcset | append: image_path | append: " " | append: img_w | append: "w" %}
-              {% assign shown_w = site.data.gallery_variants.row_height | times: img_w | divided_by: img_h | floor %}
+              {% assign img_h_float = img_h | times: 1.0 %}
+              {% assign shown_w = site.data.gallery_variants.row_height | times: img_w | divided_by: img_h_float | ceil %}
               {% assign narrow_vw = shown_w | times: 100 | divided_by: 85 | floor %}
             {% endif %}
           {% endif %}
