@@ -316,6 +316,7 @@ section h3 {
     border-bottom-color: transparent;
   }
 
+  #logo path { fill: #64b2ff; }
   #logo .logo-text path { fill: #fff; }
 
   #page-nav ul li.current {
