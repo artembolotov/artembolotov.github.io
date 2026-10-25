@@ -20,9 +20,9 @@ ul { list-style-type: none; }
 
 /* Links */
 a:link, a:visited { 
-  color: #0089ff; 
+  color: #006bc9; 
   text-decoration: none; 
-  border-bottom: 1px solid rgba(0,137,255,.3); 
+  border-bottom: 1px solid rgba(0,107,201,.3); 
 }
 
 /* Layout */
@@ -122,7 +122,8 @@ section p {
   line-height: 1.5; 
 }
 
-section h4 { 
+section h3 { 
+  font-size: 1em;
   color: #000; 
   padding-bottom: 0.4em; 
   margin-top: 1em;
@@ -377,7 +378,7 @@ section h4 {
 
 #ym-consent-btn {
   flex-shrink: 0;
-  background: #0089ff;
+  background: #006bc9;
   color: #fff;
   border: none;
   border-radius: 6px;

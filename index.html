@@ -59,7 +59,7 @@
     <link rel="preconnect" href="https://gdeya.bolotov.dev">
     <link rel="preconnect" href="https://gdeya.bolotov.dev" crossorigin>
     <link rel="stylesheet" href="styles/all.css">
-    <link rel="stylesheet" href="styles/main.css?v=4">
+    <link rel="stylesheet" href="styles/main.css?v=5">
     <link rel="preload" as="image" type="image/avif" href="/img/bg-tall.avif" media="(max-width: 767px)">
     <link rel="preload" as="image" type="image/avif" href="/img/bg-wide.avif" media="(min-width: 768px)">
     <script src="scripts/consent.js" defer></script>
@@ -68,8 +68,8 @@
   <body>
     <nav id="page-nav">
       <div>
-      <a href="#top">
-        <svg id="logo" width="170" height="44" viewBox="0 0 170 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <a href="#top" aria-label="Артём Болотов, в начало страницы">
+        <svg id="logo" aria-hidden="true" width="170" height="44" viewBox="0 0 170 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M161.792 34.088C163.339 32.754 164.441 31.1687 165.098 29.332C165.755 27.476 166.084 25.4363 166.084 23.213C166.084 20.9897 165.755 18.9597 165.098 17.123C164.441 15.267 163.339 13.672 161.792 12.338H165.388C166.335 13.1887 167.089 14.2133 167.65 15.412C168.23 16.5913 168.646 17.8577 168.897 19.211C169.148 20.545 169.274 21.879 169.274 23.213C169.274 24.547 169.148 25.8907 168.897 27.244C168.646 28.5973 168.23 29.8637 167.65 31.043C167.089 32.2223 166.335 33.2373 165.388 34.088H161.792Z" fill="#1F88D9"/>
           <path d="M156.856 34.088C155.909 33.2373 155.145 32.2223 154.565 31.043C153.985 29.8637 153.57 28.5973 153.318 27.244C153.067 25.8907 152.941 24.547 152.941 23.213C152.941 21.879 153.067 20.545 153.318 19.211C153.57 17.8577 153.985 16.5913 154.565 15.412C155.145 14.2133 155.909 13.1887 156.856 12.338H160.423C158.896 13.672 157.794 15.267 157.117 17.123C156.46 18.9597 156.131 20.9897 156.131 23.213C156.131 25.4363 156.46 27.476 157.117 29.332C157.794 31.1687 158.896 32.754 160.423 34.088H156.856Z" fill="#1F88D9"/>
           <path d="M141.599 32L136.176 18.254H139.453L143.31 28.926L147.167 18.254H150.415L145.021 32H141.599Z" fill="#1F88D9"/>
@@ -120,6 +120,7 @@
       <div id="arrow">
       </div>
     </header>
+    <main>
     <section id="about" class="container">
       <h2>Про меня</h2>
       <p>Привет, меня зовут Артём. Я автор <a href="https://screenlines.app" target="_blank" rel="noopener">ScreenLines</a>, <a href="https://twinkey.app" target="_blank" rel="noopener">TwinKey</a>, <a href="https://calendar.red" target="_blank" rel="noopener">RedCalendar</a>, <a href="https://gdeya.bolotov.dev/" target="_blank" rel="noopener">гдеЯ?</a> и <a href="https://appreach.ru" target="_blank" rel="noopener">appreach</a>, ведущий специалист сервисного центра <a href="https://compaund.com" target="_blank" rel="noopener">compaund</a>, отец троих детей.</p>
@@ -131,108 +132,108 @@
       <ul id="timeline">
         <li>
           <img loading="lazy" decoding="async" src="img/twinkey.webp" srcset="img/twinkey.webp 1x, img/twinkey@2x.webp 2x, img/twinkey@3x.webp 3x" alt="TwinKey">
-          <h4>2026</h4>
+          <h3>2026</h3>
           <p>Выпустил <a href="https://play.google.com/store/apps/details?id=com.artembolotov.twinkey" target="_blank" rel="noopener">TwinKey для Android</a>&nbsp;&mdash; теперь двухфакторная аутентификация есть и&nbsp;у&nbsp;зелёного робота</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/appreach.webp" srcset="img/appreach.webp 1x, img/appreach@2x.webp 2x, img/appreach@3x.webp 3x" alt="appreach">
-          <h4>2026</h4>
+          <h3>2026</h3>
           <p>Запустил <a href="https://appreach.ru" target="_blank" rel="noopener">appreach</a>&nbsp;&mdash; сервис для проверки доступности приложений в&nbsp;разных регионах App Store</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/dgeya.webp" srcset="img/dgeya.webp 1x, img/dgeya@2x.webp 2x, img/dgeya@3x.webp 3x" alt="гдеЯ?">
-          <h4>2026</h4>
+          <h3>2026</h3>
           <p>Сделал <a href="https://gdeya.bolotov.dev/" target="_blank" rel="noopener">гдеЯ?</a>&nbsp;&mdash; инструмент для геотаргетинга на&nbsp;сайте: один контент для России, другой&nbsp;&mdash; для всего остального мира</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/screenlines.webp" srcset="img/screenlines.webp 1x, img/screenlines@2x.webp 2x, img/screenlines@3x.webp 3x" alt="ScreenLines">
-          <h4>2025</h4>
+          <h3>2025</h3>
           <p>Написал <a href="https://apps.apple.com/app/id6739783494" target="_blank" rel="noopener">ScreenLines</a>&nbsp;&mdash; помощника в установке защитных стёкол на iPhone и iPad</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/twinkey.webp" srcset="img/twinkey.webp 1x, img/twinkey@2x.webp 2x, img/twinkey@3x.webp 3x" alt="TwinKey">
-          <h4>2023</h4>
+          <h3>2023</h3>
           <p>Написал <a href="https://apps.apple.com/app/id6450484235" target="_blank" rel="noopener">TwinKey</a>&nbsp;&mdash; приложение для двухфакторной аутентификации</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/hws.webp" srcset="img/hws.webp 1x, img/hws@2x.webp 2x, img/hws@3x.webp 3x" alt="OTUS, Hacking with Swift и Big Mountain Studio">
-          <h4>2023</h4>
-          <p>Решил улучшить навыки и&nbsp;перейти на&nbsp;SwiftUI. Прошёл курсы <a href="https://otus.ru/lessons/advanced-ios/" target="_blank" rel="noopener">iOS Developer. Professional</a>, <a href="https://www.hackingwithswift.com/100/swiftui", target="_blank" rel="noopener">100 Days of&nbsp;SwiftUI</a>. Заодно прочитал книги <a href="https://www.bigmountainstudio.com/core-data", target="_blank" rel="noopener">Core Data Mastery in&nbsp;SwiftUI</a> и&nbsp;<a href="https://www.bigmountainstudio.com/views-16", target="_blank" rel="noopener">SwiftUI Views Mastery</a>.</p>
+          <h3>2023</h3>
+          <p>Решил улучшить навыки и&nbsp;перейти на&nbsp;SwiftUI. Прошёл курсы <a href="https://otus.ru/lessons/advanced-ios/" target="_blank" rel="noopener">iOS Developer. Professional</a>, <a href="https://www.hackingwithswift.com/100/swiftui" target="_blank" rel="noopener">100 Days of&nbsp;SwiftUI</a>. Заодно прочитал книги <a href="https://www.bigmountainstudio.com/core-data" target="_blank" rel="noopener">Core Data Mastery in&nbsp;SwiftUI</a> и&nbsp;<a href="https://www.bigmountainstudio.com/views-16" target="_blank" rel="noopener">SwiftUI Views Mastery</a>.</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/red_calendar.webp" srcset="img/red_calendar.webp 1x, img/red_calendar@2x.webp 2x, img/red_calendar@3x.webp 3x" alt="RedCalendar">
-          <h4>2021</h4>
+          <h3>2021</h3>
           <p>Выпустил первую версию <a href="https://calendar.red" target="_blank" rel="noopener">RedCalendar</a>&nbsp;&mdash; облачного трекера цикла для девушек.</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/masterbolotova.webp" srcset="img/masterbolotova.webp 1x, img/masterbolotova@2x.webp 2x, img/masterbolotova@3x.webp 3x" alt="Студия наращивания ресниц">
-          <h4>2019</h4>
+          <h3>2019</h3>
           <p>Сделал CRM-систему для студии по&nbsp;наращиванию ресниц: приложение для мастера, приложение для клиента, серверная часть для учёта, анализа и&nbsp;отправки смс.</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/cls.webp" srcset="img/cls.webp 1x, img/cls@2x.webp 2x, img/cls@3x.webp 3x" alt="">
-          <h4>2017</h4>
+          <h3>2017</h3>
           <p>Заинтересовался клиент-серверными приложениями: API, архитектурой, безопасностью. Стал использовать Node.js&nbsp;вместо PHP.</p>     
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/groupmanager.webp" srcset="img/groupmanager.webp 1x, img/groupmanager@2x.webp 2x, img/groupmanager@3x.webp 3x" alt="Приложение для сообществ VK">
-          <h4>2016</h4>
+          <h3>2016</h3>
           <p>Работал над приложением для управления сообществами VK. Снова столкнулся с&nbsp;ограничениями в&nbsp;API, которые не&nbsp;позволили сделать проект таким, каким я&nbsp;его видел. Прошёл курс &laquo;Дизайн в&nbsp;цифровой среде&raquo; Никиты Обухова. Сделал <a href="https://old.compaund.com" target="_blank" rel="noopener">вторую версию</a> сайта для своей фирмы чтобы закрепить навыки адаптивного дизайна. Кстати, этот сайт набирал 100% в&nbsp;оценке производительности Google PageSpeed Insights.</p>     
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/swift.webp" srcset="img/swift.webp 1x, img/swift@2x.webp 2x, img/swift@3x.webp 3x" alt="Swift">
-          <h4>2015</h4>
+          <h3>2015</h3>
           <p>Начал изучать Swift. Основными были стэнфордские курсы CS193p Пола Хэгерти. Параллельно читал книгу iOS 8&nbsp;Day By&nbsp;Day.</p>     
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/iosdevcourse.webp" srcset="img/iosdevcourse.webp 1x, img/iosdevcourse@2x.webp 2x, img/iosdevcourse@3x.webp 3x" alt="Курсы по iOS-разработке">
-          <h4>2014</h4>
+          <h3>2014</h3>
           <p>Появился свой Macbook и&nbsp;начал изучать iOS разработку и&nbsp;Objective C. Мысль, что однажды у&nbsp;меня будут свои приложения в&nbsp;App Store, сильно вдохновляла. Основными были курсы Алексея Скутаренко, но&nbsp;ещё читал книги iOS 7&nbsp;By Tutorials, iOS Core Animation, Learn Design for iOS Development. Поучаствовал в&nbsp;проекте AKFisher (карта рыбных мест), пытался сделать приложение для определения страны и&nbsp;оператора по&nbsp;номеру телефона, но&nbsp;столкнулся с&nbsp;блокировкой со&nbsp;стороны стороннего API.</p>     
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/php.webp" srcset="img/php.webp 1x, img/php@2x.webp 2x, img/php@3x.webp 3x" alt="PHP">
-          <h4>2012</h4>
+          <h3>2012</h3>
           <p>Увлёкся сайтами и&nbsp;php. Сделал <a href="https://old2.compaund.com/" target="_blank" rel="noopener">первый сайт</a> для своей фирмы и&nbsp;<a href="https://masterbolotova.ru" target="_blank" rel="noopener">жены</a>.</p>     
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/fast.webp" srcset="img/fast.webp 1x, img/fast@2x.webp 2x, img/fast@3x.webp 3x" alt="">
-          <h4>2009</h4>
+          <h3>2009</h3>
           <p>Закончил институт, но&nbsp;было выгоднее работать не&nbsp;по&nbsp;специальности. Программирование стало моим хобби.</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/compaund.webp" srcset="img/compaund.webp 1x, img/compaund@2x.webp 2x, img/compaund@3x.webp 3x" alt="compaund">
-          <h4>2006</h4>
+          <h3>2006</h3>
           <p>Устроился в&nbsp;фирму, занимающуюся сотовыми телефонами. Сейчас она называется <a href="https://compaund.com" target="_blank" rel="noopener">compaund</a>. Пожалуй, это лучшее место для ремонта, покупки или обмена телефона в&nbsp;нашем городе, где я&nbsp;&mdash; ведущий специалист сервисного центра.</p>     
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/kgtu.webp" srcset="img/kgtu.webp 1x, img/kgtu@2x.webp 2x, img/kgtu@3x.webp 3x" alt="КГТУ">
-          <h4>2004</h4>
+          <h3>2004</h3>
           <p>Поступил в&nbsp;КГТУ (Кострома) на&nbsp;информационные системы и&nbsp;технологии. Нравилось всё, кроме баз данных, которых я&nbsp;всячески избегал. Сейчас всё очень поменялось.</p>     
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/kostroma.webp" srcset="img/kostroma.webp 1x, img/kostroma@2x.webp 2x, img/kostroma@3x.webp 3x" alt="Кострома">
-          <h4>2003</h4>
+          <h3>2003</h3>
           <p>Мы&nbsp;с&nbsp;родителями и&nbsp;братом переехали в&nbsp;Кострому.</p>          
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/delphi.webp" srcset="img/delphi.webp 1x, img/delphi@2x.webp 2x, img/delphi@3x.webp 3x" alt="Delphi">
-          <h4>2002</h4>
+          <h3>2002</h3>
           <p>Познакомился с&nbsp;Delphi.</p>
           <p>Друзья-старшеклассники записали мне диски с&nbsp;материалами по&nbsp;этой среде. В&nbsp;основном писал автозапуски к&nbsp;дискам, среди проектов были утилита в&nbsp;трей для извлечения лотка CD-ROM и&nbsp;дружественный редактор реестра Windows.</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/pc.webp" srcset="img/pc.webp 1x, img/pc@2x.webp 2x, img/pc@3x.webp 3x" alt="Первый компьютер">
-          <h4>2001</h4>
+          <h3>2001</h3>
           <p>У&nbsp;меня появился первый компьютер. Да, может и&nbsp;поздно (9&nbsp;класс), но&nbsp;я&nbsp;долго к&nbsp;этому готовился, зная наизусть самоучитель Александра Левина.</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/school.webp" srcset="img/school.webp 1x, img/school@2x.webp 2x, img/school@3x.webp 3x" alt="Артём в первом классе">
-          <h4>1994</h4>
+          <h3>1994</h3>
           <p>Пошёл в&nbsp;обычную среднюю школу &#8470;&nbsp;2. Если задавали какие-то доклады, шёл к&nbsp;папе или маме на&nbsp;работу, чтобы набрать их&nbsp;на&nbsp;компьютере. Особую любовь вызывали таблицы.</p>
         </li>
         <li>
           <img loading="lazy" decoding="async" src="img/start.webp" srcset="img/start.webp 1x, img/start@2x.webp 2x, img/start@3x.webp 3x" alt="">
-          <h4>1987</h4>
+          <h3>1987</h3>
           <p>Я&nbsp;родился и&nbsp;мы&nbsp;переехали жить в&nbsp;Тамбов. Здесь прошло всё моё детство.</p>
         </li>
       </ul>
@@ -242,26 +243,27 @@
       <p>Я&nbsp;не&nbsp;очень люблю писать или выкладывать что-то в&nbsp;соцсети: для меня они работают больше в&nbsp;режиме &laquo;только чтение&raquo;. Но&nbsp;если вы&nbsp;подпишетесь на&nbsp;меня в&nbsp;<a href="https://vk.com/artembolotov">vk</a>, <a href="https://twitter.com/artembolotov">твиттере</a> или <span data-gdeya-ru="t9G08LCjEOKFt9C1zEzjsuKIR7Taqd8S4I/m37TfqOISUUBCAgkHFg1dRF1A" data-gdeya-intl="t9ZDFwNBQAkKBkQNCwRUDRBeExAVClsdH1tYFBAEHhNTXRxVCAlKGBNGVV9UCAgKDQ5EEgzm37TYqODjsuKGt9e0+bGC4I7m0lhKGF8="></span>, мне придётся перестать лениться.<br/>Зато пишу статьи <a href="/blog/">здесь</a>, что-то в этом <a href="https://t.me/bolotovblog" target="_blank" rel="noopener">канале</a>, и какие-то заметки в <a href="https://t.me/bolotov_logs" target="_blank" rel="noopener">этом</a>.</p>
       <p>Если у&nbsp;вас есть вопросы или предложения, пишите <a data-email>письмо</a> или в&nbsp;<a href="https://t.me/artembolotov" target="_blank" rel="noopener">телеграм</a>.</p>
       <ul id="social">
-        <li><a class="icon" href="https://t.me/artembolotov" target="_blank" rel="noopener">
-          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <li><a class="icon" href="https://t.me/artembolotov" target="_blank" rel="noopener" aria-label="Телеграм">
+          <svg aria-hidden="true" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M30 60C46.5685 60 60 46.5685 60 30C60 13.4315 46.5685 0 30 0C13.4315 0 0 13.4315 0 30C0 46.5685 13.4315 60 30 60ZM24.5 43.75C25.2296 43.75 25.5631 43.4254 25.9661 43.033L26 43L29.6034 39.4962L37.1 45.0348C38.4796 45.796 39.4753 45.4018 39.819 43.7539L44.7402 20.5631C45.2441 18.5431 43.9702 17.6269 42.6504 18.2261L13.7529 29.3688C11.7804 30.16 11.7919 31.2605 13.3933 31.7508L20.8091 34.0654L37.9773 23.2341C38.7878 22.7427 39.5317 23.0069 38.9212 23.5487L25.0107 36.1019L25.0105 36.1017L25.0105 36.1021L25.01 36.1025L25.0104 36.1028L24.5 43.75Z" fill="none"/>
           </svg>
         </a></li>
-        <li><a class="icon" href="https://vk.com/artembolotov" target="_blank" rel="noopener">
-          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <li><a class="icon" href="https://vk.com/artembolotov" target="_blank" rel="noopener" aria-label="VK">
+          <svg aria-hidden="true" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M30 0C13.4315 0 0 13.4315 0 30C0 46.5685 13.4315 60 30 60C46.5685 60 60 46.5685 60 30C60 13.4315 46.5685 0 30 0ZM31.4427 39.4702C31.1469 39.7821 30.5693 39.8451 30.5693 39.8451H28.6567C28.6567 39.8451 24.4372 40.094 20.72 36.2962C16.6664 32.1528 13.0869 23.9319 13.0869 23.9319C13.0869 23.9319 12.8803 23.3927 13.1041 23.133C13.3561 22.8396 14.0432 22.8212 14.0432 22.8212L18.6149 22.792C18.6149 22.792 19.0453 22.8611 19.3537 23.0839C19.6088 23.2682 19.7512 23.6108 19.7512 23.6108C19.7512 23.6108 20.4899 25.4452 21.4681 27.1044C23.3792 30.3445 24.2682 31.0528 24.9161 30.7055C25.8614 30.2001 25.5782 26.1258 25.5782 26.1258C25.5782 26.1258 25.5954 24.6478 25.1024 23.9888C24.7205 23.4787 24.0005 23.3297 23.6828 23.2882C23.4245 23.2544 23.8471 22.6675 24.3949 22.4048C25.2182 22.01 26.6706 21.9869 28.3876 22.0038C29.7257 22.0177 30.1107 22.0991 30.6335 22.2235C31.8467 22.5109 31.8089 23.4319 31.7271 25.4196C31.7027 26.0141 31.6743 26.7039 31.6743 27.5008C31.6743 27.6799 31.669 27.8707 31.6635 28.0671C31.6351 29.0854 31.6027 30.2515 32.2863 30.6856C32.6369 30.9068 33.493 30.7178 35.6356 27.1474C36.6514 25.4544 37.412 23.4649 37.412 23.4649C37.412 23.4649 37.5795 23.11 37.8378 22.9579C38.1023 22.8027 38.4591 22.8504 38.4591 22.8504L43.2703 22.8212C43.2703 22.8212 44.7165 22.6506 44.9497 23.2928C45.1954 23.9642 44.4097 25.5343 42.4439 28.1061C40.5792 30.5463 39.6717 31.4448 39.755 32.2394C39.8159 32.82 40.4058 33.3451 41.5377 34.3758C43.9007 36.5293 44.5341 37.6624 44.6863 37.9346C44.6989 37.9571 44.7082 37.9738 44.7149 37.9846C45.7745 39.7099 43.5395 39.8451 43.5395 39.8451L39.2651 39.9035C39.2651 39.9035 38.348 40.0817 37.1397 39.2674C36.5068 38.8413 35.8883 38.1452 35.2992 37.4823C34.3995 36.4698 33.5685 35.5345 32.8591 35.7554C31.668 36.1272 31.704 38.6452 31.704 38.6452C31.704 38.6452 31.7134 39.1845 31.4427 39.4702Z" fill="#none"/>
           </svg>              
         </a></li>
-        <li><a class="icon" href="https://twitter.com/artembolotov" target="_blank" rel="noopener">
-          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <li><a class="icon" href="https://twitter.com/artembolotov" target="_blank" rel="noopener" aria-label="Твиттер">
+          <svg aria-hidden="true" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M30 0C13.4315 0 0 13.4315 0 30C0 46.5685 13.4315 60 30 60C46.5685 60 60 46.5685 60 30C60 13.4315 46.5685 0 30 0ZM30.1645 27.4224L30.1015 26.3844C29.9126 23.6939 31.5704 21.2364 34.1935 20.2831C35.1587 19.9441 36.7955 19.9017 37.8657 20.1983C38.2854 20.3255 39.0828 20.7492 39.6494 21.1305L40.6776 21.8296L41.8108 21.4694C42.4403 21.2788 43.2797 20.961 43.6574 20.7492C44.0141 20.5585 44.3289 20.4526 44.3289 20.5161C44.3289 20.8763 43.5525 22.105 42.902 22.7829C42.0206 23.7362 42.2724 23.821 44.0561 23.1854C45.1263 22.8253 45.1473 22.8253 44.9375 23.2278C44.8116 23.4397 44.161 24.1811 43.4686 24.8591C42.2934 26.0242 42.2305 26.1513 42.2305 27.1259C42.2305 28.63 41.517 31.7654 40.8035 33.4814C39.4815 36.7015 36.6486 40.0275 33.8157 41.7012C29.8287 44.0527 24.5197 44.6459 20.05 43.2689C18.5601 42.8028 16 41.6164 16 41.4046C16 41.341 16.7764 41.2563 17.7207 41.2351C19.6933 41.1927 21.6658 40.6419 23.3445 39.6674L24.4777 38.9895L23.1767 38.5446C21.33 37.909 19.6723 36.4473 19.2526 35.0702C19.1267 34.6254 19.1686 34.6042 20.3438 34.6042L21.5609 34.583L20.5326 34.0957C19.3155 33.4814 18.2034 32.4433 17.6578 31.384C17.2591 30.6214 16.7554 28.6935 16.9023 28.5452C16.9443 28.4817 17.385 28.6088 17.8886 28.7783C19.3365 29.3079 19.5254 29.1808 18.686 28.291C17.1122 26.681 16.6295 24.2871 17.385 22.0203L17.7417 21.0034L19.1267 22.3804C21.9596 25.1556 25.2961 26.8081 29.1152 27.2953L30.1645 27.4224Z" fill="none"/>
           </svg>              
         </a></li>
-        <li data-gdeya-ru="" data-gdeya-intl="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"></li>
+        <li data-gdeya-ru="" data-gdeya-intl="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"></li>
         <li><a class="email" data-email></a></li>
       </ul>
       <p class="privacy-link"><a href="/privacy/" target="_blank" rel="noopener">Политика конфиденциальности</a></p>
     </section>
+    </main>
     <script>
 
       (function(document) {

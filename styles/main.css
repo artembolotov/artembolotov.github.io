@@ -72,14 +72,14 @@ section h2 {
 
 #contact .privacy-link a:link,
 #contact .privacy-link a:visited {
-  color: rgba(0,0,0,.35);
+  color: rgba(0,0,0,.6);
   border-color: rgba(0,0,0,.12);
 }
 
 @media (prefers-color-scheme: dark) {
   #contact .privacy-link a:link,
   #contact .privacy-link a:visited {
-    color: rgba(255,255,255,.35);
+    color: rgba(255,255,255,.5);
     border-color: rgba(255,255,255,.12);
   }
 }
@@ -183,7 +183,7 @@ section h2 {
     background: rgba(255,255,255,0.3); 
   }
   
-  section h2, section h4 { 
+  section h2, section h3 { 
     color: #fff; 
   }
   

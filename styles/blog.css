@@ -618,9 +618,9 @@ main > table tr:last-child td {
 }
 
 .tag-menu a {
-  color: #0089ff;
+  color: #006bc9;
   text-decoration: none;
-  border-bottom: 1px solid rgba(0,137,255,.3);
+  border-bottom: 1px solid rgba(0,107,201,.3);
   transition: color 0.2s, border-color 0.2s;
   font-size: 0.9em;
 }
@@ -852,9 +852,9 @@ html:not(.pf-ready) .tag-menu-search pagefind-modal-trigger {
   display: inline-block;
   margin-right: 1em;
   margin-bottom: 0.5em;
-  color: #0089ff;
+  color: #006bc9;
   text-decoration: none;
-  border-bottom: 1px solid rgba(0,137,255,.3);
+  border-bottom: 1px solid rgba(0,107,201,.3);
   font-size: 0.9em;
   transition: color 0.2s, border-color 0.2s;
 }
