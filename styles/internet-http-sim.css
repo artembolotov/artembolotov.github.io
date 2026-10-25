@@ -26,7 +26,7 @@
   padding: 0.5em 0.9em;
   border: none;
   background: transparent;
-  color: #999;
+  color: #6b6b6b;
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 0.8em;
   cursor: pointer;
@@ -34,7 +34,7 @@
 }
 
 .http-sim-proto-btn.is-on {
-  background: #0089ff;
+  background: #006bc9;
   color: #fff;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .http-sim .sim-step--spy .sim-step-name {
-  color: #999;
+  color: #6b6b6b;
 }
 
 .http-sim-code--ok { color: #178a3d; }
@@ -85,7 +85,7 @@
   }
 
   .http-sim-proto-btn {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .http-sim-proto-btn.is-on {
@@ -105,7 +105,7 @@
   }
 
   .http-sim .sim-step--spy .sim-step-name {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .http-sim-code--ok { color: #4cc46e; }

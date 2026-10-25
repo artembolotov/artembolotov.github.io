@@ -158,7 +158,7 @@
 .handover-sim-chip-name {
   display: block;
   font-size: 0.7em;
-  color: #999;
+  color: #6b6b6b;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -186,7 +186,7 @@
 .handover-sim-bars i:nth-child(4) { height: 14px; }
 
 .handover-sim-bars i.is-on {
-  background: #0089ff;
+  background: #006bc9;
 }
 
 .handover-sim-chip-state {
@@ -213,7 +213,7 @@
 
 .handover-sim-slider-label {
   font-size: 0.75em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .handover-sim-slider {
@@ -241,7 +241,7 @@
   margin-top: -7px;
   border-radius: 50%;
   border: none;
-  background: #0089ff;
+  background: #006bc9;
 }
 
 .handover-sim-slider::-moz-range-track {
@@ -255,7 +255,7 @@
   height: 18px;
   border-radius: 50%;
   border: none;
-  background: #0089ff;
+  background: #006bc9;
 }
 
 .handover-sim-caption {
@@ -371,7 +371,7 @@
   }
 
   .handover-sim-chip-name {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .handover-sim-bars i {
@@ -391,7 +391,7 @@
   }
 
   .handover-sim-slider-label {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .handover-sim-slider::-webkit-slider-runnable-track {

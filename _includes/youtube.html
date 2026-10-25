@@ -1,5 +1,6 @@
 <div class="youtube-container">
-    <iframe 
+    <iframe
+      title="{{ include.title | default: 'Видео на YouTube' }}"
       src="https://www.youtube.com/embed/{{ include.id }}" 
       frameborder="0" 
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 

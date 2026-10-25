@@ -33,13 +33,13 @@
 }
 
 .rfc-nav-filter:hover {
-  border-color: #0089ff;
-  color: #0089ff;
+  border-color: #006bc9;
+  color: #006bc9;
 }
 
 .rfc-nav-filter.is-active {
-  background: #0089ff;
-  border-color: #0089ff;
+  background: #006bc9;
+  border-color: #006bc9;
   color: #fff;
 }
 
@@ -77,11 +77,11 @@
 }
 
 .rfc-nav-item:hover {
-  border-color: #0089ff;
+  border-color: #006bc9;
 }
 
 .rfc-nav-item.is-active {
-  border-color: #0089ff;
+  border-color: #006bc9;
   background: rgba(0,137,255,0.08);
 }
 
@@ -94,7 +94,7 @@
   font-size: 0.85em;
   font-weight: 600;
   white-space: nowrap;
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .rfc-nav-item-label {
@@ -106,7 +106,7 @@
 .rfc-nav-item-year {
   font-size: 0.85em;
   white-space: nowrap;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .rfc-nav-doc {
@@ -120,7 +120,7 @@
   border-radius: 10px;
   text-align: center;
   font-size: 0.8em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .rfc-nav-card {
@@ -254,12 +254,12 @@
   }
 
   .rfc-nav-item-year {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .rfc-nav-placeholder {
     border-color: rgba(255,255,255,0.25);
-    color: #777;
+    color: #a0a0a0;
   }
 
   .rfc-nav-card {

@@ -28,7 +28,7 @@
 
 .dns-sim-input:focus {
   outline: none;
-  border-color: #0089ff;
+  border-color: #006bc9;
 }
 
 .dns-sim-go {
@@ -36,7 +36,7 @@
   padding: 0.55em 1.2em;
   border: none;
   border-radius: 6px;
-  background: #0089ff;
+  background: #006bc9;
   color: #fff;
   font-family: inherit;
   font-size: 0.85em;

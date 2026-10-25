@@ -25,14 +25,14 @@
   border-radius: 100px;
   border: 1px solid rgba(0,0,0,0.12);
   background: #fff;
-  color: #999;
+  color: #6b6b6b;
   cursor: pointer;
   transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
 
 .journey-sim-step:hover {
-  border-color: #0089ff;
-  color: #0089ff;
+  border-color: #006bc9;
+  color: #006bc9;
 }
 
 .journey-sim-step-marker {
@@ -47,7 +47,7 @@
 }
 
 .journey-sim-step.is-done {
-  color: #0089ff;
+  color: #006bc9;
   border-color: rgba(0,137,255,0.4);
 }
 
@@ -57,8 +57,8 @@
 
 .journey-sim-step.is-active {
   color: #fff;
-  background: #0089ff;
-  border-color: #0089ff;
+  background: #006bc9;
+  border-color: #006bc9;
 }
 
 .journey-sim-step.is-active .journey-sim-step-marker {
@@ -88,13 +88,13 @@
 .journey-sim-detail-title {
   font-size: 0.85em;
   font-weight: 700;
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .journey-sim-detail-time {
   margin-left: auto;
   font-size: 0.75em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .journey-sim-detail p {
@@ -131,11 +131,11 @@
 .journey-sim-total {
   padding: 0 1em 1em;
   font-size: 0.75em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .journey-sim-total b {
-  color: #0089ff;
+  color: #006bc9;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -143,7 +143,7 @@
   .journey-sim-step {
     background: #242424;
     border-color: rgba(255,255,255,0.15);
-    color: #777;
+    color: #a0a0a0;
   }
 
   .journey-sim-step:hover {
@@ -184,7 +184,7 @@
   }
 
   .journey-sim-detail-time {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .journey-sim-detail p {
@@ -192,7 +192,7 @@
   }
 
   .journey-sim-total {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .journey-sim-total b {

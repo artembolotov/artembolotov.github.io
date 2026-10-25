@@ -124,7 +124,7 @@
 .cdn-map-chip-city {
   display: block;
   font-size: 0.7em;
-  color: #999;
+  color: #6b6b6b;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -140,7 +140,7 @@
 }
 
 .cdn-map-chip-ms.is-final {
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .cdn-map-caption {
@@ -228,7 +228,7 @@
   }
 
   .cdn-map-chip-city {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .cdn-map-chip-ms {

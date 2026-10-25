@@ -17,7 +17,7 @@
 .cookie-jar-pocket-empty {
   padding: 0.6em 0;
   font-size: 0.8em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .cookie-jar-domain {
@@ -95,7 +95,7 @@
 
 .cookie-jar-chip-tag--session {
   background: rgba(0,137,255,0.12);
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .cookie-jar-chip-tag--persist {
@@ -160,7 +160,7 @@
 
 @media (prefers-color-scheme: dark) {
   .cookie-jar-pocket-empty {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .cookie-jar-domain {
@@ -226,6 +226,6 @@
   }
 
   .cookie-jar-step--system {
-    color: #777;
+    color: #a0a0a0;
   }
 }

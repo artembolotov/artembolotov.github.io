@@ -25,7 +25,7 @@
   margin-bottom: 0.4em;
   font-size: 0.7em;
   font-weight: 700;
-  color: #999;
+  color: #6b6b6b;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -41,7 +41,7 @@
 .route-sim-nat th {
   text-align: left;
   font-weight: 600;
-  color: #999;
+  color: #6b6b6b;
   padding: 0.25em 0.5em;
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
@@ -59,15 +59,15 @@
 
 .route-sim-nat tr.is-active td {
   background: rgba(0,137,255,0.1);
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .route-sim .sim-step pre s {
-  color: #999;
+  color: #6b6b6b;
 }
 
 .route-sim .sim-step pre b {
-  color: #0089ff;
+  color: #006bc9;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -77,11 +77,11 @@
   }
 
   .route-sim-nat-title {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .route-sim-nat th {
-    color: #777;
+    color: #a0a0a0;
     border-bottom-color: rgba(255,255,255,0.12);
   }
 
@@ -96,7 +96,7 @@
   }
 
   .route-sim .sim-step pre s {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .route-sim .sim-step pre b {

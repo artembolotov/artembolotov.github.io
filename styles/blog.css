@@ -408,10 +408,10 @@ div.highlight {
 .highlight .s, .highlight .s1, .highlight .s2 { color: #c41a16; } /* Strings */
 .highlight .k, .highlight .kd { color: #a90d91; } /* Keywords */
 .highlight .nc { color: #3f6e75; } /* Class names */
-.highlight .nl { color: #3b972e; } /* Property names */
+.highlight .nl { color: #2e7d24; } /* Property names */
 .highlight .p { color: #000000; } /* Punctuation */
 .highlight .o { color: #000000; } /* Operators */
-.highlight .nb { color: #c18401; } /* Built-in names */
+.highlight .nb { color: #946800; } /* Built-in names */
 .highlight .nf { color: #326598; } /* Function names */
 .highlight .c, .highlight .c1, .highlight .cm { color: #536570; font-style: italic; } /* Comments */
 .highlight .m { color: #1c00cf; } /* Numbers */
@@ -593,7 +593,7 @@ main > table tr:last-child td {
 
 .author-footer .privacy-link a:link,
 .author-footer .privacy-link a:visited {
-  color: rgba(0,0,0,.35);
+  color: rgba(0,0,0,.6);
   border-color: rgba(0,0,0,.12);
 }
 
@@ -897,7 +897,7 @@ html:not(.pf-ready) .tag-menu-search pagefind-modal-trigger {
 
 /* Reading time */
 .read-time {
-  color: #777;
+  color: #666;
   font-size: 0.8em;
 }
 
@@ -931,7 +931,7 @@ blockquote p:last-child {
 
   .author-footer .privacy-link a:link,
   .author-footer .privacy-link a:visited {
-    color: rgba(255,255,255,.35);
+    color: rgba(255,255,255,.5);
     border-color: rgba(255,255,255,.12);
   }
 
@@ -1000,12 +1000,15 @@ blockquote p:last-child {
 }
 
 /* Upcoming (draft) articles in series pages */
-.article-upcoming {
-  opacity: 0.45;
+/* Цвет, а не opacity: так приглушённый текст сохраняет контраст 4.5:1 (Lighthouse) */
+.article-upcoming h2,
+.article-upcoming time {
+  color: #696969;
 }
 
 @media (prefers-color-scheme: dark) {
-  .article-upcoming {
-    opacity: 0.4;
+  .article-upcoming h2,
+  .article-upcoming time {
+    color: #808080;
   }
 }

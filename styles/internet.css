@@ -48,7 +48,7 @@
 .sim-label {
   padding: 1em 1em 0;
   font-size: 0.75em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 /* Пилюли-участники: подсвечиваются по ходу сценария */
@@ -65,19 +65,19 @@
   padding: 0.35em 0.9em;
   border-radius: 100px;
   border: 1px solid rgba(0,0,0,0.12);
-  color: #999;
+  color: #6b6b6b;
   transition: color 0.3s, border-color 0.3s, background 0.3s;
 }
 
 .sim-actor.is-done {
-  color: #0089ff;
+  color: #006bc9;
   border-color: rgba(0,137,255,0.4);
 }
 
 .sim-actor.is-active {
   color: #fff;
-  background: #0089ff;
-  border-color: #0089ff;
+  background: #006bc9;
+  border-color: #006bc9;
 }
 
 /* Кнопки-варианты: что именно запросить/откуда отправить */
@@ -101,13 +101,13 @@
 }
 
 .sim-choice:hover {
-  border-color: #0089ff;
-  color: #0089ff;
+  border-color: #006bc9;
+  color: #006bc9;
 }
 
 .sim-choice.is-active {
-  background: #0089ff;
-  border-color: #0089ff;
+  background: #006bc9;
+  border-color: #006bc9;
   color: #fff;
 }
 
@@ -123,7 +123,7 @@
   padding: 0.6em 1.1em;
   border-radius: 100px;
   border: none;
-  background: #0089ff;
+  background: #006bc9;
   color: #fff;
   cursor: pointer;
   transition: background 0.2s, opacity 0.2s;
@@ -145,8 +145,8 @@
 }
 
 .sim-btn--ghost:hover:not(:disabled) {
-  border-color: #0089ff;
-  color: #0089ff;
+  border-color: #006bc9;
+  color: #006bc9;
   background: none;
 }
 
@@ -211,14 +211,14 @@
   margin-bottom: 0.25em;
   font-size: 0.8em;
   font-weight: 700;
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .sim-step-ms {
   display: block;
   margin-top: 0.35em;
   font-size: 0.75em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 /* Итог сценария (по центру) и пояснение — на всю ширину, с акцентной рамкой */
@@ -235,7 +235,7 @@
 }
 
 .sim-step--result b {
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .sim-step--hint {
@@ -243,7 +243,7 @@
   background: none;
   box-shadow: none;
   text-align: center;
-  color: #999;
+  color: #6b6b6b;
   font-size: 0.8em;
 }
 
@@ -281,12 +281,12 @@
   }
 
   .sim-label {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .sim-actor {
     border-color: rgba(255,255,255,0.15);
-    color: #777;
+    color: #a0a0a0;
   }
 
   .sim-actor.is-done {
@@ -327,11 +327,13 @@
   }
 
   .sim-btn--ghost {
+    background: none;
     border-color: rgba(255,255,255,0.18);
     color: #999;
   }
 
   .sim-btn--ghost:hover:not(:disabled) {
+    background: none;
     border-color: #64b2ff;
     color: #64b2ff;
   }
@@ -358,7 +360,7 @@
   }
 
   .sim-step-ms {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .sim-step--result,
@@ -373,6 +375,6 @@
 
   .sim-step--hint {
     background: none;
-    color: #777;
+    color: #a0a0a0;
   }
 }

@@ -57,7 +57,7 @@
   border: none;
   border-radius: 50%;
   background: transparent;
-  color: #0089ff;
+  color: #006bc9;
   font-size: 1em;
   line-height: 1;
   cursor: pointer;
@@ -171,7 +171,7 @@
   display: block;
   margin-bottom: 0.3em;
   font-size: 0.85em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .dt-sim-alertbox p {
@@ -186,7 +186,7 @@
   padding: 0.4em 1.4em;
   border: none;
   border-radius: 100px;
-  background: #0089ff;
+  background: #006bc9;
   color: #fff;
   font-size: 0.9em;
   cursor: pointer;
@@ -203,7 +203,7 @@
   font-size: 0.7em;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .dt-sim-tab {
@@ -218,7 +218,7 @@
 }
 
 .dt-sim-tab.is-active {
-  color: #0089ff;
+  color: #006bc9;
   box-shadow: inset 0 -2px 0 #0089ff;
 }
 
@@ -241,7 +241,7 @@
 .dt-sim-note {
   margin-top: 0.8em;
   font-size: 0.8em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 /* Elements tab */
@@ -306,8 +306,8 @@
 }
 
 .dt-sim-actbtn:hover {
-  border-color: #0089ff;
-  color: #0089ff;
+  border-color: #006bc9;
+  color: #006bc9;
 }
 
 .dt-sim-actbtn--danger:hover {
@@ -364,7 +364,7 @@
   padding: 0.2em 0.5em 0.5em;
   border-bottom: 1px solid rgba(0,0,0,0.09);
   font-size: 0.75em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .dt-sim-netitem {
@@ -479,13 +479,13 @@
 
 .dt-sim-cline--input::before {
   content: "\203A\00a0";
-  color: #0089ff;
+  color: #006bc9;
   font-weight: 700;
 }
 
 .dt-sim-cline--result::before {
   content: "\2039\00a0";
-  color: #999;
+  color: #6b6b6b;
 }
 
 .dt-sim-chips {
@@ -508,8 +508,8 @@
 }
 
 .dt-sim-chip:hover {
-  border-color: #0089ff;
-  color: #0089ff;
+  border-color: #006bc9;
+  color: #006bc9;
 }
 
 .dt-sim-cform {
@@ -522,7 +522,7 @@
 .dt-sim-prompt {
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   font-weight: 700;
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .dt-sim-cinput {
@@ -601,7 +601,7 @@
   }
 
   .dt-sim-devtools-label {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .dt-sim-tab {
@@ -619,7 +619,7 @@
   }
 
   .dt-sim-note {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .dt-sim-line {
@@ -670,7 +670,7 @@
 
   .dt-sim-nethead {
     border-bottom-color: rgba(255,255,255,0.09);
-    color: #777;
+    color: #a0a0a0;
   }
 
   .dt-sim-netitem {
@@ -721,7 +721,7 @@
   }
 
   .dt-sim-cline--result::before {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .dt-sim-chip {

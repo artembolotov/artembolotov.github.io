@@ -18,7 +18,7 @@
   font-size: 0.85em;
   font-weight: 600;
   margin-left: 0.3em;
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .api-sim .sim-choice.is-active b {
@@ -48,7 +48,7 @@
   justify-content: space-between;
   padding: 0.2em 0.5em 0.4em;
   font-size: 0.65em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .api-sim-screen {
@@ -75,7 +75,7 @@
   margin: auto;
   text-align: center;
   font-size: 0.8em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .api-sim-splash b {
@@ -144,7 +144,7 @@
   flex: 1;
   padding: 0.55em 0;
   border-radius: 8px;
-  background: #0089ff;
+  background: #006bc9;
   color: #fff;
   text-align: center;
   font-size: 0.7em;
@@ -176,7 +176,7 @@
   display: block;
   margin-top: 2px;
   font-size: 0.85em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .api-sim-op-sum {
@@ -225,7 +225,7 @@
 .api-sim-note {
   margin-top: 0.8em;
   font-size: 0.7em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .api-sim-fakebtn {
@@ -233,7 +233,7 @@
   margin-top: 0.9em;
   padding: 0.55em 1.4em;
   border-radius: 8px;
-  background: #0089ff;
+  background: #006bc9;
   color: #fff;
   font-size: 0.7em;
 }
@@ -252,7 +252,7 @@
   border-radius: 10px;
   text-align: center;
   font-size: 0.8em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .api-sim-panel {
@@ -274,7 +274,7 @@
   margin-bottom: 0.4em;
   font-size: 0.7em;
   font-weight: 700;
-  color: #0089ff;
+  color: #006bc9;
 }
 
 .api-sim-codebox {
@@ -323,7 +323,7 @@
   padding-bottom: 1em;
   text-align: center;
   font-size: 0.75em;
-  color: #999;
+  color: #6b6b6b;
 }
 
 @media screen and (max-width: 767px) {
@@ -371,7 +371,7 @@
   }
 
   .api-sim-statusbar {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .api-sim .is-hl {
@@ -380,7 +380,7 @@
   }
 
   .api-sim-splash {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .api-sim-splash b {
@@ -424,7 +424,7 @@
   }
 
   .api-sim-op-d {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .api-sim-op-sum.is-plus {
@@ -445,7 +445,7 @@
   }
 
   .api-sim-note {
-    color: #777;
+    color: #a0a0a0;
   }
 
   .api-sim-fakebtn {
@@ -455,7 +455,7 @@
 
   .api-sim-placeholder {
     border-color: rgba(255,255,255,0.25);
-    color: #777;
+    color: #a0a0a0;
   }
 
   .api-sim-panel {
@@ -486,6 +486,6 @@
   }
 
   .api-sim-hint {
-    color: #777;
+    color: #a0a0a0;
   }
 }
