@@ -1,25 +1,9 @@
 # robots.txt для bolotov.dev
+# Одна общая группа: робот читает только самую подходящую ему группу,
+# поэтому отдельные группы для Googlebot или Yandex отменили бы правила отсюда.
+# Черновики закрыты от индексации мета-тегом noindex в default.html, а не здесь:
+# запрет в robots.txt не дал бы роботу увидеть noindex.
 User-agent: *
 Allow: /
-Disallow: /+1
-Disallow: /skip
-Disallow: /icons/
-Disallow: /styles/
 
-
-# Не индексировать служебные страницы и повторы
-Disallow: */feed/
-Disallow: */atom/
-Disallow: */feed.xml
-
-# Разрешить Яндекс.Картинки для иллюстраций в блоге
-User-agent: Yandex
-Allow: /blog/img/
-
-# Указываем индексу Google кэшировать JavaScript и CSS
-User-agent: Googlebot
-Allow: /*.js$
-Allow: /*.css$
-
-Host: https://bolotov.dev
 Sitemap: https://bolotov.dev/sitemap.xml

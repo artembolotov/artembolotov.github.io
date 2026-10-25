@@ -1,0 +1,35 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru">
+  {% assign published = site.posts | where_exp: "post", "post.draft != true" %}
+  <title>{{ site.title | xml_escape }}</title>
+  <subtitle>{{ site.description | xml_escape }}</subtitle>
+  <link href="https://bolotov.dev/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://bolotov.dev/blog/" rel="alternate" type="text/html"/>
+  <id>https://bolotov.dev/blog/</id>
+  <updated>{{ published.first.date | date_to_xmlschema }}</updated>
+  <author>
+    <name>{{ site.author | xml_escape }}</name>
+    <uri>https://bolotov.dev/</uri>
+  </author>
+  <icon>https://bolotov.dev/icons/favicon-32x32.png</icon>
+  <logo>https://bolotov.dev/blog/img/avatar.jpg</logo>
+  {% for post in published limit: 20 %}
+  <entry>
+    <title type="html">{{ post.title | xml_escape }}</title>
+    <link href="https://bolotov.dev{{ post.url }}" rel="alternate" type="text/html"/>
+    <id>https://bolotov.dev{{ post.url }}</id>
+    <published>{{ post.date | date_to_xmlschema }}</published>
+    <updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated>
+    {% for post_tag in post.tags %}
+    {% include tag-translations.html tag=post_tag %}
+    <category term="{{ post_tag | xml_escape }}" label="{{ tag_label | xml_escape }}"/>
+    {% endfor %}
+    {% if post.description %}<summary type="html">{{ post.description | xml_escape }}</summary>{% endif %}
+    {% comment %}Ссылки и картинки в записях указаны от корня сайта; в читалках нужны полные адреса{% endcomment %}
+    <content type="html" xml:base="https://bolotov.dev{{ post.url }}">{{ post.content | replace: 'src="/', 'src="https://bolotov.dev/' | replace: 'href="/', 'href="https://bolotov.dev/' | replace: 'srcset="/', 'srcset="https://bolotov.dev/' | replace: ', /blog/', ', https://bolotov.dev/blog/' | xml_escape }}</content>
+  </entry>
+  {% endfor %}
+</feed>

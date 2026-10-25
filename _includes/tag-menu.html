@@ -2,7 +2,7 @@
   <ul>
     <li{% if include.active_tag == 'all' %} class="active"{% endif %}>
       {% if include.active_tag == 'all' %}
-        <h1>Всё</h1>
+        <h1><span class="visually-hidden">Блог Артёма Болотова. </span>Всё</h1>
       {% else %}
         <a href="/blog/">Всё</a>
       {% endif %}
@@ -12,7 +12,7 @@
       {% include tag-translations.html tag=menu_tag %}
       <li{% if include.active_tag == menu_tag %} class="active"{% endif %}>
         {% if include.active_tag == menu_tag %}
-          <h1>#{{ tag_label }}</h1>
+          <h1><span class="visually-hidden">{{ page.title }}. </span>#{{ tag_label }}</h1>
         {% else %}
           <a href="/blog/{{ menu_tag | slugify | downcase }}/">#{{ tag_label }}</a>
         {% endif %}

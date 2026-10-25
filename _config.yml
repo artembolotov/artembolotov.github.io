@@ -9,7 +9,8 @@ author: "Артём Болотов"
 email: "ar@bolotov.dev"
 
 # Настройки SEO
-logo: "/blog/img/avatar.jpg"
+# logo не задаём: с ним jekyll-seo-tag объявляет издателем записей организацию, а блог личный.
+# Автор (ссылка на главную, аккаунт в X) описан в _data/authors.yml.
 social:
   name: Артём Болотов
   links:
@@ -18,6 +19,8 @@ social:
     - https://x.com/artembolotov
     - https://t.me/artembolotov
     - https://t.me/bolotovblog
+twitter:
+  username: artembolotov
 
 # Плагины
 plugins:
@@ -47,7 +50,12 @@ defaults:
       image: "/blog/img/avatar.jpg"
       permalink: /blog/:year/:month/:day/:title
       canonical_url: ""
-      lang: "ru"
+  # Картинка для превью главной блога и страниц разделов
+  - scope:
+      path: "blog"
+      type: "pages"
+    values:
+      image: "/blog/img/avatar.jpg"
 
 # Настройки сжатия
 compress_html:

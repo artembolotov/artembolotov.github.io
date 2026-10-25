@@ -1,0 +1,7 @@
+# Авторы для jekyll-seo-tag: ключ совпадает со значением author в записях.
+# url попадает в разметку BlogPosting и связывает записи с главной страницей,
+# twitter — в мета-тег twitter:creator.
+Артём Болотов:
+  name: Артём Болотов
+  url: https://bolotov.dev/
+  twitter: artembolotov

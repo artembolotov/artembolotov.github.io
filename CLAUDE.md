@@ -18,9 +18,10 @@ Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with
 
 - Posts live in `blog/_posts/` (not the root `_posts/`, which is empty). Filename date defines the URL: `/blog/:year/:month/:day/:title`.
 - Post front matter: `title`, `description`, `tags` (plus defaults from `_config.yml`: layout `post`, author, image).
-- **Drafts are a custom convention, not Jekyll drafts**: `draft: true` in front matter. The post still builds (its URL is live), but listing pages skip it, and series pages show it greyed-out as "выйдет <date>" (`.article-upcoming`).
+- **Drafts are a custom convention, not Jekyll drafts**: `draft: true` in front matter. The post still builds (its URL is live), but listing pages, `sitemap.xml` and `feed.xml` skip it, `default.html` adds `<meta name="robots" content="noindex">` (same for any page with `noindex: true`, e.g. `404.html`), and series pages show it greyed-out as "выйдет <date>" (`.article-upcoming`).
+- SEO: `sitemap.xml` and `feed.xml` (Atom, full text) are hand-written Liquid templates, not plugins; the sitemap lists a tag page only once it has a published post. When a published post is substantially updated, add `last_modified_at: YYYY-MM-DD` to its front matter: it feeds `dateModified`, sitemap `lastmod` and the feed's `updated`. Post author data for jekyll-seo-tag (url, X account) is in `_data/authors.yml`; `logo` is deliberately not set in `_config.yml` (it would make the publisher an Organization). `robots.txt` is a single `User-agent: *` group on purpose — a crawler obeys only its most specific group.
 - Tags double as sections. Each tag has a landing page `blog/<tag>/index.html` with layout `tag-page`; `series: true` in its front matter switches the layout to a numbered series listing (e.g. `blog/internet/` — the "Внутри интернета" series). Russian tag labels come from `_data/tag_translations.yml` via `_includes/tag-translations.html`; the top tag menu is a hardcoded list in `_includes/tag-menu.html`.
-- The root `index.html` is a standalone single-page personal site, unrelated to the blog machinery.
+- The root `index.html` is a standalone single-page personal site, unrelated to the blog machinery (no front matter, no Liquid): its title, meta, Open Graph and `Person` JSON-LD are hand-written in its `<head>`.
 
 ## Layouts and styles
 

@@ -5,66 +5,35 @@ sitemap:
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Главная страница -->
+  {% assign published = site.posts | where_exp: "post", "post.draft != true" | where_exp: "post", "post.sitemap.exclude != 'yes'" %}
+  <!-- Главная страница: дату изменения не указываем, надёжного источника для неё нет -->
   <url>
     <loc>https://bolotov.dev/</loc>
-    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
   </url>
-  
-  <!-- Главная страница блога -->
+
+  <!-- Главная страница блога: меняется с выходом новой записи -->
   <url>
     <loc>https://bolotov.dev/blog/</loc>
-    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>{{ published.first.date | date_to_xmlschema }}</lastmod>
   </url>
-  
-  <!-- Страницы категорий (тегов) блога -->
-  <url>
-    <loc>https://bolotov.dev/blog/iosdev/</loc>
-    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://bolotov.dev/blog/webdev/</loc>
-    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://bolotov.dev/blog/life/</loc>
-    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://bolotov.dev/blog/notes/</loc>
-    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Все опубликованные посты блога (исключая черновики) -->
-  {% for post in site.posts %}
-    {% unless post.draft or post.sitemap.exclude == "yes" %}
+
+  <!-- Разделы блога: только те, где уже есть опубликованные записи -->
+  {% assign tag_pages = site.pages | where: "layout", "tag-page" | sort: "url" %}
+  {% for tag_page in tag_pages %}
+    {% assign tag_posts = published | where_exp: "post", "post.tags contains tag_page.tag" %}
+    {% if tag_posts.size > 0 %}
+    <url>
+      <loc>https://bolotov.dev{{ tag_page.url }}</loc>
+      <lastmod>{{ tag_posts.first.date | date_to_xmlschema }}</lastmod>
+    </url>
+    {% endif %}
+  {% endfor %}
+
+  <!-- Опубликованные записи (без черновиков) -->
+  {% for post in published %}
     <url>
       <loc>https://bolotov.dev{{ post.url }}</loc>
-      {% if post.last_modified_at %}
-        <lastmod>{{ post.last_modified_at | date_to_xmlschema }}</lastmod>
-      {% elsif post.date %}
-        <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
-      {% else %}
-        <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-      {% endif %}
-      <changefreq>monthly</changefreq>
-      <priority>0.7</priority>
+      <lastmod>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</lastmod>
     </url>
-    {% endunless %}
   {% endfor %}
 </urlset>

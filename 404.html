@@ -1,0 +1,31 @@
+---
+layout: default
+title: "Страница не найдена"
+description: "Такой страницы на сайте нет"
+permalink: /404.html
+noindex: true
+---
+
+<div>
+  {% include tag-menu.html active_tag="" %}
+
+  <h1>Страница не найдена</h1>
+  <p>Такой страницы нет: возможно, в адресе опечатка или запись переехала. Попробуйте поиск или загляните в последние записи.</p>
+
+  <div class="posts">
+  {% assign months = "января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря" | split: "," %}
+  {% assign published = site.posts | where_exp: "post", "post.draft != true" %}
+  {% for post in published limit: 5 %}
+    <article>
+      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      {% assign month_index = post.date | date: "%-m" | minus: 1 %}
+      <time datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%-d" }} {{ months[month_index] }} {{ post.date | date: "%Y" }}</time>
+      {% if post.description %}
+      <p>{{ post.description }}</p>
+      {% endif %}
+    </article>
+  {% endfor %}
+  </div>
+
+  <p><a href="/blog/">Все записи</a> · <a href="/">Обо мне</a></p>
+</div>

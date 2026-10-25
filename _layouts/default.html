@@ -8,6 +8,8 @@ layout: compress
   <meta charset="UTF-8">
   <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content'>
   {% seo %}
+  {% if page.draft == true or page.noindex == true %}<meta name="robots" content="noindex">{% endif %}
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/feed.xml">
   <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
   <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
