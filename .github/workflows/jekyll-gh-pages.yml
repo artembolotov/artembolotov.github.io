@@ -30,6 +30,11 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Pages
         uses: actions/configure-pages@v6
+      # Уменьшенные копии картинок из галерей для srcset; кладутся рядом с оригиналами до сборки.
+      - name: Generate gallery image variants
+        run: |
+          npm install --prefix "$RUNNER_TEMP/sharp" --no-save --no-audit --no-fund sharp@0.34.4
+          SHARP_DIR="$RUNNER_TEMP/sharp" node .github/scripts/gallery-variants.cjs
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:

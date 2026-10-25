@@ -28,8 +28,77 @@
  * cancel exactly those drags and let the list scroll natively otherwise.
  * The input is left alone so caret dragging keeps working.
  *
- * Loaded at the end of <body>, after <pagefind-modal>.
+ * 4. Lazy loading. The Component UI script (~40 KB) is not on the critical
+ * path: we load it once the page is idle after `load`, or right away when
+ * the reader reaches for search. Until then the trigger is a static copy of
+ * the component's own button (tag-menu.html), and a click on it or Ctrl/Cmd+K
+ * opens the modal as soon as the script arrives. Loading it only on demand
+ * was rejected: iOS shows the keyboard only for focus inside the tap itself,
+ * so a modal opened after a network round trip would come up without it.
+ *
+ * Loaded with defer, so <pagefind-modal> is already parsed.
  */
+
+(function () {
+  var SRC = '/pagefind/pagefind-component-ui.js';
+  var TAG = 'pagefind-modal-trigger';
+  var trigger = document.querySelector('.tag-menu-search ' + TAG);
+  // Pages without the tag menu (privacy, 404) have no way to open search.
+  if (!trigger) return;
+  var requested = false;
+  var pendingOpen = false;
+
+  function load() {
+    if (requested) return;
+    requested = true;
+    var script = document.createElement('script');
+    script.type = 'module';
+    script.src = SRC;
+    document.head.appendChild(script);
+  }
+
+  // The component builds its own button on upgrade; clicking it goes through
+  // the component's path, which also keeps aria-expanded in sync. The module
+  // defines and upgrades every element synchronously, so by the time
+  // whenDefined resolves the modal is registered too.
+  function openWhenReady() {
+    if (pendingOpen || !window.customElements) return;
+    pendingOpen = true;
+    load();
+    customElements.whenDefined(TAG).then(function () {
+      pendingOpen = false;
+      var button = document.querySelector(TAG + ' .pf-trigger-btn');
+      if (button) button.click();
+    });
+  }
+
+  function upgraded() {
+    return !!(window.customElements && customElements.get(TAG));
+  }
+
+  trigger.addEventListener('pointerdown', load);
+  trigger.addEventListener('focusin', load);
+  trigger.addEventListener('click', function () {
+    if (!upgraded()) openWhenReady();
+  });
+
+  // Same shortcut as the component (mod+k); once it's upgraded it handles it.
+  document.addEventListener('keydown', function (event) {
+    if (upgraded() || event.key.toLowerCase() !== 'k' || !(event.metaKey || event.ctrlKey)) return;
+    var el = document.activeElement;
+    if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return;
+    event.preventDefault();
+    openWhenReady();
+  });
+
+  function idle() {
+    if (window.requestIdleCallback) requestIdleCallback(load, { timeout: 3000 });
+    else setTimeout(load, 1000);
+  }
+
+  if (document.readyState === 'complete') idle();
+  else window.addEventListener('load', idle);
+})();
 
 (function () {
   var modal = document.querySelector('pagefind-modal');

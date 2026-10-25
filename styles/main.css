@@ -30,7 +30,10 @@ section h2 {
   margin-top: 0;
   width: 100%;
   padding: 0;
-  background: url(/img/bg-tall-web.jpg) center center;
+  background: url(/img/bg-tall.jpg) center center;
+  /* Без поддержки type() (Safari до 17) правило отбрасывается и остаётся JPEG.
+     AVIF ещё и предзагружается в index.html — меняя файлы, правьте оба места */
+  background-image: image-set(url(/img/bg-tall.avif) type("image/avif"), url(/img/bg-tall.webp) type("image/webp"), url(/img/bg-tall.jpg) type("image/jpeg"));
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -121,7 +124,8 @@ section h2 {
 /* Responsive timeline */
 @media screen and (min-width: 768px) {
   #top { 
-    background: url(/img/bg-wide-web-1757.jpg) center center; 
+    background: url(/img/bg-wide.jpg) center center;
+    background-image: image-set(url(/img/bg-wide.avif) type("image/avif"), url(/img/bg-wide.webp) type("image/webp"), url(/img/bg-wide.jpg) type("image/jpeg"));
     -webkit-background-size: cover; 
     -moz-background-size: cover; 
     -o-background-size: cover; 

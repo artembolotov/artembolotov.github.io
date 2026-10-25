@@ -70,7 +70,32 @@ Image paths support:
           {% endif %}
 
           {% assign dim_parts = image_dims | split: "x" %}
+
+          {% comment %}
+          srcset из уменьшенных копий (name@480w.webp и т.п.), которые делает
+          .github/scripts/gallery-variants.cjs в CI. Берём только найденные среди файлов
+          сайта, поэтому без них (локальный jekyll serve) srcset просто не появляется.
+          sizes считаем по размеру: картинка вписана в ряд высотой row_height
+          (--gallery-row-h в blog.css), но не шире 85vw.
+          {% endcomment %}
+          {% assign srcset = "" %}
+          {% if image_dims != "" %}
+            {% assign img_w = dim_parts[0] | strip | plus: 0 %}
+            {% assign img_h = dim_parts[1] | strip | plus: 0 %}
+            {% assign path_base = image_path | split: "." | pop | join: "." %}
+            {% for w in site.data.gallery_variants.widths %}
+              {% assign variant = path_base | append: "@" | append: w | append: "w.webp" %}
+              {% assign variant_file = site.static_files | where: "path", variant | first %}
+              {% if variant_file %}{% assign srcset = srcset | append: variant | append: " " | append: w | append: "w, " %}{% endif %}
+            {% endfor %}
+            {% if srcset != "" %}
+              {% assign srcset = srcset | append: image_path | append: " " | append: img_w | append: "w" %}
+              {% assign shown_w = site.data.gallery_variants.row_height | times: img_w | divided_by: img_h | floor %}
+              {% assign narrow_vw = shown_w | times: 100 | divided_by: 85 | floor %}
+            {% endif %}
+          {% endif %}
           <img src="{{ image_path }}"
+               {% if srcset != "" %}srcset="{{ srcset }}" sizes="(max-width: {{ narrow_vw }}px) 85vw, {{ shown_w }}px"{% endif %}
                alt="{{ image_alt }}"
                {% if image_dims != "" %}width="{{ dim_parts[0] | strip }}" height="{{ dim_parts[1] | strip }}"{% endif %}
                loading="lazy"

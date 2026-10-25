@@ -821,8 +821,10 @@ main > table tr:last-child td {
   --pf-input-height: 32px;
 }
 
-/* Без JS или без индекса (локальный jekyll serve) кнопка не нужна, но место под неё держим */
-.tag-menu-search pagefind-modal-trigger:not(:defined) {
+/* Кнопка в разметке — копия той, что рисует компонент, поэтому видна до загрузки его скрипта
+   (scripts/search.js). Прячем, пока не пришли стили Pagefind: класс pf-ready ставит onload
+   у их <link> в default.html. Без JS или без индекса (локальный jekyll serve) место под неё держим */
+html:not(.pf-ready) .tag-menu-search pagefind-modal-trigger {
   visibility: hidden;
 }
 

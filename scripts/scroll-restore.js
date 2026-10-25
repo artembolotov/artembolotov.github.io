@@ -11,7 +11,7 @@
  * restoration, and pages with one get manual mode plus our own save/restore of
  * the vertical position.
  *
- * Loaded at the end of <body>, so the DOM is parsed when this runs.
+ * Loaded with defer, so the DOM is parsed when this runs.
  */
 
 (function () {
