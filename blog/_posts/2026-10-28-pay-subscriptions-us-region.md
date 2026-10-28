@@ -77,6 +77,7 @@ apple_checkout.webp|Оформление подарочной карты на 20
 chatgpt_purchases.webp|Встроенные покупки ChatGPT в App Store: Plus за 19,99 доллара в месяц, Go за 8 долларов, Pro от 100 долларов|920x2000
 gmail_purchases.webp|Встроенные покупки Gmail в App Store: 100 ГБ за 1,99 доллара, 200 ГБ за 2,99 доллара, Google AI Plus с 2 ТБ за 9,99 доллара|920x2000
 apple_one.webp|Тарифы Apple One: индивидуальная подписка за 21,95 доллара в месяц, семейная с 200 ГБ в iCloud за 27,95 доллара|920x2000
+apple_music.webp|Тарифы Apple Music: индивидуальный за 11,99 доллара в месяц, семейный за 19,99 доллара, студенческий за 6,99 доллара|920x2000
 {% endcapture %}
 {% include gallery.html images=gallery_subscriptions %}
 
