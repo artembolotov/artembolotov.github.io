@@ -33,12 +33,14 @@ sber_confirm.webp|Подтверждение платежа: 20 USD за 1795,15
 {% endcapture %}
 {% include gallery.html images=gallery_sber %}
 
-**Озон.** Ищем «apple card сша». Карты продают сторонние продавцы, и стоят они дороже: от 2&nbsp;292&nbsp;₽ за $20. Выбирайте продавца с хорошим рейтингом и проверьте, что карта для США.
+**Маркетплейсы.** На Озоне, Wildberries, Яндекс Маркете и других ищем «apple card сша». Карты продают сторонние продавцы, и стоят они дороже, чем в Сбере: в тот же день за $20 просили от 2&nbsp;272&nbsp;₽ на Маркете, 2&nbsp;292&nbsp;₽ на Озоне и 2&nbsp;347&nbsp;₽ на WB. Выбирайте продавца с хорошим рейтингом и проверьте, что карта для США.
 
 **Сайт Apple**&nbsp;— если у вас есть иностранная карта в Apple Pay. Открываем в Safari на iPhone [apple.com/shop/gift-cards](https://www.apple.com/shop/gift-cards){:target="_blank" rel="noopener"}, выбираем электронную карту и сумму, оплачиваем через **Continue with Apple Pay**. Письмо с кодом приходит минут за десять.
 
 {% capture gallery_other %}
 ozon_search.webp|Поиск «apple card сша 20» на Озоне: подарочные карты на 20 долларов от 2292 до 3332 рублей|920x2000
+wb_search.webp|Поиск «apple card сша 20» на Wildberries: подарочная карта на 20 долларов за 2347 рублей|920x2000
+market_search.webp|Поиск «apple card сша 20» на Яндекс Маркете: подарочные карты на 20 долларов от 2272 рублей|920x2000
 apple_checkout.webp|Оформление подарочной карты на 20 долларов на сайте Apple: кнопка Continue with Apple Pay|920x2000
 {% endcapture %}
 {% include gallery.html images=gallery_other %}
