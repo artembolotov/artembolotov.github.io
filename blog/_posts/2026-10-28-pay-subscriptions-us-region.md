@@ -52,11 +52,12 @@ apple_checkout.webp|Оформление подарочной карты на 20
 Подписки оформляются как обычно и списываются с баланса. Цены можно посмотреть заранее на странице приложения в App Store, в разделе **Встроенные покупки**.
 
 - **ChatGPT**&nbsp;— в приложении. Plus стоит $19.99 в месяц, Go&nbsp;— $8.
-- **Claude**&nbsp;— в приложении, подписка Pro.
+- **Claude**&nbsp;— в приложении. Pro стоит $20 в месяц.
 - **Google Drive**&nbsp;— в приложении Google Drive, Gmail или Google One. 100 ГБ стоят $1.99 в месяц, 200 ГБ&nbsp;— $2.99, 2 ТБ в тарифе Google AI Plus&nbsp;— $9.99.
 
 {% capture gallery_subscriptions %}
 chatgpt_purchases.webp|Встроенные покупки ChatGPT в App Store: Plus за 19,99 доллара в месяц, Go за 8 долларов, Pro от 100 долларов|920x2000
+claude_purchases.webp|Встроенные покупки Claude в App Store: Pro за 20 долларов в месяц, Max от 124,99 доллара|920x2000
 gmail_purchases.webp|Встроенные покупки Gmail в App Store: 100 ГБ за 1,99 доллара, 200 ГБ за 2,99 доллара, Google AI Plus с 2 ТБ за 9,99 доллара|920x2000
 {% endcapture %}
 {% include gallery.html images=gallery_subscriptions %}
