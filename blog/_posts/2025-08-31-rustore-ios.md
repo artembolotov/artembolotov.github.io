@@ -2,7 +2,7 @@
 title: "RuStore на iPhone. Был ли прав Билан?"
 description: "Как может работать обязательный российский магазин приложений на iOS и что будет с push-уведомлениями"
 tags: [iosdev, notes]
-image: /blog/img/2025-08-31-rustore-ios/rustore.png
+image: /blog/img/2025-08-31-rustore-ios/og-image.png
 draft: false
 ---
 

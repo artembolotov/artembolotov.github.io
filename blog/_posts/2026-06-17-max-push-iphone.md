@@ -2,6 +2,7 @@
 title: "Как вернуть push-уведомления в Макс на iPhone?"
 description: "Обходной путь через PWA-версию мессенджера, которую раньше не разрешали запускать с телефона."
 tags: [notes]
+image: /blog/img/2026-06-17-max-push-iphone/og-image.png
 draft: false
 ---
 

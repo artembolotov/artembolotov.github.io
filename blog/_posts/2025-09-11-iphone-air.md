@@ -2,7 +2,7 @@
 title: "О чём не знает iPhone Air"
 description: "И проблемы нового ConcentricRectangle. Почему лично мне хочется поскорее увидеть самый тонкий iPhone."
 tags: [iosdev]
-image: /blog/img/2025-09-11-iphone-air/preview.png
+image: /blog/img/2025-09-11-iphone-air/og-image.png
 draft: false
 ---
 
