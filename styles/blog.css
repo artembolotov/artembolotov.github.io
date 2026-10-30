@@ -39,6 +39,16 @@ h1 {
   line-height: 1.2em;
 }
 
+.post-title {
+  text-transform: none;
+  font-size: 1.85em;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin-bottom: 0.35em;
+}
+
 h2 {
   margin: 2.5em 0 0.2em;
   line-height: 1.4em;
