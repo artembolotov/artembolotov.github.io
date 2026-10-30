@@ -2,7 +2,7 @@
 title: "Как я&nbsp;перешёл с&nbsp;Google Analytics на&nbsp;Яндекс.Метрику"
 description: "И&nbsp;почему пришлось это сделать"
 tags: [webdev]
-image: /blog/img/2025-05-30-goodbye-ga/migrate.png
+image: /blog/img/2025-05-30-goodbye-ga/og-image.png
 ---
 
 ![Уходим с GA](/blog/img/2025-05-30-goodbye-ga/migrate.png)

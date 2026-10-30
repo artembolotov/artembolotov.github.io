@@ -2,7 +2,7 @@
 title: "ScreenLines: обгоняем Столото и Парковки России. Моё новое приложение"
 description: "Решаем маленькую проблему и попадаем в топ-40 App Store за 3 дня. В конце статьи секрет."
 tags: [iosdev, notes]
-image: /blog/img/2025-08-10-screenlines/preview.png
+image: /blog/img/2025-08-10-screenlines/og-image.png
 draft: false
 ---
 
