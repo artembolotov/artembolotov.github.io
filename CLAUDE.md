@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with Jekyll and deployed to GitHub Pages. All content, UI text, and commit-facing copy are in Russian.
+Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with Jekyll and deployed to GitHub Pages. All content and UI text are in Russian.
 
 ## Build and deploy
 
@@ -17,7 +17,7 @@ Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with
 ## Content model
 
 - Posts live in `blog/_posts/` (not the root `_posts/`, which is empty). Filename date defines the URL: `/blog/:year/:month/:day/:title`.
-- Post front matter: `title`, `description`, `tags` (plus defaults from `_config.yml`: layout `post`, author, image).
+- Post front matter: `title`, `description`, `tags` (plus defaults from `_config.yml`: layout `post`, author, image). A post's own cover (`image`) is a 1200×630 PNG at `blog/img/<post-slug>/og-image.png`; without it the default `/blog/img/avatar.jpg` is used.
 - **Drafts are a custom convention, not Jekyll drafts**: `draft: true` in front matter. The post still builds (its URL is live), but listing pages, `sitemap.xml` and `feed.xml` skip it, `default.html` adds `<meta name="robots" content="noindex">` (same for any page with `noindex: true`, e.g. `404.html`), and series pages show it greyed-out as "выйдет <date>" (`.article-upcoming`).
 - SEO: `sitemap.xml` and `feed.xml` (Atom, full text) are hand-written Liquid templates, not plugins; the sitemap lists a tag page only once it has a published post. When a published post is substantially updated, add `last_modified_at: YYYY-MM-DD` to its front matter: it feeds `dateModified`, sitemap `lastmod` and the feed's `updated`. Post author data for jekyll-seo-tag (url, X account) is in `_data/authors.yml`; `logo` is deliberately not set in `_config.yml` (it would make the publisher an Organization). `robots.txt` is a single `User-agent: *` group on purpose — a crawler obeys only its most specific group.
 - Tags double as sections. Each tag has a landing page `blog/<tag>/index.html` with layout `tag-page`; `series: true` in its front matter switches the layout to a numbered series listing (e.g. `blog/internet/` — the "Внутри интернета" series). Russian tag labels come from `_data/tag_translations.yml` via `_includes/tag-translations.html`; the top tag menu is a hardcoded list in `_includes/tag-menu.html`.
@@ -26,6 +26,9 @@ Personal site + Russian-language blog of Artem Bolotov (bolotov.dev), built with
 ## Layouts and styles
 
 - Layout chain: `compress` ← `default` ← `post` / `tag-page`. `default.html` contains the whole page shell (nav, logo) and loads all CSS/JS. Scripts go in `<head>` with `defer`; site scripts come before the third-party `gdeya.bolotov.dev` loader, because deferred scripts run in order and a slow external one would hold ours back.
+- Other site scripts: `scripts/consent.js` shows the Yandex Metrika notice banner (styles in `all.css`) and loads Metrika only after it is accepted (`ym_consent` in `localStorage`); `scripts/scroll-restore.js` takes over scroll restoration, but only on pages with an `.image-gallery` (Safari's restoration of the nested horizontal scroller made it drift).
+- `privacy/index.html` (privacy policy, linked from the consent banner, the author footer and the homepage) is a standalone page with inline styles, outside the layouts. The `zen_*.html` file in the root is a Dzen site-verification file — keep it.
+- `h1` is uppercase by default; post titles (`.post-title` in `blog.css`) use sentence case with balanced wrapping instead.
 - CSS is plain, no preprocessor: `styles/all.css` (base + nav, loaded everywhere), `styles/main.css` (homepage only), `styles/blog.css` (shared blog components: galleries, code highlighting, author footer...). New shared component styles go into `blog.css` by convention, including plain Markdown tables (`main > table`: hairline rows, grey small header, edges flush with the text).
 - Page-specific stylesheets are opt-in via front matter (see the `page.styles` loop in `default.html`): each name in `styles:` loads `/styles/<name>.css`. Interactive elements of the `internet` series are split into a shared framework (`styles/internet.css`) plus one file per component (`styles/internet-<include-name>.css`); a post using a component lists both, e.g. `styles: [internet, internet-dns-lookup]`.
 - Dark theme is handled via `@media (prefers-color-scheme: dark)` blocks in each stylesheet — every new component needs one. Accent colors: `#0089ff` (dark: `#64b2ff`); link text, the blue part of the logo (dark: `#64b2ff`, like links) and the background of buttons with white text use the darker `#006bc9` instead, because `#0089ff` fails WCAG 4.5:1 contrast on the `#ECEFF1`/white backgrounds (Lighthouse accessibility). Same rule for muted text: light-theme grey no lighter than `#6b6b6b` on white/`#f8f8f8`, dark-theme grey no darker than `#a0a0a0` on the `#1a1a1a`–`#242424` sim surfaces; mute with `color`, never `opacity` (that's why `.article-upcoming` uses explicit greys); hover red `#f41224` (dark: `#ff453a`).
